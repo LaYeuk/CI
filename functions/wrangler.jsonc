@@ -1,0 +1,13 @@
+{
+  // Configuration du Worker Cloudflare qui sert Outils_GIP.html et relaie les appels OFS/FRED/BNS
+  // (voir _worker.js). "directory": "./" = les fichiers statiques sont ceux du dépôt lui-même
+  // (Outils_GIP.html à la racine) ; .assetsignore empêche ce fichier et _worker.js d'être publiés
+  // comme fichiers téléchargeables.
+  "name": "outils-gip",
+  "main": "_worker.js",
+  "compatibility_date": "2026-10-04",
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS"
+  }
+}
