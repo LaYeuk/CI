@@ -8,6 +8,9 @@
  * relatives ("/api/fred/...", "/api/ofs-dam", "/api/ofs-pxweb/...", "/api/snb/...") — ce script
  * répond simplement à leur place de ce qui aurait été les fonctions séparées.
  *
+ * Routes propres à la BNS : /api/snb-catalog (liste des cubes, depuis le plan du site) et
+ * /api/snb-index (titres + libellés des séries + date de publication, pour la recherche de l'écran BNS).
+ *
  * Fichiers compagnons à la racine du dépôt (CI/) :
  *   - wrangler.jsonc   : config du Worker (assets.directory = ".", main = "_worker.js")
  *   - .assetsignore    : empêche ce fichier et wrangler.jsonc d'être servis comme fichiers publics
@@ -120,6 +123,103 @@ async function snbCatalog(ctx){
   return resp;
 }
 
+/* ----------------------------------------------------------------------------------------------
+ * Index de recherche BNS (/api/snb-index?lang=fr&offset=0&limit=15) — utilisé par l'écran « BNS »
+ * d'Outils_GIP.html pour une recherche plein texte façon data.snb.ch/fr/search.
+ * Pour chaque cube du catalogue (sitemap, voir snbCatalog) on récupère, en parallèle :
+ *   - son titre / domaine / unité / fréquence via l'API interne du portail (getCubeInfo), qui exige
+ *     l'en-tête "x-epb-ajax: true" (sinon le pare-feu du portail renvoie une page HTML) ;
+ *   - ses dimensions publiques (/api/cube/{id}/dimensions/{lang}) -> libellés des séries = mots-clés ;
+ *   - sa date de dernière publication (/api/cube/{id}/lastUpdate).
+ * Chaque résultat est mis en cache 7 jours (Cache API) : seule la toute première indexation interroge
+ * réellement la BNS. Le navigateur appelle cet endpoint par tranches (limit <= 15 cubes, soit <= 45
+ * sous-requêtes, sous la limite de 50 du plan gratuit Workers) et garde l'index complet en local.
+ * Tout est « au mieux » : si getCubeInfo échoue, le cube reste trouvable par ses séries et son id.
+ * ---------------------------------------------------------------------------------------------- */
+
+const SNB_META_TTL = 7 * 24 * 3600;
+
+function snbPageViewTime(){
+  const d = new Date(), p = n => String(n).padStart(2, '0');
+  return d.getUTCFullYear() + p(d.getUTCMonth() + 1) + p(d.getUTCDate()) + '_' + p(d.getUTCHours()) + p(d.getUTCMinutes()) + p(d.getUTCSeconds());
+}
+
+async function snbJson(url, headers){
+  try {
+    const r = await fetch(url, {headers: Object.assign({Accept: 'application/json'}, headers || {})});
+    if (!r.ok) return {status: r.status, json: null};
+    return {status: r.status, json: await r.json()};
+  } catch (e) {
+    return {status: 0, json: null};
+  }
+}
+
+function snbDimNames(dims){
+  const out = [], seen = new Set();
+  let leaves = 0;
+  (function walk(items, depth){
+    (items || []).forEach(it => {
+      const n = String(it.name || '').trim();
+      const kids = it.dimensionItems || [];
+      if (!kids.length) leaves++;
+      if (n && !seen.has(n)) { seen.add(n); out.push(n); }
+      walk(kids, depth + 1);
+    });
+  })((dims && dims.dimensions) || [], 0);
+  return {kw: out.join(' · ').slice(0, 900), leaves};
+}
+
+async function snbCubeMeta(id, lang, ctx){
+  const cache = caches.default;
+  const key = new Request('https://internal-cache.invalid/snb-meta-v1/' + lang + '/' + encodeURIComponent(id));
+  const hit = await cache.match(key);
+  if (hit) return hit.json();
+
+  const enc = encodeURIComponent(id);
+  const [info, dims, upd] = await Promise.all([
+    snbJson('https://data.snb.ch/json/table/getCubeInfo?lang=' + lang + '&cubeId=' + enc + '&isWarehouse=false&pageViewTime=' + snbPageViewTime(), {'x-epb-ajax': 'true'}),
+    snbJson('https://data.snb.ch/api/cube/' + enc + '/dimensions/' + lang),
+    snbJson('https://data.snb.ch/api/cube/' + enc + '/lastUpdate')
+  ]);
+  const i = info.json || {};
+  const d = snbDimNames(dims.json);
+  const u = upd.json || {};
+  const meta = {
+    title: String(i.title || '').trim(),
+    cat: String(i.publishingTitle || '').trim(),
+    unit: String(i.unit || '').trim(),
+    freq: String(i.frequencySpecification || '').trim(),
+    upd: String(u.publicSinceDate || u.editionDate || ''),
+    kw: d.kw,
+    n: d.leaves,
+    gone: dims.status === 404 || dims.status === 410
+  };
+  /* On ne met en cache que les réponses exploitables (évite de figer une panne passagère 7 jours). */
+  if (dims.json || meta.gone) {
+    ctx.waitUntil(cache.put(key, new Response(JSON.stringify(meta), {headers: {'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=' + SNB_META_TTL}})));
+  }
+  return meta;
+}
+
+async function snbIndex(url, ctx){
+  const lang = ['fr', 'de', 'en'].indexOf(url.searchParams.get('lang')) >= 0 ? url.searchParams.get('lang') : 'fr';
+  const offset = Math.max(0, parseInt(url.searchParams.get('offset') || '0', 10) || 0);
+  const limit = Math.min(15, Math.max(1, parseInt(url.searchParams.get('limit') || '15', 10) || 15));
+
+  const catResp = await snbCatalog(ctx);
+  if (!catResp.ok) return catResp;
+  const cat = await catResp.clone().json();
+  const all = cat.publication || [];
+  const slice = all.slice(offset, offset + limit);
+  const metas = await Promise.all(slice.map(c => snbCubeMeta(c.id, lang, ctx).catch(() => ({}))));
+  const entries = slice.map((c, k) => Object.assign({id: c.id, topic: c.topic, domaine: c.domaine}, metas[k]));
+
+  return new Response(JSON.stringify({total: all.length, offset, limit, lang, entries}), {
+    status: 200,
+    headers: {'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600', ...corsHeaders()}
+  });
+}
+
 /* Ordre important : les préfixes les plus spécifiques d'abord (aucun souci ici, les 4 préfixes
    sont mutuellement exclusifs). */
 const ROUTES = [
@@ -136,6 +236,11 @@ export default {
     if (url.pathname === '/api/snb-catalog') {
       if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
       return snbCatalog(ctx);
+    }
+
+    if (url.pathname === '/api/snb-index') {
+      if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+      return snbIndex(url, ctx);
     }
 
     for (const r of ROUTES) {

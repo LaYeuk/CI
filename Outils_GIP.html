@@ -123,111 +123,133 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenSandbox .extDim label{font-size:10.5px;color:var(--mut)}
 
 /* ---- FRED (recherche façon fred.stlouisfed.org) ---- */
-#screenFred{--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
-#screenFred header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
-#screenFred header h1{margin:0;font-size:20px;font-weight:700} #screenFred header span{opacity:.75;font-size:13px}
-#screenFred main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
-#screenFred button{font:inherit;cursor:pointer}
-#screenFred .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
-#screenFred .fx-hero{padding:18px 20px}
-#screenFred .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
-#screenFred .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
-#screenFred .fx-sbox{position:relative}
-#screenFred .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
-#screenFred .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
-#screenFred .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
-#screenFred .fx-go:hover{background:#0a3252}
-#screenFred .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
-#screenFred .fx-ac.open{display:block}
-#screenFred .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
-#screenFred .fx-ac-item:first-child{border-top:0}
-#screenFred .fx-ac-item.active,#screenFred .fx-ac-item:hover{background:#EFFCFF}
-#screenFred .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
-#screenFred .fx-ac-item .fx-id{min-width:96px}
-#screenFred .fx-ac-item .t{flex:1}
-#screenFred .fx-ac-item .m,#screenFred .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
-#screenFred .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
-#screenFred .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-#screenFred .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
-#screenFred .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
-#screenFred .fx-sec{margin-top:20px}
-#screenFred .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
-#screenFred .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
-#screenFred .fx-sec-h small{color:var(--mut);font-size:11.5px}
-#screenFred .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-#screenFred .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
-#screenFred .fx-tile:hover{border-color:var(--ink2)}
-#screenFred .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
-#screenFred .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
-#screenFred .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-#screenFred .fx-tile .u{font-size:11px;color:var(--mut)}
-#screenFred .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
-#screenFred .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
-#screenFred .fx-delta.up{color:var(--up)} #screenFred .fx-delta.down{color:var(--down)}
-#screenFred .fx-tile svg{display:block}
-#screenFred .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
-@media(max-width:1000px){#screenFred .fx-cols{grid-template-columns:1fr}}
-#screenFred .fx-list{list-style:none;margin:0;padding:3px 0}
-#screenFred .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
-#screenFred .fx-list li:first-child{border-top:0}
-#screenFred .fx-list .clk{cursor:pointer}
-#screenFred .fx-list .clk:hover{background:#F7F6F2}
-#screenFred .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
-#screenFred .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
-#screenFred .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
-#screenFred .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
-#screenFred .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
-#screenFred .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
-#screenFred .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
-#screenFred .fx-crumbs a:hover{text-decoration:underline}
-#screenFred .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
-#screenFred .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
-#screenFred .fx-res:first-child{border-top:0}
-#screenFred .fx-res:hover{background:#F7F6F2}
-#screenFred .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
-#screenFred .fx-res .fx-id{margin-right:8px}
-#screenFred .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
-#screenFred .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
-#screenFred .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
-#screenFred .fx-pop i b{display:block;height:100%;background:var(--ink2)}
-#screenFred .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
-#screenFred .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
-#screenFred .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
-#screenFred .btn:hover:not(:disabled){background:#EEF7FA}
-#screenFred .btn.pri{background:var(--navy);color:#fff} #screenFred .btn.pri:hover:not(:disabled){background:#0a3252}
-#screenFred .btn:disabled{opacity:.4;cursor:not-allowed}
-#screenFred .fx-panel{padding:16px 20px}
-#screenFred .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
-#screenFred .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
-#screenFred .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
-#screenFred .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
-#screenFred .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-#screenFred .fx-kpi .s{font-size:11px;color:var(--mut)}
-#screenFred .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
-#screenFred .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
-#screenFred .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-#screenFred .fx-chart{position:relative}
-#screenFred .fx-chart svg{display:block;width:100%}
-#screenFred .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
-#screenFred .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
-#screenFred .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
-#screenFred .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
-#screenFred .fx-mut{color:var(--mut)}
-#screenFred .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
-#screenFred .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
+:is(#screenFred,#screenSnb){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
+:is(#screenFred,#screenSnb) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+:is(#screenFred,#screenSnb) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb) header span{opacity:.75;font-size:13px}
+:is(#screenFred,#screenSnb) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
+:is(#screenFred,#screenSnb) button{font:inherit;cursor:pointer}
+:is(#screenFred,#screenSnb) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
+:is(#screenFred,#screenSnb) .fx-hero{padding:18px 20px}
+:is(#screenFred,#screenSnb) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
+:is(#screenFred,#screenSnb) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb) .fx-sbox{position:relative}
+:is(#screenFred,#screenSnb) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
+:is(#screenFred,#screenSnb) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
+:is(#screenFred,#screenSnb) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
+:is(#screenFred,#screenSnb) .fx-go:hover{background:#0a3252}
+:is(#screenFred,#screenSnb) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
+:is(#screenFred,#screenSnb) .fx-ac.open{display:block}
+:is(#screenFred,#screenSnb) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
+:is(#screenFred,#screenSnb) .fx-ac-item:first-child{border-top:0}
+:is(#screenFred,#screenSnb) .fx-ac-item.active,:is(#screenFred,#screenSnb) .fx-ac-item:hover{background:#EFFCFF}
+:is(#screenFred,#screenSnb) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
+:is(#screenFred,#screenSnb) .fx-ac-item .fx-id{min-width:96px}
+:is(#screenFred,#screenSnb) .fx-ac-item .t{flex:1}
+:is(#screenFred,#screenSnb) .fx-ac-item .m,:is(#screenFred,#screenSnb) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
+:is(#screenFred,#screenSnb) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+:is(#screenFred,#screenSnb) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
+:is(#screenFred,#screenSnb) .fx-sec{margin-top:20px}
+:is(#screenFred,#screenSnb) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
+:is(#screenFred,#screenSnb) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+:is(#screenFred,#screenSnb) .fx-sec-h small{color:var(--mut);font-size:11.5px}
+:is(#screenFred,#screenSnb) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+:is(#screenFred,#screenSnb) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
+:is(#screenFred,#screenSnb) .fx-tile:hover{border-color:var(--ink2)}
+:is(#screenFred,#screenSnb) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
+:is(#screenFred,#screenSnb) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
+:is(#screenFred,#screenSnb) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb) .fx-tile .u{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
+:is(#screenFred,#screenSnb) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb) .fx-delta.down{color:var(--down)}
+:is(#screenFred,#screenSnb) .fx-tile svg{display:block}
+:is(#screenFred,#screenSnb) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
+@media(max-width:1000px){:is(#screenFred,#screenSnb) .fx-cols{grid-template-columns:1fr}}
+:is(#screenFred,#screenSnb) .fx-list{list-style:none;margin:0;padding:3px 0}
+:is(#screenFred,#screenSnb) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
+:is(#screenFred,#screenSnb) .fx-list li:first-child{border-top:0}
+:is(#screenFred,#screenSnb) .fx-list .clk{cursor:pointer}
+:is(#screenFred,#screenSnb) .fx-list .clk:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
+:is(#screenFred,#screenSnb) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
+:is(#screenFred,#screenSnb) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
+:is(#screenFred,#screenSnb) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
+:is(#screenFred,#screenSnb) .fx-crumbs a:hover{text-decoration:underline}
+:is(#screenFred,#screenSnb) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+:is(#screenFred,#screenSnb) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
+:is(#screenFred,#screenSnb) .fx-res:first-child{border-top:0}
+:is(#screenFred,#screenSnb) .fx-res:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
+:is(#screenFred,#screenSnb) .fx-res .fx-id{margin-right:8px}
+:is(#screenFred,#screenSnb) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
+:is(#screenFred,#screenSnb) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
+:is(#screenFred,#screenSnb) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
+:is(#screenFred,#screenSnb) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
+:is(#screenFred,#screenSnb) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
+:is(#screenFred,#screenSnb) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
+:is(#screenFred,#screenSnb) .btn:hover:not(:disabled){background:#EEF7FA}
+:is(#screenFred,#screenSnb) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb) .btn.pri:hover:not(:disabled){background:#0a3252}
+:is(#screenFred,#screenSnb) .btn:disabled{opacity:.4;cursor:not-allowed}
+:is(#screenFred,#screenSnb) .fx-panel{padding:16px 20px}
+:is(#screenFred,#screenSnb) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
+:is(#screenFred,#screenSnb) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
+:is(#screenFred,#screenSnb) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+:is(#screenFred,#screenSnb) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb) .fx-kpi .s{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
+:is(#screenFred,#screenSnb) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+:is(#screenFred,#screenSnb) .fx-chart{position:relative}
+:is(#screenFred,#screenSnb) .fx-chart svg{display:block;width:100%}
+:is(#screenFred,#screenSnb) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
+:is(#screenFred,#screenSnb) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+:is(#screenFred,#screenSnb) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
+:is(#screenFred,#screenSnb) .fx-mut{color:var(--mut)}
+:is(#screenFred,#screenSnb) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
+:is(#screenFred,#screenSnb) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
 @keyframes fxsk{to{background-position:-200% 0}}
-#screenFred .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
-#screenFred .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
-#screenFred .fx-litem a{cursor:pointer;color:var(--navy)}
-#screenFred .fx-litem .per{color:var(--mut);font-size:11px}
-#screenFred .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
-#screenFred details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
-#screenFred details.fx-set summary{cursor:pointer}
-#screenFred details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
-#screenFred .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
-#screenFred .fx-toast.show{display:flex}
-#screenFred .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
-#screenFred [hidden]{display:none!important}
+:is(#screenFred,#screenSnb) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
+:is(#screenFred,#screenSnb) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
+:is(#screenFred,#screenSnb) .fx-litem a{cursor:pointer;color:var(--navy)}
+:is(#screenFred,#screenSnb) .fx-litem .per{color:var(--mut);font-size:11px}
+:is(#screenFred,#screenSnb) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
+:is(#screenFred,#screenSnb) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb) details.fx-set summary{cursor:pointer}
+:is(#screenFred,#screenSnb) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
+:is(#screenFred,#screenSnb) .fx-toast.show{display:flex}
+:is(#screenFred,#screenSnb) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
+:is(#screenFred,#screenSnb) [hidden]{display:none!important}
+
+/* ---- BNS (recherche façon data.snb.ch/fr/search) — réutilise les styles fx- de l'écran FRED ---- */
+#screenSnb .fx-idx{margin-top:10px;font-size:11.5px;color:var(--mut);display:flex;align-items:center;gap:10px;min-height:16px}
+#screenSnb .fx-idx .bar{flex:0 0 160px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
+#screenSnb .fx-idx .bar b{display:block;height:100%;background:var(--ink2);transition:width .3s}
+#screenSnb .fx-idx a{color:var(--ink2);cursor:pointer}
+#screenSnb .fx-cols2{grid-template-columns:1fr 1fr}
+@media(max-width:1000px){#screenSnb .fx-cols2{grid-template-columns:1fr}}
+#screenSnb .fx-list .num{margin-left:auto;font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums}
+#screenSnb .fx-sfilter{width:100%;margin:12px 0 6px;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font:inherit;font-size:12.5px;background:#fff;color:var(--ink)}
+#screenSnb .fx-stab{max-height:330px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+#screenSnb .fx-srow{display:grid;grid-template-columns:1fr 100px 96px 86px;gap:10px;align-items:center;padding:6px 12px;border-top:1px solid #F1F0EC;cursor:pointer;font-size:12.5px}
+#screenSnb .fx-srow:first-child{border-top:0}
+#screenSnb .fx-srow:hover{background:#F7F6F2}
+#screenSnb .fx-srow.on{background:#EFFCFF;box-shadow:inset 3px 0 0 var(--ink2)}
+#screenSnb .fx-srow .lv{text-align:right;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+#screenSnb .fx-srow .dt{font-size:11px;color:var(--mut);text-align:right}
+#screenSnb .fx-srow svg{display:block}
+#screenSnb .fx-shead{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);cursor:default;background:#FAFAF8;position:sticky;top:0}
+#screenSnb .fx-shead:hover{background:#FAFAF8}
+#screenSnb .fx-sel{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+#screenSnb .fx-sel h3{margin:0;font-size:15px;color:var(--navy)}
 
 /* ---- Whiteboard ---- */
 #screenWhiteboard{--navy:#02182B;--cyan:#00CFFF;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27}
@@ -471,6 +493,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     <button type="button" class="navbtn on" data-screen="home">Accueil</button>
     <button type="button" class="navbtn" data-screen="sandbox">Sandbox</button>
     <button type="button" class="navbtn" data-screen="fred">FRED</button>
+    <button type="button" class="navbtn" data-screen="snb">BNS</button>
     <button type="button" class="navbtn" data-screen="chartpack">Chart Pack</button>
     <button type="button" class="navbtn" data-screen="am">AM Dashboard</button>
     <button type="button" class="navbtn" data-screen="whiteboard">Whiteboard</button>
@@ -523,7 +546,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       </div>
     </div>
 
-    <div class="note"><b>Astuce :</b> ce fichier unique regroupe le Portail, le Chart Pack et l'AM Dashboard (ex-Risk Map). Les deux classeurs Excel ci-dessus restent <b>indépendants</b> — chargez-les une fois ici, ils alimentent automatiquement les onglets correspondants tant que cette page reste ouverte. Les données OFS et BNS se chargent depuis l'écran <b>Sandbox</b> (cases à cocher au-dessus de la liste des séries) ; les séries FRED se recherchent dans l'écran <b>FRED</b> (bouton « Ajouter au Sandbox »).</div>
+    <div class="note"><b>Astuce :</b> ce fichier unique regroupe le Portail, le Chart Pack et l'AM Dashboard (ex-Risk Map). Les deux classeurs Excel ci-dessus restent <b>indépendants</b> — chargez-les une fois ici, ils alimentent automatiquement les onglets correspondants tant que cette page reste ouverte. Les données OFS se chargent depuis l'écran <b>Sandbox</b> (case à cocher au-dessus de la liste des séries) ; les séries FRED et BNS se recherchent dans les écrans <b>FRED</b> et <b>BNS</b> (bouton « Ajouter au Sandbox »).</div>
   </main>
 </div>
 
@@ -752,23 +775,6 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 
     <div class="row" style="margin-top:8px;gap:14px">
       <label class="srcChk"><input type="checkbox" id="sbSrcOfs"> Données OFS</label>
-      <label class="srcChk"><input type="checkbox" id="sbSrcSnb"> Données BNS</label>
-    </div>
-
-    <div id="sbSnbBox" class="extbox" style="display:none">
-      <button type="button" class="btn" id="sbSnbCatalogBtn" style="width:100%;margin-bottom:6px">Charger le catalogue complet (~900 indicateurs)</button>
-      <div class="row" style="margin-top:0">
-        <input type="text" id="sbSnbSearch" placeholder="Mot-clé (taux, change, réserves, actions, agrégats…)" style="flex:1;min-width:160px">
-      </div>
-      <div class="row">
-        <select id="sbSnbCube" style="flex:1;min-width:160px" disabled><option value="">— tapez un mot-clé ci-dessus —</option></select>
-        <button type="button" class="btn" id="sbSnbLoadBtn" disabled>Charger les séries de cet indicateur</button>
-      </div>
-      <div class="hint" style="margin:-2px 0 6px">La BNS n'a pas de catalogue consultable par mot-clé : tant que le catalogue complet n'est pas chargé, la recherche porte sur une sélection faite à la main (une vingtaine d'indicateurs). Une fois chargé (plan du site officiel), elle couvre l'ensemble des indicateurs publiés par la BNS (hors statistique bancaire détaillée, API séparée).</div>
-      <select id="sbSnbResults" style="display:none;margin-bottom:6px"><option value="">— choisissez une série —</option></select>
-      <button type="button" class="btn pri" id="sbSnbAddBtn" style="display:none;width:100%;margin-bottom:6px">+ Ajouter cette série</button>
-      <div class="stat" id="sbSnbStatus"></div>
-      <div id="sbSnbLoadedList"></div>
     </div>
 
     <div id="sbOfsBox" class="extbox" style="display:none">
@@ -955,6 +961,78 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
   </details>
 </main>
 <div class="fx-toast" id="fxToast"><span id="fxToastMsg"></span><button type="button" id="fxToastBtn">Ouvrir le Sandbox →</button></div>
+
+</div>
+<div id="screenSnb" class="screen">
+
+<header><h1>BNS</h1><span>Portail de données de la Banque nationale suisse — recherchez parmi tous les indicateurs publiés et ajoutez leurs séries au Sandbox en un clic.</span></header>
+<main>
+  <section class="fx-card fx-hero">
+    <h2>Rechercher un indicateur BNS</h2>
+    <p class="fx-sub">Mot-clé en français (« taux directeur », « SARON », « euro », « M3 », « hypothèques ») ou identifiant de cube (snbgwdzid, devkum…).</p>
+    <div class="fx-sbox">
+      <input id="sxQ" type="search" autocomplete="off" placeholder="ex. taux directeur, cours de change, réserves de devises…" aria-label="Recherche BNS">
+      <button type="button" class="fx-go" id="sxGo">Rechercher</button>
+      <div class="fx-ac" id="sxAc" role="listbox"></div>
+    </div>
+    <div class="fx-chips" id="sxQuick"></div>
+    <div class="fx-idx" id="sxIdx"></div>
+  </section>
+
+  <section class="fx-sec" id="sxLoadedSec" hidden>
+    <div class="fx-sec-h"><h3>Dans le catalogue du Sandbox</h3><small>disponibles dans la liste des séries du Sandbox</small></div>
+    <div class="fx-card fx-loaded" id="sxLoaded"></div>
+  </section>
+
+  <!-- Vue accueil -->
+  <div id="sxHome">
+    <section class="fx-sec">
+      <div class="fx-sec-h"><h3>Indicateurs clés</h3><small id="sxAsOf"></small></div>
+      <div class="fx-tiles" id="sxTiles"></div>
+    </section>
+    <section class="fx-sec fx-cols fx-cols2">
+      <div>
+        <div class="fx-sec-h"><h3>Parcourir par domaine</h3></div>
+        <div class="fx-card"><ul class="fx-list" id="sxDomains"></ul></div>
+      </div>
+      <div>
+        <div class="fx-sec-h"><h3>Dernières publications</h3></div>
+        <div class="fx-card"><ul class="fx-list" id="sxRecent"></ul></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Vue résultats / domaine -->
+  <div id="sxListView" hidden>
+    <div class="fx-crumbs" id="sxCrumbs"></div>
+    <div class="fx-bar">
+      <select id="sxDom" aria-label="Domaine"><option value="">Tous les domaines</option></select>
+      <select id="sxFreq" aria-label="Fréquence">
+        <option value="">Toutes fréquences</option>
+        <option value="D">Journalière</option>
+        <option value="W">Hebdomadaire</option>
+        <option value="M">Mensuelle</option>
+        <option value="Q">Trimestrielle</option>
+        <option value="Y">Annuelle</option>
+      </select>
+      <select id="sxSort" aria-label="Tri">
+        <option value="rank">Pertinence</option>
+        <option value="recent">Publication récente</option>
+        <option value="az">Titre A → Z</option>
+      </select>
+      <span class="fx-count" id="sxCount"></span>
+    </div>
+    <div class="fx-card" id="sxResults"></div>
+    <div class="fx-pager"><button type="button" class="btn" id="sxPrev">← Précédent</button><button type="button" class="btn" id="sxNext">Suivant →</button></div>
+  </div>
+
+  <!-- Fiche indicateur (cube) -->
+  <div id="sxCubeView" hidden>
+    <div class="fx-crumbs"><a id="sxBack">← Retour</a></div>
+    <div class="fx-card fx-panel" id="sxCube"></div>
+  </div>
+</main>
+<div class="fx-toast" id="sxToast"><span id="sxToastMsg"></span><button type="button" id="sxToastBtn">Ouvrir le Sandbox →</button></div>
 
 </div>
 <div id="screenWhiteboard" class="screen">
@@ -5180,196 +5258,615 @@ function snbParseValues(values){
 "use strict";
 
 /* ============================================================================================
-   Import de séries de la Banque nationale suisse (BNS) dans le catalogue.
-   https://data.snb.ch/api/cube/{cubeId}/data/json/{lang} — sans authentification, sans dimSel
-   la réponse contient TOUTES les combinaisons disponibles dans le cube (tableau "timeseries"),
-   chacune avec son propre "header" (libellés) et déjà ses valeurs : contrairement à l'OFS, une
-   seule requête HTTP suffit à la fois pour parcourir les séries d'un indicateur ET les récupérer.
-   La BNS ne publie pas de catalogue consultable par mot-clé comme l'OFS : la liste d'indicateurs
-   ci-dessous (SNB_CUBES) est une sélection faite à la main, pas une recherche exhaustive.
-   Le statut CORS de data.snb.ch n'est pas confirmé dans un sens ou l'autre (à la différence de
-   FRED, où l'absence de CORS est documentée). Comme pour l'OFS et FRED, un relais même-origine
-   (Cloudflare Pages Functions, functions/api/snb/[[path]].js, fourni à part) est essayé en premier :
-   si ce fichier est servi par Cloudflare Pages avec cette fonction déployée, aucun CORS n'intervient
-   jamais, quoi que la BNS autorise ou non de son côté. Sinon, repli automatique sur l'appel direct
-   (comportement d'avant) ; voir snbErrMsg si la requête échoue malgré tout.
+   Écran BNS — recherche d'indicateurs de la Banque nationale suisse, à la manière de
+   data.snb.ch/fr/search (recherche plein texte avec suggestions, indicateurs clés, parcours par
+   domaine, dernières publications, fiche indicateur avec toutes ses séries et graphique).
+   La BNS n'a pas d'API de recherche publique : l'index est construit par le Worker
+   (/api/snb-index, voir _worker.js) à partir du plan du site + titres + libellés des séries, puis
+   conservé 7 jours dans ce navigateur (localStorage) — la recherche elle-même est instantanée,
+   sans appel réseau.
+   Données : https://data.snb.ch/api/cube/{cubeId}/data/json/fr via le relais "/api/snb/..." :
+   une seule requête renvoie TOUTES les séries d'un cube (header = libellés, metadata = clé/unité).
+   « Ajouter au Sandbox » injecte la série dans SNB_CATALOG (fusionné dans CATALOG via
+   rebuildCombinedCatalog) : elle apparaît dans la liste des séries du Sandbox, groupe « BNS ».
    ============================================================================================ */
 
 const SNB_API_RELAY = '/api/snb';
 const SNB_API_DIRECT = 'https://data.snb.ch/api/cube';
-const SNB_STORE_KEY = 'gip_snb_series_v1';
-
-/* Catalogue sélectionné à la main (pas de recherche officielle côté BNS — voir plus haut) ;
-   "domaine" et "mots" servent uniquement au filtre par mot-clé ci-dessous (snbApplyFilter). */
-const SNB_CUBES = [
-  {id: 'snbgwdzid', label: 'Taux directeur BNS, SARON (fixing de clôture) & taux spéciaux — Suisse, quotidien', domaine: "Taux d'intérêt", mots: 'taux directeur saron leitzins politique monetaire sichteinlagen liquidite aide engpass'},
-  {id: 'zirepo', label: 'SARON composés — overnight, Tomorrow Next, 1 semaine, 1M, 3M, 6M (marché repo), quotidien', domaine: "Taux d'intérêt", mots: 'saron repo overnight tomorrow next compose compound reference'},
-  {id: 'zimoma', label: 'Taux du marché monétaire — comparaison internationale (SARON, SOFR, TONA, SONIA, €STR/EURIBOR), mensuel', domaine: "Taux d'intérêt", mots: 'sofr tona sonia estr euribor marche monetaire international comparaison'},
-  {id: 'snboffzisa', label: 'Taux directeurs officiels — comparaison internationale (BNS, Fed, BCE, BoE, BoJ)', domaine: "Taux d'intérêt", mots: 'fed bce ecb boe boj banque centrale directeur officiel comparaison'},
-  {id: 'rendoblim', label: 'Rendements des emprunts de la Confédération — courbe CHF, mensuel', domaine: "Taux d'intérêt / Obligations", mots: 'obligation emprunt confederation rendement courbe taux long terme'},
-  {id: 'devkum', label: 'Cours de change mensuels moyens / fin de mois — 27 devises', domaine: 'Cours de change', mots: 'change devise cours eur usd gbp jpy mensuel forex'},
-  {id: 'devkua', label: 'Cours de change — moyennes annuelles, 27 devises', domaine: 'Cours de change', mots: 'change devise cours annuel forex'},
-  {id: 'snbmonagg', label: 'Agrégats monétaires M1, M2, M3 — Suisse, mensuel', domaine: 'Agrégats monétaires', mots: 'm1 m2 m3 masse monetaire agregat'},
-  {id: 'snbbipo', label: 'Bilan de la BNS — or, devises, position FMI, moyens de paiement internationaux, mensuel', domaine: 'Bilan & réserves BNS', mots: 'bilan or devises fmi reserve actif passif'},
-  {id: 'snbcurrc', label: 'Réserves de devises par monnaie (USD/EUR/JPY/GBP/CAD/autres)', domaine: 'Bilan & réserves BNS', mots: 'reserve devise monnaie usd eur jpy gbp cad'},
-  {id: 'snbcurrp', label: 'Allocation des placements de devises par monnaie, en %', domaine: 'Bilan & réserves BNS', mots: 'allocation placement devise pourcentage repartition'},
-  {id: 'snbcurrinvc', label: "Structure des placements de la BNS — catégories d'actifs, notation, duration", domaine: 'Bilan & réserves BNS', mots: 'placement actif obligation action notation rating duration structure'},
-  {id: 'snbgwdchfsgw', label: 'Avoirs à vue en francs à la BNS — hebdomadaire', domaine: 'Bilan & réserves BNS', mots: 'avoir a vue compte virement sight deposit hebdomadaire liquidite'},
-  {id: 'snbgwdmigirow', label: 'Avoirs en comptes de virement à la BNS — hebdomadaire', domaine: 'Bilan & réserves BNS', mots: 'avoir compte virement hebdomadaire'},
-  {id: 'bamire', label: 'Réserves minimales des banques — exigence et taux de couverture', domaine: 'Bilan & réserves BNS', mots: 'reserve minimale banque exigence couverture minimum'},
-  {id: 'snbnomu', label: 'Billets en circulation par coupure (5/10/20/50/100.-)', domaine: 'Bilan & réserves BNS', mots: 'billet circulation coupure cash especes'},
-  {id: 'capchstocki', label: 'Indices boursiers suisses (ex. SPI, avec réinvestissement des dividendes) — quotidien', domaine: 'Marché des actions', mots: 'action bourse indice spi performance dividende swiss market'},
-  {id: 'bopoverq', label: 'Balance des paiements — vue d’ensemble (courant, capital, financier), trimestriel', domaine: 'Balance des paiements', mots: 'balance paiement courant capital financier compte'},
-  {id: 'auvekomq', label: 'Position extérieure — investissements directs, portefeuille, dérivés, trimestriel', domaine: 'Balance des paiements', mots: 'position exterieure investissement direct portefeuille derive iip'}
-];
-
-let snbCurrentCube = null;
-let snbCurrentSeries = []; // [{label, t, values}] — déjà entièrement récupérées lors du "Charger"
-let SNB_LOADED = [];
-
-function snbSetStatus(html, isErr){
-  const el = $('sbSnbStatus'); if (!el) return;
-  el.innerHTML = isErr ? '<span class="err">' + html + '</span>' : (html || '');
-}
-
-function snbErrMsg(e, url){
-  const base = (e && e.message) || String(e);
-  const looksNetwork = /fetch|network|NetworkError|Load failed|404|relais/i.test(base);
-  const hint = looksNetwork
-    ? ' — probablement un blocage réseau/CORS entre ce navigateur et data.snb.ch si le relais Cloudflare Pages Functions (functions/api/snb) n\'est pas déployé sur ce domaine (pas confirmé dans un sens ou l\'autre pour ce site sinon ; copiez ce message exact si ça se reproduit malgré le relais).'
-    : '';
-  return 'Erreur BNS : ' + esc(base) + hint + (url ? '<div class="hint" style="margin-top:4px;word-break:break-all">' + esc(url) + '</div>' : '');
-}
-
-/* Minuscules + sans accents, pour que "reserves" retrouve "réserves". */
-function snbNorm(s){
-  return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-}
-
-let SNB_FILTERED = [];
-
-/* ----------------------------------------------------------------------------------------------
- * Catalogue complet (/api/snb-catalog, servi par le Worker) : la BNS n'a pas d'API de recherche —
- * on passe par le plan du site (~900 cubes « publication »), récupéré et classé par domaine côté
- * Worker (lui n'a pas la limite de taille que l'outil de navigation web a rencontrée côté agent).
- * Chargé une seule fois (bouton), mis en cache 24h dans localStorage pour ne pas re-télécharger à
- * chaque visite. Les libellés détaillés de SNB_CUBES ci-dessus sont réutilisés quand on les connaît ;
- * sinon on affiche juste le domaine + l'id — le vrai nom de chaque série apparaît de toute façon une
- * fois l'indicateur chargé (dimItem renvoyé par l'API, déjà en français). Les cubes "warehouse"
- * (statistique bancaire détaillée, API différente) ne sont pas inclus.
- * ---------------------------------------------------------------------------------------------- */
-
+const SNB_INDEX_API = '/api/snb-index';
 const SNB_CATALOG_API = '/api/snb-catalog';
-const SNB_CATALOG_STORE_KEY = 'gip_snb_full_catalog_v1';
-const SNB_CATALOG_TTL_MS = 24 * 3600 * 1000;
+const SNB_STORE_KEY = 'gip_snb_series_v1';
+const SNB_INDEX_STORE = 'gip_snb_index_v2';
+const SNB_INDEX_TTL = 7 * 24 * 3600 * 1000;
+const SNB_SLICE = 15;
 
-let SNB_FULL_CATALOG = null; // null = pas encore chargé ; sinon tableau {id, domaine, label, mots}
+/* Libellés de secours pour les cubes les plus utiles (si le titre officiel n'est pas disponible). */
+const SNB_KNOWN = {
+  snbgwdzid: "Taux directeur BNS, SARON (fixing de clôture) et taux spéciaux",
+  zirepo: "SARON composés — overnight, Tomorrow Next, 1 semaine, 1, 3 et 6 mois",
+  zimoma: "Taux du marché monétaire — comparaison internationale (SARON, SOFR, TONA, SONIA, €STR)",
+  snboffzisa: "Taux directeurs officiels — comparaison internationale (BNS, Fed, BCE, BoE, BoJ)",
+  rendoblim: "Rendements des emprunts de la Confédération",
+  devkum: "Cours de change — moyennes mensuelles et fins de mois",
+  devkua: "Cours de change — moyennes annuelles",
+  snbmonagg: "Agrégats monétaires M1, M2, M3",
+  snbbipo: "Bilan de la BNS — positions",
+  snbcurrc: "Réserves de devises par monnaie",
+  snbcurrp: "Allocation des placements de devises par monnaie",
+  snbcurrinvc: "Structure des placements de la BNS",
+  snbgwdchfsgw: "Avoirs à vue en francs à la BNS",
+  bamire: "Réserves minimales des banques",
+  snbnomu: "Billets en circulation par coupure",
+  capchstocki: "Indices boursiers suisses (SPI, SMI)",
+  bopoverq: "Balance des paiements — vue d'ensemble",
+  auvekomq: "Position extérieure de la Suisse",
+  plkopr: "Prix à la consommation (IPC) — Suisse"
+};
 
-function snbCatalogEntry(raw){
-  const known = SNB_CUBES.find(c => c.id === raw.id);
-  return known
-    ? {id: raw.id, domaine: known.domaine, label: known.label, mots: known.mots}
-    : {id: raw.id, domaine: raw.domaine, label: raw.id, mots: ''};
+let SNB_LOADED = [];
+let IDX = [];            // [{id, topic, domaine, title, cat, unit, freq, upd, kw, n, gone}]
+let idxState = {done: 0, total: 0, building: false, full: false, error: ''};
+
+/* ---------------------------------------------------------------- utilitaires */
+const nf = d => new Intl.NumberFormat('fr-CH', {maximumFractionDigits: d, minimumFractionDigits: d});
+const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const isoDay = d => d.toISOString().slice(0, 10);
+function decimalsFor(vals){
+  const m = Math.max.apply(null, vals.map(v => Math.abs(v)).filter(v => isFinite(v)).concat([0]));
+  return m >= 1000 ? 0 : m >= 100 ? 1 : m >= 1 ? 2 : 3;
+}
+/* Code de fréquence (D/W/M/Q/S/Y) à partir d'un code ISO (P1M…) ou d'un libellé (« mensuel »…). */
+function freqCode(s){
+  s = norm(s);
+  if (!s) return '';
+  if (/p1d|quotid|journal|daily|tagl/.test(s)) return 'D';
+  if (/p1w|hebdo|week|woch/.test(s)) return 'W';
+  if (/p1m|mensu|month|monat/.test(s)) return 'M';
+  if (/p3m|trimes|quarter|quartal/.test(s)) return 'Q';
+  if (/p6m|semes|halbj/.test(s)) return 'S';
+  if (/p1y|annu|year|jahr/.test(s)) return 'Y';
+  return '';
+}
+const FREQ_FR = {D: 'Journalière', W: 'Hebdomadaire', M: 'Mensuelle', Q: 'Trimestrielle', S: 'Semestrielle', Y: 'Annuelle'};
+function fmtPeriod(dateStr, f){
+  const ms = snbPeriodToMs(dateStr);
+  if (isNaN(ms)) return String(dateStr || '');
+  const d = new Date(ms);
+  if (f === 'Y') return String(d.getUTCFullYear());
+  if (f === 'Q') return 'T' + (Math.floor(d.getUTCMonth() / 3) + 1) + ' ' + d.getUTCFullYear();
+  if (f === 'M' || f === 'S') return d.toLocaleDateString('fr-CH', {month: 'short', year: 'numeric', timeZone: 'UTC'});
+  return d.toLocaleDateString('fr-CH', {day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC'});
+}
+/* "20260921_0900" -> Date */
+function updDate(s){
+  const m = /^(\d{4})(\d{2})(\d{2})(?:_(\d{2})(\d{2}))?/.exec(String(s || ''));
+  return m ? new Date(+m[1], +m[2] - 1, +m[3], +(m[4] || 0), +(m[5] || 0)) : null;
+}
+const fmtUpd = s => { const d = updDate(s); return d ? d.toLocaleDateString('fr-CH', {day: '2-digit', month: '2-digit', year: 'numeric'}) : ''; };
+const titleOf = e => (e && (e.title || SNB_KNOWN[e.id] || ((e.cat || e.domaine || 'BNS') + ' — ' + e.id))) || '';
+
+function snbErrText(e){
+  const base = (e && e.message) || String(e);
+  const net = /fetch|network|NetworkError|Load failed|CORS|404/i.test(base);
+  return 'Erreur BNS : ' + base + (net ? ' — le relais /api/snb du Worker est-il déployé ?' : '');
 }
 
-async function snbLoadFullCatalog(){
-  if (SNB_FULL_CATALOG) return; // déjà chargé cette session
-  const btn = $('sbSnbCatalogBtn');
-  if (btn) { btn.disabled = true; btn.textContent = 'Chargement du catalogue complet…'; }
-  snbSetStatus('Chargement du catalogue complet de la BNS (plan du site, ~900 indicateurs)…');
+/* ---------------------------------------------------------------- données d'un cube */
+const cubeCache = new Map();
+function fetchCube(id, fromDate){
+  const path = '/' + encodeURIComponent(id) + '/data/json/fr' + (fromDate ? '?fromDate=' + encodeURIComponent(fromDate) : '');
+  if (cubeCache.has(path)) return cubeCache.get(path);
+  const p = relayFetchJson(SNB_API_RELAY, SNB_API_DIRECT, path).then(json => (json.timeseries || []).map(s => {
+    const pts = [];
+    (s.values || []).forEach(v => { if (typeof v.value === 'number' && isFinite(v.value)) pts.push({d: v.date, v: v.value}); });
+    const md = s.metadata || {};
+    const km = /\{([^}]*)\}/.exec(md.key || '');
+    return {
+      key: km ? km[1] : (md.key || ''),
+      label: (s.header || []).map(h => h.dimItem).filter(Boolean).join(' — '),
+      unit: md.unit || '', scale: md.scale || '', f: freqCode(md.frequency), pts: pts
+    };
+  }));
+  cubeCache.set(path, p);
+  p.catch(() => cubeCache.delete(path));
+  return p;
+}
 
+/* ---------------------------------------------------------------- index de recherche */
+function idxSave(){
+  try { localStorage.setItem(SNB_INDEX_STORE, JSON.stringify({ts: Date.now(), full: idxState.full, total: idxState.total, entries: IDX})); } catch (e) {}
+}
+function idxRestore(){
   try {
-    const raw = localStorage.getItem(SNB_CATALOG_STORE_KEY);
-    if (raw) {
-      const cached = JSON.parse(raw);
-      if (cached && cached.ts && (Date.now() - cached.ts) < SNB_CATALOG_TTL_MS && Array.isArray(cached.entries) && cached.entries.length) {
-        SNB_FULL_CATALOG = cached.entries;
+    const raw = localStorage.getItem(SNB_INDEX_STORE);
+    if (!raw) return false;
+    const c = JSON.parse(raw);
+    if (!c || !Array.isArray(c.entries) || !c.entries.length) return false;
+    IDX = c.entries; idxState.total = c.total || IDX.length; idxState.done = IDX.length; idxState.full = !!c.full;
+    return (Date.now() - (c.ts || 0)) < SNB_INDEX_TTL && c.full;
+  } catch (e) { return false; }
+}
+function renderIdxStatus(){
+  const el = $('sxIdx');
+  const live = IDX.filter(e => !e.gone).length;
+  if (idxState.error) { el.innerHTML = '<span>' + esc(idxState.error) + '</span>'; return; }
+  if (idxState.building) {
+    const pct = idxState.total ? Math.round(100 * idxState.done / idxState.total) : 0;
+    el.innerHTML = '<span class="bar"><b style="width:' + pct + '%"></b></span><span>Indexation des indicateurs BNS : ' + idxState.done + ' / ' + (idxState.total || '…') + ' (première fois uniquement — la recherche fonctionne déjà sur la partie indexée)</span>';
+    return;
+  }
+  el.innerHTML = live ? '<span>' + nf(0).format(live) + ' indicateurs BNS indexés' + (idxState.full ? '' : ' (index partiel)') + ' · <a id="sxReindex">réindexer</a></span>' : '';
+  const a = $('sxReindex'); if (a) a.addEventListener('click', () => buildIndex(true));
+}
+
+async function buildIndex(force){
+  if (idxState.building) return;
+  if (!force && idxRestore()) { renderIdxStatus(); refreshHomeLists(); return; }
+  idxState.building = true; idxState.error = '';
+  const prev = new Map(IDX.map(e => [e.id, e]));
+  const fresh = [];
+  idxState.done = 0;
+  renderIdxStatus();
+  try {
+    const first = await fetch(SNB_INDEX_API + '?lang=fr&offset=0&limit=' + SNB_SLICE).then(r => {
+      if (!r.ok || (r.headers.get('Content-Type') || '').indexOf('json') < 0) throw new Error('HTTP ' + r.status);
+      return r.json();
+    });
+    idxState.total = first.total || 0;
+    fresh.push.apply(fresh, first.entries || []);
+    idxState.done = fresh.length;
+    IDX = mergeIdx(fresh, prev); renderIdxStatus(); refreshHomeLists();
+    const offsets = [];
+    for (let o = SNB_SLICE; o < idxState.total; o += SNB_SLICE) offsets.push(o);
+    /* 3 tranches en parallèle : l'indexation complète prend ~1 min la première fois, puis vient du cache. */
+    let k = 0;
+    async function worker(){
+      while (k < offsets.length) {
+        const o = offsets[k++];
+        let j = null;
+        for (let attempt = 0; attempt < 2 && !j; attempt++) {
+          try { j = await fetch(SNB_INDEX_API + '?lang=fr&offset=' + o + '&limit=' + SNB_SLICE).then(r => r.ok ? r.json() : null); } catch (e) { j = null; }
+        }
+        if (j && j.entries) fresh.push.apply(fresh, j.entries);
+        idxState.done = Math.min(idxState.total, idxState.done + SNB_SLICE);
+        IDX = mergeIdx(fresh, prev); renderIdxStatus();
       }
     }
-  } catch (e) {}
-
-  if (!SNB_FULL_CATALOG) {
+    await Promise.all([worker(), worker(), worker()]);
+    idxState.full = fresh.length >= idxState.total;
+    IDX = mergeIdx(fresh, prev);
+    idxSave();
+  } catch (e) {
+    /* Worker sans /api/snb-index (ancienne version) : liste brute des cubes, sans titres. */
     try {
       const r = await fetch(SNB_CATALOG_API);
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      const json = await r.json();
-      SNB_FULL_CATALOG = (json.publication || []).map(snbCatalogEntry);
-      try { localStorage.setItem(SNB_CATALOG_STORE_KEY, JSON.stringify({ts: Date.now(), entries: SNB_FULL_CATALOG})); } catch (e) {}
-    } catch (e) {
-      snbSetStatus('Erreur lors du chargement du catalogue complet : ' + esc((e && e.message) || String(e)) + ' — recherche limitée à la sélection restreinte en attendant.', true);
-      if (btn) { btn.disabled = false; btn.textContent = 'Charger le catalogue complet (~900 indicateurs)'; }
-      return;
+      const j = await r.json();
+      IDX = (j.publication || []).map(c => Object.assign({id: c.id, topic: c.topic, domaine: c.domaine}, prev.get(c.id) || {}));
+      idxState.error = 'Recherche limitée aux identifiants et aux libellés connus — déployez la nouvelle version de _worker.js (route /api/snb-index) pour la recherche plein texte.';
+    } catch (e2) {
+      IDX = Object.keys(SNB_KNOWN).map(id => ({id: id, domaine: 'BNS'}));
+      idxState.error = 'Catalogue BNS indisponible (' + ((e && e.message) || e) + ') — recherche limitée à une sélection d\'indicateurs.';
     }
   }
-
-  if (btn) { btn.style.display = 'none'; }
-  snbSetStatus(SNB_FULL_CATALOG.length + ' indicateurs BNS disponibles — tapez un mot-clé ci-dessus.');
-  snbApplyFilter();
+  idxState.building = false;
+  renderIdxStatus();
+  refreshHomeLists();
+  if (listState) loadList();
+}
+function mergeIdx(fresh, prev){
+  const seen = new Set(fresh.map(e => e.id));
+  return fresh.concat(Array.from(prev.values()).filter(e => !seen.has(e.id)));
 }
 
-/* Filtre par mot-clé (aucune liste affichée par défaut — voir sbSnbSearch) : cherche dans le
-   libellé, le domaine, les mots-clés et l'id. Porte sur le catalogue complet une fois chargé,
-   sinon sur la sélection restreinte faite à la main (SNB_CUBES). */
-function snbApplyFilter(){
-  const kw = snbNorm($('sbSnbSearch').value).trim();
-  const sel = $('sbSnbCube');
-  const btn = $('sbSnbLoadBtn');
-  const source = SNB_FULL_CATALOG || SNB_CUBES;
-  if (!kw) {
-    SNB_FILTERED = [];
-    sel.innerHTML = '<option value="">— tapez un mot-clé ci-dessus —</option>';
-    sel.disabled = true; btn.disabled = true;
+/* Recherche plein texte (accents et casse ignorés ; tous les mots doivent être trouvés). */
+function searchIdx(text){
+  const toks = norm(text).split(/[^a-z0-9€$%.]+/).filter(t => t.length >= 1);
+  if (!toks.length) return [];
+  const res = toks.map(tok => new RegExp('(^|[^a-z0-9])' + tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  const out = [];
+  IDX.forEach(e => {
+    if (e.gone) return;
+    const t = norm(titleOf(e)), meta = norm((e.cat || '') + ' ' + (e.domaine || '')), kw = norm(e.kw || ''), id = norm(e.id);
+    let score = 0;
+    for (let k = 0; k < toks.length; k++) {
+      const tok = toks[k], re = res[k];
+      let s = 0;
+      if (id === tok) s += 40;
+      else if (id.indexOf(tok) >= 0) s += 8;
+      if (re.test(t)) s += 12; else if (t.indexOf(tok) >= 0) s += 6;
+      if (re.test(meta)) s += 4;
+      if (re.test(kw)) s += 3; else if (kw.indexOf(tok) >= 0) s += 1;
+      if (!s) return;
+      score += s;
+    }
+    out.push({e: e, score: score});
+  });
+  return out.sort((a, b) => b.score - a.score || String(b.e.upd || '').localeCompare(String(a.e.upd || ''))).map(x => x.e);
+}
+
+/* ---------------------------------------------------------------- navigation interne */
+const VIEWS = ['sxHome', 'sxListView', 'sxCubeView'];
+let lastListView = 'sxHome';
+function sxShow(v){
+  VIEWS.forEach(x => { $(x).hidden = x !== v; });
+  if (v !== 'sxCubeView') lastListView = v;
+  window.scrollTo(0, 0);
+}
+$('sxBack').addEventListener('click', () => sxShow(lastListView));
+
+function sxToast(msg, withBtn, filter){
+  $('sxToastMsg').textContent = msg;
+  $('sxToastBtn').style.display = withBtn ? '' : 'none';
+  sxToast._filter = filter || '';
+  $('sxToast').classList.add('show');
+  clearTimeout(sxToast._t);
+  sxToast._t = setTimeout(() => $('sxToast').classList.remove('show'), 4500);
+}
+$('sxToastBtn').addEventListener('click', () => {
+  $('sxToast').classList.remove('show');
+  const nb = document.querySelector('.navbtn[data-screen="sandbox"]');
+  if (nb) nb.click();
+  const s = $('sbSearch');
+  if (s && sxToast._filter) { s.value = sxToast._filter; s.dispatchEvent(new Event('input', {bubbles: true})); }
+});
+
+function sxSpark(pts, w, h){
+  w = w || 96; h = h || 32;
+  if (pts.length < 2) return '';
+  const vs = pts.map(p => p.v), lo = Math.min.apply(null, vs), hi = Math.max.apply(null, vs), r = (hi - lo) || 1;
+  const d = pts.map((p, i) => (i ? 'L' : 'M') + ((i / (pts.length - 1)) * (w - 4) + 2).toFixed(1) + ',' + (h - 3 - ((p.v - lo) / r) * (h - 6)).toFixed(1)).join('');
+  const ly = h - 3 - ((pts[pts.length - 1].v - lo) / r) * (h - 6);
+  return '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" aria-hidden="true"><path d="' + d + '" fill="none" stroke="#0086B3" stroke-width="1.75" stroke-linejoin="round" stroke-linecap="round"/><circle cx="' + (w - 2) + '" cy="' + ly.toFixed(1) + '" r="2.5" fill="#0086B3"/></svg>';
+}
+function thin(pts, max){
+  if (pts.length <= max) return pts;
+  const step = pts.length / max, out = [];
+  for (let i = 0; i < max; i++) out.push(pts[Math.floor(i * step)]);
+  out.push(pts[pts.length - 1]);
+  return out;
+}
+
+/* ---------------------------------------------------------------- accueil */
+/* Indicateurs clés : cube + clé de série (vérifiées sur data.snb.ch) ; "pct" = variation en points. */
+const TILES = [
+  {cube: 'snbgwdzid', key: 'LZ', label: 'Taux directeur de la BNS', unit: '%', pct: true, f: 'D'},
+  {cube: 'snbgwdzid', key: 'SARON', label: 'SARON (fixing de clôture)', unit: '%', pct: true, f: 'D'},
+  {cube: 'plkopr', key: 'VVP', label: 'Inflation (IPC, sur 1 an)', unit: '%', pct: true, f: 'M'},
+  {cube: 'devkum', key: 'M0,EUR1', label: 'EUR/CHF (moyenne mensuelle)', unit: 'CHF pour 1 EUR', f: 'M'},
+  {cube: 'devkum', key: 'M0,USD1', match: /USD/, label: 'USD/CHF (moyenne mensuelle)', unit: 'CHF pour 1 USD', f: 'M'},
+  {cube: 'snbmonagg', key: 'VV,GM3', label: 'Masse monétaire M3 (sur 1 an)', unit: '%', pct: true, f: 'M'},
+  {cube: 'snbbipo', key: 'D', label: 'Placements de devises de la BNS', unit: 'Mrd CHF', div: 1000, f: 'M'},
+  {cube: 'snbgwdchfsgw', key: 'TG', label: 'Avoirs à vue en francs à la BNS', unit: 'Mrd CHF', div: 1000, f: 'D'}
+];
+const QUICK = ['taux directeur', 'SARON', 'cours de change euro', 'inflation', 'M3', 'réserves de devises', 'avoirs à vue', 'hypothèques', 'rendement obligations', 'balance des paiements', 'crédits', 'bilan BNS'];
+
+function renderQuick(){
+  $('sxQuick').innerHTML = QUICK.map(q => '<button type="button" class="fx-chip" data-q="' + esc(q) + '">' + esc(q) + '</button>').join('');
+  $('sxQuick').addEventListener('click', e => {
+    const b = e.target.closest('.fx-chip');
+    if (b) { $('sxQ').value = b.dataset.q; runSearch(b.dataset.q); }
+  });
+}
+
+async function renderTiles(){
+  const start = new Date(); start.setFullYear(start.getFullYear() - 3);
+  $('sxTiles').innerHTML = TILES.map((t, i) => '<button type="button" class="fx-tile" data-i="' + i + '"><div class="fx-skel" style="height:70px"></div></button>').join('');
+  let latest = 0;
+  await Promise.all(TILES.map(async (t, i) => {
+    const el = $('sxTiles').querySelector('[data-i="' + i + '"]');
+    try {
+      const from = t.f === 'D' ? isoDay(start) : isoDay(start).slice(0, 7);
+      const all = await fetchCube(t.cube, from);
+      const s = all.find(x => x.key === t.key) || (t.match && all.find(x => t.match.test(x.label)));
+      if (!s || !s.pts.length) throw new Error('série introuvable');
+      const div = t.div || 1;
+      const pts = s.pts.map(p => ({d: p.d, v: p.v / div}));
+      const last = pts[pts.length - 1];
+      /* variation : sur 1 an pour les séries quotidiennes (sinon toujours ~0), sinon vs observation précédente */
+      let ref = pts[pts.length - 2] || last, refTxt = 'vs observation précédente';
+      if (t.f === 'D') {
+        const lim = new Date(snbPeriodToMs(last.d)); lim.setUTCFullYear(lim.getUTCFullYear() - 1);
+        for (let k = pts.length - 1; k >= 0; k--) if (snbPeriodToMs(pts[k].d) <= +lim) { ref = pts[k]; break; }
+        refTxt = 'sur 1 an';
+      }
+      const ch = t.pct ? last.v - ref.v : (last.v / ref.v - 1) * 100;
+      const chTxt = (ch >= 0 ? '+' : '−') + (t.pct ? nf(2).format(Math.abs(ch)) + ' pt' : nf(1).format(Math.abs(ch)) + ' %');
+      latest = Math.max(latest, snbPeriodToMs(last.d) || 0);
+      el.dataset.cube = t.cube; el.dataset.key = s.key;
+      el.title = t.label + ' — variation ' + refTxt;
+      el.innerHTML = '<div class="lbl">' + esc(t.label) + '</div>'
+        + '<div class="row"><div><div class="v">' + nf(t.pct ? 2 : decimalsFor([last.v])).format(last.v) + '</div><div class="u">' + esc(t.unit) + '</div></div>' + sxSpark(thin(pts, 160)) + '</div>'
+        + '<div class="d"><span>' + esc(t.cube) + ' · ' + esc(fmtPeriod(last.d, t.f)) + '</span><span class="fx-delta ' + (ch > 0 ? 'up' : ch < 0 ? 'down' : '') + '">' + chTxt + '</span></div>';
+    } catch (e) {
+      el.dataset.cube = t.cube;
+      el.innerHTML = '<div class="lbl">' + esc(t.label) + '</div><div class="fx-mut" style="font-size:12px">' + esc(t.cube) + ' — indisponible</div>';
+      if (!renderTiles._err) { renderTiles._err = true; $('sxAsOf').textContent = snbErrText(e); }
+    }
+  }));
+  if (latest) $('sxAsOf').textContent = 'Dernière observation : ' + new Date(latest).toLocaleDateString('fr-CH', {day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC'});
+}
+$('sxTiles').addEventListener('click', e => { const t = e.target.closest('.fx-tile'); if (t && t.dataset.cube) openCube(t.dataset.cube, t.dataset.key); });
+
+function domainsOf(){
+  const m = new Map();
+  IDX.forEach(e => { if (!e.gone) { const d = e.domaine || 'Autres'; m.set(d, (m.get(d) || 0) + 1); } });
+  return Array.from(m.entries()).sort((a, b) => b[1] - a[1]);
+}
+function refreshHomeLists(){
+  const doms = domainsOf();
+  $('sxDomains').innerHTML = doms.map(d => '<li class="clk" data-dom="' + esc(d[0]) + '">' + esc(d[0]) + '<span class="num">' + d[1] + '</span></li>').join('')
+    || '<li class="fx-mut">' + (idxState.building ? 'Indexation en cours…' : 'Aucun domaine') + '</li>';
+  const sel = $('sxDom'), cur = sel.value;
+  sel.innerHTML = '<option value="">Tous les domaines</option>' + doms.map(d => '<option value="' + esc(d[0]) + '">' + esc(d[0]) + ' (' + d[1] + ')</option>').join('');
+  sel.value = cur;
+  const recent = IDX.filter(e => !e.gone && e.upd).sort((a, b) => String(b.upd).localeCompare(String(a.upd))).slice(0, 12);
+  $('sxRecent').innerHTML = recent.map(e => '<li class="clk" data-id="' + esc(e.id) + '"><span class="date">' + esc(fmtUpd(e.upd).slice(0, 5)) + '</span><span>' + esc(titleOf(e)) + '</span><span class="meta">' + esc(e.id) + '</span></li>').join('')
+    || '<li class="fx-mut">' + (idxState.building ? 'Indexation en cours…' : 'Dates de publication indisponibles') + '</li>';
+}
+$('sxDomains').addEventListener('click', e => { const li = e.target.closest('[data-dom]'); if (li) openDomain(li.dataset.dom); });
+$('sxRecent').addEventListener('click', e => { const li = e.target.closest('[data-id]'); if (li) openCube(li.dataset.id); });
+
+/* ---------------------------------------------------------------- autocomplétion (locale, instantanée) */
+const ac = $('sxAc'), q = $('sxQ');
+let acItems = [], acIdx = -1;
+q.addEventListener('input', () => {
+  const text = q.value.trim();
+  if (text.length < 2) { closeAc(); return; }
+  const res = searchIdx(text);
+  acItems = res.slice(0, 8); acIdx = -1;
+  if (!acItems.length) { ac.innerHTML = '<div class="fx-ac-foot">Aucun indicateur' + (idxState.building ? ' (indexation en cours…)' : '') + '</div>'; ac.classList.add('open'); return; }
+  ac.innerHTML = acItems.map((e, i) => '<div class="fx-ac-item" role="option" data-i="' + i + '"><span class="fx-id">' + esc(e.id) + '</span><span class="t">' + esc(titleOf(e)) + '</span><span class="m">' + esc(e.cat || e.domaine || '') + '</span></div>').join('')
+    + '<div class="fx-ac-foot">Entrée : voir les ' + res.length + ' résultats</div>';
+  ac.classList.add('open');
+});
+function closeAc(){ ac.classList.remove('open'); acItems = []; acIdx = -1; }
+ac.addEventListener('mousedown', e => {
+  const it = e.target.closest('.fx-ac-item');
+  if (it) { e.preventDefault(); const x = acItems[+it.dataset.i]; closeAc(); openCube(x.id); }
+});
+q.addEventListener('keydown', e => {
+  const els = ac.querySelectorAll('.fx-ac-item');
+  if (e.key === 'ArrowDown' && els.length) { e.preventDefault(); acIdx = (acIdx + 1) % els.length; }
+  else if (e.key === 'ArrowUp' && els.length) { e.preventDefault(); acIdx = (acIdx - 1 + els.length) % els.length; }
+  else if (e.key === 'Enter') {
+    e.preventDefault();
+    if (acIdx >= 0 && acItems[acIdx]) { const x = acItems[acIdx]; closeAc(); openCube(x.id); }
+    else { closeAc(); runSearch(q.value.trim()); }
     return;
-  }
-  SNB_FILTERED = source.filter(c => snbNorm(c.label + ' ' + c.domaine + ' ' + c.mots + ' ' + c.id).indexOf(kw) >= 0).slice(0, 300);
-  sel.disabled = false; btn.disabled = SNB_FILTERED.length === 0;
-  sel.innerHTML = SNB_FILTERED.length
-    ? SNB_FILTERED.map(c => `<option value="${esc(c.id)}">${esc(c.domaine)} — ${esc(c.label)}</option>`).join('')
-    : '<option value="">— aucune série BNS ne correspond à ce mot-clé —</option>';
-}
+  } else if (e.key === 'Escape') { closeAc(); return; }
+  else return;
+  els.forEach((el, i) => el.classList.toggle('active', i === acIdx));
+});
+q.addEventListener('blur', () => setTimeout(closeAc, 150));
+$('sxGo').addEventListener('click', () => { closeAc(); runSearch(q.value.trim()); });
 
-async function snbLoadCube(){
-  const cubeId = $('sbSnbCube').value;
-  const cube = SNB_FILTERED.find(c => c.id === cubeId);
-  if (!cube) return;
-  snbCurrentCube = cube;
-  const btn = $('sbSnbLoadBtn'); btn.disabled = true; btn.textContent = 'Chargement…';
-  snbSetStatus('Chargement de « ' + esc(cube.label) + ' »…');
-  const pathAndQuery = '/' + encodeURIComponent(cubeId) + '/data/json/fr';
-  let json;
+/* ---------------------------------------------------------------- liste de résultats / domaine */
+const PAGE = 25;
+let listState = null; // {text, dom, offset}
+['sxDom', 'sxFreq', 'sxSort'].forEach(id => $(id).addEventListener('change', () => { if (listState) { listState.offset = 0; if (id === 'sxDom') listState.dom = $('sxDom').value; loadList(); } }));
+$('sxPrev').addEventListener('click', () => { listState.offset = Math.max(0, listState.offset - PAGE); loadList(); });
+$('sxNext').addEventListener('click', () => { listState.offset += PAGE; loadList(); });
+
+function runSearch(text){
+  if (!text) return;
+  listState = {text: text, dom: '', offset: 0};
+  $('sxDom').value = ''; $('sxSort').value = 'rank';
+  $('sxSort').querySelector('[value="rank"]').disabled = false;
+  sxShow('sxListView');
+  loadList();
+}
+function openDomain(dom){
+  listState = {text: '', dom: dom, offset: 0};
+  $('sxDom').value = dom; $('sxSort').value = 'recent';
+  $('sxSort').querySelector('[value="rank"]').disabled = true;
+  sxShow('sxListView');
+  loadList();
+}
+$('sxCrumbs').addEventListener('click', e => { if (e.target.closest('[data-home]')) sxShow('sxHome'); });
+
+function loadList(){
+  const st = listState;
+  $('sxCrumbs').innerHTML = '<a data-home="1">Accueil BNS</a> › ' + (st.text ? 'Résultats pour « ' + esc(st.text) + ' »' : 'Domaine : ' + esc(st.dom));
+  let rows = st.text ? searchIdx(st.text) : IDX.filter(e => !e.gone);
+  if (st.dom) rows = rows.filter(e => (e.domaine || 'Autres') === st.dom);
+  const f = $('sxFreq').value;
+  if (f) rows = rows.filter(e => freqCode(e.freq) === f);
+  const sort = $('sxSort').value;
+  if (sort === 'recent') rows = rows.slice().sort((a, b) => String(b.upd || '').localeCompare(String(a.upd || '')));
+  else if (sort === 'az') rows = rows.slice().sort((a, b) => titleOf(a).localeCompare(titleOf(b), 'fr'));
+  const count = rows.length;
+  $('sxCount').textContent = count + ' indicateur(s)' + (count > PAGE ? ' · ' + (st.offset + 1) + '–' + Math.min(st.offset + PAGE, count) : '') + (idxState.building ? ' · indexation en cours…' : '');
+  $('sxPrev').disabled = st.offset === 0;
+  $('sxNext').disabled = st.offset + PAGE >= count;
+  const loadedCubes = new Set(SNB_LOADED.map(x => x.cubeId));
+  $('sxResults').innerHTML = rows.slice(st.offset, st.offset + PAGE).map(e => '<div class="fx-res" data-id="' + esc(e.id) + '">'
+    + '<div><span class="fx-id">' + esc(e.id) + '</span><span class="t">' + esc(titleOf(e)) + '</span></div>'
+    + '<div class="fx-pop">' + (loadedCubes.has(e.id) ? '<span class="fx-in">dans le Sandbox</span>' : '') + '</div>'
+    + '<div class="m">' + [e.cat || e.domaine, FREQ_FR[freqCode(e.freq)] || e.freq, e.unit, e.n ? e.n + ' série(s)' : '', e.upd ? 'publié le ' + fmtUpd(e.upd) : ''].filter(Boolean).map(esc).join(' · ') + '</div>'
+    + '</div>').join('') || '<div class="fx-res"><div class="fx-mut">Aucun indicateur — essayez un autre mot-clé (français ou allemand) ou retirez des filtres.' + (idxState.building ? ' L\'indexation est encore en cours.' : '') + '</div></div>';
+}
+$('sxResults').addEventListener('click', e => { const r = e.target.closest('[data-id]'); if (r) openCube(r.dataset.id); });
+
+/* ---------------------------------------------------------------- fiche indicateur (cube) */
+let cube = null; // {id, entry, series:[...], sel: index, range, filter}
+async function openCube(id, selKey){
+  sxShow('sxCubeView');
+  const box = $('sxCube');
+  box.innerHTML = '<div class="fx-skel" style="height:26px;width:60%"></div><div class="fx-skel" style="height:220px;margin-top:16px"></div>';
+  const entry = IDX.find(e => e.id === id) || {id: id};
   try {
-    json = await relayFetchJson(SNB_API_RELAY, SNB_API_DIRECT, pathAndQuery);
+    const series = (await fetchCube(id)).filter(s => s.pts.length);
+    let sel = selKey ? series.findIndex(s => s.key === selKey) : 0;
+    if (sel < 0) sel = 0;
+    cube = {id: id, entry: entry, series: series, sel: sel, range: 'max', filter: ''};
+    drawCube();
   } catch (e) {
-    snbSetStatus(snbErrMsg(e, e.__url), true);
-    btn.disabled = false; btn.textContent = 'Charger les séries de cet indicateur';
-    return;
+    box.innerHTML = '<div class="fx-err">Impossible de charger l\'indicateur ' + esc(id) + ' — ' + esc(snbErrText(e)) + '</div>';
   }
-  const series = (json.timeseries || []).map(s => {
-    const label = (s.header || []).map(h => h.dimItem).join(' — ') || cube.label;
-    const parsed = snbParseValues(s.values);
-    return {label, unit: s.metadata && s.metadata.unit, t: parsed.t, values: parsed.values};
-  }).filter(s => s.t.length);
-  snbCurrentSeries = series;
-  const sel = $('sbSnbResults');
-  sel.style.display = '';
-  sel.innerHTML = series.length
-    ? series.map((s, i) => `<option value="${i}">${esc(s.label)}</option>`).join('')
-    : '<option value="">— aucune série exploitable —</option>';
-  $('sbSnbAddBtn').style.display = series.length ? '' : 'none';
-  snbSetStatus(series.length + ' série(s) disponibles dans « ' + esc(cube.label) + ' ».');
-  btn.disabled = false; btn.textContent = 'Charger les séries de cet indicateur';
+}
+function seriesDec(s){ return decimalsFor(s.pts.slice(-50).map(p => p.v)); }
+
+function drawCube(){
+  const e = cube.entry, ss = cube.series;
+  const link = 'https://data.snb.ch/fr/topics/' + encodeURIComponent(e.topic || 'snb') + '/cube/' + encodeURIComponent(cube.id);
+  $('sxCube').innerHTML =
+      '<h2>' + esc(titleOf(e)) + '</h2>'
+    + '<div class="fx-ids">' + ['<span class="fx-id">' + esc(cube.id) + '</span>', esc(e.cat || e.domaine || ''), esc(FREQ_FR[freqCode(e.freq)] || ''), e.upd ? 'publié le ' + esc(fmtUpd(e.upd)) : '', ss.length + ' série(s)'].filter(Boolean).join(' · ')
+    + ' · <a href="' + link + '" target="_blank" rel="noopener" style="color:var(--ink2)">data.snb.ch ↗</a></div>'
+    + (ss.length > 10 ? '<input type="search" class="fx-sfilter" id="sxSFilter" placeholder="Filtrer les ' + ss.length + ' séries (ex. EUR, 10 ans, total…)" value="' + esc(cube.filter) + '">' : '<div style="height:12px"></div>')
+    + '<div class="fx-stab" id="sxSTab"></div>'
+    + '<div class="fx-sel" id="sxSel"></div>';
+  if ($('sxSFilter')) $('sxSFilter').addEventListener('input', ev => { cube.filter = ev.target.value; drawSeriesTable(); });
+  $('sxSTab').addEventListener('click', ev => {
+    const r = ev.target.closest('[data-s]'); if (!r) return;
+    cube.sel = +r.dataset.s; drawSeriesTable(); drawSelected();
+  });
+  drawSeriesTable();
+  drawSelected();
+}
+function drawSeriesTable(){
+  const f = norm(cube.filter).trim().split(/\s+/).filter(Boolean);
+  const rows = cube.series.map((s, i) => ({s: s, i: i})).filter(x => !f.length || f.every(t => norm(x.s.label + ' ' + x.s.key).indexOf(t) >= 0));
+  $('sxSTab').innerHTML = '<div class="fx-srow fx-shead"><span>Série</span><span></span><span style="text-align:right">Dernière valeur</span><span style="text-align:right">Date</span></div>'
+    + rows.map(x => {
+      const s = x.s, last = s.pts[s.pts.length - 1];
+      return '<div class="fx-srow' + (x.i === cube.sel ? ' on' : '') + '" data-s="' + x.i + '" title="' + esc(s.label + (s.unit ? ' — ' + s.unit : '')) + '">'
+        + '<span>' + esc(s.label || s.key) + (isLoaded(cube.id, s.key) ? ' <span class="fx-in">Sandbox</span>' : '') + '</span>'
+        + sxSpark(thin(s.pts.slice(-260), 80), 100, 24)
+        + '<span class="lv">' + nf(seriesDec(s)).format(last.v) + '</span>'
+        + '<span class="dt">' + esc(fmtPeriod(last.d, s.f)) + '</span></div>';
+    }).join('')
+    + (rows.length ? '' : '<div class="fx-srow"><span class="fx-mut">Aucune série ne correspond au filtre.</span></div>');
+}
+function drawSelected(){
+  const s = cube.series[cube.sel], box = $('sxSel');
+  if (!s) { box.innerHTML = '<p class="fx-mut">Aucune série avec des données dans cet indicateur.</p>'; return; }
+  const pts = s.pts, last = pts[pts.length - 1], first = pts[0], dec = seriesDec(s);
+  let yoy = null;
+  const lim = new Date(snbPeriodToMs(last.d)); lim.setUTCFullYear(lim.getUTCFullYear() - 1);
+  for (let i = pts.length - 1; i >= 0; i--) if (snbPeriodToMs(pts[i].d) <= +lim) { yoy = (last.v / pts[i].v - 1) * 100; break; }
+  const isPct = /pour-cent|%|prozent|percent/i.test(s.unit);
+  const inSb = isLoaded(cube.id, s.key);
+  box.innerHTML = '<h3>' + esc(s.label || s.key) + '</h3>'
+    + '<div class="fx-ids">' + [esc(s.unit), s.scale ? 'échelle ' + esc(s.scale) : '', esc(FREQ_FR[s.f] || ''), 'clé <span class="fx-id">' + esc(s.key) + '</span>'].filter(Boolean).join(' · ') + '</div>'
+    + '<div class="fx-kpis">'
+    +   '<div class="fx-kpi"><div class="k">Dernière valeur</div><div class="v">' + nf(dec).format(last.v) + '</div><div class="s">' + esc(fmtPeriod(last.d, s.f)) + '</div></div>'
+    +   (yoy != null && isFinite(yoy) && !isPct ? '<div class="fx-kpi"><div class="k">Sur 1 an</div><div class="v fx-delta ' + (yoy > 0 ? 'up' : yoy < 0 ? 'down' : '') + '">' + (yoy >= 0 ? '+' : '−') + nf(1).format(Math.abs(yoy)) + ' %</div></div>' : '')
+    +   '<div class="fx-kpi"><div class="k">Historique</div><div class="v" style="font-size:15px;margin-top:3px">' + esc(fmtPeriod(first.d, s.f)) + ' → ' + esc(fmtPeriod(last.d, s.f)) + '</div><div class="s">' + nf(0).format(pts.length) + ' observations</div></div>'
+    + '</div>'
+    + '<div class="fx-ranges" id="sxRanges">' + [['1', '1A'], ['5', '5A'], ['10', '10A'], ['20', '20A'], ['max', 'Max']].map(r => '<button type="button" data-r="' + r[0] + '" class="' + (cube.range === r[0] ? 'on' : '') + '">' + r[1] + '</button>').join('') + '</div>'
+    + '<div class="fx-chart" id="sxChart"><div class="fx-tip" id="sxTip"></div></div>'
+    + '<div class="fx-actions">'
+    +   '<button type="button" class="btn pri" id="sxAdd">' + (inSb ? '↻ Mettre à jour dans le Sandbox' : '+ Ajouter au Sandbox') + '</button>'
+    +   (inSb ? '<span class="fx-in">déjà dans le catalogue du Sandbox</span>' : '')
+    +   '<button type="button" class="btn" id="sxCsv">Télécharger CSV</button>'
+    + '</div>';
+  $('sxRanges').addEventListener('click', ev => {
+    const b = ev.target.closest('[data-r]'); if (!b) return;
+    cube.range = b.dataset.r;
+    $('sxRanges').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    drawChart();
+  });
+  $('sxAdd').addEventListener('click', addSelectedToSandbox);
+  $('sxCsv').addEventListener('click', downloadCsv);
+  drawChart();
 }
 
-function snbAddSelected(){
-  const idx = $('sbSnbResults').value;
-  const s = snbCurrentSeries[+idx];
-  if (!s || !snbCurrentCube) return;
-  const title = snbCurrentCube.label + ' — ' + s.label;
-  snbAddLoaded({title, cubeId: snbCurrentCube.id, t: s.t, values: s.values});
-  snbSetStatus(s.t.length + ' point(s) ajoutés au catalogue sous « BNS » — disponible dans le Sandbox.');
+function niceTicks(lo, hi, n){
+  n = n || 5;
+  const span = (hi - lo) || Math.abs(hi) || 1;
+  const step0 = span / n, mag = Math.pow(10, Math.floor(Math.log10(step0)));
+  const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= step0);
+  const t = [];
+  for (let v = Math.floor(lo / step) * step; v <= hi + step * 0.001; v += step) t.push(+v.toFixed(10));
+  return t;
+}
+function drawChart(){
+  const el = $('sxChart'), tip = $('sxTip');
+  if (!el) return;
+  Array.from(el.querySelectorAll('svg,p')).forEach(n => n.remove());
+  const s = cube.series[cube.sel];
+  let P = s.pts;
+  if (cube.range !== 'max' && P.length) {
+    const end = new Date(snbPeriodToMs(P[P.length - 1].d)); end.setUTCFullYear(end.getUTCFullYear() - (+cube.range));
+    P = P.filter(p => snbPeriodToMs(p.d) >= +end);
+  }
+  if (P.length < 2) { el.insertAdjacentHTML('afterbegin', '<p class="fx-mut">Pas assez de données sur cette période.</p>'); return; }
+  const W = Math.max(320, el.clientWidth || 800), H = 300, m = {t: 12, r: 16, b: 28, l: 64};
+  const xs = P.map(p => snbPeriodToMs(p.d)), vs = P.map(p => p.v);
+  let lo = Math.min.apply(null, vs), hi = Math.max.apply(null, vs);
+  const yt = niceTicks(lo, hi); lo = Math.min(lo, yt[0]); hi = Math.max(hi, yt[yt.length - 1]);
+  const x0 = xs[0], x1 = xs[xs.length - 1];
+  const X = t => m.l + ((t - x0) / ((x1 - x0) || 1)) * (W - m.l - m.r);
+  const Y = v => m.t + (1 - (v - lo) / ((hi - lo) || 1)) * (H - m.t - m.b);
+  const ydec = decimalsFor(yt);
+  const yrs = (x1 - x0) / (365.25 * 864e5);
+  const xt = [];
+  if (yrs < 2) {
+    const d = new Date(x0); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() + 1);
+    const stepM = yrs < 0.6 ? 1 : 3;
+    while (+d <= x1) { xt.push([+d, d.toLocaleDateString('fr-CH', {month: 'short', year: '2-digit', timeZone: 'UTC'})]); d.setUTCMonth(d.getUTCMonth() + stepM); }
+  } else {
+    const stepY = [1, 2, 5, 10, 20, 25, 50].find(k => yrs / k <= 8) || 50;
+    for (let y = Math.ceil(new Date(x0).getUTCFullYear() / stepY) * stepY; Date.UTC(y, 0, 1) <= x1; y += stepY) if (Date.UTC(y, 0, 1) >= x0) xt.push([Date.UTC(y, 0, 1), String(y)]);
+  }
+  const path = P.map((p, i) => (i ? 'L' : 'M') + X(xs[i]).toFixed(1) + ',' + Y(p.v).toFixed(1)).join('');
+  const zero = (lo < 0 && hi > 0) ? '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(0) + '" y2="' + Y(0) + '" stroke="#9A9B98"/>' : '';
+  el.insertAdjacentHTML('afterbegin', '<svg viewBox="0 0 ' + W + ' ' + H + '" height="' + H + '" role="img" aria-label="' + esc(s.label) + '">'
+    + yt.map(v => '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="#ECEAE4"/><text x="' + (m.l - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end" font-size="11" fill="#6B6F76">' + nf(ydec).format(v) + '</text>').join('')
+    + zero
+    + xt.map(x => '<text x="' + X(x[0]) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="#6B6F76">' + x[1] + '</text>').join('')
+    + '<path d="' + path + '" fill="none" stroke="#0086B3" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
+    + '<line class="xh" y1="' + m.t + '" y2="' + (H - m.b) + '" stroke="#02182B" stroke-opacity=".35" stroke-dasharray="3 3" visibility="hidden"/>'
+    + '<circle class="dot" r="4.5" fill="#0086B3" stroke="#fff" stroke-width="2" visibility="hidden"/>'
+    + '<rect class="hit" x="' + m.l + '" y="' + m.t + '" width="' + (W - m.l - m.r) + '" height="' + (H - m.t - m.b) + '" fill="transparent"/>'
+    + '</svg>');
+  const svg = el.querySelector('svg'), xh = svg.querySelector('.xh'), dot = svg.querySelector('.dot'), hit = svg.querySelector('.hit');
+  const vdec = decimalsFor(vs.slice(-50));
+  hit.addEventListener('mousemove', ev => {
+    const r = svg.getBoundingClientRect(), mx = ((ev.clientX - r.left) / r.width) * W;
+    const t = x0 + ((mx - m.l) / (W - m.l - m.r)) * (x1 - x0);
+    let a = 0, b = xs.length - 1;
+    while (b - a > 1) { const mid = (a + b) >> 1; if (xs[mid] < t) a = mid; else b = mid; }
+    const i = Math.abs(xs[a] - t) < Math.abs(xs[b] - t) ? a : b;
+    const px = X(xs[i]), py = Y(P[i].v);
+    xh.setAttribute('x1', px); xh.setAttribute('x2', px); xh.setAttribute('visibility', 'visible');
+    dot.setAttribute('cx', px); dot.setAttribute('cy', py); dot.setAttribute('visibility', 'visible');
+    tip.style.display = 'block';
+    tip.style.left = (px / W) * r.width + 'px'; tip.style.top = (py / H) * r.height + 'px';
+    tip.innerHTML = esc(fmtPeriod(P[i].d, s.f)) + '<br><b>' + nf(vdec).format(P[i].v) + '</b> ' + esc(s.unit || '');
+  });
+  hit.addEventListener('mouseleave', () => { xh.setAttribute('visibility', 'hidden'); dot.setAttribute('visibility', 'hidden'); tip.style.display = 'none'; });
+}
+let rT = null;
+window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (cube && !$('sxCubeView').hidden && $('screenSnb').classList.contains('on')) drawChart(); }, 150); });
+
+function downloadCsv(){
+  const s = cube.series[cube.sel];
+  const csv = 'date;' + cube.id + '{' + s.key + '}\n' + s.pts.map(p => p.d + ';' + p.v).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv'}));
+  a.download = cube.id + '_' + String(s.key).replace(/[^A-Za-z0-9]+/g, '_') + '.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
-/* ---- Fusion dans CATALOG (via rebuildCombinedCatalog, défini dans cp_module.js) + persistance locale ---- */
+/* ---------------------------------------------------------------- catalogue du Sandbox (SNB_CATALOG) + persistance */
+const isLoaded = (cubeId, key) => SNB_LOADED.some(x => x.cubeId === cubeId && x.seriesKey === key);
+
+function addSelectedToSandbox(){
+  const s = cube.series[cube.sel];
+  const t = [], values = [];
+  s.pts.forEach(p => { const ms = snbPeriodToMs(p.d); if (!isNaN(ms)) { t.push(ms); values.push(p.v); } });
+  if (!t.length) { sxToast('Aucune donnée exploitable pour cette série', false); return; }
+  const existing = SNB_LOADED.find(x => x.cubeId === cube.id && x.seriesKey === s.key);
+  if (existing) snbRemoveLoaded(existing.key, true);
+  const title = titleOf(cube.entry) + ' — ' + (s.label || s.key);
+  snbAddLoaded({title: title, cubeId: cube.id, seriesKey: s.key, t: t, values: values});
+  sxToast((existing ? 'Série mise à jour' : 'Série ajoutée') + ' — ' + t.length + ' points disponibles dans le Sandbox', true, (s.label || s.key).slice(0, 40));
+  drawSeriesTable(); drawSelected();
+}
+
 function snbInjectCatalog(it){
   const key = 'BNS — ' + it.title;
   SNB_CATALOG[key] = {
@@ -5380,11 +5877,10 @@ function snbInjectCatalog(it){
     hasCat: true
   };
 }
-
 function snbSaveStore(){
-  try { localStorage.setItem(SNB_STORE_KEY, JSON.stringify(SNB_LOADED)); } catch (e) {}
+  try { localStorage.setItem(SNB_STORE_KEY, JSON.stringify(SNB_LOADED)); }
+  catch (e) { sxToast('Stockage local plein : la série est disponible pour cette session seulement.', false); }
 }
-
 function snbLoadStore(){
   try {
     const raw = localStorage.getItem(SNB_STORE_KEY);
@@ -5394,7 +5890,6 @@ function snbLoadStore(){
   if (typeof rebuildCombinedCatalog === 'function') rebuildCombinedCatalog();
   snbRenderLoadedList();
 }
-
 function snbAddLoaded(it){
   it.key = 'snb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
   SNB_LOADED.push(it);
@@ -5403,43 +5898,45 @@ function snbAddLoaded(it){
   if (typeof rebuildCombinedCatalog === 'function') rebuildCombinedCatalog();
   snbRenderLoadedList();
 }
-
-function snbRemoveLoaded(key){
+function snbRemoveLoaded(key, silent){
   const it = SNB_LOADED.find(x => x.key === key); if (!it) return;
   SNB_LOADED = SNB_LOADED.filter(x => x.key !== key);
   delete SNB_CATALOG['BNS — ' + it.title];
+  if (silent) return;
   snbSaveStore();
   if (typeof rebuildCombinedCatalog === 'function') rebuildCombinedCatalog();
   snbRenderLoadedList();
+  if (cube && cube.id === it.cubeId && !$('sxCubeView').hidden) { drawSeriesTable(); drawSelected(); }
 }
-
 function snbRenderLoadedList(){
-  const box = $('sbSnbLoadedList'); if (!box) return;
-  if (!SNB_LOADED.length) { box.innerHTML = ''; return; }
-  box.innerHTML = '<div class="hint" style="margin-bottom:4px">Séries BNS dans le catalogue :</div>' + SNB_LOADED.map(it => {
+  $('sxLoadedSec').hidden = !SNB_LOADED.length;
+  $('sxLoaded').innerHTML = SNB_LOADED.map(it => {
     const n = it.t.length;
-    const per = n ? (new Date(it.t[0]).getUTCFullYear() + ' → ' + new Date(it.t[n - 1]).getUTCFullYear()) : '';
-    return `<div class="extItem"><span>${esc(it.title)} <span class="per">(${esc(per)})</span></span><button type="button" data-key="${esc(it.key)}">Retirer</button></div>`;
+    const per = n ? (new Date(it.t[0]).getUTCFullYear() + '–' + new Date(it.t[n - 1]).getUTCFullYear()) : '';
+    const short = it.title.length > 70 ? it.title.slice(0, 68) + '…' : it.title;
+    return '<span class="fx-litem"><a data-cube="' + esc(it.cubeId || '') + '" data-skey="' + esc(it.seriesKey || '') + '" title="' + esc(it.title) + '">' + esc(short) + '</a><span class="per">' + esc(per) + '</span><button type="button" data-key="' + esc(it.key) + '" title="Retirer du catalogue">✕</button></span>';
   }).join('');
-  box.querySelectorAll('button[data-key]').forEach(b => b.addEventListener('click', () => snbRemoveLoaded(b.dataset.key)));
 }
+$('sxLoaded').addEventListener('click', e => {
+  const b = e.target.closest('button[data-key]');
+  if (b) { snbRemoveLoaded(b.dataset.key); return; }
+  const a = e.target.closest('[data-cube]');
+  if (a && a.dataset.cube) openCube(a.dataset.cube, a.dataset.skey || undefined);
+});
 
-/* ---- Câblage ---- */
-if ($('sbSnbCube')) {
-  snbApplyFilter(); // état initial : rien tant qu'aucun mot-clé n'est tapé
-  if ($('sbSnbCatalogBtn')) $('sbSnbCatalogBtn').addEventListener('click', snbLoadFullCatalog);
-  $('sbSnbSearch').addEventListener('input', snbApplyFilter);
-  $('sbSnbLoadBtn').addEventListener('click', snbLoadCube);
-  $('sbSnbResults').addEventListener('change', () => { $('sbSnbAddBtn').style.display = $('sbSnbResults').value !== '' ? '' : 'none'; });
-  $('sbSnbAddBtn').addEventListener('click', snbAddSelected);
+/* ---------------------------------------------------------------- démarrage : rien n'est chargé tant que
+   l'écran BNS n'est pas ouvert (indicateurs clés ≈ 6 appels ; index construit une fois, puis 7 jours en cache local). */
+let homeLoaded = false;
+function initHome(){
+  if (homeLoaded) return;
+  homeLoaded = true;
+  renderTiles();
+  buildIndex(false);
 }
+document.querySelectorAll('[data-screen="snb"],[data-open="snb"]').forEach(b => b.addEventListener('click', initHome));
 
-if ($('sbSrcSnb')) {
-  $('sbSrcSnb').addEventListener('change', () => {
-    $('sbSnbBox').style.display = $('sbSrcSnb').checked ? '' : 'none';
-  });
-}
-
+renderQuick();
+refreshHomeLists();
 snbLoadStore();
 
 })();
@@ -6208,7 +6705,7 @@ renderWbBoard();
 
 (function NavModule(){
 "use strict";
-const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), whiteboard: document.getElementById('screenWhiteboard')};
+const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), whiteboard: document.getElementById('screenWhiteboard')};
 function showScreen(name){
   if (!screens[name]) return;
   Object.keys(screens).forEach(k => { if (screens[k]) screens[k].classList.toggle('on', k === name); });

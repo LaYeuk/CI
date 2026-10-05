@@ -1,0 +1,8 @@
+Copier TOUT le contenu de ce dossier à la racine du dossier CI (en remplaçant les fichiers existants), puis déployer comme d'habitude :
+    npx wrangler deploy
+
+Fichiers modifiés : Outils_GIP.html (écrans FRED et BNS) et _worker.js (nouvelle route /api/snb-index).
+Fichiers inchangés, fournis pour avoir un jeu complet : wrangler.jsonc, .assetsignore, _redirects.
+
+Attention : .assetsignore commence par un point. Il peut être masqué dans l'Explorateur Windows (Affichage > Éléments masqués).
+Si un ancien dossier functions/ existe encore dans CI, il ne sert plus (le Worker _worker.js le remplace) : vous pouvez le supprimer.
