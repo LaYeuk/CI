@@ -1045,7 +1045,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 <main>
   <section class="fx-card fx-hero">
     <h2>Rechercher une statistique</h2>
-    <p class="fx-sub">Mot-clé en français (« population », « loyers », « nuitées », « salaires ») ou numéro de table (px-x-…). Les titres et dimensions sont en français dès que l'index est construit.</p>
+    <p class="fx-sub">Mot-clé en français (« population », « loyers », « nuitées », « salaires ») ou numéro de table (px-x-…).</p>
     <div class="fx-sbox">
       <input id="oxQ" type="search" autocomplete="off" placeholder="ex. population résidante, hôtellerie, logements vacants…" aria-label="Recherche OFS">
       <button type="button" class="fx-go" id="oxGo">Rechercher</button>
@@ -4452,7 +4452,7 @@ const BFS_PXWEB_RELAY = '/api/ofs-pxweb';
 const BFS_PXWEB_DIRECT = 'https://www.pxweb.bfs.admin.ch/api/v1';
 const OFS_INDEX_API = '/api/ofs-index';
 const BFS_STORE_KEY = 'gip_bfs_series_v1';
-const OFS_CAT_STORE = 'gip_ofs_catalog_v1';
+const OFS_CAT_STORE = 'gip_ofs_catalog_v2'; /* v2 : titres en français (en-tête Accept-Language) */
 const OFS_IDX_STORE = 'gip_ofs_index_v1';
 const OFS_CAT_TTL = 24 * 3600 * 1000;
 const OFS_IDX_TTL = 7 * 24 * 3600 * 1000;
@@ -4522,7 +4522,8 @@ async function loadCatalog(){
     let skip = 0, total = Infinity;
     for (let page = 0; page < 10 && skip < total; page++) {
       const qs = '?' + new URLSearchParams({language: 'fr', articleModelGroup: '900029', articleModel: '900033', limit: '200', skip: String(skip)}).toString();
-      const json = await relayFetchJson(BFS_DAM_RELAY, BFS_DAM_DIRECT, qs);
+      /* Le catalogue DAM ne renvoie les titres en français qu'avec l'en-tête Accept-Language: fr */
+      const json = await relayFetchJson(BFS_DAM_RELAY, BFS_DAM_DIRECT, qs, {headers: {'Accept-Language': 'fr', 'Accept': 'application/json'}});
       total = typeof json.total === 'number' ? json.total : Infinity;
       const batch = json.data || [];
       all.push.apply(all, batch);
@@ -4600,7 +4601,7 @@ async function buildIndex(force){
   await run(queue, false);
   if (retry.length && !unsupported) { await sleep(8000); await run(retry, true); }
   state.building = false;
-  if (unsupported) state.idxErr = 'Titres en allemand uniquement — déployez la nouvelle version de _worker.js (route /api/ofs-index) pour les titres et dimensions en français.';
+  if (unsupported) state.idxErr = 'recherche dans les dimensions indisponible — déployez la nouvelle version de _worker.js (route /api/ofs-index).';
   idxSave();
   renderStatus();
   refreshHome();
@@ -4613,11 +4614,11 @@ function renderStatus(){
   if (!state.catLoaded) { el.innerHTML = '<span>Chargement du catalogue OFS…</span>'; return; }
   if (state.building) {
     const pct = state.total ? Math.round(100 * state.done / state.total) : 0;
-    el.innerHTML = '<span class="bar"><b style="width:' + pct + '%"></b></span><span>Traduction de l\'index en français : ' + state.done + ' / ' + state.total + ' tables (première fois uniquement — la recherche fonctionne déjà)</span>';
+    el.innerHTML = '<span class="bar"><b style="width:' + pct + '%"></b></span><span>Indexation des dimensions : ' + state.done + ' / ' + state.total + ' tables (première fois uniquement — la recherche fonctionne déjà)</span>';
     return;
   }
   const nFr = CAT.filter(e => FR[e.id]).length;
-  el.innerHTML = '<span>' + CAT.length + ' tables STAT-TAB · ' + nFr + ' avec titres français' + (state.idxErr ? ' — ' + esc(state.idxErr) : '') + ' · <a id="oxReindex">réindexer</a></span>';
+  el.innerHTML = '<span>' + CAT.length + ' tables STAT-TAB · ' + nFr + ' avec dimensions indexées' + (state.idxErr ? ' — ' + esc(state.idxErr) : '') + ' · <a id="oxReindex">réindexer</a></span>';
   const a = $('oxReindex'); if (a) a.addEventListener('click', () => buildIndex(true));
 }
 

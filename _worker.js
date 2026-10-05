@@ -41,10 +41,16 @@ async function relay(request, targetBase, stripPrefix, methods){
   const path = url.pathname.startsWith(stripPrefix) ? url.pathname.slice(stripPrefix.length) : url.pathname;
   const target = targetBase + path + url.search;
 
-  const init = {method: request.method};
+  /* Langue : le catalogue DAM de l'OFS choisit la langue des titres d'après l'en-tête Accept-Language
+     (le paramètre "language" ne filtre que la langue des fichiers). On transmet donc l'en-tête du
+     navigateur, ou on le déduit du paramètre "language" quand il est présent (ex. /api/ofs-dam?language=fr). */
+  const qLang = url.searchParams.get('language');
+  const acceptLang = (qLang && /^(de|fr|it|en)$/i.test(qLang)) ? qLang.toLowerCase() : request.headers.get('Accept-Language');
+  const init = {method: request.method, headers: {}};
+  if (acceptLang) init.headers['Accept-Language'] = acceptLang;
   if (request.method === 'POST') {
     init.body = await request.text();
-    init.headers = {'Content-Type': request.headers.get('Content-Type') || 'application/json'};
+    init.headers['Content-Type'] = request.headers.get('Content-Type') || 'application/json';
   }
 
   let upstream;
