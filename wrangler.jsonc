@@ -3,7 +3,7 @@
   // (voir _worker.js). "directory": "./" = les fichiers statiques sont ceux du dépôt lui-même
   // (Outils_GIP.html à la racine) ; .assetsignore empêche ce fichier et _worker.js d'être publiés
   // comme fichiers téléchargeables.
-  "name": "outils-gip",
+  "name": "ci",
   "main": "_worker.js",
   "compatibility_date": "2026-10-04",
   "assets": {

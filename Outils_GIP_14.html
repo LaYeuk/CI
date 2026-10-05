@@ -677,9 +677,9 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
         <input type="text" id="sbFredApiKey" placeholder="Clé API FRED (gratuite sur fred.stlouisfed.org)" style="flex:1;min-width:160px">
       </div>
       <div class="row">
-        <input type="text" id="sbFredProxyUrl" placeholder="URL du relais CORS (ex. https://xxx.workers.dev) — vide = essai en direct" style="flex:1;min-width:160px">
+        <input type="text" id="sbFredProxyUrl" placeholder="Worker Cloudflare séparé (facultatif — laissez vide si Pages Functions est déployé)" style="flex:1;min-width:160px">
       </div>
-      <div class="hint" style="margin:-2px 0 6px">⚠️ L'API FRED ne renvoie pas d'en-tête CORS autorisant les appels directs depuis un navigateur — un essai sans relais échouera presque certainement. Un petit relais gratuit (Cloudflare Worker) est fourni à part avec ce fichier ; collez son URL ci-dessus une fois déployé.</div>
+      <div class="hint" style="margin:-2px 0 6px">⚠️ L'API FRED ne renvoie pas d'en-tête CORS autorisant les appels directs depuis un navigateur. Si ce fichier est servi par Cloudflare Pages avec les fonctions fournies (dossier <code>functions/</code>) déployées, ça fonctionne automatiquement, sans rien coller ici. Sinon, déployez le petit relais Worker fourni à part et collez son URL ci-dessus.</div>
       <div class="row">
         <input type="text" id="sbFredSearch" placeholder="Rechercher un indicateur (ex. CPI, unemployment, 10 year treasury)…" style="flex:1;min-width:160px">
         <button type="button" class="btn" id="sbFredSearchBtn">Rechercher</button>
@@ -2101,6 +2101,69 @@ let BFS_CATALOG = {};
 let FRED_CATALOG = {}; /* même principe, alimenté par fred_module.js (séries FRED, Federal Reserve Bank of St. Louis) */
 let SNB_CATALOG = {}; /* même principe, alimenté par bns_module.js (séries BNS, data.snb.ch) */
 let rebuildCombinedCatalog = null; /* défini par cp_module.js (seul module ayant accès à WB) ; recombine buildCatalog(WB) + BFS_CATALOG + FRED_CATALOG + SNB_CATALOG */
+
+/* ============================================================================================
+   Relais même-origine (Cloudflare Pages Functions) avec repli automatique sur l'appel direct.
+   Utilisé par bfs_module.js, fred_module.js et bns_module.js pour parler à l'OFS/FRED/BNS :
+   - si ce fichier est servi par Cloudflare Pages avec les fonctions de /functions déployées,
+     l'appel part vers une URL relative sur le MÊME domaine que la page (ex. "/api/fred/...") :
+     aucune règle CORS ne s'applique jamais à une requête same-origin, quoi que l'API externe
+     autorise ou non de son côté ;
+   - si ces fonctions ne sont pas déployées (page ouverte en local, ou hébergée ailleurs, ex.
+     GitHub Pages sans Cloudflare Pages), cette URL relative répond 404 (ou échoue carrément en
+     file://) et relayFetchJson retente alors automatiquement l'appel direct vers l'hôte externe
+     — exactement le comportement d'avant, avec les mêmes messages d'erreur CORS explicites.
+   ============================================================================================ */
+async function relayFetchJson(relayBase, directBase, pathAndQuery, opts){
+  const relayUrl = relayBase + pathAndQuery;
+  const directUrl = directBase + pathAndQuery;
+
+  /* Fichier ouvert en local (file://) : une URL relative n'y a jamais de sens (et Chrome la signale
+     même comme un blocage CORS dans la console, ce qui est trompeur) — on saute directement l'appel
+     direct, sans tenter le relais. */
+  if (typeof location !== 'undefined' && location.protocol === 'file:') {
+    let r;
+    try { r = await fetch(directUrl, opts); }
+    catch (e) { throw Object.assign(e, {__url: directUrl}); }
+    if (!r.ok) {
+      let detail = '';
+      try { const j = await r.json(); detail = j && j.error_message ? ' — ' + j.error_message : ''; } catch (e) {}
+      throw Object.assign(new Error('HTTP ' + r.status + (r.statusText ? ' (' + r.statusText + ')' : '') + detail), {__url: directUrl});
+    }
+    return await r.json();
+  }
+
+  /* ---- Tentative 1 : relais même-origine ---- */
+  try {
+    const r = await fetch(relayUrl, opts);
+    /* Un 404 sans corps JSON ressemble à la page 404 par défaut de Cloudflare (fonction absente de
+       ce domaine) -> on retente en direct plus bas. Un 404 AVEC corps JSON est une vraie réponse de
+       l'API relayée (le relais fonctionne, l'API a juste répondu 404) -> erreur finale, pas de repli. */
+    const relayAbsent = r.status === 404 && (r.headers.get('Content-Type') || '').indexOf('json') < 0;
+    if (!relayAbsent) {
+      if (!r.ok) {
+        let detail = '';
+        try { const j = await r.json(); detail = j && j.error_message ? ' — ' + j.error_message : ''; } catch (e) {}
+        throw Object.assign(new Error('HTTP ' + r.status + (r.statusText ? ' (' + r.statusText + ')' : '') + detail), {__url: relayUrl});
+      }
+      return await r.json();
+    }
+  } catch (e) {
+    if (e && e.__url) throw e; /* vraie erreur HTTP déjà remontée par le relais : ne pas la masquer derrière un repli */
+    /* sinon : échec réseau/transport pur (relais injoignable, page ouverte en file://, etc.) -> repli */
+  }
+
+  /* ---- Tentative 2 : appel direct (repli) ---- */
+  let r;
+  try { r = await fetch(directUrl, opts); }
+  catch (e) { throw Object.assign(e, {__url: directUrl}); }
+  if (!r.ok) {
+    let detail = '';
+    try { const j = await r.json(); detail = j && j.error_message ? ' — ' + j.error_message : ''; } catch (e) {}
+    throw Object.assign(new Error('HTTP ' + r.status + (r.statusText ? ' (' + r.statusText + ')' : '') + detail), {__url: directUrl});
+  }
+  return await r.json();
+}
 
 
 loadAllDestinationStores();
@@ -4032,16 +4095,21 @@ function bfsPeriodToMs(code){
    Deux API publiques, sans authentification :
      - dam-api.bfs.admin.ch/hub/api/dam/assets  -> catalogue/recherche (titres, thèmes, lien vers la table)
      - www.pxweb.bfs.admin.ch/api/v1/{lang}/{dbid}/{dbid}.px -> métadonnées (GET) + données (POST, JSON-stat2)
-   Ces deux hôtes sont appelés directement depuis le navigateur : si l'OFS ne renvoie pas d'en-tête
-   CORS autorisant l'origine de la page (ou si le réseau de l'utilisateur bloque bfs.admin.ch), la
-   requête échoue avec une erreur réseau générique ("Failed to fetch") — c'est signalé explicitement
-   dans l'interface (voir bfsErrMsg) plutôt que de rester silencieux, pour pouvoir diagnostiquer si
-   ça se reproduit comme avec la précédente tentative (BNS).
+   Ces deux hôtes sont appelés en priorité via un relais même-origine (Cloudflare Pages Functions,
+   functions/api/ofs-dam/[[path]].js et functions/api/ofs-pxweb/[[path]].js, fournis à part) : si ce
+   fichier est servi par Cloudflare Pages avec ces fonctions déployées, aucun CORS n'intervient jamais,
+   quoi que l'OFS autorise ou non de son côté. Si ce relais est absent (page ouverte en local, ou
+   hébergée ailleurs sans ces fonctions — ex. GitHub Pages seul), un appel direct est tenté en repli ;
+   si l'OFS ne renvoie alors pas d'en-tête CORS autorisant l'origine de la page, la requête échoue avec
+   une erreur réseau générique ("Failed to fetch") — c'est signalé explicitement dans l'interface (voir
+   bfsErrMsg) plutôt que de rester silencieux.
    ============================================================================================ */
 
 const BFS_LANG_DEFAULT = 'fr';
-const BFS_DAM_BASE = 'https://dam-api.bfs.admin.ch/hub/api/dam/assets';
-const BFS_PXWEB_BASE = 'https://www.pxweb.bfs.admin.ch/api/v1';
+const BFS_DAM_RELAY = '/api/ofs-dam';
+const BFS_DAM_DIRECT = 'https://dam-api.bfs.admin.ch/hub/api/dam/assets';
+const BFS_PXWEB_RELAY = '/api/ofs-pxweb';
+const BFS_PXWEB_DIRECT = 'https://www.pxweb.bfs.admin.ch/api/v1';
 const BFS_STORE_KEY = 'gip_bfs_series_v1';
 
 let bfsFullCatalog = [];     // [{title, dbid}] — toutes les tables "Cube PX" (données chiffrées) cataloguées par l'OFS
@@ -4058,19 +4126,16 @@ function bfsSetStatus(html, isErr){
 
 function bfsErrMsg(e, url){
   const base = (e && e.message) || String(e);
-  const looksNetwork = /fetch|network|NetworkError|Load failed/i.test(base);
+  const looksNetwork = /fetch|network|NetworkError|Load failed|404|relais/i.test(base);
   const hint = looksNetwork
-    ? ' — probablement un blocage réseau/CORS entre ce navigateur et bfs.admin.ch (pas une erreur de l\'outil). Si ça persiste sur la page hébergée sur GitHub Pages, notez ce message exact.'
+    ? ' — probablement un blocage réseau/CORS entre ce navigateur et bfs.admin.ch si le relais Cloudflare Pages Functions (functions/api/ofs-dam, functions/api/ofs-pxweb) n\'est pas déployé sur ce domaine. Si ça persiste malgré leur déploiement, notez ce message exact.'
     : '';
   return 'Erreur OFS : ' + esc(base) + hint + (url ? '<div class="hint" style="margin-top:4px;word-break:break-all">' + esc(url) + '</div>' : '');
 }
 
-async function bfsFetchJson(url, opts){
-  let r;
-  try { r = await fetch(url, opts); }
-  catch (e) { throw e; } // erreur réseau/CORS brute — remontée telle quelle par bfsErrMsg
-  if (!r.ok) throw new Error('HTTP ' + r.status + ' (' + r.statusText + ')');
-  return r.json();
+/* relayBase/directBase : BFS_DAM_* ou BFS_PXWEB_* selon l'appel — voir relayFetchJson (shared_engine.js). */
+async function bfsFetchJson(relayBase, directBase, pathAndQuery, opts){
+  return relayFetchJson(relayBase, directBase, pathAndQuery, opts);
 }
 
 /* ---- Catalogue OFS : liste paginée des tables "Cube PX" (= séries chiffrées requêtables via l'API STAT-TAB) ---- */
@@ -4079,15 +4144,14 @@ async function bfsLoadFullCatalog(){
   if (btn) { btn.disabled = true; btn.textContent = 'Chargement…'; }
   bfsSetStatus('Chargement de la liste des tables OFS disponibles…');
   const pageSize = 200, maxPages = 10;
-  let all = [], skip = 0, total = Infinity, lastUrl = BFS_DAM_BASE;
+  let all = [], skip = 0, total = Infinity;
   try {
     for (let page = 0; page < maxPages && skip < total; page++) {
-      const url = BFS_DAM_BASE + '?' + new URLSearchParams({
+      const qs = '?' + new URLSearchParams({
         language: BFS_LANG_DEFAULT, articleModelGroup: '900029', articleModel: '900033',
         limit: String(pageSize), skip: String(skip)
       }).toString();
-      lastUrl = url;
-      const json = await bfsFetchJson(url);
+      const json = await bfsFetchJson(BFS_DAM_RELAY, BFS_DAM_DIRECT, qs);
       total = typeof json.total === 'number' ? json.total : ((json.data || []).length + skip);
       const batch = json.data || [];
       all = all.concat(batch);
@@ -4096,7 +4160,7 @@ async function bfsLoadFullCatalog(){
     }
   } catch (e) {
     if (btn) { btn.disabled = false; btn.textContent = 'Charger la liste des données OFS disponibles'; }
-    bfsSetStatus(bfsErrMsg(e, lastUrl), true);
+    bfsSetStatus(bfsErrMsg(e, e.__url), true);
     return;
   }
   bfsFullCatalog = all
@@ -4142,8 +4206,8 @@ function bfsApplyFilter(){
 
 /* ---- Métadonnées d'une table (dimensions + repérage de la dimension temporelle) ---- */
 async function bfsFetchMeta(dbid, lang){
-  const url = BFS_PXWEB_BASE + '/' + lang + '/' + encodeURIComponent(dbid) + '/' + encodeURIComponent(dbid) + '.px';
-  return {meta: await bfsFetchJson(url), url};
+  const pathAndQuery = '/' + lang + '/' + encodeURIComponent(dbid) + '/' + encodeURIComponent(dbid) + '.px';
+  return {meta: await bfsFetchJson(BFS_PXWEB_RELAY, BFS_PXWEB_DIRECT, pathAndQuery), url: BFS_PXWEB_DIRECT + pathAndQuery};
 }
 
 async function bfsOnSelectResult(){
@@ -4164,7 +4228,7 @@ async function bfsOnSelectResult(){
       bfsCurrentLang = 'de';
       r = await bfsFetchMeta(item.dbid, bfsCurrentLang);
     } catch (e2) {
-      bfsSetStatus(bfsErrMsg(e2, BFS_PXWEB_BASE + '/.../' + item.dbid), true);
+      bfsSetStatus(bfsErrMsg(e2, e2.__url || (BFS_PXWEB_DIRECT + '/.../' + item.dbid)), true);
       return;
     }
   }
@@ -4209,12 +4273,12 @@ async function bfsAddSelected(){
     query.push({code: v.code, selection: {filter: 'item', values: [chosenVal]}});
     if (chosenIdx > 0) suffixParts.push((v.valueTexts || [])[chosenIdx] || chosenVal);
   });
-  const url = BFS_PXWEB_BASE + '/' + bfsCurrentLang + '/' + encodeURIComponent(dbid) + '/' + encodeURIComponent(dbid) + '.px';
+  const pathAndQuery = '/' + bfsCurrentLang + '/' + encodeURIComponent(dbid) + '/' + encodeURIComponent(dbid) + '.px';
   let json;
   try {
-    json = await bfsFetchJson(url, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({query, response: {format: 'json-stat2'}})});
+    json = await bfsFetchJson(BFS_PXWEB_RELAY, BFS_PXWEB_DIRECT, pathAndQuery, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({query, response: {format: 'json-stat2'}})});
   } catch (e) {
-    bfsSetStatus(bfsErrMsg(e, url), true);
+    bfsSetStatus(bfsErrMsg(e, e.__url), true);
     btn.disabled = false; btn.textContent = '+ Ajouter cette série au catalogue';
     return;
   }
@@ -4346,19 +4410,29 @@ function fredParseObservations(json){
      - series/observations  -> les points de la série choisie
    Contrairement à l'OFS, l'absence de CORS côté FRED est CONFIRMÉE (documentée par des tiers qui
    ont dû construire un relais pour la contourner) : un appel direct du navigateur vers
-   api.stlouisfed.org échouera presque toujours. Un relais minimal (Cloudflare Worker, fourni à
-   part) qui se contente d'ajouter l'en-tête Access-Control-Allow-Origin est nécessaire ; son URL
-   se configure dans le champ #sbFredProxyUrl et préfixe alors les appels à la place de l'hôte FRED.
+   api.stlouisfed.org échouera presque toujours. Deux solutions, essayées dans cet ordre :
+     1. Relais même-origine automatique via Cloudflare Pages Functions (functions/api/fred/[[path]].js,
+        fourni à part) : si ce fichier est servi par Cloudflare Pages avec ces fonctions déployées,
+        l'appel part vers une URL relative sur le même domaine — aucun CORS possible, rien à configurer.
+     2. Repli : si ce relais est absent (page ouverte en local, ou hébergée ailleurs sans ces fonctions),
+        et que le champ #sbFredProxyUrl contient l'URL d'un Worker Cloudflare séparé (fred_cors_proxy_worker.js,
+        fourni à part aussi), cette URL est utilisée à la place.
    La clé API (gratuite, à obtenir sur fred.stlouisfed.org) reste dans l'URL de la requête — elle
-   transite donc par ce relais et reste visible dans l'onglet réseau du navigateur ; comme il s'agit
-   d'une clé gratuite sans risque financier (données publiques, quota non payant), ce compromis de
-   simplicité est documenté plutôt que masqué.
+   transite donc par le relais utilisé et reste visible dans l'onglet réseau du navigateur ; comme il
+   s'agit d'une clé gratuite sans risque financier (données publiques, quota non payant), ce compromis
+   de simplicité est documenté plutôt que masqué.
    ============================================================================================ */
 
 const FRED_API_BASE = 'https://api.stlouisfed.org/fred';
 const FRED_KEY_STORE = 'gip_fred_api_key_v1';
 const FRED_PROXY_STORE = 'gip_fred_proxy_url_v1';
 const FRED_STORE_KEY = 'gip_fred_series_v1';
+/* Clé API FRED intégrée directement dans ce fichier (fournie par l'utilisateur) pour éviter de devoir
+   la ressaisir sur chaque poste/navigateur. Comme ce fichier est un HTML statique sans backend, cette
+   clé est visible dans le code source par quiconque ouvre la page (ou inspecte les requêtes réseau) —
+   acceptable ici car il s'agit d'une clé FRED gratuite, sans risque financier, limitée à des données
+   publiques. Le champ #sbFredApiKey reste modifiable et prioritaire si l'utilisateur le change. */
+const FRED_API_KEY_DEFAULT = 'd744e335baec080a0399aa0c0d424a15';
 
 let fredResults = []; // [{id, title, frequency, units, observation_start, observation_end}]
 let FRED_LOADED = [];
@@ -4368,19 +4442,20 @@ function fredSetStatus(html, isErr){
   el.innerHTML = isErr ? '<span class="err">' + html + '</span>' : (html || '');
 }
 
-function fredBaseUrl(){
-  const proxy = ($('sbFredProxyUrl').value || '').trim().replace(/\/+$/, '');
-  return proxy ? proxy + '/fred' : FRED_API_BASE;
-}
+/* Relais même-origine automatique (Cloudflare Pages Functions, voir functions/api/fred/[[path]].js)
+   essayé en premier ; le champ « URL du relais CORS » reste disponible pour les cas où l'utilisateur
+   préfère un Worker Cloudflare séparé (ex. page hébergée ailleurs que sur Cloudflare Pages) — s'il est
+   rempli, il est prioritaire et aucun repli automatique n'est tenté. */
+const FRED_API_RELAY = '/api/fred';
 
 function fredErrMsg(e, url){
   const base = (e && e.message) || String(e);
-  const looksNetwork = /fetch|network|NetworkError|Load failed/i.test(base);
+  const looksNetwork = /fetch|network|NetworkError|Load failed|404|relais/i.test(base);
   const usingProxy = !!($('sbFredProxyUrl').value || '').trim();
   const hint = looksNetwork
     ? (usingProxy
         ? ' — vérifiez que le relais est bien déployé et joignable à cette URL.'
-        : ' — attendu : l\'API FRED bloque les appels directs depuis un navigateur (CORS). Déployez le petit relais fourni (fred_cors_proxy_worker.js) et collez son URL dans le champ ci-dessus, puis réessayez.')
+        : ' — attendu si ce fichier n\'est pas (encore) servi par Cloudflare Pages avec les fonctions de /functions déployées (voir functions/api/fred) : l\'API FRED bloque sinon les appels directs depuis un navigateur (CORS). Déployez les fonctions fournies, ou à défaut collez l\'URL d\'un relais Worker dans le champ ci-dessus.')
     : '';
   return 'Erreur FRED : ' + esc(base) + hint + (url ? '<div class="hint" style="margin-top:4px;word-break:break-all">' + esc(url) + '</div>' : '');
 }
@@ -4388,19 +4463,21 @@ function fredErrMsg(e, url){
 async function fredFetchJson(path, params){
   const key = ($('sbFredApiKey').value || '').trim();
   if (!key) throw new Error('clé API FRED manquante (champ ci-dessus — gratuite sur fred.stlouisfed.org)');
-  const qs = new URLSearchParams(Object.assign({file_type: 'json', api_key: key}, params));
-  const url = fredBaseUrl() + path + '?' + qs.toString();
-  let r;
-  try { r = await fetch(url); }
-  catch (e) { throw Object.assign(e, {__url: url}); }
-  if (!r.ok) {
-    let detail = '';
-    try { const j = await r.json(); detail = j && j.error_message ? ' — ' + j.error_message : ''; } catch (e) {}
-    const err = new Error('HTTP ' + r.status + detail);
-    err.__url = url;
-    throw err;
+  const qs = '?' + new URLSearchParams(Object.assign({file_type: 'json', api_key: key}, params)).toString();
+  const manualProxy = ($('sbFredProxyUrl').value || '').trim().replace(/\/+$/, '');
+  if (manualProxy) {
+    const url = manualProxy + '/fred' + path + qs;
+    let r;
+    try { r = await fetch(url); }
+    catch (e) { throw Object.assign(e, {__url: url}); }
+    if (!r.ok) {
+      let detail = '';
+      try { const j = await r.json(); detail = j && j.error_message ? ' — ' + j.error_message : ''; } catch (e) {}
+      throw Object.assign(new Error('HTTP ' + r.status + detail), {__url: url});
+    }
+    return r.json();
   }
-  return r.json();
+  return relayFetchJson(FRED_API_RELAY, FRED_API_BASE, path + qs);
 }
 
 async function fredSearch(){
@@ -4512,7 +4589,7 @@ function fredRenderLoadedList(){
 
 /* ---- Persistance de la clé API / de l'URL du relais (champs simples, pas de catalogue) ---- */
 function fredRestoreFields(){
-  try { $('sbFredApiKey').value = localStorage.getItem(FRED_KEY_STORE) || ''; } catch (e) {}
+  try { $('sbFredApiKey').value = localStorage.getItem(FRED_KEY_STORE) || FRED_API_KEY_DEFAULT || ''; } catch (e) { try { $('sbFredApiKey').value = FRED_API_KEY_DEFAULT || ''; } catch (e2) {} }
   try { $('sbFredProxyUrl').value = localStorage.getItem(FRED_PROXY_STORE) || ''; } catch (e) {}
 }
 
@@ -4576,10 +4653,15 @@ function snbParseValues(values){
    La BNS ne publie pas de catalogue consultable par mot-clé comme l'OFS : la liste d'indicateurs
    ci-dessous (SNB_CUBES) est une sélection faite à la main, pas une recherche exhaustive.
    Le statut CORS de data.snb.ch n'est pas confirmé dans un sens ou l'autre (à la différence de
-   FRED, où l'absence de CORS est documentée) : voir snbErrMsg si la requête échoue.
+   FRED, où l'absence de CORS est documentée). Comme pour l'OFS et FRED, un relais même-origine
+   (Cloudflare Pages Functions, functions/api/snb/[[path]].js, fourni à part) est essayé en premier :
+   si ce fichier est servi par Cloudflare Pages avec cette fonction déployée, aucun CORS n'intervient
+   jamais, quoi que la BNS autorise ou non de son côté. Sinon, repli automatique sur l'appel direct
+   (comportement d'avant) ; voir snbErrMsg si la requête échoue malgré tout.
    ============================================================================================ */
 
-const SNB_API_BASE = 'https://data.snb.ch/api/cube';
+const SNB_API_RELAY = '/api/snb';
+const SNB_API_DIRECT = 'https://data.snb.ch/api/cube';
 const SNB_STORE_KEY = 'gip_snb_series_v1';
 
 const SNB_CUBES = [
@@ -4602,9 +4684,9 @@ function snbSetStatus(html, isErr){
 
 function snbErrMsg(e, url){
   const base = (e && e.message) || String(e);
-  const looksNetwork = /fetch|network|NetworkError|Load failed/i.test(base);
+  const looksNetwork = /fetch|network|NetworkError|Load failed|404|relais/i.test(base);
   const hint = looksNetwork
-    ? ' — probablement un blocage réseau/CORS entre ce navigateur et data.snb.ch (pas confirmé dans un sens ou l\'autre pour ce site ; copiez ce message exact si ça se reproduit).'
+    ? ' — probablement un blocage réseau/CORS entre ce navigateur et data.snb.ch si le relais Cloudflare Pages Functions (functions/api/snb) n\'est pas déployé sur ce domaine (pas confirmé dans un sens ou l\'autre pour ce site sinon ; copiez ce message exact si ça se reproduit malgré le relais).'
     : '';
   return 'Erreur BNS : ' + esc(base) + hint + (url ? '<div class="hint" style="margin-top:4px;word-break:break-all">' + esc(url) + '</div>' : '');
 }
@@ -4620,14 +4702,12 @@ async function snbLoadCube(){
   snbCurrentCube = cube;
   const btn = $('sbSnbLoadBtn'); btn.disabled = true; btn.textContent = 'Chargement…';
   snbSetStatus('Chargement de « ' + esc(cube.label) + ' »…');
-  const url = SNB_API_BASE + '/' + encodeURIComponent(cubeId) + '/data/json/fr';
+  const pathAndQuery = '/' + encodeURIComponent(cubeId) + '/data/json/fr';
   let json;
   try {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error('HTTP ' + r.status + ' (' + r.statusText + ')');
-    json = await r.json();
+    json = await relayFetchJson(SNB_API_RELAY, SNB_API_DIRECT, pathAndQuery);
   } catch (e) {
-    snbSetStatus(snbErrMsg(e, url), true);
+    snbSetStatus(snbErrMsg(e, e.__url), true);
     btn.disabled = false; btn.textContent = 'Charger les séries de cet indicateur';
     return;
   }

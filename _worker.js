@@ -84,6 +84,13 @@ export default {
       }
     }
 
+    /* Racine du site -> sert directement Outils_GIP.html (le fichier "_redirects" seul ne suffit
+       pas ici : un Worker personnalisé intercepte la requête avant que ce mécanisme ne s'applique,
+       donc on fait la même chose explicitement). */
+    if (url.pathname === '/') {
+      return env.ASSETS.fetch(new Request(new URL('/Outils_GIP.html', request.url), request));
+    }
+
     /* Tout le reste : fichiers statiques du site (Outils_GIP.html, images, etc.). */
     return env.ASSETS.fetch(request);
   }
