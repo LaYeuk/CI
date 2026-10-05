@@ -1,7 +1,9 @@
 Copier TOUT le contenu de ce dossier à la racine du dossier CI (en remplaçant les fichiers existants), puis déployer comme d'habitude :
     npx wrangler deploy
 
-Fichiers modifiés : Outils_GIP.html (écrans FRED et BNS) et _worker.js (nouvelle route /api/snb-index).
+Fichiers modifiés :
+  - Outils_GIP.html : onglets OFS, BNS et FRED (une source par onglet) ; le Sandbox s'appelle désormais « Chart Creator ».
+  - _worker.js : routes /api/ofs-index et /api/snb-index (titres français et recherche plein texte OFS / BNS).
 Fichiers inchangés, fournis pour avoir un jeu complet : wrangler.jsonc, .assetsignore, _redirects.
 
 Attention : .assetsignore commence par un point. Il peut être masqué dans l'Explorateur Windows (Affichage > Éléments masqués).

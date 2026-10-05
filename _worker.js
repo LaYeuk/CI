@@ -10,6 +10,7 @@
  *
  * Routes propres à la BNS : /api/snb-catalog (liste des cubes, depuis le plan du site) et
  * /api/snb-index (titres + libellés des séries + date de publication, pour la recherche de l'écran BNS).
+ * Route propre à l'OFS : /api/ofs-index (titres français + dimensions des tables STAT-TAB, écran OFS).
  *
  * Fichiers compagnons à la racine du dépôt (CI/) :
  *   - wrangler.jsonc   : config du Worker (assets.directory = ".", main = "_worker.js")
@@ -220,6 +221,76 @@ async function snbIndex(url, ctx){
   });
 }
 
+/* ----------------------------------------------------------------------------------------------
+ * Index de recherche OFS (/api/ofs-index?lang=fr&ids=px-x-...,px-x-...) — utilisé par l'écran
+ * « OFS » d'Outils_GIP.html. Le catalogue DAM de l'OFS ne donne les titres qu'en allemand ; les
+ * titres français et les libellés des dimensions viennent de l'API STAT-TAB (PxWeb) :
+ *   - /api/v1/{lang}/{id}              -> titre de la table + date de mise à jour ;
+ *   - /api/v1/{lang}/{id}/{id}.px      -> variables (dimensions) et leurs valeurs = mots-clés.
+ * 10 tables max par appel (20 sous-requêtes), 3 tables à la fois pour ménager la limite de débit de
+ * STAT-TAB ; chaque table est mise en cache 7 jours. Repli sur l'allemand si la table n'existe pas en
+ * français. Les échecs ne sont pas mis en cache (le navigateur les redemandera plus tard).
+ * ---------------------------------------------------------------------------------------------- */
+
+const OFS_META_TTL = 7 * 24 * 3600;
+
+async function ofsTableMeta(id, lang, ctx){
+  const cache = caches.default;
+  const key = new Request('https://internal-cache.invalid/ofs-meta-v1/' + lang + '/' + encodeURIComponent(id));
+  const hit = await cache.match(key);
+  if (hit) return hit.json();
+
+  const base = 'https://www.pxweb.bfs.admin.ch/api/v1/';
+  const enc = encodeURIComponent(id);
+  let usedLang = lang, list = await snbJson(base + lang + '/' + enc);
+  if (!list.json && list.status === 404 && lang !== 'de') { usedLang = 'de'; list = await snbJson(base + 'de/' + enc); }
+  const meta = await snbJson(base + usedLang + '/' + enc + '/' + enc + '.px');
+  if (!list.json && !meta.json) return {id, err: list.status || meta.status || 0};
+
+  const tbl = Array.isArray(list.json) ? (list.json.find(x => x.type === 't') || list.json[0] || {}) : {};
+  const vars = (meta.json && meta.json.variables) || [];
+  const kw = [];
+  vars.forEach(v => {
+    kw.push(v.text || v.code);
+    if (v.time) return;
+    (v.valueTexts || []).slice(0, 40).forEach(t => { if (t && !/^\d+$/.test(t)) kw.push(t); });
+  });
+  const timeVar = vars.find(v => v.time);
+  const out = {
+    id,
+    lang: usedLang,
+    title: String(tbl.text || (meta.json && meta.json.title) || '').trim(),
+    updated: String(tbl.updated || ''),
+    dims: vars.map(v => v.text || v.code).join(' · '),
+    kw: Array.from(new Set(kw)).join(' · ').slice(0, 1200),
+    t0: timeVar && timeVar.values ? timeVar.values[0] : '',
+    t1: timeVar && timeVar.values ? timeVar.values[timeVar.values.length - 1] : ''
+  };
+  if (list.json && meta.json) {
+    ctx.waitUntil(cache.put(key, new Response(JSON.stringify(out), {headers: {'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=' + OFS_META_TTL}})));
+  }
+  return out;
+}
+
+async function ofsIndex(url, ctx){
+  const lang = ['fr', 'de', 'it', 'en'].indexOf(url.searchParams.get('lang')) >= 0 ? url.searchParams.get('lang') : 'fr';
+  const ids = (url.searchParams.get('ids') || '').split(',').map(s => s.trim()).filter(s => /^px-x-[0-9A-Za-z_]+$/.test(s)).slice(0, 10);
+  const entries = new Array(ids.length);
+  let k = 0;
+  async function worker(){
+    while (k < ids.length) {
+      const i = k++;
+      try { entries[i] = await ofsTableMeta(ids[i], lang, ctx); }
+      catch (e) { entries[i] = {id: ids[i], err: 0}; }
+    }
+  }
+  await Promise.all([worker(), worker(), worker()]);
+  return new Response(JSON.stringify({lang, entries}), {
+    status: 200,
+    headers: {'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...corsHeaders()}
+  });
+}
+
 /* Ordre important : les préfixes les plus spécifiques d'abord (aucun souci ici, les 4 préfixes
    sont mutuellement exclusifs). */
 const ROUTES = [
@@ -241,6 +312,11 @@ export default {
     if (url.pathname === '/api/snb-index') {
       if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
       return snbIndex(url, ctx);
+    }
+
+    if (url.pathname === '/api/ofs-index') {
+      if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+      return ofsIndex(url, ctx);
     }
 
     for (const r of ROUTES) {
