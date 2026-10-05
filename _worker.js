@@ -60,6 +60,66 @@ async function relay(request, targetBase, stripPrefix, methods){
   });
 }
 
+/* ----------------------------------------------------------------------------------------------
+ * Catalogue complet BNS (/api/snb-catalog) : la BNS n'offre aucune API de recherche — la seule
+ * source exhaustive est son plan de site XML (https://data.snb.ch/sitemap, ~1'149 entrées). Ce
+ * fichier est trop gros pour les outils de navigation web utilisés côté agent pour l'explorer (ils
+ * le tronquent), mais AUCUN souci ici : ce Worker tourne sur le réseau de Cloudflare et fait un
+ * fetch() normal, sans cette limite. On le télécharge, on en extrait tous les cubes "publication"
+ * (topics/{domaine}/cube/{id}, langue EN pour éviter les triplons de/fr/en), on les classe par
+ * domaine, et on met le résultat en cache (Cache API, 24h) pour ne pas re-télécharger le sitemap à
+ * chaque recherche. Les cubes "warehouse" (statistique bancaire détaillée, API différente, non
+ * gérée par ce Worker) sont volontairement exclus du résultat.
+ * ---------------------------------------------------------------------------------------------- */
+
+const SNB_TOPIC_FR = {
+  snb: 'BNS (bilan, réserves, billets)',
+  banken: 'Banques',
+  ziredev: "Taux d'intérêt, rendements et changes",
+  finma: 'Marché des capitaux et transactions de paiement',
+  uvo: 'Conjoncture suisse',
+  aube: 'Conjoncture internationale',
+  cross: 'Transversal'
+};
+
+const SNB_PUB_CUBE_RE = /<loc>https:\/\/data\.snb\.ch\/en\/topics\/([^/]+)\/cube\/([^<]+)<\/loc>/g;
+
+async function snbCatalog(ctx){
+  const cache = caches.default;
+  const cacheKey = new Request('https://internal-cache.invalid/snb-catalog-v1');
+  const cached = await cache.match(cacheKey);
+  if (cached) return cached;
+
+  let xml;
+  try {
+    const r = await fetch('https://data.snb.ch/sitemap');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    xml = await r.text();
+  } catch (e) {
+    return new Response(JSON.stringify({error_message: 'Impossible de récupérer le plan du site de la BNS (' + e.message + ')'}), {
+      status: 502, headers: {'Content-Type': 'application/json', ...corsHeaders()}
+    });
+  }
+
+  const seen = new Set();
+  const publication = [];
+  let m;
+  SNB_PUB_CUBE_RE.lastIndex = 0;
+  while ((m = SNB_PUB_CUBE_RE.exec(xml))) {
+    const topic = m[1], id = m[2];
+    if (seen.has(id)) continue;
+    seen.add(id);
+    publication.push({id, topic, domaine: SNB_TOPIC_FR[topic] || topic});
+  }
+
+  const resp = new Response(JSON.stringify({publication, generated: new Date().toISOString()}), {
+    status: 200,
+    headers: {'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=86400', ...corsHeaders()}
+  });
+  ctx.waitUntil(cache.put(cacheKey, resp.clone()));
+  return resp;
+}
+
 /* Ordre important : les préfixes les plus spécifiques d'abord (aucun souci ici, les 4 préfixes
    sont mutuellement exclusifs). */
 const ROUTES = [
@@ -70,8 +130,13 @@ const ROUTES = [
 ];
 
 export default {
-  async fetch(request, env){
+  async fetch(request, env, ctx){
     const url = new URL(request.url);
+
+    if (url.pathname === '/api/snb-catalog') {
+      if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+      return snbCatalog(ctx);
+    }
 
     for (const r of ROUTES) {
       if (url.pathname === r.prefix || url.pathname.startsWith(r.prefix + '/')) {

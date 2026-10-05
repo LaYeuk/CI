@@ -649,10 +649,15 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     </div>
 
     <div id="sbSnbBox" class="extbox" style="display:none">
+      <button type="button" class="btn" id="sbSnbCatalogBtn" style="width:100%;margin-bottom:6px">Charger le catalogue complet (~900 indicateurs)</button>
       <div class="row" style="margin-top:0">
-        <select id="sbSnbCube" style="flex:1;min-width:160px"></select>
-        <button type="button" class="btn" id="sbSnbLoadBtn">Charger les séries de cet indicateur</button>
+        <input type="text" id="sbSnbSearch" placeholder="Mot-clé (taux, change, réserves, actions, agrégats…)" style="flex:1;min-width:160px">
       </div>
+      <div class="row">
+        <select id="sbSnbCube" style="flex:1;min-width:160px" disabled><option value="">— tapez un mot-clé ci-dessus —</option></select>
+        <button type="button" class="btn" id="sbSnbLoadBtn" disabled>Charger les séries de cet indicateur</button>
+      </div>
+      <div class="hint" style="margin:-2px 0 6px">La BNS n'a pas de catalogue consultable par mot-clé : tant que le catalogue complet n'est pas chargé, la recherche porte sur une sélection faite à la main (une vingtaine d'indicateurs). Une fois chargé (plan du site officiel), elle couvre l'ensemble des indicateurs publiés par la BNS (hors statistique bancaire détaillée, API séparée).</div>
       <select id="sbSnbResults" style="display:none;margin-bottom:6px"><option value="">— choisissez une série —</option></select>
       <button type="button" class="btn pri" id="sbSnbAddBtn" style="display:none;width:100%;margin-bottom:6px">+ Ajouter cette série</button>
       <div class="stat" id="sbSnbStatus"></div>
@@ -4664,13 +4669,28 @@ const SNB_API_RELAY = '/api/snb';
 const SNB_API_DIRECT = 'https://data.snb.ch/api/cube';
 const SNB_STORE_KEY = 'gip_snb_series_v1';
 
+/* Catalogue sélectionné à la main (pas de recherche officielle côté BNS — voir plus haut) ;
+   "domaine" et "mots" servent uniquement au filtre par mot-clé ci-dessous (snbApplyFilter). */
 const SNB_CUBES = [
-  {id: 'snbgwdzid', label: 'Taux directeurs & SARON (Suisse, quotidien)'},
-  {id: 'snboffzisa', label: 'Taux directeurs des grandes banques centrales (comparaison internationale, mensuel)'},
-  {id: 'zirepo', label: 'SARON et dérivés — marché repo (quotidien)'},
-  {id: 'rendoblim', label: 'Rendements des emprunts de la Confédération — courbe CHF (mensuel)'},
-  {id: 'devkum', label: 'Cours de change mensuels moyens (CHF)'},
-  {id: 'snbmonagg', label: 'Agrégats monétaires (Suisse, mensuel)'}
+  {id: 'snbgwdzid', label: 'Taux directeur BNS, SARON (fixing de clôture) & taux spéciaux — Suisse, quotidien', domaine: "Taux d'intérêt", mots: 'taux directeur saron leitzins politique monetaire sichteinlagen liquidite aide engpass'},
+  {id: 'zirepo', label: 'SARON composés — overnight, Tomorrow Next, 1 semaine, 1M, 3M, 6M (marché repo), quotidien', domaine: "Taux d'intérêt", mots: 'saron repo overnight tomorrow next compose compound reference'},
+  {id: 'zimoma', label: 'Taux du marché monétaire — comparaison internationale (SARON, SOFR, TONA, SONIA, €STR/EURIBOR), mensuel', domaine: "Taux d'intérêt", mots: 'sofr tona sonia estr euribor marche monetaire international comparaison'},
+  {id: 'snboffzisa', label: 'Taux directeurs officiels — comparaison internationale (BNS, Fed, BCE, BoE, BoJ)', domaine: "Taux d'intérêt", mots: 'fed bce ecb boe boj banque centrale directeur officiel comparaison'},
+  {id: 'rendoblim', label: 'Rendements des emprunts de la Confédération — courbe CHF, mensuel', domaine: "Taux d'intérêt / Obligations", mots: 'obligation emprunt confederation rendement courbe taux long terme'},
+  {id: 'devkum', label: 'Cours de change mensuels moyens / fin de mois — 27 devises', domaine: 'Cours de change', mots: 'change devise cours eur usd gbp jpy mensuel forex'},
+  {id: 'devkua', label: 'Cours de change — moyennes annuelles, 27 devises', domaine: 'Cours de change', mots: 'change devise cours annuel forex'},
+  {id: 'snbmonagg', label: 'Agrégats monétaires M1, M2, M3 — Suisse, mensuel', domaine: 'Agrégats monétaires', mots: 'm1 m2 m3 masse monetaire agregat'},
+  {id: 'snbbipo', label: 'Bilan de la BNS — or, devises, position FMI, moyens de paiement internationaux, mensuel', domaine: 'Bilan & réserves BNS', mots: 'bilan or devises fmi reserve actif passif'},
+  {id: 'snbcurrc', label: 'Réserves de devises par monnaie (USD/EUR/JPY/GBP/CAD/autres)', domaine: 'Bilan & réserves BNS', mots: 'reserve devise monnaie usd eur jpy gbp cad'},
+  {id: 'snbcurrp', label: 'Allocation des placements de devises par monnaie, en %', domaine: 'Bilan & réserves BNS', mots: 'allocation placement devise pourcentage repartition'},
+  {id: 'snbcurrinvc', label: "Structure des placements de la BNS — catégories d'actifs, notation, duration", domaine: 'Bilan & réserves BNS', mots: 'placement actif obligation action notation rating duration structure'},
+  {id: 'snbgwdchfsgw', label: 'Avoirs à vue en francs à la BNS — hebdomadaire', domaine: 'Bilan & réserves BNS', mots: 'avoir a vue compte virement sight deposit hebdomadaire liquidite'},
+  {id: 'snbgwdmigirow', label: 'Avoirs en comptes de virement à la BNS — hebdomadaire', domaine: 'Bilan & réserves BNS', mots: 'avoir compte virement hebdomadaire'},
+  {id: 'bamire', label: 'Réserves minimales des banques — exigence et taux de couverture', domaine: 'Bilan & réserves BNS', mots: 'reserve minimale banque exigence couverture minimum'},
+  {id: 'snbnomu', label: 'Billets en circulation par coupure (5/10/20/50/100.-)', domaine: 'Bilan & réserves BNS', mots: 'billet circulation coupure cash especes'},
+  {id: 'capchstocki', label: 'Indices boursiers suisses (ex. SPI, avec réinvestissement des dividendes) — quotidien', domaine: 'Marché des actions', mots: 'action bourse indice spi performance dividende swiss market'},
+  {id: 'bopoverq', label: 'Balance des paiements — vue d’ensemble (courant, capital, financier), trimestriel', domaine: 'Balance des paiements', mots: 'balance paiement courant capital financier compte'},
+  {id: 'auvekomq', label: 'Position extérieure — investissements directs, portefeuille, dérivés, trimestriel', domaine: 'Balance des paiements', mots: 'position exterieure investissement direct portefeuille derive iip'}
 ];
 
 let snbCurrentCube = null;
@@ -4691,13 +4711,96 @@ function snbErrMsg(e, url){
   return 'Erreur BNS : ' + esc(base) + hint + (url ? '<div class="hint" style="margin-top:4px;word-break:break-all">' + esc(url) + '</div>' : '');
 }
 
-function snbPopulateCubeSelect(){
-  $('sbSnbCube').innerHTML = SNB_CUBES.map(c => `<option value="${esc(c.id)}">${esc(c.label)}</option>`).join('');
+/* Minuscules + sans accents, pour que "reserves" retrouve "réserves". */
+function snbNorm(s){
+  return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+}
+
+let SNB_FILTERED = [];
+
+/* ----------------------------------------------------------------------------------------------
+ * Catalogue complet (/api/snb-catalog, servi par le Worker) : la BNS n'a pas d'API de recherche —
+ * on passe par le plan du site (~900 cubes « publication »), récupéré et classé par domaine côté
+ * Worker (lui n'a pas la limite de taille que l'outil de navigation web a rencontrée côté agent).
+ * Chargé une seule fois (bouton), mis en cache 24h dans localStorage pour ne pas re-télécharger à
+ * chaque visite. Les libellés détaillés de SNB_CUBES ci-dessus sont réutilisés quand on les connaît ;
+ * sinon on affiche juste le domaine + l'id — le vrai nom de chaque série apparaît de toute façon une
+ * fois l'indicateur chargé (dimItem renvoyé par l'API, déjà en français). Les cubes "warehouse"
+ * (statistique bancaire détaillée, API différente) ne sont pas inclus.
+ * ---------------------------------------------------------------------------------------------- */
+
+const SNB_CATALOG_API = '/api/snb-catalog';
+const SNB_CATALOG_STORE_KEY = 'gip_snb_full_catalog_v1';
+const SNB_CATALOG_TTL_MS = 24 * 3600 * 1000;
+
+let SNB_FULL_CATALOG = null; // null = pas encore chargé ; sinon tableau {id, domaine, label, mots}
+
+function snbCatalogEntry(raw){
+  const known = SNB_CUBES.find(c => c.id === raw.id);
+  return known
+    ? {id: raw.id, domaine: known.domaine, label: known.label, mots: known.mots}
+    : {id: raw.id, domaine: raw.domaine, label: raw.id, mots: ''};
+}
+
+async function snbLoadFullCatalog(){
+  if (SNB_FULL_CATALOG) return; // déjà chargé cette session
+  const btn = $('sbSnbCatalogBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Chargement du catalogue complet…'; }
+  snbSetStatus('Chargement du catalogue complet de la BNS (plan du site, ~900 indicateurs)…');
+
+  try {
+    const raw = localStorage.getItem(SNB_CATALOG_STORE_KEY);
+    if (raw) {
+      const cached = JSON.parse(raw);
+      if (cached && cached.ts && (Date.now() - cached.ts) < SNB_CATALOG_TTL_MS && Array.isArray(cached.entries) && cached.entries.length) {
+        SNB_FULL_CATALOG = cached.entries;
+      }
+    }
+  } catch (e) {}
+
+  if (!SNB_FULL_CATALOG) {
+    try {
+      const r = await fetch(SNB_CATALOG_API);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const json = await r.json();
+      SNB_FULL_CATALOG = (json.publication || []).map(snbCatalogEntry);
+      try { localStorage.setItem(SNB_CATALOG_STORE_KEY, JSON.stringify({ts: Date.now(), entries: SNB_FULL_CATALOG})); } catch (e) {}
+    } catch (e) {
+      snbSetStatus('Erreur lors du chargement du catalogue complet : ' + esc((e && e.message) || String(e)) + ' — recherche limitée à la sélection restreinte en attendant.', true);
+      if (btn) { btn.disabled = false; btn.textContent = 'Charger le catalogue complet (~900 indicateurs)'; }
+      return;
+    }
+  }
+
+  if (btn) { btn.style.display = 'none'; }
+  snbSetStatus(SNB_FULL_CATALOG.length + ' indicateurs BNS disponibles — tapez un mot-clé ci-dessus.');
+  snbApplyFilter();
+}
+
+/* Filtre par mot-clé (aucune liste affichée par défaut — voir sbSnbSearch) : cherche dans le
+   libellé, le domaine, les mots-clés et l'id. Porte sur le catalogue complet une fois chargé,
+   sinon sur la sélection restreinte faite à la main (SNB_CUBES). */
+function snbApplyFilter(){
+  const kw = snbNorm($('sbSnbSearch').value).trim();
+  const sel = $('sbSnbCube');
+  const btn = $('sbSnbLoadBtn');
+  const source = SNB_FULL_CATALOG || SNB_CUBES;
+  if (!kw) {
+    SNB_FILTERED = [];
+    sel.innerHTML = '<option value="">— tapez un mot-clé ci-dessus —</option>';
+    sel.disabled = true; btn.disabled = true;
+    return;
+  }
+  SNB_FILTERED = source.filter(c => snbNorm(c.label + ' ' + c.domaine + ' ' + c.mots + ' ' + c.id).indexOf(kw) >= 0).slice(0, 300);
+  sel.disabled = false; btn.disabled = SNB_FILTERED.length === 0;
+  sel.innerHTML = SNB_FILTERED.length
+    ? SNB_FILTERED.map(c => `<option value="${esc(c.id)}">${esc(c.domaine)} — ${esc(c.label)}</option>`).join('')
+    : '<option value="">— aucune série BNS ne correspond à ce mot-clé —</option>';
 }
 
 async function snbLoadCube(){
   const cubeId = $('sbSnbCube').value;
-  const cube = SNB_CUBES.find(c => c.id === cubeId);
+  const cube = SNB_FILTERED.find(c => c.id === cubeId);
   if (!cube) return;
   snbCurrentCube = cube;
   const btn = $('sbSnbLoadBtn'); btn.disabled = true; btn.textContent = 'Chargement…';
@@ -4793,7 +4896,9 @@ function snbRenderLoadedList(){
 
 /* ---- Câblage ---- */
 if ($('sbSnbCube')) {
-  snbPopulateCubeSelect();
+  snbApplyFilter(); // état initial : rien tant qu'aucun mot-clé n'est tapé
+  if ($('sbSnbCatalogBtn')) $('sbSnbCatalogBtn').addEventListener('click', snbLoadFullCatalog);
+  $('sbSnbSearch').addEventListener('input', snbApplyFilter);
   $('sbSnbLoadBtn').addEventListener('click', snbLoadCube);
   $('sbSnbResults').addEventListener('change', () => { $('sbSnbAddBtn').style.display = $('sbSnbResults').value !== '' ? '' : 'none'; });
   $('sbSnbAddBtn').addEventListener('click', snbAddSelected);
