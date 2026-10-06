@@ -22,7 +22,8 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 .topnav .navmark img{height:22px}
 .topnav .navmark span{font-size:12.5px;font-weight:700;letter-spacing:.02em;color:#DDE3E6}
 .topnav .navspacer{flex:1}
-.topnav .navbtns{display:flex;gap:6px}
+.topnav .navgroups{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.topnav .navbtns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .topnav .navbtn{border:1px solid rgba(255,255,255,.22);background:transparent;color:#CBD5DA;padding:6px 14px;border-radius:20px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;transition:.15s}
 .topnav .navbtn:hover{border-color:#fff;color:#fff}
 .topnav .navbtn.on{background:var(--cyan);border-color:var(--cyan);color:var(--navy)}
@@ -520,16 +521,20 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 <nav class="topnav">
   <div class="navmark"><img src="data:image/png;base64,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" alt="GIP"><span>OUTILS CI &middot; GIP SA</span></div>
   <div class="navspacer"></div>
-  <div class="navbtns">
-    <button type="button" class="navbtn on" data-screen="home">Accueil</button>
-    <button type="button" class="navbtn" data-screen="sandbox">Chart Creator</button>
-    <button type="button" class="navbtn" data-screen="ofs">OFS</button>
-    <button type="button" class="navbtn" data-screen="snb">BNS</button>
-    <button type="button" class="navbtn" data-screen="fred">FRED</button>
-    <button type="button" class="navbtn" data-screen="chartpack">Chart Pack</button>
-    <button type="button" class="navbtn" data-screen="am">AM Dashboard</button>
-    <button type="button" class="navbtn" data-screen="whiteboard">Whiteboard</button>
-    <button type="button" class="navbtn" id="gipTeamKeyBtn" title="Clé d'équipe et état de la base partagée" style="padding:6px 10px"><span id="gipDbDot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#8A9199;margin-right:6px;vertical-align:middle"></span>🔑</button>
+  <div class="navgroups">
+    <div class="navbtns">
+      <button type="button" class="navbtn on" data-screen="home">Accueil</button>
+      <button type="button" class="navbtn" data-screen="sandbox">Chart Creator</button>
+      <button type="button" class="navbtn" data-screen="snb">BNS</button>
+      <button type="button" class="navbtn" data-screen="fred">FRED</button>
+      <button type="button" class="navbtn" data-screen="ofs">OFS</button>
+    </div>
+    <div class="navbtns">
+      <button type="button" class="navbtn" data-screen="chartpack">Chart Pack</button>
+      <button type="button" class="navbtn" data-screen="am">AM Dashboard</button>
+      <button type="button" class="navbtn" data-screen="whiteboard">Whiteboard</button>
+      <button type="button" class="navbtn" id="gipTeamKeyBtn" title="Clé d'équipe et état de la base partagée" style="padding:6px 10px"><span id="gipDbDot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#8A9199;margin-right:6px;vertical-align:middle"></span>🔑</button>
+    </div>
   </div>
 </nav>
 
@@ -872,7 +877,11 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     <div id="sbTableWrap" style="display:none;margin-top:8px" class="hint"></div>
 
     <div class="destrow">
-      <div class="hint" style="margin-bottom:8px">Envoyer ce graphique vers :</div>
+      <div class="hint" style="margin-bottom:8px">Exporter ce graphique :</div>
+      <div class="row" style="margin-top:0;margin-bottom:14px">
+        <button class="btn" id="sbExportPng" disabled type="button">⬇ Exporter en PNG</button>
+      </div>
+      <div class="hint" style="margin-bottom:8px">Ou l'envoyer vers :</div>
       <div class="row" style="margin-top:0">
         <button class="btn pri" id="sbSendChartpack" disabled type="button">→ Chart Pack CI</button>
         <button class="btn pri" id="sbSendDashboard" disabled type="button">→ AM Dashboard</button>
@@ -6844,7 +6853,7 @@ document.querySelectorAll('#screenSandbox .flag.ma').forEach(el => el.addEventLi
   renderPreview();
 }));
 $('sbTitle').addEventListener('input', renderPreview);
-$('sbCaption').addEventListener('input', () => { $('sbSendChartpack').disabled = $('sbSendDashboard').disabled = $('sbSendWhiteboard').disabled = sbSel.length === 0; });
+$('sbCaption').addEventListener('input', () => { $('sbSendChartpack').disabled = $('sbSendDashboard').disabled = $('sbSendWhiteboard').disabled = $('sbExportPng').disabled = sbSel.length === 0; });
 
 /* ---- Aperçu ---- */
 function currentChart(){
@@ -6862,7 +6871,7 @@ function tableRowsFor(s){
 function renderPreview(){
   const box = $('sbPrev');
   const canSend = sbSel.length > 0;
-  $('sbSendChartpack').disabled = $('sbSendDashboard').disabled = $('sbSendWhiteboard').disabled = !canSend;
+  $('sbSendChartpack').disabled = $('sbSendDashboard').disabled = $('sbSendWhiteboard').disabled = $('sbExportPng').disabled = !canSend;
   if (!canSend) {
     box.innerHTML = '<div class="hint" style="padding:20px 4px;text-align:center">Sélectionnez une ou plusieurs séries pour voir l\'aperçu.</div>';
     $('sbTableWrap').style.display = 'none';
@@ -7013,15 +7022,28 @@ $('sbEditSave').addEventListener('click', saveEditedItem);
 $('sbEditCancel').addEventListener('click', () => { sbEditingRef = null; renderEditBanner(null); });
 
 /* ---- Envoi vers une destination ---- */
-function bakeItem(){
+function bakeCanvas(){
   const chart = currentChart();
   const range = sbRange || seriesFullRange(chart);
-  const cv = buildSandboxExportCanvas(chart, {
+  return buildSandboxExportCanvas(chart, {
     rsi: sbOpts.rsi, macd: sbOpts.macd,
     rsiT: sbSel[0] ? sbSel[0].t : [], rsiValues: sbOpts.rsi ? computeRSI(sbSel[0].values, 14) : [],
     macdT: sbSel[0] ? sbSel[0].t : [], macdData: sbOpts.macd ? computeMACD(sbSel[0].values, 12, 26, 9) : null,
     xRange: range
   });
+}
+/* ---- Export PNG du graphique en construction (même rendu que celui envoyé vers les destinations) ---- */
+$('sbExportPng').addEventListener('click', () => {
+  if (!sbSel.length) return;
+  const cv = bakeCanvas();
+  const name = ($('sbTitle').value || sbSel.map(s => s.label).join(' / ') || 'graphique').replace(/[^a-z0-9]+/gi, '_').replace(/^_+|_+$/g, '').slice(0, 80) || 'graphique';
+  downloadUrl(cv.toDataURL('image/png'), name + '.png');
+  $('sbMsg').textContent = 'Graphique exporté en PNG (' + name + '.png).';
+});
+function bakeItem(){
+  const chart = currentChart();
+  const range = sbRange || seriesFullRange(chart);
+  const cv = bakeCanvas();
   return {
     title: $('sbTitle').value || sbSel.map(s=>s.label).join(' / '),
     img: cv.toDataURL('image/png'),
