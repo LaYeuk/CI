@@ -13,6 +13,8 @@
   // Base partagée (Cloudflare D1) pour les graphiques déposés sur le Chart Pack CI, le Whiteboard
   // et l'AM Dashboard : tout le monde qui visite le site voit les mêmes dépôts (voir _worker.js,
   // routes /api/db/...). Base "ci-shared-charts" déjà créée sur ce compte Cloudflare.
+  // Exploration automatique du catalogue BNS (index des séries pour la recherche par mot-clé) : un petit lot de cubes toutes les 3 minutes
+  "triggers": { "crons": ["*/3 * * * *"] },
   "d1_databases": [
     {
       "binding": "DB",

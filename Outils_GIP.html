@@ -140,7 +140,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenWhiteboard .btn.danger:hover{background:#FBEAE9}
 #screenWhiteboard .flag{font-size:11px;border:1px solid #B6C0C6;border-radius:10px;padding:4px 11px;cursor:pointer;color:var(--mut);background:#fff;user-select:none;display:inline-block}
 #screenWhiteboard .flag.on{background:#E8F6FA;border-color:#0a6b8c;color:var(--navy)}
-#screenWhiteboard .modal-box select{font-size:11.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;font-family:inherit;color:var(--ink);background:#fff}
+.modal-box select{font-size:11.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;font-family:inherit;color:var(--ink);background:#fff}
 #screenWhiteboard .wbcat{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:#FAFAF7;transition:.15s}
 #screenWhiteboard .wbcat.dragover{border-color:var(--cyan);background:#EFFCFF}
 #screenWhiteboard .wbcat.dragging{opacity:.4}
@@ -152,23 +152,37 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenWhiteboard .wbcat-drag:active{cursor:grabbing}
 #screenWhiteboard .destcard{cursor:grab}
 #screenWhiteboard .destcard.dragging{opacity:.35}
-#screenWhiteboard .modal-overlay{position:fixed;inset:0;background:rgba(2,24,43,.6);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
-#screenWhiteboard .modal-overlay.open{display:flex}
-#screenWhiteboard .modal-box{background:#fff;border-radius:12px;max-width:1080px;width:100%;max-height:92vh;overflow:auto;padding:20px 24px 22px;box-shadow:0 20px 60px rgba(0,0,0,.32);position:relative}
-#screenWhiteboard .modal-box .modal-close{position:absolute;top:14px;right:16px;cursor:pointer;font-size:22px;color:var(--mut);border:none;background:none;line-height:1;padding:2px 6px}
-#screenWhiteboard .modal-box .modal-close:hover{color:var(--ink)}
-#screenWhiteboard .modal-box h3{margin:0 0 12px;font-size:16px;color:var(--navy);padding-right:30px}
-#screenWhiteboard .modal-canvas-wrap{border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff}
-#screenWhiteboard .modal-canvas-wrap canvas{width:100%;height:460px;display:block}
-#screenWhiteboard .modal-controls{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;margin-bottom:14px;font-size:11.5px;color:var(--mut)}
-#screenWhiteboard .modal-controls .ctrl{display:flex;flex-direction:column;gap:3px}
-#screenWhiteboard .modal-controls select,#screenWhiteboard .modal-controls input{font-size:11.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;font-family:inherit;color:var(--ink)}
-#screenWhiteboard .modal-controls button{font-size:11.5px;padding:5px 12px;border:1px solid var(--line);border-radius:5px;background:#F4F5F2;cursor:pointer;color:var(--ink);font-family:inherit}
-#screenWhiteboard .modal-controls button:hover{background:#EAEBE5}
-#screenWhiteboard .modal-controls button.pri{background:var(--navy);border-color:var(--navy);color:#fff}
-#screenWhiteboard .modal-controls button.pri:hover{background:#0a3252}
-#screenWhiteboard .modal-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--mut);margin-top:10px}
-#screenWhiteboard .modal-legend .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.modal-overlay{position:fixed;inset:0;background:rgba(2,24,43,.6);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:12px;max-width:1080px;width:100%;max-height:92vh;overflow:auto;padding:20px 24px 22px;box-shadow:0 20px 60px rgba(0,0,0,.32);position:relative}
+.modal-box .modal-close{position:absolute;top:14px;right:16px;cursor:pointer;font-size:22px;color:var(--mut);border:none;background:none;line-height:1;padding:2px 6px}
+.modal-box .modal-close:hover{color:var(--ink)}
+.modal-box h3{margin:0 0 12px;font-size:16px;color:var(--navy);padding-right:30px}
+.modal-canvas-wrap{border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff}
+.modal-canvas-wrap canvas{width:100%;height:460px;display:block}
+.modal-controls{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;margin-bottom:14px;font-size:11.5px;color:var(--mut)}
+.modal-controls .ctrl{display:flex;flex-direction:column;gap:3px}
+.modal-controls select,.modal-controls input{font-size:11.5px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;font-family:inherit;color:var(--ink)}
+.modal-controls button{font-size:11.5px;padding:5px 12px;border:1px solid var(--line);border-radius:5px;background:#F4F5F2;cursor:pointer;color:var(--ink);font-family:inherit}
+.modal-controls button:hover{background:#EAEBE5}
+.modal-controls button.pri{background:var(--navy);border-color:var(--navy);color:#fff}
+.modal-controls button.pri:hover{background:#0a3252}
+.modal-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--mut);margin-top:10px}
+.modal-legend .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:middle}
+
+/* ---- Modales Agrandir/Éditer partagées (Whiteboard + AM Dashboard), hors des écrans pour rester visibles de partout ---- */
+.modal-overlay .hint{color:var(--mut);font-size:12px;line-height:1.5;margin-bottom:6px}
+.modal-overlay input[type=text]{padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+.modal-overlay .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 14px;font:inherit;font-size:12.5px;cursor:pointer}
+.modal-overlay .btn:hover{background:#EEF3F5}
+.modal-overlay .btn.pri{background:var(--navy);color:#fff}
+.modal-overlay .btn.danger{border-color:#F3C7C4;color:#C0201B}
+.modal-overlay .btn.danger:hover{background:#FBEAE9}
+.modal-overlay .flag{font-size:11px;border:1px solid #B6C0C6;border-radius:10px;padding:4px 11px;cursor:pointer;color:var(--mut);background:#fff;user-select:none;display:inline-block}
+.modal-overlay .flag.on{background:#E8F6FA;border-color:#0a6b8c;color:var(--navy)}
+/* ---- AM Dashboard : graphiques ajoutés plus grands par défaut, comme dans le Whiteboard ---- */
+#screenAM .destgrid{grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:16px}
+#screenAM .destttl{font-size:13px}
 
 #screenChartPack {--navy:#02182B;--blue:#0a6b8c;--cyan:#00CFFF;--beige:#DDD8C4;--pale:#ECEADF;--tint:#E8F6FA;--grey:#B6C0C6;--bg:#F5F6F5;--line:#DDE3E6;--txt:#12242F;--mut:#5B6B76}
 #screenChartPack * {box-sizing:border-box}
@@ -319,7 +333,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenAM .kv .k {color:var(--mut)}
 #screenAM .kv .v {font-weight:600}
 #screenAM .note {font-size:10.5px;color:var(--mut);margin-top:8px;line-height:1.5}
-#screenAM .chartsgrid {display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;margin-top:10px}
+#screenAM .chartsgrid {display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:12px;margin-top:10px}
 #screenAM .chartcard {border:1px solid var(--line);border-radius:8px;padding:9px 11px 10px;background:#FBFBF9;cursor:zoom-in;transition:.12s}
 #screenAM .chartcard:hover {border-color:#B9C3CC;box-shadow:0 2px 10px rgba(2,24,43,.09)}
 #screenAM .chartcard.dragging {opacity:.35}
@@ -786,6 +800,9 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
   <div id="wbBoard"></div>
 </main>
 
+
+</div>
+<div id="gipModals">
 <div class="modal-overlay" id="wbLightbox">
   <div class="modal-box">
     <button class="modal-close" id="wbLightboxClose" aria-label="Fermer">&times;</button>
@@ -2228,6 +2245,7 @@ let onCatalogUpdate = null;
 let onDashboardUpdate = null;  /* l'AM Dashboard rafraîchit ses "graphiques ajoutés" quand le Sandbox y envoie un graphique */
 let onWhiteboardUpdate = null; /* le Whiteboard rafraîchit sa grille quand le Sandbox y envoie un graphique */
 let sendFigToChartPack = null; /* le Chart Pack insère le graphique reçu comme figure à la suite du document (partie 2) */
+let openDestZoom = null;       /* ouvre la fenêtre Agrandir/Éditer (définie par whiteboard_module.js) pour un item de n'importe quelle destination : openDestZoom(dest, item) */
 let loadIntoSandbox = null;    /* le Sandbox recharge un graphique existant (Whiteboard) pour modification */
 
 /* Séries importées depuis l'API STAT-TAB de l'OFS (module bfs_module.js), fusionnées dans CATALOG en plus
@@ -2853,11 +2871,31 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeChartMo
 
 /* ============================ Graphiques ajoutés (Sandbox) — dashboard démarrant vide, peuplé au fil du temps ============================ */
 function renderAddedGrid(){
-  renderDestinationGrid($('amAddedGrid'), 'dashboard', it => `<button data-a="del" data-id="${it.id}" class="danger" type="button">Retirer</button>`);
+  /* mêmes actions que dans le Whiteboard : Éditer (dans le Sandbox), Agrandir (modal : type par série, période, tableau, PNG),
+     transfert vers le Whiteboard ou le Chart Pack CI, et Retirer. */
+  renderDestinationGrid($('amAddedGrid'), 'dashboard', it => `
+    ${it.config ? `<button data-a="edit" data-id="${it.id}" type="button">Éditer</button>` : ''}
+    <button data-a="zoom" data-id="${it.id}" type="button">Agrandir</button>
+    <button data-a="wb" data-id="${it.id}" type="button">&rarr; Whiteboard</button>
+    <button data-a="cp" data-id="${it.id}" type="button">&rarr; Chart Pack CI</button>
+    <button data-a="del" data-id="${it.id}" class="danger" type="button">Retirer</button>`);
+  $('amAddedGrid').querySelectorAll('.destcard img').forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.dataset.a = 'zoom'; img.dataset.id = img.closest('.destcard').dataset.id;
+  });
 }
 $('amAddedGrid').addEventListener('click', e => {
-  const b = e.target.closest('button[data-a="del"]'); if (!b) return;
-  removeFromDestination('dashboard', b.dataset.id); renderAddedGrid();
+  const b = e.target.closest('[data-a]'); if (!b) return;
+  const id = b.dataset.id, a = b.dataset.a;
+  const it = DEST_STORE.dashboard.find(x => x.id === id);
+  if (a === 'del') { removeFromDestination('dashboard', id); renderAddedGrid(); }
+  else if (a === 'zoom' && it) { if (typeof openDestZoom === 'function') openDestZoom('dashboard', it); }
+  else if (a === 'edit' && it && it.config && typeof loadIntoSandbox === 'function') {
+    loadIntoSandbox(it.config, {dest: 'dashboard', id: it.id});
+    const navBtn = document.querySelector('.navbtn[data-screen="sandbox"]'); if (navBtn) navBtn.click();
+  }
+  else if (a === 'wb' && it) { moveDestinationItem('dashboard', 'whiteboard', id); renderAddedGrid(); if (typeof onWhiteboardUpdate === 'function') onWhiteboardUpdate(); }
+  else if (a === 'cp' && it) { removeFromDestination('dashboard', id); renderAddedGrid(); if (typeof sendFigToChartPack === 'function') sendFigToChartPack(it); }
 });
 onDashboardUpdate = renderAddedGrid;
 renderAddedGrid();
@@ -4308,6 +4346,20 @@ async function bfsLoadFullCatalog(){
   const btn = $('sbOfsLoadCatalogBtn');
   if (btn) { btn.disabled = true; btn.textContent = 'Chargement…'; }
   bfsSetStatus('Chargement de la liste des tables OFS disponibles…');
+  /* Voie rapide : le Worker garde le catalogue complet dans la base partagée (D1) — une seule requête, au lieu de
+     paginer ~10 appels vers l'OFS. Si le Worker n'a pas cette route (pas à jour, ou page ouverte hors du site),
+     on retombe sur la pagination directe ci-dessous. */
+  try {
+    const r = await fetch('/api/ofs-catalog?language=' + BFS_LANG_DEFAULT);
+    if (r.ok) {
+      const j = await r.json();
+      if (Array.isArray(j.catalog) && j.catalog.length) {
+        bfsFullCatalog = j.catalog;
+        bfsFinishCatalog(btn, j.total != null ? j.total : j.catalog.length);
+        return;
+      }
+    }
+  } catch (e) {}
   const pageSize = 200, maxPages = 10;
   let all = [], skip = 0, total = Infinity;
   try {
@@ -4337,6 +4389,10 @@ async function bfsLoadFullCatalog(){
         .filter(p => p.level === 0)
         .map(p => ({code: p.code, name: p.name}))
     }));
+  bfsFinishCatalog(btn, total);
+}
+
+function bfsFinishCatalog(btn, total){
   bfsBuildThemeOptions();
   bfsApplyFilter();
   if (btn) btn.style.display = 'none';
@@ -4897,16 +4953,38 @@ function snbSeriesIndexLoad(){
     const raw = localStorage.getItem(SNB_SERIES_INDEX_KEY);
     SNB_SERIES_INDEX = raw ? JSON.parse(raw) : [];
   } catch (e) { SNB_SERIES_INDEX = []; }
+  SNB_SERIES_INDEX.forEach(snbIndexPrep);
 }
 
+/* champ de recherche pré-normalisé (sans accents, minuscules) : l'index partagé compte plusieurs dizaines de milliers de
+   séries, on ne veut pas re-normaliser chacune à chaque frappe. Non persisté (préfixe « _ »). */
+function snbIndexPrep(e){ e._n = snbNorm(e.seriesLabel + ' ' + e.cubeLabel + ' ' + e.cubeDomaine); return e; }
+
 function snbSeriesIndexSave(){
-  try { localStorage.setItem(SNB_SERIES_INDEX_KEY, JSON.stringify(SNB_SERIES_INDEX)); } catch (e) {}
+  try { localStorage.setItem(SNB_SERIES_INDEX_KEY, JSON.stringify(SNB_SERIES_INDEX.filter(e => !e._srv), (k, v) => k === '_n' || k === '_srv' ? undefined : v)); } catch (e) {}
 }
 
 function snbSeriesIndexAdd(cubeId, cubeLabel, cubeDomaine, series){
   SNB_SERIES_INDEX = SNB_SERIES_INDEX.filter(e => e.cubeId !== cubeId);
-  series.forEach((s, idx) => SNB_SERIES_INDEX.push({cubeId, cubeLabel, cubeDomaine: cubeDomaine || '', seriesIdx: idx, seriesLabel: s.label}));
+  series.forEach((s, idx) => SNB_SERIES_INDEX.push(snbIndexPrep({cubeId, cubeLabel, cubeDomaine: cubeDomaine || '', seriesIdx: idx, seriesLabel: s.label})));
   snbSeriesIndexSave();
+  dbWrite('/api/db/snb-series', 'POST', {cubeId, cubeLabel, cubeDomaine: cubeDomaine || '', labels: series.map(s => s.label)}); /* partagé avec toute l'équipe (base D1) */
+}
+
+/* Index partagé (base D1) : alimenté par l'exploration automatique des ~900 cubes BNS faite côté Worker, et par ce que chacun
+   charge. Le serveur fait foi pour les cubes qu'il connaît ; les cubes que ce navigateur est seul à connaître lui sont publiés. */
+async function snbSeriesIndexSync(){
+  const j = await dbReadJson('/api/db/snb-series');
+  if (!j || !Array.isArray(j.cubes)) return;
+  const serverIds = new Set(j.cubes.map(c => c.c));
+  const localOnly = SNB_SERIES_INDEX.filter(e => !serverIds.has(e.cubeId));
+  const fromServer = [];
+  j.cubes.forEach(c => c.s.forEach((label, idx) => fromServer.push(Object.assign(snbIndexPrep({cubeId: c.c, cubeLabel: c.l || c.c, cubeDomaine: c.d || '', seriesIdx: idx, seriesLabel: label}), {_srv: true}))));
+  SNB_SERIES_INDEX = fromServer.concat(localOnly);
+  snbSeriesIndexSave();
+  const byCube = {};
+  localOnly.forEach(e => { (byCube[e.cubeId] = byCube[e.cubeId] || {cubeLabel: e.cubeLabel, cubeDomaine: e.cubeDomaine, labels: []}).labels.push(e.seriesLabel); });
+  Object.keys(byCube).forEach(cubeId => dbWrite('/api/db/snb-series', 'POST', Object.assign({cubeId}, byCube[cubeId])));
 }
 
 /* ----------------------------------------------------------------------------------------------
@@ -5002,12 +5080,12 @@ function snbApplyFilter(){
 
   const source = SNB_FULL_CATALOG || SNB_CUBES;
   const cubeHits = source.filter(c => snbNorm(c.label + ' ' + c.domaine + ' ' + c.mots + ' ' + c.id).indexOf(kw) >= 0);
-  const seriesHits = SNB_SERIES_INDEX.filter(e => snbNorm(e.seriesLabel + ' ' + e.cubeLabel + ' ' + e.cubeDomaine).indexOf(kw) >= 0);
+  const seriesHits = SNB_SERIES_INDEX.filter(e => e._n.indexOf(kw) >= 0);
 
   SNB_FILTERED = cubeHits.slice(0, 300);
   const options = [];
-  seriesHits.slice(0, 50).forEach(e => {
-    options.push({value: e.cubeId + '::' + e.seriesIdx, text: '🔎 ' + e.seriesLabel + ' — ' + (e.cubeDomaine || e.cubeLabel)});
+  seriesHits.slice(0, 100).forEach(e => {
+    options.push({value: e.cubeId + '::' + e.seriesIdx + '::' + encodeURIComponent(e.seriesLabel), text: '🔎 ' + e.seriesLabel + ' — ' + (e.cubeDomaine || e.cubeLabel)});
   });
   SNB_FILTERED.forEach(c => {
     options.push({value: c.id, text: c.domaine + ' — ' + c.label});
@@ -5017,15 +5095,15 @@ function snbApplyFilter(){
   sel.innerHTML = options.length
     ? options.map(o => `<option value="${esc(o.value)}">${esc(o.text)}</option>`).join('')
     : '<option value="">— aucune série BNS ne correspond à ce mot-clé —</option>';
-  snbSetStatus(options.length ? (options.length + ' résultat(s).') : '');
+  snbSetStatus(options.length ? (seriesHits.length + ' série(s) trouvée(s) dans l\'index' + (seriesHits.length > 100 ? ' (100 premières affichées — précisez le mot-clé)' : '') + ', ' + SNB_FILTERED.length + ' indicateur(s).') : '');
 }
 
 async function snbLoadCube(){
   const raw = $('sbSnbCube').value;
   if (!raw) return;
-  let cubeId = raw, targetIdx = null;
-  const sepIdx = raw.indexOf('::');
-  if (sepIdx >= 0) { cubeId = raw.slice(0, sepIdx); targetIdx = +raw.slice(sepIdx + 2); }
+  let cubeId = raw, targetIdx = null, targetLabel = null;
+  const parts = raw.split('::');
+  if (parts.length > 1) { cubeId = parts[0]; targetIdx = +parts[1]; if (parts[2]) { try { targetLabel = decodeURIComponent(parts[2]); } catch (e) {} } }
 
   const source = SNB_FULL_CATALOG || SNB_CUBES;
   let cube = SNB_FILTERED.find(c => c.id === cubeId) || source.find(c => c.id === cubeId);
@@ -5058,8 +5136,12 @@ async function snbLoadCube(){
   sel.innerHTML = series.length
     ? series.map((s, i) => `<option value="${i}">${esc(s.label)}</option>`).join('')
     : '<option value="">— aucune série exploitable —</option>';
-  const hasTarget = targetIdx !== null && series[targetIdx];
-  if (hasTarget) sel.value = String(targetIdx);
+  /* on retrouve la série par son NOM (l'index partagé vient d'une exploration automatique : sa position peut différer de celle
+     des séries réellement exploitables), avec la position comme repli */
+  let tIdx = targetLabel ? series.findIndex(s => s.label === targetLabel) : -1;
+  if (tIdx < 0 && targetIdx !== null && !targetLabel && series[targetIdx]) tIdx = targetIdx;
+  const hasTarget = tIdx >= 0;
+  if (hasTarget) sel.value = String(tIdx);
   $('sbSnbAddBtn').style.display = series.length ? '' : 'none';
   snbSetStatus(series.length + ' série(s) disponibles dans « ' + esc(cube.label) + ' »' + (hasTarget ? ' — série recherchée pré-sélectionnée ci-dessous.' : '.'));
   btn.disabled = false; btn.textContent = 'Charger les séries de cet indicateur';
@@ -5131,6 +5213,7 @@ function snbRenderLoadedList(){
 
 /* ---- Câblage ---- */
 snbSeriesIndexLoad();
+snbSeriesIndexSync();
 
 if ($('sbSnbCube')) {
   snbApplyFilter(); // état initial : rien tant qu'aucun mot-clé n'est tapé
@@ -5576,6 +5659,7 @@ $('wbLightbox').addEventListener('click', e => { if (e.target === $('wbLightbox'
 /* ---- Agrandir / éditer en place — mêmes propriétés que le modal de l'AM Dashboard :
    type de graphique par série, zoom sur la période (Du/Au), Réinitialiser, Télécharger PNG,
    plus un bouton Enregistrer qui met à jour le graphique stocké dans le Whiteboard. ---- */
+let wbModalDest = 'whiteboard';
 let wbModalItem = null, wbModalChart = null, wbModalSel = null, wbModalTypeOverride = null, wbModalRange = null, wbModalFullRange = null;
 let wbModalTableOn = false, wbModalTableRows = [], wbModalTableSrcIdx = 0;
 
@@ -5607,6 +5691,7 @@ function wbResolveSel(cfg){
   return {sel, missing};
 }
 
+openDestZoom = function(dest, it){ wbModalDest = dest; openWbZoom(it); };
 function openWbZoom(it){
   if (it.config) {
     const {sel, missing} = wbResolveSel(it.config);
@@ -5767,8 +5852,8 @@ function saveWbModalChanges(){
   });
   it.img = cv.toDataURL('image/png');
   it.imgRatio = cv.width / cv.height;
-  saveDestinationItem('whiteboard', it);
-  renderWbBoard();
+  saveDestinationItem(wbModalDest, it);
+  if (wbModalDest === 'dashboard') { if (typeof onDashboardUpdate === 'function') onDashboardUpdate(); } else renderWbBoard();
   closeWbModal();
 }
 
@@ -5843,7 +5928,7 @@ function wireBoard(){
       }
     } else if (a === 'zoom') {
       const it = DEST_STORE.whiteboard.find(x => x.id === b.dataset.id);
-      if (it) openWbZoom(it);
+      if (it) { wbModalDest = 'whiteboard'; openWbZoom(it); }
     } else if (a === 'edit') {
       const it = DEST_STORE.whiteboard.find(x => x.id === b.dataset.id);
       if (it && it.config && typeof loadIntoSandbox === 'function') {

@@ -22,7 +22,7 @@ function corsHeaders(){
   };
 }
 
-async function relay(request, targetBase, stripPrefix, methods){
+async function relay(request, targetBase, stripPrefix, methods, env, ctx, ttlMs){
   const url = new URL(request.url);
 
   if (request.method === 'OPTIONS') {
@@ -43,10 +43,20 @@ async function relay(request, targetBase, stripPrefix, methods){
     init.headers = {'Content-Type': request.headers.get('Content-Type') || 'application/json'};
   }
 
+  /* Réponses GET rarement modifiées (métadonnées OFS, séries BNS) : servies depuis D1 si assez récentes. */
+  const cacheKey = (ttlMs && request.method === 'GET' && env && env.DB) ? 'relay:' + target : null;
+  let stale = null;
+  if (cacheKey) {
+    const hit = await cacheGet(env, cacheKey);
+    if (hit && hit.age < ttlMs) return new Response(hit.data, {status: 200, headers: {'Content-Type': 'application/json', 'X-GIP-Cache': 'HIT', ...corsHeaders()}});
+    stale = hit;
+  }
+
   let upstream;
   try {
     upstream = await fetch(target, init);
   } catch (e) {
+    if (stale) return new Response(stale.data, {status: 200, headers: {'Content-Type': 'application/json', 'X-GIP-Cache': 'STALE', ...corsHeaders()}});
     return new Response(JSON.stringify({error_message: 'Relais : échec de connexion à l\'hôte externe (' + e.message + ')'}), {
       status: 502,
       headers: {'Content-Type': 'application/json', ...corsHeaders()}
@@ -54,6 +64,7 @@ async function relay(request, targetBase, stripPrefix, methods){
   }
 
   const body = await upstream.text();
+  if (cacheKey && upstream.status === 200 && ctx) ctx.waitUntil(cachePut(env, cacheKey, body));
   return new Response(body, {
     status: upstream.status,
     headers: {'Content-Type': upstream.headers.get('Content-Type') || 'application/json', ...corsHeaders()}
@@ -84,11 +95,10 @@ const SNB_TOPIC_FR = {
 
 const SNB_PUB_CUBE_RE = /<loc>https:\/\/data\.snb\.ch\/en\/topics\/([^/]+)\/cube\/([^<]+)<\/loc>/g;
 
-async function snbCatalog(ctx){
-  const cache = caches.default;
-  const cacheKey = new Request('https://internal-cache.invalid/snb-catalog-v1');
-  const cached = await cache.match(cacheKey);
-  if (cached) return cached;
+async function snbCatalog(env, ctx){
+  /* 1) D1 (durable, partagé, 7 jours) 2) sinon plan du site officiel, puis on mémorise 3) en cas d'échec : copie périmée si on en a une */
+  const hit = env.DB ? await cacheGet(env, 'snb_catalog_v1') : null;
+  if (hit && hit.age < 7 * DAY) return jsonBody(hit.data, 200, {'X-GIP-Cache': 'HIT', 'Cache-Control': 'public, max-age=3600'});
 
   let xml;
   try {
@@ -96,9 +106,8 @@ async function snbCatalog(ctx){
     if (!r.ok) throw new Error('HTTP ' + r.status);
     xml = await r.text();
   } catch (e) {
-    return new Response(JSON.stringify({error_message: 'Impossible de récupérer le plan du site de la BNS (' + e.message + ')'}), {
-      status: 502, headers: {'Content-Type': 'application/json', ...corsHeaders()}
-    });
+    if (hit) return jsonBody(hit.data, 200, {'X-GIP-Cache': 'STALE'});
+    return jsonBody(JSON.stringify({error_message: 'Impossible de récupérer le plan du site de la BNS (' + e.message + ')'}), 502);
   }
 
   const seen = new Set();
@@ -111,13 +120,160 @@ async function snbCatalog(ctx){
     seen.add(id);
     publication.push({id, topic, domaine: SNB_TOPIC_FR[topic] || topic});
   }
+  const body = JSON.stringify({publication, generated: new Date().toISOString()});
+  if (env.DB) ctx.waitUntil(cachePut(env, 'snb_catalog_v1', body));
+  return jsonBody(body, 200, {'X-GIP-Cache': 'MISS', 'Cache-Control': 'public, max-age=3600'});
+}
 
-  const resp = new Response(JSON.stringify({publication, generated: new Date().toISOString()}), {
-    status: 200,
-    headers: {'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=86400', ...corsHeaders()}
-  });
-  ctx.waitUntil(cache.put(cacheKey, resp.clone()));
-  return resp;
+/* ----------------------------------------------------------------------------------------------
+ * Cache d'index et de réponses d'API dans D1 (table api_cache) : partagé par tous les visiteurs et
+ * durable (contrairement au cache du navigateur ou au cache de bord Cloudflare, propre à chaque
+ * datacenter). Sert à accélérer le chargement des catalogues (OFS, BNS) et à éviter de re-télécharger
+ * à chaque fois les métadonnées OFS / séries BNS qui changent rarement. Si D1 est indisponible,
+ * tout continue de fonctionner sans cache (appel direct à l'API d'origine).
+ * ---------------------------------------------------------------------------------------------- */
+const CACHE_MAX_BYTES = 1800000; /* limite D1 : ~2 Mo par ligne */
+async function cacheGet(env, k) {
+  try {
+    await ensureSchema(env.DB);
+    const r = await env.DB.prepare('SELECT data, fetched_at FROM api_cache WHERE k = ?').bind(k).first();
+    return r ? {data: r.data, age: Date.now() - r.fetched_at} : null;
+  } catch (e) { return null; }
+}
+async function cachePut(env, k, data) {
+  try {
+    if (!env.DB || data.length > CACHE_MAX_BYTES) return;
+    await ensureSchema(env.DB);
+    await env.DB.prepare('INSERT INTO api_cache (k, data, fetched_at) VALUES (?, ?, ?) ON CONFLICT(k) DO UPDATE SET data = excluded.data, fetched_at = excluded.fetched_at')
+      .bind(k, data, Date.now()).run();
+  } catch (e) {}
+}
+function jsonBody(body, status, extra) {
+  return new Response(body, {status: status || 200, headers: {'Content-Type': 'application/json', ...corsHeaders(), ...(extra || {})}});
+}
+
+const DAY = 24 * 3600 * 1000;
+
+/* Catalogue OFS : toutes les tables chiffrées STAT-TAB (~plusieurs pages de 200 côté DAM), construit côté Worker
+   puis gardé 7 jours dans D1 — le navigateur reçoit tout en UNE requête au lieu de paginer. */
+async function ofsCatalog(request, env, ctx) {
+  const lang = new URL(request.url).searchParams.get('language') === 'de' ? 'de' : (new URL(request.url).searchParams.get('language') || 'fr');
+  const key = 'ofs_catalog_' + lang;
+  const hit = await cacheGet(env, key);
+  if (hit && hit.age < 7 * DAY) return jsonBody(hit.data, 200, {'X-GIP-Cache': 'HIT'});
+  try {
+    let all = [], skip = 0, total = Infinity;
+    for (let page = 0; page < 15 && skip < total; page++) {
+      const qs = new URLSearchParams({language: lang, articleModelGroup: '900029', articleModel: '900033', limit: '200', skip: String(skip)});
+      const r = await fetch('https://dam-api.bfs.admin.ch/hub/api/dam/assets?' + qs.toString());
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const j = await r.json();
+      total = typeof j.total === 'number' ? j.total : ((j.data || []).length + skip);
+      const batch = j.data || [];
+      all = all.concat(batch);
+      if (!batch.length) break;
+      skip += batch.length;
+    }
+    const catalog = all.filter(it => it && it.shop && it.shop.orderNr).map(it => ({
+      title: (it.description && it.description.titles && it.description.titles.main) || it.shop.orderNr,
+      dbid: it.shop.orderNr,
+      themes: ((it.description && it.description.categorization && it.description.categorization.prodima) || [])
+        .filter(p => p.level === 0).map(p => ({code: p.code, name: p.name}))
+    }));
+    const body = JSON.stringify({catalog, total, generated: new Date().toISOString()});
+    ctx.waitUntil(cachePut(env, key, body));
+    return jsonBody(body, 200, {'X-GIP-Cache': 'MISS'});
+  } catch (e) {
+    if (hit) return jsonBody(hit.data, 200, {'X-GIP-Cache': 'STALE'}); /* mieux vaut un index un peu ancien que pas d'index */
+    return jsonBody(JSON.stringify({error_message: "Catalogue OFS indisponible (" + e.message + ")"}), 502);
+  }
+}
+
+/* Index des séries BNS (table snb_series, un document compact par cube : {c: id, d: domaine, l: libellé, s: [noms de séries]}).
+   Alimenté de deux façons : (1) par les navigateurs, quand quelqu'un charge un indicateur ; (2) par l'EXPLORATION AUTOMATIQUE
+   ci-dessous, qui parcourt les ~900 cubes du catalogue BNS par petits lots (déclenchée par le cron toutes les 3 minutes). La recherche
+   par mot-clé « 🔎 » de l'appli couvre ainsi toutes les séries, y compris celles que personne n'a encore ouvertes. */
+async function handleSnbSeries(request, env) {
+  if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+  try {
+    await ensureSchema(env.DB);
+    if (request.method === 'GET') {
+      const rs = await env.DB.prepare('SELECT data FROM snb_series').all();
+      const cubes = [];
+      rs.results.forEach(r => { try { const c = JSON.parse(r.data); if (c && c.c && Array.isArray(c.s) && c.s.length) cubes.push(c); } catch (e) {} });
+      return jsonBody(JSON.stringify({cubes}), 200, {'Cache-Control': 'public, max-age=120'});
+    }
+    if (request.method === 'POST') {
+      if (!writeAllowed(request, env)) return jsonResponse({error_message: "Clé d'équipe manquante ou invalide."}, 401);
+      let b; try { b = await request.json(); } catch (e) { return jsonResponse({error_message: 'JSON invalide.'}, 400); }
+      if (!b || !b.cubeId || !Array.isArray(b.labels)) return jsonResponse({error_message: 'Requête invalide.'}, 400);
+      const doc = {c: String(b.cubeId), d: String(b.cubeDomaine || ''), l: String(b.cubeLabel || b.cubeId), s: b.labels.map(String)};
+      await env.DB.prepare('INSERT INTO snb_series (cube_id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(cube_id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at')
+        .bind(doc.c, JSON.stringify(doc), new Date().toISOString()).run();
+      return jsonResponse({ok: true});
+    }
+    return jsonResponse({error_message: 'Méthode non supportée.'}, 405);
+  } catch (e) {
+    return jsonResponse({error_message: 'Base partagée indisponible (' + e.message + ').'}, 500);
+  }
+}
+
+/* ---- Exploration automatique des cubes BNS ----
+   Chaque cube est téléchargé (data/json/fr) et on n'en extrait QUE les noms de séries (les "dimItem" des en-têtes), par balayage de
+   texte — sans parser les valeurs, pour rester léger en CPU. Un lot = quelques cubes ; l'état d'avancement est simplement la
+   présence (et l'âge) de chaque cube dans snb_series : manquants d'abord, puis les plus anciens (> 30 jours). */
+const SNB_CRAWL_FRESH_MS = 30 * DAY;
+const SNB_HEADER_RE = /"header"\s*:\s*\[([^\]]*)\]/g;
+const SNB_DIMITEM_RE = /"dimItem"\s*:\s*"((?:[^"\\]|\\.)*)"/g;
+
+function snbExtractLabels(text, fallback) {
+  const labels = [];
+  let m;
+  SNB_HEADER_RE.lastIndex = 0;
+  while ((m = SNB_HEADER_RE.exec(text))) {
+    const items = [];
+    let d;
+    SNB_DIMITEM_RE.lastIndex = 0;
+    while ((d = SNB_DIMITEM_RE.exec(m[1]))) {
+      try { items.push(JSON.parse('"' + d[1] + '"')); } catch (e) { items.push(d[1]); }
+    }
+    labels.push(items.join(' — ') || fallback);
+  }
+  return labels;
+}
+
+async function snbCrawlStatus(env) {
+  await ensureSchema(env.DB);
+  const cat = await (await snbCatalog(env, {waitUntil: p => p})).json();
+  const ids = (cat.publication || []);
+  const rs = await env.DB.prepare('SELECT cube_id, updated_at FROM snb_series').all();
+  const have = new Map(rs.results.map(r => [r.cube_id, Date.parse(r.updated_at) || 0]));
+  const missing = ids.filter(c => !have.has(c.id));
+  const stale = ids.filter(c => have.has(c.id) && Date.now() - have.get(c.id) > SNB_CRAWL_FRESH_MS);
+  return {ids, have, missing, stale};
+}
+
+async function snbCrawlBatch(env, n) {
+  if (!env.DB) return {error: 'D1 absente'};
+  const st = await snbCrawlStatus(env);
+  const todo = st.missing.concat(st.stale.sort((a, b) => st.have.get(a.id) - st.have.get(b.id))).slice(0, n);
+  let done = 0, failed = 0;
+  const writes = [];
+  for (let i = 0; i < todo.length; i += 4) {
+    await Promise.all(todo.slice(i, i + 4).map(async c => {
+      try {
+        const r = await fetch('https://data.snb.ch/api/cube/' + encodeURIComponent(c.id) + '/data/json/fr', {signal: AbortSignal.timeout(20000)});
+        if (r.status >= 500) throw new Error('HTTP ' + r.status);
+        const labels = r.ok ? snbExtractLabels(await r.text(), c.id) : []; /* 4xx : cube sans données exploitables, on le marque pour ne pas le rejouer sans cesse */
+        const doc = {c: c.id, d: c.domaine, l: c.id, s: labels};
+        writes.push(env.DB.prepare('INSERT INTO snb_series (cube_id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(cube_id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at')
+          .bind(c.id, JSON.stringify(doc), new Date().toISOString()));
+        done++;
+      } catch (e) { failed++; }
+    }));
+  }
+  if (writes.length) await env.DB.batch(writes);
+  return {total: st.ids.length, indexed: st.have.size + done, processed: done, failed, remaining: Math.max(0, st.missing.length - done), stale: st.stale.length};
 }
 
 /* ----------------------------------------------------------------------------------------------
@@ -144,7 +300,9 @@ async function ensureSchema(db) {
     db.prepare('CREATE TABLE IF NOT EXISTS dest_items (id TEXT PRIMARY KEY, dest TEXT NOT NULL, created_at TEXT NOT NULL, data TEXT NOT NULL)'),
     db.prepare('CREATE INDEX IF NOT EXISTS idx_dest_items_dest ON dest_items(dest)'),
     db.prepare('CREATE TABLE IF NOT EXISTS chartpack_doc (id INTEGER PRIMARY KEY CHECK (id = 1), data TEXT NOT NULL, updated_at TEXT NOT NULL)'),
-    db.prepare('CREATE TABLE IF NOT EXISTS kv_store (k TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at TEXT NOT NULL)')
+    db.prepare('CREATE TABLE IF NOT EXISTS kv_store (k TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at TEXT NOT NULL)'),
+    db.prepare('CREATE TABLE IF NOT EXISTS api_cache (k TEXT PRIMARY KEY, data TEXT NOT NULL, fetched_at INTEGER NOT NULL)'),
+    db.prepare('CREATE TABLE IF NOT EXISTS snb_series (cube_id TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at TEXT NOT NULL)')
   ]);
   SCHEMA_READY = true;
 }
@@ -264,19 +422,42 @@ async function handleKv(request, env, key) {
 const ROUTES = [
   {prefix: '/api/fred', target: 'https://api.stlouisfed.org/fred', methods: ['GET']},
   {prefix: '/api/ofs-dam', target: 'https://dam-api.bfs.admin.ch/hub/api/dam/assets', methods: ['GET'], noSubPath: true},
-  {prefix: '/api/ofs-pxweb', target: 'https://www.pxweb.bfs.admin.ch/api/v1', methods: ['GET', 'POST']},
-  {prefix: '/api/snb', target: 'https://data.snb.ch/api/cube', methods: ['GET']}
+  {prefix: '/api/ofs-pxweb', target: 'https://www.pxweb.bfs.admin.ch/api/v1', methods: ['GET', 'POST'], ttlMs: 7 * 24 * 3600 * 1000}, /* GET = métadonnées de table (stables) ; les POST de données ne sont jamais mis en cache */
+  {prefix: '/api/snb', target: 'https://data.snb.ch/api/cube', methods: ['GET'], ttlMs: 6 * 3600 * 1000}
 ];
 
 export default {
+  /* Cron (voir wrangler.jsonc) : fait avancer l'exploration du catalogue BNS d'un petit lot à chaque passage. */
+  async scheduled(event, env, ctx){
+    ctx.waitUntil(snbCrawlBatch(env, 12).catch(() => {}));
+  },
+
   async fetch(request, env, ctx){
     const url = new URL(request.url);
 
     if (url.pathname === '/api/snb-catalog') {
       if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
-      return snbCatalog(ctx);
+      return snbCatalog(env, ctx);
     }
 
+    if (url.pathname === '/api/ofs-catalog') {
+      if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+      return ofsCatalog(request, env, ctx);
+    }
+    if (url.pathname === '/api/db/snb-series') return handleSnbSeries(request, env);
+    if (url.pathname === '/api/snb-crawl') {
+      if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+      try {
+        if (url.searchParams.get('run')) {
+          const keyOk = writeAllowed(request, env) || (env.GIP_WRITE_KEY && url.searchParams.get('key') === env.GIP_WRITE_KEY);
+          if (!keyOk) return jsonResponse({error_message: "Clé d'équipe manquante ou invalide."}, 401);
+          const n = Math.max(1, Math.min(20, parseInt(url.searchParams.get('n'), 10) || 10));
+          return jsonResponse(await snbCrawlBatch(env, n));
+        }
+        const st = await snbCrawlStatus(env);
+        return jsonResponse({total: st.ids.length, indexed: st.have.size, remaining: st.missing.length, stale: st.stale.length});
+      } catch (e) { return jsonResponse({error_message: 'Exploration indisponible (' + e.message + ').'}, 500); }
+    }
     if (url.pathname === '/api/db/chartpack') return handleChartpack(request, env);
     const kvMatch = url.pathname.match(/^\/api\/db\/kv\/([a-z_]+)$/);
     if (kvMatch) return handleKv(request, env, kvMatch[1]);
@@ -290,9 +471,9 @@ export default {
         if (r.noSubPath) {
           /* /api/ofs-dam n'a jamais de sous-chemin : on retire le préfixe entier, il ne reste que
              la query string (ex. "/api/ofs-dam?language=fr&..." -> "?language=fr&..."). */
-          return relay(request, r.target, r.prefix, r.methods);
+          return relay(request, r.target, r.prefix, r.methods, env, ctx, r.ttlMs);
         }
-        return relay(request, r.target, r.prefix, r.methods);
+        return relay(request, r.target, r.prefix, r.methods, env, ctx, r.ttlMs);
       }
     }
 
