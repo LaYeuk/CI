@@ -4,6 +4,9 @@
  * dossier functions/ (convention "Cloudflare Pages Functions", qui ne s'applique plus au mode de
  * déploiement actuel de ce projet, basé sur "npx wrangler deploy" / Workers + Static Assets).
  *
+ * Routes propres : /api/snb-catalog, /api/snb-index et /api/ofs-index (index de recherche des onglets BNS et OFS, mémorisés
+ * dans la base D1 partagée et complétés en arrière-plan par le cron), /api/index-status, /api/db/... (graphiques partagés).
+ *
  * Rien à changer côté Outils_GIP.html : les modules OFS/FRED/BNS appellent déjà ces mêmes adresses
  * relatives ("/api/fred/...", "/api/ofs-dam", "/api/ofs-pxweb/...", "/api/snb/...") — ce script
  * répond simplement à leur place de ce qui aurait été les fonctions séparées.
@@ -37,14 +40,20 @@ async function relay(request, targetBase, stripPrefix, methods, env, ctx, ttlMs)
   const path = url.pathname.startsWith(stripPrefix) ? url.pathname.slice(stripPrefix.length) : url.pathname;
   const target = targetBase + path + url.search;
 
-  const init = {method: request.method};
+  /* Langue : le catalogue DAM de l'OFS choisit la langue des titres d'après l'en-tête Accept-Language (le paramètre
+     « language » ne filtre que la langue des fichiers). On transmet donc l'en-tête du navigateur, ou on le déduit du
+     paramètre « language » quand il est présent (ex. /api/ofs-dam?language=fr). */
+  const qLang = url.searchParams.get('language');
+  const acceptLang = (qLang && /^(de|fr|it|en)$/i.test(qLang)) ? qLang.toLowerCase() : request.headers.get('Accept-Language');
+  const init = {method: request.method, headers: {}};
+  if (acceptLang) init.headers['Accept-Language'] = acceptLang;
   if (request.method === 'POST') {
     init.body = await request.text();
-    init.headers = {'Content-Type': request.headers.get('Content-Type') || 'application/json'};
+    init.headers['Content-Type'] = request.headers.get('Content-Type') || 'application/json';
   }
 
   /* Réponses GET rarement modifiées (métadonnées OFS, séries BNS) : servies depuis D1 si assez récentes. */
-  const cacheKey = (ttlMs && request.method === 'GET' && env && env.DB) ? 'relay:' + target : null;
+  const cacheKey = (ttlMs && request.method === 'GET' && env && env.DB) ? 'relay:' + target + '|' + (acceptLang || '') : null;
   let stale = null;
   if (cacheKey) {
     const hit = await cacheGet(env, cacheKey);
@@ -154,65 +163,273 @@ function jsonBody(body, status, extra) {
 
 const DAY = 24 * 3600 * 1000;
 
-/* Catalogue OFS : toutes les tables chiffrées STAT-TAB (~plusieurs pages de 200 côté DAM), construit côté Worker
-   puis gardé 7 jours dans D1 — le navigateur reçoit tout en UNE requête au lieu de paginer. */
-async function ofsCatalog(request, env, ctx) {
-  const lang = new URL(request.url).searchParams.get('language') === 'de' ? 'de' : (new URL(request.url).searchParams.get('language') || 'fr');
-  const key = 'ofs_catalog_' + lang;
-  const hit = await cacheGet(env, key);
-  if (hit && hit.age < 7 * DAY) return jsonBody(hit.data, 200, {'X-GIP-Cache': 'HIT'});
+/* ----------------------------------------------------------------------------------------------
+ * Index de recherche (BNS : /api/snb-index, OFS : /api/ofs-index) — alimentent les onglets « BNS » et « OFS ».
+ * Chaque entrée (un cube BNS, une table OFS) est construite à partir d'appels aux API d'origine puis gardée
+ * dans D1 (table api_cache), partagée par tous les visiteurs :
+ *   - ?ids=… / ?offset=…&limit=… : construit (ou relit depuis D1) un petit lot — utilisé pour les entrées manquantes ;
+ *   - ?bulk=1 : renvoie EN UNE REQUÊTE tout ce qui est déjà en D1 (+ la liste des identifiants manquants) — c'est ce
+ *     qui rend l'ouverture des onglets instantanée pour tout le monde dès que l'index est complet ;
+ *   - le cron (voir scheduled) complète l'index en arrière-plan, par petits lots, sans attendre qu'un visiteur le fasse.
+ * Tout est « au mieux » : si D1 est indisponible, les appels vont directement à la BNS / l'OFS (comme avant).
+ * ---------------------------------------------------------------------------------------------- */
+
+const INDEX_FRESH_MS = 14 * DAY;   /* au-delà, l'entrée est reconstruite (par le cron ou un visiteur) */
+const SNB_PREFIX = 'snb_meta/fr/';
+const ofsPrefix = lang => 'ofs_meta/' + lang + '/';
+
+/* Lecture groupée de quelques clés (une seule requête D1). */
+async function cacheGetMany(env, keys) {
+  const out = new Map();
+  if (!env.DB || !keys.length) return out;
   try {
-    let all = [], skip = 0, total = Infinity;
-    for (let page = 0; page < 15 && skip < total; page++) {
-      const qs = new URLSearchParams({language: lang, articleModelGroup: '900029', articleModel: '900033', limit: '200', skip: String(skip)});
-      const r = await fetch('https://dam-api.bfs.admin.ch/hub/api/dam/assets?' + qs.toString());
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      const j = await r.json();
-      total = typeof j.total === 'number' ? j.total : ((j.data || []).length + skip);
-      const batch = j.data || [];
-      all = all.concat(batch);
-      if (!batch.length) break;
-      skip += batch.length;
-    }
-    const catalog = all.filter(it => it && it.shop && it.shop.orderNr).map(it => ({
-      title: (it.description && it.description.titles && it.description.titles.main) || it.shop.orderNr,
-      dbid: it.shop.orderNr,
-      themes: ((it.description && it.description.categorization && it.description.categorization.prodima) || [])
-        .filter(p => p.level === 0).map(p => ({code: p.code, name: p.name}))
-    }));
-    const body = JSON.stringify({catalog, total, generated: new Date().toISOString()});
-    ctx.waitUntil(cachePut(env, key, body));
-    return jsonBody(body, 200, {'X-GIP-Cache': 'MISS'});
+    await ensureSchema(env.DB);
+    const rs = await env.DB.prepare('SELECT k, data, fetched_at FROM api_cache WHERE k IN (' + keys.map(() => '?').join(',') + ')').bind(...keys).all();
+    rs.results.forEach(r => out.set(r.k, {data: r.data, age: Date.now() - r.fetched_at}));
+  } catch (e) {}
+  return out;
+}
+/* Toutes les lignes dont la clé commence par `prefix` (qui se termine par « / ») ; withData=false : clés et âges seulement. */
+async function cacheRange(env, prefix, withData) {
+  if (!env.DB) return [];
+  try {
+    await ensureSchema(env.DB);
+    const hi = prefix.slice(0, -1) + String.fromCharCode(prefix.charCodeAt(prefix.length - 1) + 1);
+    const rs = await env.DB.prepare('SELECT k, ' + (withData ? 'data, ' : '') + 'fetched_at FROM api_cache WHERE k >= ? AND k < ?').bind(prefix, hi).all();
+    return rs.results.map(r => ({id: decodeURIComponent(r.k.slice(prefix.length)), data: r.data, age: Date.now() - r.fetched_at}));
+  } catch (e) { return []; }
+}
+async function cachePutMany(env, rows) {
+  try {
+    if (!env.DB || !rows.length) return;
+    await ensureSchema(env.DB);
+    const now = Date.now();
+    await env.DB.batch(rows.filter(r => r.data.length <= CACHE_MAX_BYTES).map(r =>
+      env.DB.prepare('INSERT INTO api_cache (k, data, fetched_at) VALUES (?, ?, ?) ON CONFLICT(k) DO UPDATE SET data = excluded.data, fetched_at = excluded.fetched_at').bind(r.k, r.data, now)));
+  } catch (e) {}
+}
+
+async function snbJson(url, headers) {
+  try {
+    const r = await fetch(url, {headers: Object.assign({Accept: 'application/json'}, headers || {}), signal: AbortSignal.timeout(15000)});
+    if (!r.ok) return {status: r.status, json: null};
+    return {status: r.status, json: await r.json()};
   } catch (e) {
-    if (hit) return jsonBody(hit.data, 200, {'X-GIP-Cache': 'STALE'}); /* mieux vaut un index un peu ancien que pas d'index */
-    return jsonBody(JSON.stringify({error_message: "Catalogue OFS indisponible (" + e.message + ")"}), 502);
+    return {status: 0, json: null};
   }
 }
 
-/* Index des séries BNS déjà explorées par les utilisateurs (un document par cube) : la recherche par mot-clé
-   « 🔎 » profite ainsi de ce que toute l'équipe a déjà chargé, pas seulement de son propre navigateur. */
-async function handleSnbSeries(request, env) {
-  if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
-  try {
-    await ensureSchema(env.DB);
-    if (request.method === 'GET') {
-      const rs = await env.DB.prepare('SELECT data FROM snb_series').all();
-      const entries = [];
-      rs.results.forEach(r => { try { JSON.parse(r.data).forEach(e => entries.push(e)); } catch (e) {} });
-      return jsonResponse({entries});
-    }
-    if (request.method === 'POST') {
-      if (!writeAllowed(request, env)) return jsonResponse({error_message: "Clé d'équipe manquante ou invalide."}, 401);
-      let b; try { b = await request.json(); } catch (e) { return jsonResponse({error_message: 'JSON invalide.'}, 400); }
-      if (!b || !b.cubeId || !Array.isArray(b.rows)) return jsonResponse({error_message: 'Requête invalide.'}, 400);
-      await env.DB.prepare('INSERT INTO snb_series (cube_id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(cube_id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at')
-        .bind(String(b.cubeId), JSON.stringify(b.rows), new Date().toISOString()).run();
-      return jsonResponse({ok: true});
-    }
-    return jsonResponse({error_message: 'Méthode non supportée.'}, 405);
-  } catch (e) {
-    return jsonResponse({error_message: 'Base partagée indisponible (' + e.message + ').'}, 500);
+/* ---------------- BNS ---------------- */
+function snbPageViewTime() {
+  const d = new Date(), p = n => String(n).padStart(2, '0');
+  return d.getUTCFullYear() + p(d.getUTCMonth() + 1) + p(d.getUTCDate()) + '_' + p(d.getUTCHours()) + p(d.getUTCMinutes()) + p(d.getUTCSeconds());
+}
+function snbDimNames(dims) {
+  const out = [], seen = new Set();
+  let leaves = 0;
+  (function walk(items) {
+    (items || []).forEach(it => {
+      const n = String(it.name || '').trim();
+      const kids = it.dimensionItems || [];
+      if (!kids.length) leaves++;
+      if (n && !seen.has(n)) { seen.add(n); out.push(n); }
+      walk(kids);
+    });
+  })((dims && dims.dimensions) || []);
+  return {kw: out.join(' · ').slice(0, 900), leaves};
+}
+/* Titre / domaine / unité / fréquence (API interne du portail, exige « x-epb-ajax »), libellés des séries (= mots-clés)
+   et date de dernière publication. Renvoie null si rien d'exploitable n'a pu être lu (non mis en cache, à retenter). */
+async function snbBuildEntry(c, lang) {
+  const enc = encodeURIComponent(c.id);
+  const [info, dims, upd] = await Promise.all([
+    snbJson('https://data.snb.ch/json/table/getCubeInfo?lang=' + lang + '&cubeId=' + enc + '&isWarehouse=false&pageViewTime=' + snbPageViewTime(), {'x-epb-ajax': 'true'}),
+    snbJson('https://data.snb.ch/api/cube/' + enc + '/dimensions/' + lang),
+    snbJson('https://data.snb.ch/api/cube/' + enc + '/lastUpdate')
+  ]);
+  const i = info.json || {}, d = snbDimNames(dims.json), u = upd.json || {};
+  const gone = dims.status === 404 || dims.status === 410;
+  const entry = {
+    id: c.id, topic: c.topic, domaine: c.domaine,
+    title: String(i.title || '').trim(),
+    cat: String(i.publishingTitle || '').trim(),
+    unit: String(i.unit || '').trim(),
+    freq: String(i.frequencySpecification || '').trim(),
+    upd: String(u.publicSinceDate || u.editionDate || ''),
+    kw: d.kw, n: d.leaves, gone
+  };
+  return {entry, cacheable: !!(dims.json || gone)};
+}
+async function snbCatalogList(env, ctx) {
+  const resp = await snbCatalog(env, ctx);
+  if (!resp.ok) return null;
+  try { return (await resp.json()).publication || []; } catch (e) { return null; }
+}
+async function snbIndex(url, env, ctx) {
+  const lang = 'fr'; /* l'index est mémorisé en français (langue de l'interface) */
+  const all = await snbCatalogList(env, ctx);
+  if (!all) return jsonBody(JSON.stringify({error_message: 'Catalogue BNS indisponible.'}), 502);
+
+  /* Lecture groupée : tout ce que D1 connaît déjà + identifiants encore manquants (ou périmés). */
+  if (url.searchParams.get('bulk')) {
+    const rows = await cacheRange(env, SNB_PREFIX, true);
+    const have = new Set(rows.filter(r => r.age < INDEX_FRESH_MS).map(r => r.id));
+    const missing = all.filter(c => !have.has(c.id)).map(c => c.id);
+    const inCat = new Set(all.map(c => c.id));
+    const body = '{"total":' + all.length + ',"missing":' + JSON.stringify(missing) + ',"entries":[' + rows.filter(r => inCat.has(r.id)).map(r => r.data).join(',') + ']}';
+    return jsonBody(body, 200, {'Cache-Control': 'no-cache'});
   }
+
+  let slice;
+  const idsParam = url.searchParams.get('ids');
+  if (idsParam) {
+    const want = new Set(idsParam.split(',').map(s => s.trim()).filter(Boolean));
+    slice = all.filter(c => want.has(c.id)).slice(0, 15);
+  } else {
+    const offset = Math.max(0, parseInt(url.searchParams.get('offset') || '0', 10) || 0);
+    const limit = Math.min(15, Math.max(1, parseInt(url.searchParams.get('limit') || '15', 10) || 15));
+    slice = all.slice(offset, offset + limit);
+  }
+  const cached = await cacheGetMany(env, slice.map(c => SNB_PREFIX + encodeURIComponent(c.id)));
+  const entries = new Array(slice.length), toWrite = [];
+  await Promise.all(slice.map(async (c, i) => {
+    const hit = cached.get(SNB_PREFIX + encodeURIComponent(c.id));
+    if (hit && hit.age < INDEX_FRESH_MS) { try { entries[i] = JSON.parse(hit.data); return; } catch (e) {} }
+    try {
+      const r = await snbBuildEntry(c, lang);
+      entries[i] = r.entry;
+      if (r.cacheable) toWrite.push({k: SNB_PREFIX + encodeURIComponent(c.id), data: JSON.stringify(r.entry)});
+    } catch (e) { entries[i] = {id: c.id, topic: c.topic, domaine: c.domaine}; }
+  }));
+  if (toWrite.length) ctx.waitUntil(cachePutMany(env, toWrite));
+  const offset = idsParam ? 0 : Math.max(0, parseInt(url.searchParams.get('offset') || '0', 10) || 0);
+  return jsonBody(JSON.stringify({total: all.length, offset, lang, entries}), 200, {'Cache-Control': 'no-cache'});
+}
+
+/* ---------------- OFS ---------------- */
+async function ofsBuildEntry(id, lang) {
+  const base = 'https://www.pxweb.bfs.admin.ch/api/v1/';
+  const enc = encodeURIComponent(id);
+  let usedLang = lang, list = await snbJson(base + lang + '/' + enc);
+  if (!list.json && list.status === 404 && lang !== 'de') { usedLang = 'de'; list = await snbJson(base + 'de/' + enc); }
+  const meta = await snbJson(base + usedLang + '/' + enc + '/' + enc + '.px');
+  if (!list.json && !meta.json) return {entry: {id, err: list.status || meta.status || 0}, cacheable: false};
+  const tbl = Array.isArray(list.json) ? (list.json.find(x => x.type === 't') || list.json[0] || {}) : {};
+  const vars = (meta.json && meta.json.variables) || [];
+  const kw = [];
+  vars.forEach(v => {
+    kw.push(v.text || v.code);
+    if (v.time) return;
+    (v.valueTexts || []).slice(0, 40).forEach(t => { if (t && !/^\d+$/.test(t)) kw.push(t); });
+  });
+  const timeVar = vars.find(v => v.time);
+  const entry = {
+    id, lang: usedLang,
+    title: String(tbl.text || (meta.json && meta.json.title) || '').trim(),
+    updated: String(tbl.updated || ''),
+    dims: vars.map(v => v.text || v.code).join(' · '),
+    kw: Array.from(new Set(kw)).join(' · ').slice(0, 1200),
+    t0: timeVar && timeVar.values ? timeVar.values[0] : '',
+    t1: timeVar && timeVar.values ? timeVar.values[timeVar.values.length - 1] : ''
+  };
+  return {entry, cacheable: !!(list.json && meta.json)};
+}
+/* Identifiants de toutes les tables chiffrées (catalogue DAM, ~6 pages de 200), gardés 7 jours dans D1. */
+async function ofsCatalogIds(env) {
+  const hit = await cacheGet(env, 'ofs_ids_v1');
+  if (hit && hit.age < 7 * DAY) { try { return JSON.parse(hit.data); } catch (e) {} }
+  try {
+    const ids = [];
+    let skip = 0, total = Infinity;
+    for (let page = 0; page < 15 && skip < total; page++) {
+      const qs = new URLSearchParams({language: 'fr', articleModelGroup: '900029', articleModel: '900033', limit: '200', skip: String(skip)});
+      const r = await fetch('https://dam-api.bfs.admin.ch/hub/api/dam/assets?' + qs.toString(), {headers: {'Accept-Language': 'fr', Accept: 'application/json'}, signal: AbortSignal.timeout(20000)});
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const j = await r.json();
+      total = typeof j.total === 'number' ? j.total : Infinity;
+      const batch = j.data || [];
+      batch.forEach(it => { if (it && it.shop && it.shop.orderNr) ids.push(it.shop.orderNr); });
+      if (!batch.length) break;
+      skip += batch.length;
+    }
+    if (ids.length) await cachePut(env, 'ofs_ids_v1', JSON.stringify(ids));
+    return ids;
+  } catch (e) {
+    if (hit) { try { return JSON.parse(hit.data); } catch (e2) {} }
+    return null;
+  }
+}
+async function ofsIndex(url, env, ctx) {
+  const lang = ['fr', 'de', 'it', 'en'].indexOf(url.searchParams.get('lang')) >= 0 ? url.searchParams.get('lang') : 'fr';
+  const pfx = ofsPrefix(lang);
+
+  if (url.searchParams.get('bulk')) {
+    const rows = await cacheRange(env, pfx, true);
+    return jsonBody('{"lang":"' + lang + '","entries":[' + rows.map(r => r.data).join(',') + ']}', 200, {'Cache-Control': 'no-cache'});
+  }
+
+  const ids = (url.searchParams.get('ids') || '').split(',').map(s => s.trim()).filter(s => /^px-x-[0-9A-Za-z_]+$/.test(s)).slice(0, 10);
+  const cached = await cacheGetMany(env, ids.map(id => pfx + encodeURIComponent(id)));
+  const entries = new Array(ids.length), toWrite = [];
+  let k = 0, hits = 0;
+  async function worker() {
+    while (k < ids.length) {
+      const i = k++, id = ids[i];
+      const hit = cached.get(pfx + encodeURIComponent(id));
+      if (hit && hit.age < INDEX_FRESH_MS) { try { entries[i] = JSON.parse(hit.data); hits++; continue; } catch (e) {} }
+      try {
+        const r = await ofsBuildEntry(id, lang);
+        entries[i] = r.entry;
+        if (r.cacheable) toWrite.push({k: pfx + encodeURIComponent(id), data: JSON.stringify(r.entry)});
+      } catch (e) { entries[i] = {id, err: 0}; }
+    }
+  }
+  await Promise.all([worker(), worker(), worker()]);
+  if (toWrite.length) ctx.waitUntil(cachePutMany(env, toWrite));
+  return jsonBody(JSON.stringify({lang, entries, hits}), 200, {'Cache-Control': 'no-store'});
+}
+
+/* ---------------- Complétion de l'index en arrière-plan (cron) + état ----------------
+   Un passage = soit un lot de tables OFS (≤ 10, soit 20 sous-requêtes), soit un lot de cubes BNS (≤ 12, soit 36), pour rester
+   sous la limite de 50 sous-requêtes d'un passage ; les deux sources alternent. Priorité : entrées manquantes, puis périmées. */
+async function indexStatus(env, ctx) {
+  const ofsIds = await ofsCatalogIds(env);
+  const snb = await snbCatalogList(env, ctx);
+  const ofsHave = new Map((await cacheRange(env, ofsPrefix('fr'), false)).map(r => [r.id, r.age]));
+  const snbHave = new Map((await cacheRange(env, SNB_PREFIX, false)).map(r => [r.id, r.age]));
+  const plan = (list, have) => {
+    const ids = list || [];
+    const missing = ids.filter(id => !have.has(id));
+    const stale = ids.filter(id => have.has(id) && have.get(id) > INDEX_FRESH_MS).sort((a, b) => have.get(b) - have.get(a));
+    return {total: ids.length, indexed: ids.length - missing.length, missing, stale};
+  };
+  return {ofs: plan(ofsIds, ofsHave), snb: plan(snb && snb.map(c => c.id), snbHave), snbList: snb || []};
+}
+async function warmIndexBatch(env, ctx, preferSnb) {
+  if (!env.DB) return {error: 'D1 absente'};
+  const st = await indexStatus(env, ctx);
+  const todoOf = p => p.missing.concat(p.stale);
+  const order = preferSnb ? ['snb', 'ofs'] : ['ofs', 'snb'];
+  for (const kind of order) {
+    const todo = todoOf(st[kind]);
+    if (!todo.length) continue;
+    const rows = [];
+    if (kind === 'ofs') {
+      const batch = todo.slice(0, 10);
+      let k = 0;
+      const worker = async () => { while (k < batch.length) { const id = batch[k++]; try { const r = await ofsBuildEntry(id, 'fr'); if (r.cacheable) rows.push({k: ofsPrefix('fr') + encodeURIComponent(id), data: JSON.stringify(r.entry)}); } catch (e) {} } };
+      await Promise.all([worker(), worker(), worker()]);
+    } else {
+      const byId = new Map(st.snbList.map(c => [c.id, c]));
+      const batch = todo.slice(0, 12).map(id => byId.get(id)).filter(Boolean);
+      for (let i = 0; i < batch.length; i += 4) {
+        await Promise.all(batch.slice(i, i + 4).map(async c => { try { const r = await snbBuildEntry(c, 'fr'); if (r.cacheable) rows.push({k: SNB_PREFIX + encodeURIComponent(c.id), data: JSON.stringify(r.entry)}); } catch (e) {} }));
+      }
+    }
+    await cachePutMany(env, rows);
+    return {kind, processed: rows.length, remaining: todo.length - rows.length};
+  }
+  return {kind: null, remaining: 0};
 }
 
 /* ----------------------------------------------------------------------------------------------
@@ -240,8 +457,7 @@ async function ensureSchema(db) {
     db.prepare('CREATE INDEX IF NOT EXISTS idx_dest_items_dest ON dest_items(dest)'),
     db.prepare('CREATE TABLE IF NOT EXISTS chartpack_doc (id INTEGER PRIMARY KEY CHECK (id = 1), data TEXT NOT NULL, updated_at TEXT NOT NULL)'),
     db.prepare('CREATE TABLE IF NOT EXISTS kv_store (k TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at TEXT NOT NULL)'),
-    db.prepare('CREATE TABLE IF NOT EXISTS api_cache (k TEXT PRIMARY KEY, data TEXT NOT NULL, fetched_at INTEGER NOT NULL)'),
-    db.prepare('CREATE TABLE IF NOT EXISTS snb_series (cube_id TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at TEXT NOT NULL)')
+    db.prepare('CREATE TABLE IF NOT EXISTS api_cache (k TEXT PRIMARY KEY, data TEXT NOT NULL, fetched_at INTEGER NOT NULL)')
   ]);
   SCHEMA_READY = true;
 }
@@ -360,12 +576,18 @@ async function handleKv(request, env, key) {
    sont mutuellement exclusifs). */
 const ROUTES = [
   {prefix: '/api/fred', target: 'https://api.stlouisfed.org/fred', methods: ['GET']},
-  {prefix: '/api/ofs-dam', target: 'https://dam-api.bfs.admin.ch/hub/api/dam/assets', methods: ['GET'], noSubPath: true},
+  {prefix: '/api/ofs-dam', target: 'https://dam-api.bfs.admin.ch/hub/api/dam/assets', methods: ['GET'], noSubPath: true, ttlMs: 24 * 3600 * 1000}, /* catalogue des tables : relu au plus une fois par jour */
   {prefix: '/api/ofs-pxweb', target: 'https://www.pxweb.bfs.admin.ch/api/v1', methods: ['GET', 'POST'], ttlMs: 7 * 24 * 3600 * 1000}, /* GET = métadonnées de table (stables) ; les POST de données ne sont jamais mis en cache */
   {prefix: '/api/snb', target: 'https://data.snb.ch/api/cube', methods: ['GET'], ttlMs: 6 * 3600 * 1000}
 ];
 
 export default {
+  /* Cron (voir wrangler.jsonc) : complète l'index de recherche OFS / BNS d'un petit lot à chaque passage (les deux sources alternent). */
+  async scheduled(event, env, ctx){
+    const preferSnb = Math.floor((event.scheduledTime || Date.now()) / 120000) % 2 === 1;
+    ctx.waitUntil(warmIndexBatch(env, ctx, preferSnb).catch(() => {}));
+  },
+
   async fetch(request, env, ctx){
     const url = new URL(request.url);
 
@@ -373,12 +595,27 @@ export default {
       if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
       return snbCatalog(env, ctx);
     }
-
-    if (url.pathname === '/api/ofs-catalog') {
+    if (url.pathname === '/api/snb-index') {
       if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
-      return ofsCatalog(request, env, ctx);
+      return snbIndex(url, env, ctx);
     }
-    if (url.pathname === '/api/db/snb-series') return handleSnbSeries(request, env);
+    if (url.pathname === '/api/ofs-index') {
+      if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+      return ofsIndex(url, env, ctx);
+    }
+    /* État de l'index (GET) ; ?run=1 fait avancer un lot à la demande (protégé par la clé d'équipe si elle est définie). */
+    if (url.pathname === '/api/index-status') {
+      if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+      try {
+        if (url.searchParams.get('run')) {
+          const keyOk = writeAllowed(request, env) || (env.GIP_WRITE_KEY && url.searchParams.get('key') === env.GIP_WRITE_KEY);
+          if (!keyOk) return jsonResponse({error_message: "Clé d'équipe manquante ou invalide."}, 401);
+          return jsonResponse(await warmIndexBatch(env, ctx, url.searchParams.get('run') === 'snb'));
+        }
+        const st = await indexStatus(env, ctx);
+        return jsonResponse({ofs: {total: st.ofs.total, indexed: st.ofs.indexed, stale: st.ofs.stale.length}, snb: {total: st.snb.total, indexed: st.snb.indexed, stale: st.snb.stale.length}});
+      } catch (e) { return jsonResponse({error_message: 'État indisponible (' + e.message + ').'}, 500); }
+    }
     if (url.pathname === '/api/db/chartpack') return handleChartpack(request, env);
     const kvMatch = url.pathname.match(/^\/api\/db\/kv\/([a-z_]+)$/);
     if (kvMatch) return handleKv(request, env, kvMatch[1]);

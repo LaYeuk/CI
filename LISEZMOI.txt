@@ -1,0 +1,18 @@
+Copier TOUT le contenu de ce dossier à la racine du dossier CI (en remplaçant les fichiers existants), puis déployer comme d'habitude :
+    npx wrangler deploy
+
+Nouveautés :
+  - Outils_GIP.html : onglets OFS, BNS et FRED (une source par onglet, avec barre de recherche) ; le Sandbox s'appelle désormais « Chart Creator ».
+    Tout ce qui existait déjà est conservé : base partagée (Chart Pack, AM Dashboard, Whiteboard), édition des graphiques de l'AM Dashboard,
+    catégories partagées du Whiteboard, pastille d'état de la base à côté du bouton 🔑.
+  - _worker.js : index de recherche OFS et BNS mémorisé dans la base D1 (partagé par tous les visiteurs). Une fois l'index complet, les onglets OFS et BNS
+    s'ouvrent instantanément, sans rien re-télécharger depuis l'OFS / la BNS. Un « cron » (toutes les 2 minutes) complète l'index en arrière-plan.
+    L'état d'avancement se consulte sur  https://<votre-site>/api/index-status  (nombre de tables OFS et de cubes BNS déjà indexés).
+  - wrangler.jsonc : cron passé à « */2 * * * * » (l'ancienne exploration de séries BNS est remplacée par ce mécanisme).
+
+Après le déploiement : rafraîchir la page en forçant le rechargement (Ctrl+F5). Au tout premier chargement de l'onglet OFS ou BNS, l'index se construit
+(une à deux minutes, barre de progression) ; ensuite il est partagé et instantané pour tout le monde.
+
+Fichiers inchangés, fournis pour avoir un jeu complet : .assetsignore, _redirects.
+Attention : .assetsignore commence par un point. Il peut être masqué dans l'Explorateur Windows (Affichage > Éléments masqués).
+Si un ancien dossier functions/ existe encore dans CI, il ne sert plus (le Worker _worker.js le remplace) : vous pouvez le supprimer.
