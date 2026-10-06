@@ -8,10 +8,6 @@
  * relatives ("/api/fred/...", "/api/ofs-dam", "/api/ofs-pxweb/...", "/api/snb/...") — ce script
  * répond simplement à leur place de ce qui aurait été les fonctions séparées.
  *
- * Routes propres à la BNS : /api/snb-catalog (liste des cubes, depuis le plan du site) et
- * /api/snb-index (titres + libellés des séries + date de publication, pour la recherche de l'écran BNS).
- * Route propre à l'OFS : /api/ofs-index (titres français + dimensions des tables STAT-TAB, écran OFS).
- *
  * Fichiers compagnons à la racine du dépôt (CI/) :
  *   - wrangler.jsonc   : config du Worker (assets.directory = ".", main = "_worker.js")
  *   - .assetsignore    : empêche ce fichier et wrangler.jsonc d'être servis comme fichiers publics
@@ -41,16 +37,10 @@ async function relay(request, targetBase, stripPrefix, methods){
   const path = url.pathname.startsWith(stripPrefix) ? url.pathname.slice(stripPrefix.length) : url.pathname;
   const target = targetBase + path + url.search;
 
-  /* Langue : le catalogue DAM de l'OFS choisit la langue des titres d'après l'en-tête Accept-Language
-     (le paramètre "language" ne filtre que la langue des fichiers). On transmet donc l'en-tête du
-     navigateur, ou on le déduit du paramètre "language" quand il est présent (ex. /api/ofs-dam?language=fr). */
-  const qLang = url.searchParams.get('language');
-  const acceptLang = (qLang && /^(de|fr|it|en)$/i.test(qLang)) ? qLang.toLowerCase() : request.headers.get('Accept-Language');
-  const init = {method: request.method, headers: {}};
-  if (acceptLang) init.headers['Accept-Language'] = acceptLang;
+  const init = {method: request.method};
   if (request.method === 'POST') {
     init.body = await request.text();
-    init.headers['Content-Type'] = request.headers.get('Content-Type') || 'application/json';
+    init.headers = {'Content-Type': request.headers.get('Content-Type') || 'application/json'};
   }
 
   let upstream;
@@ -131,170 +121,113 @@ async function snbCatalog(ctx){
 }
 
 /* ----------------------------------------------------------------------------------------------
- * Index de recherche BNS (/api/snb-index?lang=fr&offset=0&limit=15) — utilisé par l'écran « BNS »
- * d'Outils_GIP.html pour une recherche plein texte façon data.snb.ch/fr/search.
- * Pour chaque cube du catalogue (sitemap, voir snbCatalog) on récupère, en parallèle :
- *   - son titre / domaine / unité / fréquence via l'API interne du portail (getCubeInfo), qui exige
- *     l'en-tête "x-epb-ajax: true" (sinon le pare-feu du portail renvoie une page HTML) ;
- *   - ses dimensions publiques (/api/cube/{id}/dimensions/{lang}) -> libellés des séries = mots-clés ;
- *   - sa date de dernière publication (/api/cube/{id}/lastUpdate).
- * Chaque résultat est mis en cache 7 jours (Cache API) : seule la toute première indexation interroge
- * réellement la BNS. Le navigateur appelle cet endpoint par tranches (limit <= 15 cubes, soit <= 45
- * sous-requêtes, sous la limite de 50 du plan gratuit Workers) et garde l'index complet en local.
- * Tout est « au mieux » : si getCubeInfo échoue, le cube reste trouvable par ses séries et son id.
+ * Base partagée (Cloudflare D1) pour les graphiques déposés : Whiteboard, AM Dashboard et Chart
+ * Pack CI. Objectif demandé : tout le monde qui visite le site voit les mêmes graphiques déposés,
+ * au lieu d'une copie par navigateur (ancien stockage localStorage — toujours utilisé côté client
+ * comme repli hors-ligne / avant la 1ère réponse du serveur, voir shared_engine.js). Deux tables :
+ *   - dest_items(id, dest, created_at, data)  -> Whiteboard et AM Dashboard, un item par ligne
+ *   - chartpack_doc(id=1, data, updated_at)   -> Chart Pack CI, document unique partagé
+ * Liaison D1 attendue dans wrangler.jsonc : binding "DB" (voir fichier fourni avec ce Worker).
+ *
+ * Protection optionnelle des écritures : ce Worker est public (pas d'authentification), donc par
+ * défaut n'importe qui connaissant l'URL peut aussi bien lire qu'écrire dans cette base partagée.
+ * Si le secret GIP_WRITE_KEY est défini pour ce Worker ("npx wrangler secret put GIP_WRITE_KEY"),
+ * toute requête POST/PUT/DELETE sous /api/db/ doit fournir l'en-tête X-GIP-Key avec la même valeur,
+ * sinon 401 (la lecture reste toujours libre). Tant qu'aucun secret n'est défini, les écritures
+ * restent ouvertes comme aujourd'hui — ce mécanisme est donc facultatif, à activer si besoin.
  * ---------------------------------------------------------------------------------------------- */
 
-const SNB_META_TTL = 7 * 24 * 3600;
-
-function snbPageViewTime(){
-  const d = new Date(), p = n => String(n).padStart(2, '0');
-  return d.getUTCFullYear() + p(d.getUTCMonth() + 1) + p(d.getUTCDate()) + '_' + p(d.getUTCHours()) + p(d.getUTCMinutes()) + p(d.getUTCSeconds());
-}
-
-async function snbJson(url, headers){
-  try {
-    const r = await fetch(url, {headers: Object.assign({Accept: 'application/json'}, headers || {})});
-    if (!r.ok) return {status: r.status, json: null};
-    return {status: r.status, json: await r.json()};
-  } catch (e) {
-    return {status: 0, json: null};
-  }
-}
-
-function snbDimNames(dims){
-  const out = [], seen = new Set();
-  let leaves = 0;
-  (function walk(items, depth){
-    (items || []).forEach(it => {
-      const n = String(it.name || '').trim();
-      const kids = it.dimensionItems || [];
-      if (!kids.length) leaves++;
-      if (n && !seen.has(n)) { seen.add(n); out.push(n); }
-      walk(kids, depth + 1);
-    });
-  })((dims && dims.dimensions) || [], 0);
-  return {kw: out.join(' · ').slice(0, 900), leaves};
-}
-
-async function snbCubeMeta(id, lang, ctx){
-  const cache = caches.default;
-  const key = new Request('https://internal-cache.invalid/snb-meta-v1/' + lang + '/' + encodeURIComponent(id));
-  const hit = await cache.match(key);
-  if (hit) return hit.json();
-
-  const enc = encodeURIComponent(id);
-  const [info, dims, upd] = await Promise.all([
-    snbJson('https://data.snb.ch/json/table/getCubeInfo?lang=' + lang + '&cubeId=' + enc + '&isWarehouse=false&pageViewTime=' + snbPageViewTime(), {'x-epb-ajax': 'true'}),
-    snbJson('https://data.snb.ch/api/cube/' + enc + '/dimensions/' + lang),
-    snbJson('https://data.snb.ch/api/cube/' + enc + '/lastUpdate')
+let SCHEMA_READY = false;
+async function ensureSchema(db) {
+  if (SCHEMA_READY) return;
+  await db.batch([
+    db.prepare('CREATE TABLE IF NOT EXISTS dest_items (id TEXT PRIMARY KEY, dest TEXT NOT NULL, created_at TEXT NOT NULL, data TEXT NOT NULL)'),
+    db.prepare('CREATE INDEX IF NOT EXISTS idx_dest_items_dest ON dest_items(dest)'),
+    db.prepare('CREATE TABLE IF NOT EXISTS chartpack_doc (id INTEGER PRIMARY KEY CHECK (id = 1), data TEXT NOT NULL, updated_at TEXT NOT NULL)')
   ]);
-  const i = info.json || {};
-  const d = snbDimNames(dims.json);
-  const u = upd.json || {};
-  const meta = {
-    title: String(i.title || '').trim(),
-    cat: String(i.publishingTitle || '').trim(),
-    unit: String(i.unit || '').trim(),
-    freq: String(i.frequencySpecification || '').trim(),
-    upd: String(u.publicSinceDate || u.editionDate || ''),
-    kw: d.kw,
-    n: d.leaves,
-    gone: dims.status === 404 || dims.status === 410
-  };
-  /* On ne met en cache que les réponses exploitables (évite de figer une panne passagère 7 jours). */
-  if (dims.json || meta.gone) {
-    ctx.waitUntil(cache.put(key, new Response(JSON.stringify(meta), {headers: {'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=' + SNB_META_TTL}})));
-  }
-  return meta;
+  SCHEMA_READY = true;
 }
 
-async function snbIndex(url, ctx){
-  const lang = ['fr', 'de', 'en'].indexOf(url.searchParams.get('lang')) >= 0 ? url.searchParams.get('lang') : 'fr';
-  const offset = Math.max(0, parseInt(url.searchParams.get('offset') || '0', 10) || 0);
-  const limit = Math.min(15, Math.max(1, parseInt(url.searchParams.get('limit') || '15', 10) || 15));
-
-  const catResp = await snbCatalog(ctx);
-  if (!catResp.ok) return catResp;
-  const cat = await catResp.clone().json();
-  const all = cat.publication || [];
-  const slice = all.slice(offset, offset + limit);
-  const metas = await Promise.all(slice.map(c => snbCubeMeta(c.id, lang, ctx).catch(() => ({}))));
-  const entries = slice.map((c, k) => Object.assign({id: c.id, topic: c.topic, domaine: c.domaine}, metas[k]));
-
-  return new Response(JSON.stringify({total: all.length, offset, limit, lang, entries}), {
-    status: 200,
-    headers: {'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600', ...corsHeaders()}
-  });
+function jsonResponse(obj, status) {
+  return new Response(JSON.stringify(obj), {status: status || 200, headers: {'Content-Type': 'application/json', ...corsHeaders()}});
 }
 
-/* ----------------------------------------------------------------------------------------------
- * Index de recherche OFS (/api/ofs-index?lang=fr&ids=px-x-...,px-x-...) — utilisé par l'écran
- * « OFS » d'Outils_GIP.html. Le catalogue DAM de l'OFS ne donne les titres qu'en allemand ; les
- * titres français et les libellés des dimensions viennent de l'API STAT-TAB (PxWeb) :
- *   - /api/v1/{lang}/{id}              -> titre de la table + date de mise à jour ;
- *   - /api/v1/{lang}/{id}/{id}.px      -> variables (dimensions) et leurs valeurs = mots-clés.
- * 10 tables max par appel (20 sous-requêtes), 3 tables à la fois pour ménager la limite de débit de
- * STAT-TAB ; chaque table est mise en cache 7 jours. Repli sur l'allemand si la table n'existe pas en
- * français. Les échecs ne sont pas mis en cache (le navigateur les redemandera plus tard).
- * ---------------------------------------------------------------------------------------------- */
-
-const OFS_META_TTL = 7 * 24 * 3600;
-
-async function ofsTableMeta(id, lang, ctx){
-  const cache = caches.default;
-  const key = new Request('https://internal-cache.invalid/ofs-meta-v1/' + lang + '/' + encodeURIComponent(id));
-  const hit = await cache.match(key);
-  if (hit) return hit.json();
-
-  const base = 'https://www.pxweb.bfs.admin.ch/api/v1/';
-  const enc = encodeURIComponent(id);
-  let usedLang = lang, list = await snbJson(base + lang + '/' + enc);
-  if (!list.json && list.status === 404 && lang !== 'de') { usedLang = 'de'; list = await snbJson(base + 'de/' + enc); }
-  const meta = await snbJson(base + usedLang + '/' + enc + '/' + enc + '.px');
-  if (!list.json && !meta.json) return {id, err: list.status || meta.status || 0};
-
-  const tbl = Array.isArray(list.json) ? (list.json.find(x => x.type === 't') || list.json[0] || {}) : {};
-  const vars = (meta.json && meta.json.variables) || [];
-  const kw = [];
-  vars.forEach(v => {
-    kw.push(v.text || v.code);
-    if (v.time) return;
-    (v.valueTexts || []).slice(0, 40).forEach(t => { if (t && !/^\d+$/.test(t)) kw.push(t); });
-  });
-  const timeVar = vars.find(v => v.time);
-  const out = {
-    id,
-    lang: usedLang,
-    title: String(tbl.text || (meta.json && meta.json.title) || '').trim(),
-    updated: String(tbl.updated || ''),
-    dims: vars.map(v => v.text || v.code).join(' · '),
-    kw: Array.from(new Set(kw)).join(' · ').slice(0, 1200),
-    t0: timeVar && timeVar.values ? timeVar.values[0] : '',
-    t1: timeVar && timeVar.values ? timeVar.values[timeVar.values.length - 1] : ''
-  };
-  if (list.json && meta.json) {
-    ctx.waitUntil(cache.put(key, new Response(JSON.stringify(out), {headers: {'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=' + OFS_META_TTL}})));
-  }
-  return out;
+function writeAllowed(request, env) {
+  const required = env.GIP_WRITE_KEY;
+  if (!required) return true;
+  return request.headers.get('X-GIP-Key') === required;
 }
 
-async function ofsIndex(url, ctx){
-  const lang = ['fr', 'de', 'it', 'en'].indexOf(url.searchParams.get('lang')) >= 0 ? url.searchParams.get('lang') : 'fr';
-  const ids = (url.searchParams.get('ids') || '').split(',').map(s => s.trim()).filter(s => /^px-x-[0-9A-Za-z_]+$/.test(s)).slice(0, 10);
-  const entries = new Array(ids.length);
-  let k = 0;
-  async function worker(){
-    while (k < ids.length) {
-      const i = k++;
-      try { entries[i] = await ofsTableMeta(ids[i], lang, ctx); }
-      catch (e) { entries[i] = {id: ids[i], err: 0}; }
+const DEST_NAMES = ['whiteboard', 'dashboard'];
+
+async function handleDestCollection(request, env, destName) {
+  if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+  if (DEST_NAMES.indexOf(destName) < 0) return jsonResponse({error_message: 'Destination inconnue.'}, 404);
+  try {
+    await ensureSchema(env.DB);
+
+    if (request.method === 'GET') {
+      const rs = await env.DB.prepare('SELECT data FROM dest_items WHERE dest = ? ORDER BY created_at ASC').bind(destName).all();
+      const items = rs.results.map(r => { try { return JSON.parse(r.data); } catch (e) { return null; } }).filter(Boolean);
+      return jsonResponse({items});
     }
+
+    if (request.method === 'POST') {
+      if (!writeAllowed(request, env)) return jsonResponse({error_message: "Clé d'équipe manquante ou invalide."}, 401);
+      let item;
+      try { item = await request.json(); } catch (e) { return jsonResponse({error_message: 'JSON invalide.'}, 400); }
+      if (!item || !item.id) return jsonResponse({error_message: 'Item invalide (id manquant).'}, 400);
+      await env.DB.prepare('INSERT OR REPLACE INTO dest_items (id, dest, created_at, data) VALUES (?, ?, ?, ?)')
+        .bind(item.id, destName, item.createdAt || new Date().toISOString(), JSON.stringify(item)).run();
+      return jsonResponse({ok: true, id: item.id});
+    }
+
+    return jsonResponse({error_message: 'Méthode non supportée.'}, 405);
+  } catch (e) {
+    return jsonResponse({error_message: 'Base partagée indisponible (' + e.message + '). Le Worker a-t-il bien été redéployé avec la liaison D1 "DB" ?'}, 500);
   }
-  await Promise.all([worker(), worker(), worker()]);
-  return new Response(JSON.stringify({lang, entries}), {
-    status: 200,
-    headers: {'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...corsHeaders()}
-  });
+}
+
+async function handleDestItem(request, env, destName, id) {
+  if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+  if (DEST_NAMES.indexOf(destName) < 0) return jsonResponse({error_message: 'Destination inconnue.'}, 404);
+  if (request.method !== 'DELETE') return jsonResponse({error_message: 'Méthode non supportée.'}, 405);
+  if (!writeAllowed(request, env)) return jsonResponse({error_message: "Clé d'équipe manquante ou invalide."}, 401);
+  try {
+    await ensureSchema(env.DB);
+    await env.DB.prepare('DELETE FROM dest_items WHERE dest = ? AND id = ?').bind(destName, id).run();
+    return jsonResponse({ok: true});
+  } catch (e) {
+    return jsonResponse({error_message: 'Base partagée indisponible (' + e.message + ').'}, 500);
+  }
+}
+
+async function handleChartpack(request, env) {
+  if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+  try {
+    await ensureSchema(env.DB);
+
+    if (request.method === 'GET') {
+      const row = await env.DB.prepare('SELECT data, updated_at FROM chartpack_doc WHERE id = 1').first();
+      if (!row) return jsonResponse({data: null});
+      let data; try { data = JSON.parse(row.data); } catch (e) { data = null; }
+      return jsonResponse({data, updated_at: row.updated_at});
+    }
+
+    if (request.method === 'PUT') {
+      if (!writeAllowed(request, env)) return jsonResponse({error_message: "Clé d'équipe manquante ou invalide."}, 401);
+      let doc;
+      try { doc = await request.json(); } catch (e) { return jsonResponse({error_message: 'JSON invalide.'}, 400); }
+      const now = new Date().toISOString();
+      await env.DB.prepare("INSERT INTO chartpack_doc (id, data, updated_at) VALUES (1, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at")
+        .bind(JSON.stringify(doc), now).run();
+      return jsonResponse({ok: true, updated_at: now});
+    }
+
+    return jsonResponse({error_message: 'Méthode non supportée.'}, 405);
+  } catch (e) {
+    return jsonResponse({error_message: 'Base partagée indisponible (' + e.message + ').'}, 500);
+  }
 }
 
 /* Ordre important : les préfixes les plus spécifiques d'abord (aucun souci ici, les 4 préfixes
@@ -315,15 +248,11 @@ export default {
       return snbCatalog(ctx);
     }
 
-    if (url.pathname === '/api/snb-index') {
-      if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
-      return snbIndex(url, ctx);
-    }
-
-    if (url.pathname === '/api/ofs-index') {
-      if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
-      return ofsIndex(url, ctx);
-    }
+    if (url.pathname === '/api/db/chartpack') return handleChartpack(request, env);
+    const destItemMatch = url.pathname.match(/^\/api\/db\/dest\/([a-z]+)\/([^/]+)$/);
+    if (destItemMatch) return handleDestItem(request, env, destItemMatch[1], decodeURIComponent(destItemMatch[2]));
+    const destCollMatch = url.pathname.match(/^\/api\/db\/dest\/([a-z]+)$/);
+    if (destCollMatch) return handleDestCollection(request, env, destCollMatch[1]);
 
     for (const r of ROUTES) {
       if (url.pathname === r.prefix || url.pathname.startsWith(r.prefix + '/')) {

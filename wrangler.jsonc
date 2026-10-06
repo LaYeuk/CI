@@ -9,5 +9,15 @@
   "assets": {
     "directory": "./",
     "binding": "ASSETS"
-  }
+  },
+  // Base partagée (Cloudflare D1) pour les graphiques déposés sur le Chart Pack CI, le Whiteboard
+  // et l'AM Dashboard : tout le monde qui visite le site voit les mêmes dépôts (voir _worker.js,
+  // routes /api/db/...). Base "ci-shared-charts" déjà créée sur ce compte Cloudflare.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ci-shared-charts",
+      "database_id": "35741c48-fc72-4640-b57d-8930157528af"
+    }
+  ]
 }
