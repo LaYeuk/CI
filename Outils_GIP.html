@@ -4953,38 +4953,33 @@ function snbSeriesIndexLoad(){
     const raw = localStorage.getItem(SNB_SERIES_INDEX_KEY);
     SNB_SERIES_INDEX = raw ? JSON.parse(raw) : [];
   } catch (e) { SNB_SERIES_INDEX = []; }
-  SNB_SERIES_INDEX.forEach(snbIndexPrep);
 }
 
-/* champ de recherche pré-normalisé (sans accents, minuscules) : l'index partagé compte plusieurs dizaines de milliers de
-   séries, on ne veut pas re-normaliser chacune à chaque frappe. Non persisté (préfixe « _ »). */
-function snbIndexPrep(e){ e._n = snbNorm(e.seriesLabel + ' ' + e.cubeLabel + ' ' + e.cubeDomaine); return e; }
-
 function snbSeriesIndexSave(){
-  try { localStorage.setItem(SNB_SERIES_INDEX_KEY, JSON.stringify(SNB_SERIES_INDEX.filter(e => !e._srv), (k, v) => k === '_n' || k === '_srv' ? undefined : v)); } catch (e) {}
+  try { localStorage.setItem(SNB_SERIES_INDEX_KEY, JSON.stringify(SNB_SERIES_INDEX)); } catch (e) {}
 }
 
 function snbSeriesIndexAdd(cubeId, cubeLabel, cubeDomaine, series){
   SNB_SERIES_INDEX = SNB_SERIES_INDEX.filter(e => e.cubeId !== cubeId);
-  series.forEach((s, idx) => SNB_SERIES_INDEX.push(snbIndexPrep({cubeId, cubeLabel, cubeDomaine: cubeDomaine || '', seriesIdx: idx, seriesLabel: s.label})));
+  const rows = series.map((s, idx) => ({cubeId, cubeLabel, cubeDomaine: cubeDomaine || '', seriesIdx: idx, seriesLabel: s.label}));
+  rows.forEach(r => SNB_SERIES_INDEX.push(r));
   snbSeriesIndexSave();
-  dbWrite('/api/db/snb-series', 'POST', {cubeId, cubeLabel, cubeDomaine: cubeDomaine || '', labels: series.map(s => s.label)}); /* partagé avec toute l'équipe (base D1) */
+  dbWrite('/api/db/snb-series', 'POST', {cubeId, rows}); /* partagé avec toute l'équipe (base D1) */
 }
 
-/* Index partagé (base D1) : alimenté par l'exploration automatique des ~900 cubes BNS faite côté Worker, et par ce que chacun
-   charge. Le serveur fait foi pour les cubes qu'il connaît ; les cubes que ce navigateur est seul à connaître lui sont publiés. */
+/* Fusionne l'index partagé (séries déjà explorées par n'importe qui dans l'équipe) avec l'index local, et publie les
+   cubes que ce navigateur est seul à connaître. */
 async function snbSeriesIndexSync(){
   const j = await dbReadJson('/api/db/snb-series');
-  if (!j || !Array.isArray(j.cubes)) return;
-  const serverIds = new Set(j.cubes.map(c => c.c));
-  const localOnly = SNB_SERIES_INDEX.filter(e => !serverIds.has(e.cubeId));
-  const fromServer = [];
-  j.cubes.forEach(c => c.s.forEach((label, idx) => fromServer.push(Object.assign(snbIndexPrep({cubeId: c.c, cubeLabel: c.l || c.c, cubeDomaine: c.d || '', seriesIdx: idx, seriesLabel: label}), {_srv: true}))));
-  SNB_SERIES_INDEX = fromServer.concat(localOnly);
-  snbSeriesIndexSave();
+  if (!j || !Array.isArray(j.entries)) return;
+  const serverCubes = new Set(j.entries.map(e => e.cubeId));
+  const localOnly = SNB_SERIES_INDEX.filter(e => !serverCubes.has(e.cubeId));
+  const localCubes = new Set(SNB_SERIES_INDEX.map(e => e.cubeId));
+  const added = j.entries.filter(e => !localCubes.has(e.cubeId));
+  if (added.length) { SNB_SERIES_INDEX = SNB_SERIES_INDEX.concat(added); snbSeriesIndexSave(); }
   const byCube = {};
-  localOnly.forEach(e => { (byCube[e.cubeId] = byCube[e.cubeId] || {cubeLabel: e.cubeLabel, cubeDomaine: e.cubeDomaine, labels: []}).labels.push(e.seriesLabel); });
-  Object.keys(byCube).forEach(cubeId => dbWrite('/api/db/snb-series', 'POST', Object.assign({cubeId}, byCube[cubeId])));
+  localOnly.forEach(e => { (byCube[e.cubeId] = byCube[e.cubeId] || []).push(e); });
+  Object.keys(byCube).forEach(cubeId => dbWrite('/api/db/snb-series', 'POST', {cubeId, rows: byCube[cubeId]}));
 }
 
 /* ----------------------------------------------------------------------------------------------
@@ -5080,12 +5075,12 @@ function snbApplyFilter(){
 
   const source = SNB_FULL_CATALOG || SNB_CUBES;
   const cubeHits = source.filter(c => snbNorm(c.label + ' ' + c.domaine + ' ' + c.mots + ' ' + c.id).indexOf(kw) >= 0);
-  const seriesHits = SNB_SERIES_INDEX.filter(e => e._n.indexOf(kw) >= 0);
+  const seriesHits = SNB_SERIES_INDEX.filter(e => snbNorm(e.seriesLabel + ' ' + e.cubeLabel + ' ' + e.cubeDomaine).indexOf(kw) >= 0);
 
   SNB_FILTERED = cubeHits.slice(0, 300);
   const options = [];
-  seriesHits.slice(0, 100).forEach(e => {
-    options.push({value: e.cubeId + '::' + e.seriesIdx + '::' + encodeURIComponent(e.seriesLabel), text: '🔎 ' + e.seriesLabel + ' — ' + (e.cubeDomaine || e.cubeLabel)});
+  seriesHits.slice(0, 50).forEach(e => {
+    options.push({value: e.cubeId + '::' + e.seriesIdx, text: '🔎 ' + e.seriesLabel + ' — ' + (e.cubeDomaine || e.cubeLabel)});
   });
   SNB_FILTERED.forEach(c => {
     options.push({value: c.id, text: c.domaine + ' — ' + c.label});
@@ -5095,15 +5090,15 @@ function snbApplyFilter(){
   sel.innerHTML = options.length
     ? options.map(o => `<option value="${esc(o.value)}">${esc(o.text)}</option>`).join('')
     : '<option value="">— aucune série BNS ne correspond à ce mot-clé —</option>';
-  snbSetStatus(options.length ? (seriesHits.length + ' série(s) trouvée(s) dans l\'index' + (seriesHits.length > 100 ? ' (100 premières affichées — précisez le mot-clé)' : '') + ', ' + SNB_FILTERED.length + ' indicateur(s).') : '');
+  snbSetStatus(options.length ? (options.length + ' résultat(s).') : '');
 }
 
 async function snbLoadCube(){
   const raw = $('sbSnbCube').value;
   if (!raw) return;
-  let cubeId = raw, targetIdx = null, targetLabel = null;
-  const parts = raw.split('::');
-  if (parts.length > 1) { cubeId = parts[0]; targetIdx = +parts[1]; if (parts[2]) { try { targetLabel = decodeURIComponent(parts[2]); } catch (e) {} } }
+  let cubeId = raw, targetIdx = null;
+  const sepIdx = raw.indexOf('::');
+  if (sepIdx >= 0) { cubeId = raw.slice(0, sepIdx); targetIdx = +raw.slice(sepIdx + 2); }
 
   const source = SNB_FULL_CATALOG || SNB_CUBES;
   let cube = SNB_FILTERED.find(c => c.id === cubeId) || source.find(c => c.id === cubeId);
@@ -5136,12 +5131,8 @@ async function snbLoadCube(){
   sel.innerHTML = series.length
     ? series.map((s, i) => `<option value="${i}">${esc(s.label)}</option>`).join('')
     : '<option value="">— aucune série exploitable —</option>';
-  /* on retrouve la série par son NOM (l'index partagé vient d'une exploration automatique : sa position peut différer de celle
-     des séries réellement exploitables), avec la position comme repli */
-  let tIdx = targetLabel ? series.findIndex(s => s.label === targetLabel) : -1;
-  if (tIdx < 0 && targetIdx !== null && !targetLabel && series[targetIdx]) tIdx = targetIdx;
-  const hasTarget = tIdx >= 0;
-  if (hasTarget) sel.value = String(tIdx);
+  const hasTarget = targetIdx !== null && series[targetIdx];
+  if (hasTarget) sel.value = String(targetIdx);
   $('sbSnbAddBtn').style.display = series.length ? '' : 'none';
   snbSetStatus(series.length + ' série(s) disponibles dans « ' + esc(cube.label) + ' »' + (hasTarget ? ' — série recherchée pré-sélectionnée ci-dessous.' : '.'));
   btn.disabled = false; btn.textContent = 'Charger les séries de cet indicateur';
