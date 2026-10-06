@@ -17,7 +17,7 @@
 function corsHeaders(){
   return {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': '*'
   };
 }
@@ -143,7 +143,8 @@ async function ensureSchema(db) {
   await db.batch([
     db.prepare('CREATE TABLE IF NOT EXISTS dest_items (id TEXT PRIMARY KEY, dest TEXT NOT NULL, created_at TEXT NOT NULL, data TEXT NOT NULL)'),
     db.prepare('CREATE INDEX IF NOT EXISTS idx_dest_items_dest ON dest_items(dest)'),
-    db.prepare('CREATE TABLE IF NOT EXISTS chartpack_doc (id INTEGER PRIMARY KEY CHECK (id = 1), data TEXT NOT NULL, updated_at TEXT NOT NULL)')
+    db.prepare('CREATE TABLE IF NOT EXISTS chartpack_doc (id INTEGER PRIMARY KEY CHECK (id = 1), data TEXT NOT NULL, updated_at TEXT NOT NULL)'),
+    db.prepare('CREATE TABLE IF NOT EXISTS kv_store (k TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at TEXT NOT NULL)')
   ]);
   SCHEMA_READY = true;
 }
@@ -230,6 +231,34 @@ async function handleChartpack(request, env) {
   }
 }
 
+/* Petit stockage clé/valeur partagé (ex. les catégories du Whiteboard) : un document JSON par clé. */
+const KV_KEYS = ['wb_categories'];
+async function handleKv(request, env, key) {
+  if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
+  if (KV_KEYS.indexOf(key) < 0) return jsonResponse({error_message: 'Clé inconnue.'}, 404);
+  try {
+    await ensureSchema(env.DB);
+    if (request.method === 'GET') {
+      const row = await env.DB.prepare('SELECT data, updated_at FROM kv_store WHERE k = ?').bind(key).first();
+      if (!row) return jsonResponse({data: null});
+      let data; try { data = JSON.parse(row.data); } catch (e) { data = null; }
+      return jsonResponse({data, updated_at: row.updated_at});
+    }
+    if (request.method === 'PUT') {
+      if (!writeAllowed(request, env)) return jsonResponse({error_message: "Clé d'équipe manquante ou invalide."}, 401);
+      let doc;
+      try { doc = await request.json(); } catch (e) { return jsonResponse({error_message: 'JSON invalide.'}, 400); }
+      const now = new Date().toISOString();
+      await env.DB.prepare('INSERT INTO kv_store (k, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(k) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at')
+        .bind(key, JSON.stringify(doc), now).run();
+      return jsonResponse({ok: true, updated_at: now});
+    }
+    return jsonResponse({error_message: 'Méthode non supportée.'}, 405);
+  } catch (e) {
+    return jsonResponse({error_message: 'Base partagée indisponible (' + e.message + ').'}, 500);
+  }
+}
+
 /* Ordre important : les préfixes les plus spécifiques d'abord (aucun souci ici, les 4 préfixes
    sont mutuellement exclusifs). */
 const ROUTES = [
@@ -249,6 +278,8 @@ export default {
     }
 
     if (url.pathname === '/api/db/chartpack') return handleChartpack(request, env);
+    const kvMatch = url.pathname.match(/^\/api\/db\/kv\/([a-z_]+)$/);
+    if (kvMatch) return handleKv(request, env, kvMatch[1]);
     const destItemMatch = url.pathname.match(/^\/api\/db\/dest\/([a-z]+)\/([^/]+)$/);
     if (destItemMatch) return handleDestItem(request, env, destItemMatch[1], decodeURIComponent(destItemMatch[2]));
     const destCollMatch = url.pathname.match(/^\/api\/db\/dest\/([a-z]+)$/);
