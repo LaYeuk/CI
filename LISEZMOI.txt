@@ -1,18 +1,31 @@
-Copier TOUT le contenu de ce dossier à la racine du dossier CI (en remplaçant les fichiers existants), puis déployer comme d'habitude :
+Copier TOUT le contenu de ce dossier à la racine du dossier CI (en remplaçant les fichiers existants), puis déployer :
     npx wrangler deploy
 
-Nouveautés :
-  - Outils_GIP.html : onglets OFS, BNS et FRED (une source par onglet, avec barre de recherche) ; le Sandbox s'appelle désormais « Chart Creator ».
-    Tout ce qui existait déjà est conservé : base partagée (Chart Pack, AM Dashboard, Whiteboard), édition des graphiques de l'AM Dashboard,
-    catégories partagées du Whiteboard, pastille d'état de la base à côté du bouton 🔑.
-  - _worker.js : index de recherche OFS et BNS mémorisé dans la base D1 (partagé par tous les visiteurs). Une fois l'index complet, les onglets OFS et BNS
-    s'ouvrent instantanément, sans rien re-télécharger depuis l'OFS / la BNS. Un « cron » (toutes les 2 minutes) complète l'index en arrière-plan.
-    L'état d'avancement se consulte sur  https://<votre-site>/api/index-status  (nombre de tables OFS et de cubes BNS déjà indexés).
-  - wrangler.jsonc : cron passé à « */2 * * * * » (l'ancienne exploration de séries BNS est remplacée par ce mécanisme).
+================ DONNÉES EXCEL PUBLIÉES AVEC LE SITE ================
+Le site charge automatiquement, à l'ouverture, les deux classeurs du dossier data/ :
+    data/R2_Data.xlsx   -> Chart Pack (et catalogue de séries du Chart Creator)
+    data/Risk_Map.xlsx  -> AM Dashboard (feuille « Copy Risk Map » + ses graphiques)
+    data/manifest.json  -> décrit ces fichiers (nom, date, empreinte) ; généré par le script.
+Plus rien à glisser-déposer ni à lier : les glisser-déposer restent possibles (ils s'ajoutent / remplacent le temps de la session).
 
-Après le déploiement : rafraîchir la page en forçant le rechargement (Ctrl+F5). Au tout premier chargement de l'onglet OFS ou BNS, l'index se construit
-(une à deux minutes, barre de progression) ; ensuite il est partagé et instantané pour tout le monde.
+Pour mettre les données à jour :
+  1. Mettre les classeurs à jour dans un dossier  data_source/  à la racine de CI (« R2 Data.xlsx », « Copy fixed Cycle and ESI.xlsx »…).
+     Ce dossier n'est PAS publié : ajoutez la ligne  data_source/  dans votre fichier .gitignore (les originaux pèsent ~100 Mo).
+  2. Lancer :   node prepare_data.mjs
+     (aucune installation nécessaire ; reconnaît chaque classeur à ses feuilles ; les originaux ne sont pas modifiés)
+        - Risk Map : le classeur d'origine (86 Mo, 485 Mo décompressé) dépasse la limite de Cloudflare (25 Mo par fichier) : le script n'en garde
+          que la feuille « Copy Risk Map » et ses graphiques -> ~3 Mo, chargé en 2-3 secondes au lieu de 1 à 2 minutes.
+        - R2 Data : toutes les feuilles sont gardées (~13 Mo).
+  3. git add data && git commit -m "Mise à jour des données" && git push
+  4. Déploiement : soit  npx wrangler deploy  à la main, soit automatiquement à chaque push (recommandé) : dans le tableau de bord Cloudflare,
+     Workers & Pages > ci > Settings > Builds > « Connect » le dépôt GitHub (LaYeuk/CI), commande de déploiement :  npx wrangler deploy
+     Dès lors, chaque « git push » met le site à jour tout seul.
+Remarque : les fichiers de data/ sont aussi publics que le site lui-même (adresse /data/R2_Data.xlsx). Si ces données doivent rester confidentielles,
+il faut protéger le site avec Cloudflare Access (je peux détailler).
 
-Fichiers inchangés, fournis pour avoir un jeu complet : .assetsignore, _redirects.
+================ AUTRES NOUVEAUTÉS ================
+  - Menu sur deux lignes (Chart Creator, BNS, FRED, OFS / Chart Pack, AM Dashboard, Whiteboard) ; export PNG dans le Chart Creator.
+  - Index de recherche OFS / BNS mémorisé dans la base D1, complété par le cron (état : /api/index-status).
+
 Attention : .assetsignore commence par un point. Il peut être masqué dans l'Explorateur Windows (Affichage > Éléments masqués).
 Si un ancien dossier functions/ existe encore dans CI, il ne sert plus (le Worker _worker.js le remplace) : vous pouvez le supprimer.

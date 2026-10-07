@@ -1,6 +1,12 @@
 wrangler.jsonc
 _worker.js
 .assetsignore
+prepare_data.mjs
+LISEZMOI.txt
+data_source
+data_source/**
+node_modules
+node_modules/**
 .git
 .git/**
 .wrangler

@@ -1,0 +1,21 @@
+{
+  "files": {
+    "riskmap": {
+      "file": "Risk_Map.xlsx",
+      "name": "Risk Map (feuille « Copy Risk Map »)",
+      "size": 3587841,
+      "hash": "b375635e17",
+      "updated": "2026-10-07T09:17:34.114Z",
+      "source": "Copy fixed Cycle and ESI.xlsx"
+    },
+    "base": {
+      "file": "R2_Data.xlsx",
+      "name": "R2 Data.xlsx",
+      "size": 13731477,
+      "hash": "efad880663",
+      "updated": "2026-10-07T09:17:34.163Z",
+      "source": "R2 Data.xlsx"
+    }
+  },
+  "generated": "2026-10-07T09:17:34.163Z"
+}

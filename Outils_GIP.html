@@ -548,7 +548,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     </div>
   </header>
   <main>
-    <div class="intro">Déposez ici les classeurs Excel une seule fois, puis ouvrez le Chart Pack ou l'AM Dashboard ci-dessous (ou via le menu en haut de page) — les deux outils utilisent les fichiers chargés ici. Tout se passe dans votre navigateur, sans envoi de données vers un serveur.</div>
+    <div class="intro">Les classeurs Excel de référence sont chargés automatiquement depuis le site (ils sont mis à jour avec le dépôt Git, voir <code>prepare_data.mjs</code>). Vous pouvez aussi glisser un autre classeur ci-dessous : il s'ajoute (Chart Pack) ou remplace celui du site (AM Dashboard) le temps de la session — rien n'est envoyé vers un serveur.</div>
 
     <div class="grid">
       <div class="card">
@@ -577,7 +577,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
           </svg>
         </div>
         <h2>AM Dashboard <span style="font-weight:400;color:var(--mut);font-size:13px">(Risk Map)</span></h2>
-        <p>Tableaux et 64 graphiques recréés depuis la feuille « Copy Risk Map », mis à jour à chaque dépôt du classeur.</p>
+        <p>Tableaux et graphiques recréés depuis la feuille « Copy Risk Map », mis à jour avec le classeur publié sur le site.</p>
         <div class="drop" id="rmwDrop">Glissez le classeur Excel de la Risk Map (feuille « Copy Risk Map ») ici, ou cliquez<input type="file" id="rmwFile" accept=".xlsx,.xlsm,.xls" hidden></div>
         <div class="stat" id="rmwStatus">Aucun classeur chargé.</div>
         <button type="button" class="go" data-open="am">Ouvrir AM Dashboard →</button>
@@ -2610,6 +2610,29 @@ function startDestinationAutoRefresh(intervalMs) {
   }, intervalMs || 20000);
 }
 
+/* ---- Données publiées avec le site : classeurs Excel du dossier data/ du dépôt (préparés par prepare_data.mjs).
+   data/manifest.json décrit ce qui est disponible ; s'il est absent (page ouverte hors du site) on retombe sur le
+   fonctionnement manuel d'avant (glisser-déposer / fichier lié). ---- */
+let gipSiteManifestPromise = null;
+function gipSiteManifest() {
+  if (!gipSiteManifestPromise) {
+    gipSiteManifestPromise = fetch('data/manifest.json', {cache: 'no-cache'})
+      .then(r => (r.ok && /json/.test(r.headers.get('Content-Type') || '')) ? r.json() : null)
+      .then(j => (j && j.files) ? j : null)
+      .catch(() => null);
+  }
+  return gipSiteManifestPromise;
+}
+async function gipFetchSiteFile(entry) {
+  const r = await fetch('data/' + encodeURIComponent(entry.file) + '?v=' + encodeURIComponent(entry.hash || entry.updated || ''));
+  if (!r.ok) throw new Error('HTTP ' + r.status + ' pour data/' + entry.file);
+  const blob = await r.blob();
+  return new File([blob], entry.name || entry.file, {type: blob.type || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+function gipSiteDateLabel(entry) {
+  const d = entry && entry.updated ? new Date(entry.updated) : null;
+  return d && !isNaN(d) ? d.toLocaleDateString('fr-CH', {day: '2-digit', month: '2-digit', year: 'numeric'}) : '';
+}
 /* Catalogue unifié de séries (alimenté par le classeur de séries chargé dans le Chart Pack) + accroche Chart Creator */
 let CATALOG = {};
 let onCatalogUpdate = null;
@@ -3226,6 +3249,22 @@ fileIn.onchange = () => fileIn.files[0] && loadFile(fileIn.files[0]);
 
 drop.addEventListener('drop', e => !drop.classList.contains('loading') && e.dataTransfer.files[0] && loadFile(e.dataTransfer.files[0]));
 
+/* Classeur Risk Map publié avec le site (dossier data/ du dépôt) : chargé automatiquement à l'ouverture ; un glisser-déposer le remplace. */
+(async function autoLoadSiteRiskMap(){
+  const site = await gipSiteManifest();
+  if (!site || !site.files || !site.files.riskmap) return;
+  try {
+    $('rmwStatus').innerHTML = 'Téléchargement des données du site…';
+    const file = await gipFetchSiteFile(site.files.riskmap);
+    await loadFile(file);
+    const d = gipSiteDateLabel(site.files.riskmap);
+    if (d && ROWS) $('rmwStatus').innerHTML += ' — fournis par le site (mis à jour le ' + esc(d) + ')';
+  } catch (e) {
+    console.error('Risk Map du site', e);
+    $('rmwStatus').innerHTML = '<span class="err">Données du site indisponibles (' + esc(e.message) + ') — glissez le classeur manuellement.</span>';
+  }
+})();
+
 $('exportZipBtn').addEventListener('click', exportAllChartsZip);
 
 $('resetOrderBtn').addEventListener('click', () => {
@@ -3383,6 +3422,14 @@ async function idbSet(key, val) {
 
 function renderBaseBox() {
   const box = $('baseBox'); if (!box) return;
+  if (state.baseStatus === 'site') {
+    box.innerHTML = `<div class="stat">✓ Base : <b>${esc(BASE_DB_NAME)}</b> fournie par le site${state.baseDate ? ' (mise à jour du ' + esc(state.baseDate) + ')' : ''} — vous pouvez y ajouter d'autres classeurs ci-dessous.</div>`;
+    return;
+  }
+  if (state.baseStatus === 'siteLoading') {
+    box.innerHTML = `<div class="stat">Téléchargement de la base « ${esc(BASE_DB_NAME)} » depuis le site…</div>`;
+    return;
+  }
   if (!FS_ACCESS_OK) {
     box.innerHTML = `<div class="hint">Base « ${esc(BASE_DB_NAME)} » : liaison automatique non disponible dans ce navigateur (utilisez Chrome ou Edge). En attendant, glissez-la manuellement ci-dessous à chaque session.</div>`;
     return;
@@ -3428,6 +3475,24 @@ async function grantBaseAccess() {
 }
 
 async function tryAutoLoadBase() {
+  /* 1) Base publiée avec le site (dossier data/ du dépôt) : prioritaire, rien à lier ni à glisser */
+  const site = await gipSiteManifest();
+  if (site && site.files && site.files.base) {
+    try {
+      state.baseStatus = 'siteLoading'; renderBaseBox();
+      dualStatus('Téléchargement de la base depuis le site…');
+      const file = await gipFetchSiteFile(site.files.base);
+      state.baseDate = gipSiteDateLabel(site.files.base);
+      state.baseStatus = 'site'; renderBaseBox();
+      await loadFile(file, true);
+      return;
+    } catch (e) {
+      console.error('base du site', e);
+      state.baseStatus = 'none';
+      dualStatus('<span class="err">Base du site indisponible (' + esc(e.message) + ') — glissez le fichier manuellement.</span>');
+    }
+  }
+  /* 2) Sinon : fichier lié sur cet ordinateur (comme avant) */
   if (!FS_ACCESS_OK) { renderBaseBox(); return; }
   baseHandle = await idbGet('base');
   if (!baseHandle) { renderBaseBox(); return; }
