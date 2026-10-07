@@ -52,6 +52,27 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenHome .basebox .btn:hover{background:#EEF7FA}
 #screenHome .msg{font-size:12px;color:var(--mut)}
 #screenHome .err{color:#C0201B}
+#screenHome .hsec{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);margin:26px 0 12px;font-weight:700}
+#screenHome .hsec:first-of-type{margin-top:4px}
+#screenHome .tilegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:16px}
+#screenHome .tile{all:unset;box-sizing:border-box;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 18px;box-shadow:0 1px 3px rgba(2,24,43,.04);cursor:pointer;transition:.15s;font-family:inherit}
+#screenHome .tile:hover,#screenHome .tile:focus-visible{border-color:var(--cyan);box-shadow:0 6px 18px rgba(2,24,43,.10);transform:translateY(-2px)}
+#screenHome .tile:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+#screenHome .tile .icon{width:50px;height:50px;border-radius:12px;background:var(--navy);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+#screenHome .tile .icon svg{width:27px;height:27px}
+#screenHome .tile .icon .mono{color:var(--cyan);font-weight:800;font-size:13px;letter-spacing:.03em}
+#screenHome .tile h2{font-size:16px;margin:0 0 6px;color:var(--navy);font-weight:700}
+#screenHome .tile .sub2{font-weight:400;color:var(--mut);font-size:12.5px}
+#screenHome .tile p{margin:0 0 14px;color:var(--mut);font-size:12.5px;line-height:1.5;flex:1}
+#screenHome .tile .go2{font-size:12.5px;font-weight:700;color:var(--navy)}
+#screenHome .tile:hover .go2{color:#0086B3}
+#screenHome .datastrip{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px;padding:14px 18px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:12px;color:var(--ink)}
+@media (max-width:820px){#screenHome .datastrip{grid-template-columns:1fr}}
+#screenHome .datastrip .stat{margin:3px 0 0}
+#screenHome .manual{margin-top:18px;font-size:12px;color:var(--mut)}
+#screenHome .manual summary{cursor:pointer;padding:4px 0}
+#screenHome .manualgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+@media (max-width:820px){#screenHome .manualgrid{grid-template-columns:1fr}}
 #screenHome .go{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#fff;background:var(--navy);border:none;border-radius:8px;padding:9px 16px;cursor:pointer;font-family:inherit;width:100%;justify-content:center}
 #screenHome .go:hover{background:#0a3252}
 #screenHome #bfsCard select,#screenHome #bfsCard input[type=text]{font:inherit;font-size:12.5px;padding:7px 9px;border:1px solid var(--line);border-radius:7px;color:var(--ink);background:#fff}
@@ -548,53 +569,84 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     </div>
   </header>
   <main>
-    <div class="intro">Les classeurs Excel de référence sont chargés automatiquement depuis le site (ils sont mis à jour avec le dépôt Git, voir <code>prepare_data.mjs</code>). Vous pouvez aussi glisser un autre classeur ci-dessous : il s'ajoute (Chart Pack) ou remplace celui du site (AM Dashboard) le temps de la session — rien n'est envoyé vers un serveur.</div>
+    <div class="intro">Choisissez un outil. Les classeurs Excel de référence (Chart Pack et AM Dashboard) sont chargés automatiquement depuis le site.</div>
 
-    <div class="grid">
-      <div class="card">
-        <div class="icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 19V10" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/>
-            <path d="M10 19V5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/>
-            <path d="M16 19V13" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/>
-            <path d="M20 19V8" stroke="#DDD8C4" stroke-width="2" stroke-linecap="round"/>
-            <path d="M3 20.5H21" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h2>Chart Pack &ndash; CI</h2>
-        <p>Séries macro &amp; actions, graphiques personnalisés, moyennes mobiles, export PDF prêt à diffuser.</p>
-        <div class="basebox" id="baseBox"></div>
-        <div class="drop" id="drop">Glissez le fichier Excel des séries ici, ou cliquez<input type="file" id="file" accept=".xlsx,.xlsm,.xls" hidden></div>
-        <div class="stat" id="homeCpStatus">Aucun fichier chargé.</div>
-        <button type="button" class="go" data-open="chartpack">Ouvrir Chart Pack →</button>
-      </div>
-
-      <div class="card">
-        <div class="icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 3L20 6.5V11.5C20 16.2 16.9 20.4 12 21.5C7.1 20.4 4 16.2 4 11.5V6.5L12 3Z" stroke="#00CFFF" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M9 12L11.2 14.2L15.5 9.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h2>AM Dashboard <span style="font-weight:400;color:var(--mut);font-size:13px">(Risk Map)</span></h2>
-        <p>Tableaux et graphiques recréés depuis la feuille « Copy Risk Map », mis à jour avec le classeur publié sur le site.</p>
-        <div class="drop" id="rmwDrop">Glissez le classeur Excel de la Risk Map (feuille « Copy Risk Map ») ici, ou cliquez<input type="file" id="rmwFile" accept=".xlsx,.xlsm,.xls" hidden></div>
-        <div class="stat" id="rmwStatus">Aucun classeur chargé.</div>
-        <button type="button" class="go" data-open="am">Ouvrir AM Dashboard →</button>
-      </div>
+    <h3 class="hsec">Créer un graphique</h3>
+    <div class="tilegrid">
+      <button type="button" class="tile" data-open="sandbox">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 17L8.5 11.5L12.5 14.5L20 6" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 6H20V10.5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20.5H21" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+        <h2>Chart Creator</h2>
+        <p>Composez un graphique à partir de n'importe quelle série, ajoutez moyennes mobiles et indicateurs, exportez en PNG ou envoyez-le vers vos destinations.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="snb">
+        <div class="icon"><span class="mono">BNS</span></div>
+        <h2>BNS</h2>
+        <p>Banque nationale suisse : taux directeur, SARON, changes, réserves, agrégats monétaires…</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="fred">
+        <div class="icon"><span class="mono">FRED</span></div>
+        <h2>FRED</h2>
+        <p>Federal Reserve Economic Data : plus de 800 000 séries économiques américaines et internationales.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="ofs">
+        <div class="icon"><span class="mono">OFS</span></div>
+        <h2>OFS</h2>
+        <p>Office fédéral de la statistique : population, prix, logement, tourisme, salaires… (STAT-TAB).</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
     </div>
 
-    <div class="note"><b>Astuce :</b> ce fichier unique regroupe le Portail, le Chart Pack et l'AM Dashboard (ex-Risk Map). Les deux classeurs Excel ci-dessus restent <b>indépendants</b> — chargez-les une fois ici, ils alimentent automatiquement les onglets correspondants tant que cette page reste ouverte. Les données externes se recherchent dans les onglets <b>OFS</b>, <b>BNS</b> et <b>FRED</b>, puis s'envoient vers le <b>Chart Creator</b> (bouton « Ajouter au Chart Creator »).</div>
+    <h3 class="hsec">Diffuser et suivre</h3>
+    <div class="tilegrid">
+      <button type="button" class="tile" data-open="chartpack">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V10" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><path d="M10 19V5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><path d="M16 19V13" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><path d="M20 19V8" stroke="#DDD8C4" stroke-width="2" stroke-linecap="round"/><path d="M3 20.5H21" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+        <h2>Chart Pack – CI</h2>
+        <p>Assemblez les figures, ordonnez-les et générez le PDF du comité d'investissement.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="am">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3L20 6.5V11.5C20 16.2 16.9 20.4 12 21.5C7.1 20.4 4 16.2 4 11.5V6.5L12 3Z" stroke="#00CFFF" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11.2 14.2L15.5 9.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2>AM Dashboard <span class="sub2">(Risk Map)</span></h2>
+        <p>Tableaux et graphiques de la feuille « Copy Risk Map », plus vos graphiques déposés depuis le Chart Creator.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="whiteboard">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4" width="17" height="13" rx="2" stroke="#00CFFF" stroke-width="1.8"/><path d="M7 13L10 9.5L12.5 12L16.5 8" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 20.5H15M12 17V20.5" stroke="#00CFFF" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h2>Whiteboard</h2>
+        <p>Laboratoire d'idées : déposez, classez en catégories et transférez vos graphiques.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+    </div>
+
+    <div class="datastrip">
+      <div><b>Chart Pack</b><div class="stat" id="homeCpStatus">Aucun fichier chargé.</div></div>
+      <div><b>AM Dashboard</b><div class="stat" id="rmwStatus">Aucun classeur chargé.</div></div>
+    </div>
+
+    <details class="manual">
+      <summary>Dépannage : charger un classeur manuellement</summary>
+      <div class="hint">À utiliser seulement si les données du site sont indisponibles (page ouverte hors du site, par exemple).</div>
+      <div class="basebox" id="baseBox"></div>
+      <div class="manualgrid">
+        <div class="drop" id="drop">Glissez le fichier Excel des séries ici, ou cliquez<input type="file" id="file" accept=".xlsx,.xlsm,.xls" hidden></div>
+        <div class="drop" id="rmwDrop">Glissez le classeur Excel de la Risk Map (feuille « Copy Risk Map ») ici, ou cliquez<input type="file" id="rmwFile" accept=".xlsx,.xlsm,.xls" hidden></div>
+      </div>
+    </details>
   </main>
 </div>
 
 <div id="screenChartPack" class="screen">
 
-<header><h1>Chart Pack &ndash; Comité d'investissement</h1><span>Choisissez les séries, ordonnez-les, générez le PDF. Tout se passe dans votre navigateur.</span></header>
+<header><h1>Chart Pack &ndash; Comité d'investissement</h1><span>Ordonnez les figures envoyées depuis le Chart Creator (ou l'AM Dashboard) et générez le PDF. Tout se passe dans votre navigateur.</span></header>
 <main>
   <!-- 1. SERIES -->
   <section class="panel">
-    <h2><span class="step">1</span>Données et séries</h2>
+    <h2><span class="step">1</span>Graphiques de l'AM Dashboard <span style="font-size:11px;font-weight:600;color:var(--mut);background:#ECEADF;border-radius:5px;padding:2px 6px;margin-left:6px">facultatif</span></h2>
+    <div class="hint" style="margin-bottom:8px">Les graphiques créés dans le <b>Chart Creator</b> arrivent directement dans la liste « Document » (bouton « → Chart Pack CI »). Ici, vous pouvez en plus reprendre des graphiques de l'AM Dashboard.</div>
+    <div id="cpLegacyCreate" hidden>
     <div class="tabbar" id="srcTabs">
       <button type="button" class="on" data-tab="series">Séries Excel</button>
       <button type="button" data-tab="risk">Graphiques Risk Map</button>
@@ -640,8 +692,10 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     <div class="msg" id="msg"></div>
     </div>
 
-    <div id="tabRiskCharts" style="display:none">
-      <div class="stat" id="rmStatus">Aucun classeur Risk Map chargé pour l'instant — déposez-le depuis l'<b>Accueil</b>.</div>
+    </div>
+
+    <div id="tabRiskCharts">
+      <div class="stat" id="rmStatus">Aucun classeur Risk Map chargé pour l'instant.</div>
       <div class="hint" style="font-size:11.5px;color:var(--mut);margin-top:6px">Cochez les graphiques à reprendre, puis ajoutez-les comme figures — ils s'insèrent avec leur titre, leurs axes et leur légende, comme dans la Risk Map.</div>
       <div id="rmActions" class="row" style="display:none;justify-content:space-between;align-items:center">
         <span style="font-size:12px"><a href="#" id="rmSelAll">Tout cocher</a> · <a href="#" id="rmSelNone">Tout décocher</a></span>
@@ -678,7 +732,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
   <!-- 3. APERCU -->
   <section class="panel">
     <h2><span class="step">3</span>Aperçu</h2>
-    <div class="hint" id="prevLabel">Cochez des séries ou cliquez une figure.</div>
+    <div class="hint" id="prevLabel">Cliquez une figure pour l'aperçu.</div>
     <div class="prev" id="prev" style="margin-top:8px"></div>
     <details style="margin-top:12px;border:0" open><summary style="background:none;padding:0 0 6px">Index des séries (aperçu)</summary><div id="idx"></div></details>
   </section>
@@ -1919,13 +1973,14 @@ function drawChartCanvas(canvas, chart, opts){
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, cssW, cssH);
-  ctx.font = (full ? '11px' : '9px') + " 'Aspekta', Arial, sans-serif";
+  const big = !full && cssW >= 420;  /* miniature affichée en grand (cartes larges) : textes un peu plus lisibles */
+  ctx.font = (full ? '11px' : (big ? '10.5px' : '9px')) + " 'Aspekta', Arial, sans-serif";
 
   const pad = {
-    top: full ? 10 : 6,
-    right: hasR ? (full ? 54 : 30) : (full ? 14 : 6),
-    bottom: full ? 26 : 14,
-    left: full ? 54 : 30,
+    top: full ? 10 : (big ? 8 : 6),
+    right: hasR ? (full ? 54 : (big ? 42 : 30)) : (full ? 14 : (big ? 10 : 6)),
+    bottom: full ? 26 : (big ? 18 : 14),
+    left: full ? 54 : (big ? 44 : 30),
   };
   const plotW = Math.max(10, cssW - pad.left - pad.right), plotH = Math.max(10, cssH - pad.top - pad.bottom);
 
@@ -3083,6 +3138,31 @@ function loadChartOrder(n){
 
 function saveChartOrder(){ try { localStorage.setItem(CHART_ORDER_KEY, JSON.stringify(CHART_ORDER)); } catch (e) {} }
 
+/* Dessin net des miniatures : chaque canevas est dessiné à sa taille réelle d'affichage (× densité de pixels de l'écran).
+   Quand l'écran AM est masqué au moment du chargement (largeur 0), on attend qu'il devienne visible — sinon le dessin
+   se fait à une taille de repli puis est étiré, d'où un rendu flou. */
+let CHARTS_DRAWN_W = 0;
+let gridResizeObs = null;
+function drawGridCanvases(grid, charts){
+  const cvs = Array.from(grid.querySelectorAll('canvas'));
+  if (!cvs.length || !cvs[0].clientWidth) return false;
+  cvs.forEach(cv => drawChartCanvas(cv, charts[+cv.dataset.idx], {detail: 'mini', width: cv.clientWidth, height: cv.clientHeight || 178}));
+  CHARTS_DRAWN_W = cvs[0].clientWidth;
+  return true;
+}
+function watchGridResize(grid, charts){
+  if (gridResizeObs) gridResizeObs.disconnect();
+  if (typeof ResizeObserver === 'undefined') return;
+  let timer = null;
+  gridResizeObs = new ResizeObserver(() => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      const c0 = grid.querySelector('canvas');
+      if (c0 && c0.clientWidth && Math.abs(c0.clientWidth - CHARTS_DRAWN_W) > 1) drawGridCanvases(grid, charts);
+    }, 60);
+  });
+  gridResizeObs.observe(grid);
+}
 function renderCharts(charts){
   const card = $('chartsCard');
   if (!charts || !charts.length) { card.style.display = 'none'; return; }
@@ -3099,7 +3179,9 @@ function renderCharts(charts){
       '<div class="chartlegend">' + legend + '</div></div>';
   }).join('');
   card.style.display = '';
-  Array.from(grid.querySelectorAll('canvas')).forEach(cv => drawChartCanvas(cv, charts[+cv.dataset.idx], {detail: 'mini'}));
+  CHARTS_DRAWN_W = 0;
+  drawGridCanvases(grid, charts);
+  watchGridResize(grid, charts);
   wireChartCardEvents(grid);
 }
 
@@ -4234,7 +4316,7 @@ function buildGenericFigs() {
 
 function generateGenericPdf() {
   const {figs, missing} = buildGenericFigs();
-  if (!figs.length) { $('genericmsg').innerHTML = '<span class="err">Aucune donnée chargée : déposez au moins le fichier de séries depuis l\'Accueil.</span>'; return; }
+  if (!figs.length) { $('genericmsg').innerHTML = '<span class="err">Aucune donnée chargée : les séries du site ne sont pas (encore) disponibles.</span>'; return; }
   const saved = {title: OPTS.title, date: OPTS.date, perPage: OPTS.perPage, startM: OPTS.startM, startA: OPTS.startA};
   Object.assign(OPTS, {title: "Comité d'investissement", date: new Date().toISOString().slice(0, 10), perPage: 1, startM: '2005-01-01', startA: '2015-01-01'});
   try {
@@ -4554,8 +4636,8 @@ let RM_SHEET_NAME = '';
 function updateRmStatus(){
   const st = $('rmStatus'); if (!st) return;
   st.innerHTML = RM_CHARTS.length
-    ? '<b>' + RM_CHARTS.length + '</b> graphique(s) disponible(s)' + (RM_SHEET_NAME ? ' — feuille « ' + esc(RM_SHEET_NAME) + ' »' : '') + ' (chargé depuis l\'Accueil).'
-    : 'Aucun classeur Risk Map chargé pour l\'instant — déposez-le depuis l\'<b>Accueil</b>.';
+    ? '<b>' + RM_CHARTS.length + '</b> graphique(s) disponible(s)' + (RM_SHEET_NAME ? ' — feuille « ' + esc(RM_SHEET_NAME) + ' »' : '') + ' (chargés depuis le site).'
+    : 'Aucun classeur Risk Map chargé pour l\'instant.';
 }
 RISKMAP_LOAD_HOOK = function(charts, sheetName){
   RM_CHARTS = charts || []; RM_SEL = new Set(); RM_SHEET_NAME = sheetName || '';
