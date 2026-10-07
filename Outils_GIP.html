@@ -364,6 +364,29 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenHome .tilegrid.five{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
 @media (max-width:1100px){#screenHome .tilegrid.five{grid-template-columns:repeat(auto-fill,minmax(235px,1fr))}}
 
+/* Market Data : liste SPI par secteur */
+#screenMkt details.mk-sec{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+#screenMkt details.mk-sec>summary{display:flex;align-items:baseline;gap:12px;padding:10px 14px;cursor:pointer;list-style:none}
+#screenMkt details.mk-sec>summary::-webkit-details-marker{display:none}
+#screenMkt details.mk-sec>summary::before{content:'▸';color:var(--mut);font-size:12px;width:10px}
+#screenMkt details.mk-sec[open]>summary::before{content:'▾'}
+#screenMkt .mk-sec .sn{font-weight:700;color:var(--navy);font-size:14px}
+#screenMkt .mk-sec .sc{font-size:12px;color:var(--mut)}
+#screenMkt .mk-sec .sa{margin-left:auto;font-size:12.5px}
+#screenMkt .mk-rows{border-top:1px solid #F1F0EC}
+#screenMkt .mk-row{display:grid;grid-template-columns:1fr 70px 100px 90px 30px;gap:8px;align-items:center;padding:7px 14px;border-top:1px solid #F7F6F2;cursor:pointer;font-size:13px}
+#screenMkt .mk-row:first-child{border-top:0}
+#screenMkt .mk-row:hover{background:#F7F6F2}
+#screenMkt .mk-row[hidden]{display:none}
+#screenMkt .mk-row .n{color:var(--navy);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#screenMkt .mk-row .t{color:var(--mut);font-size:11.5px}
+#screenMkt .mk-row .p{text-align:right;font-variant-numeric:tabular-nums}
+#screenMkt .mk-row .c{text-align:right;font-size:12.5px}
+#screenMkt .mk-row.miss{opacity:.55}
+#screenMkt .mk-star{border:0;background:none;font-size:15px;color:#B88A00;padding:0}
+#screenMkt #mkSpiMiss{margin:0 0 10px}
+@media (max-width:640px){#screenMkt .mk-row{grid-template-columns:1fr 80px 70px 26px}#screenMkt .mk-row .t{display:none}}
+
 #screenChartPack {--navy:#02182B;--blue:#0a6b8c;--cyan:#00CFFF;--beige:#DDD8C4;--pale:#ECEADF;--tint:#E8F6FA;--grey:#B6C0C6;--bg:#F5F6F5;--line:#DDE3E6;--txt:#12242F;--mut:#5B6B76}
 #screenChartPack * {box-sizing:border-box}
 #screenChartPack {margin:0;background:var(--bg);color:var(--txt);font:14px/1.4 Aspekta,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
@@ -1224,15 +1247,28 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     <div class="fx-card fx-loaded" id="mkLoaded"></div>
   </section>
 
-  <!-- Accueil : watchlist -->
+  <!-- Accueil : listes -->
   <div id="mkHome">
-    <section class="fx-sec">
+    <div class="fx-ranges" id="mkLists" style="margin:0 0 14px"><button type="button" data-l="mine" class="on">Ma watchlist partagée</button><button type="button" data-l="spi">SPI par secteur</button></div>
+
+    <section class="fx-sec" id="mkMineSec">
       <div class="fx-sec-h"><h3>Watchlist partagée</h3><small id="mkAsOf"></small></div>
       <div class="fx-tiles" id="mkTiles"></div>
       <div class="fx-actions" style="margin-top:10px">
         <button type="button" class="btn" id="mkRefresh">↻ Actualiser les cotes</button>
         <button type="button" class="btn" id="mkReset">Rétablir la watchlist par défaut</button>
       </div>
+    </section>
+
+    <section class="fx-sec" id="mkSpiSec" hidden>
+      <div class="fx-sec-h"><h3>Swiss Performance Index (SPI) — par secteur</h3><small id="mkSpiInfo"></small></div>
+      <div class="fx-bar" style="margin-top:0">
+        <input id="mkSpiQ" type="search" placeholder="Filtrer par nom ou ticker…" aria-label="Filtrer les titres du SPI" style="font:inherit;font-size:12.5px;padding:6px 10px;border:1px solid var(--line);border-radius:7px;min-width:240px">
+        <button type="button" class="btn" id="mkSpiAll">Charger toutes les cotes</button>
+        <button type="button" class="btn" id="mkSpiToggle">Tout déplier</button>
+      </div>
+      <div id="mkSpiMiss" class="fx-notes" hidden></div>
+      <div id="mkSpi"></div>
     </section>
   </div>
 
@@ -6931,6 +6967,85 @@ snbLoadStore();
 
 
 
+/* Composition du Swiss Performance Index (SPI), regroupée par secteur (classification simplifiée inspirée d'ICB, pensée pour la gestion de portefeuille :
+   banques / assurances / services financiers / immobilier séparés). Format : [secteur, [[ticker SIX, nom], ...]].
+   L'indice est révisé chaque année (septembre) : les entrées / sorties se corrigent ici, dans ce seul tableau.
+   Les symboles sont envoyés sous la forme « SIX:<ticker> » ; un ticker sans cote est signalé dans l'onglet (« sans cote »). */
+const MKT_SPI = [
+  ['Banques', [
+    ['UBSG', 'UBS Group'], ['BAER', 'Julius Bär'], ['VONN', 'Vontobel'], ['EFGN', 'EFG International'], ['SNBN', 'Banque nationale suisse'],
+    ['BCVN', 'Banque Cantonale Vaudoise'], ['BCGE', 'Banque Cantonale de Genève'], ['BCJ', 'Banque Cantonale du Jura'], ['WKB', 'Banque Cantonale du Valais'],
+    ['BEKN', 'Berner Kantonalbank'], ['BLKB', 'Basellandschaftliche Kantonalbank'], ['BSKP', 'Basler Kantonalbank'], ['GLKBN', 'Glarner Kantonalbank'],
+    ['GRKP', 'Graubündner Kantonalbank'], ['LUKN', 'Luzerner Kantonalbank'], ['SGKN', 'St.Galler Kantonalbank'], ['TKBP', 'Thurgauer Kantonalbank'],
+    ['ZG', 'Zuger Kantonalbank'], ['HBLN', 'Hypothekarbank Lenzburg'], ['VATN', 'Valiant'], ['VPBN', 'VP Bank'], ['LLBN', 'Liechtensteinische Landesbank'],
+    ['BPDG', 'Banque Profil de Gestion']
+  ]],
+  ['Assurances', [
+    ['ZURN', 'Zurich Insurance'], ['SREN', 'Swiss Re'], ['SLHN', 'Swiss Life'], ['HBAN', 'Helvetia Baloise'], ['VAHN', 'Vaudoise Assurances']
+  ]],
+  ['Services financiers', [
+    ['PGHN', 'Partners Group'], ['SQN', 'Swissquote'], ['CMBN', 'Cembra Money Bank'], ['LEON', 'Leonteq'], ['VZN', 'VZ Holding'],
+    ['BION', 'BB Biotech'], ['HBMN', 'HBM Healthcare Investments'], ['PEHN', 'Private Equity Holding'], ['GAM', 'GAM Holding'],
+    ['BBN', 'Bellevue Group'], ['CFT', 'Compagnie Financière Tradition']
+  ]],
+  ['Immobilier', [
+    ['SPSN', 'Swiss Prime Site'], ['PSPN', 'PSP Swiss Property'], ['ALLN', 'Allreal'], ['MOBN', 'Mobimo'], ['IREN', 'Investis'], ['INA', 'Ina Invest'],
+    ['HIAG', 'HIAG Immobilien'], ['ISN', 'Intershop'], ['SFPN', 'SF Urban Properties'], ['ZUGN', 'Zug Estates'], ['WARN', 'Warteck Invest'],
+    ['FREN', 'Fundamenta Real Estate'], ['NREN', 'Novavest Real Estate'], ['PEAN', 'Peach Property'], ['VARN', 'Varia US Properties'],
+    ['ZUBN', 'Züblin Immobilien'], ['PLAN', 'Plazza'], ['EPIC', 'EPIC Suisse'], ['CSP', 'Cham Swiss Properties']
+  ]],
+  ['Pharma & biotechnologie', [
+    ['ROG', 'Roche (BJ)'], ['RO', 'Roche (porteur)'], ['NOVN', 'Novartis'], ['SDZ', 'Sandoz'], ['GALD', 'Galderma'], ['LONN', 'Lonza'], ['BANB', 'Bachem'],
+    ['SFZN', 'Siegfried'], ['PPGN', 'PolyPeptide'], ['DESN', 'Dottikon ES'], ['IDIA', 'Idorsia'], ['BSLN', 'Basilea Pharmaceutica'], ['COPN', 'Cosmo Pharmaceuticals'],
+    ['MOLN', 'Molecular Partners'], ['NWRN', 'Newron Pharmaceuticals'], ['SANN', 'Santhera'], ['KURN', 'Kuros Biosciences'], ['ADXN', 'Addex Therapeutics'],
+    ['RLF', 'Relief Therapeutics'], ['BIOV', 'BioVersys']
+  ]],
+  ['Medtech & services de santé', [
+    ['ALC', 'Alcon'], ['SOON', 'Sonova'], ['STMN', 'Straumann'], ['TECN', 'Tecan'], ['YPSN', 'Ypsomed'], ['MED', 'Medartis'], ['MOVE', 'Medacta'],
+    ['SKAN', 'SKAN Group'], ['GALE', 'Galenica'], ['DOCM', 'DocMorris'], ['AEVS', 'Aevis Victoria'], ['VBSN', 'IVF Hartmann'], ['CLTN', 'Coltene']
+  ]],
+  ['Alimentation & boissons', [
+    ['NESN', 'Nestlé'], ['LISN', 'Lindt & Sprüngli (BP)'], ['LISP', 'Lindt & Sprüngli (BJ)'], ['BARN', 'Barry Callebaut'], ['EMMN', 'Emmi'], ['BELL', 'Bell Food Group'],
+    ['ORON', 'Orior'], ['GMI', 'Groupe Minoteries'], ['VILN', 'Villars Holding'], ['ARYN', 'Aryzta']
+  ]],
+  ['Consommation, luxe & loisirs', [
+    ['CFR', 'Richemont'], ['UHR', 'Swatch Group (porteur)'], ['UHRN', 'Swatch Group (nominatif)'], ['AVOL', 'Avolta'], ['CALN', 'Calida'], ['LLQ', 'Lalique Group'],
+    ['JFN', 'Jungfraubahn'], ['TIBN', 'Titlis Bergbahnen'], ['AUTN', 'Autoneum'], ['BMAG', 'Bajaj Mobility'], ['LMN', 'lastminute.com'], ['ASWN', 'ASmallWorld']
+  ]],
+  ['Matériaux de base & chimie', [
+    ['GIVN', 'Givaudan'], ['SIKA', 'Sika'], ['CLN', 'Clariant'], ['EMSN', 'EMS-Chemie'], ['STLN', 'Swiss Steel Group'], ['VETN', 'Vetropack'], ['CPHN', 'CPH Chemie + Papier'],
+    ['GUR', 'Gurit']
+  ]],
+  ['Construction & matériaux de construction', [
+    ['HOLN', 'Holcim'], ['AMRZ', 'Amrize'], ['GEBN', 'Geberit'], ['IMPN', 'Implenia'], ['ARBN', 'Arbonia'], ['ZEHN', 'Zehnder Group'], ['FORN', 'Forbo'],
+    ['BRKN', 'Burkhalter'], ['MTG', 'Meier Tobler']
+  ]],
+  ['Industrie', [
+    ['ABBN', 'ABB'], ['SCHN', 'Schindler (nominatif)'], ['SCHP', 'Schindler (BP)'], ['SIGN', 'SIG Group'], ['SUN', 'Sulzer'], ['GF', 'Georg Fischer'], ['DOKA', 'dormakaba'],
+    ['BEAN', 'Belimo'], ['KARN', 'Kardex'], ['KOMN', 'Komax'], ['INRN', 'Interroll'], ['HUBN', 'Huber+Suhner'], ['LAND', 'Landis+Gyr'], ['METN', 'Metall Zug'],
+    ['PM', 'Phoenix Mecano'], ['RIEN', 'Rieter'], ['SWTQ', 'Schweiter Technologies'], ['STGN', 'Starrag'], ['TOHN', 'Tornos'], ['VZUG', 'V-Zug'], ['SFSN', 'SFS Group'],
+    ['BYS', 'Bystronic'], ['ACLN', 'Accelleron'], ['MEDX', 'medmix'], ['RSGN', 'R&S Group'], ['AERO', 'Montana Aerospace'], ['BCHN', 'Burckhardt Compression'],
+    ['BOSN', 'Bossard'], ['BUCN', 'Bucher Industries'], ['OERL', 'OC Oerlikon'], ['STRN', 'Schlatter'], ['GAV', 'Carlo Gavazzi'], ['BOBNN', 'Bobst'],
+    ['SRAIL', 'Stadler Rail'], ['DAE', 'Dätwyler'], ['FTON', 'Feintool'], ['KLIN', 'Klingelnberg'], ['LEHN', 'LEM Holding'], ['MIKN', 'Mikron'], ['ADVN', 'Adval Tech']
+  ]],
+  ['Transports, logistique & services aux entreprises', [
+    ['KNIN', 'Kühne + Nagel'], ['FHZN', 'Flughafen Zürich'], ['ADEN', 'Adecco'], ['SGSN', 'SGS'], ['DKSH', 'DKSH'], ['BVZN', 'BVZ Holding']
+  ]],
+  ['Technologie', [
+    ['LOGN', 'Logitech'], ['TEMN', 'Temenos'], ['SENS', 'Sensirion'], ['AMS', 'ams-OSRAM'], ['SWON', 'SoftwareOne'], ['ALSN', 'ALSO Holding'], ['KUD', 'Kudelski'],
+    ['WIHN', 'WISeKey'], ['ASCN', 'Ascom'], ['SMGN', 'Swiss Marketplace Group'], ['LECN', 'Leclanché'], ['VACN', 'VAT Group'], ['COTN', 'Comet'], ['IFCN', 'Inficon'],
+    ['CICN', 'Cicor Technologies']
+  ]],
+  ['Télécoms & médias', [
+    ['SCMN', 'Swisscom'], ['SUNN', 'Sunrise Communications'], ['TXGN', 'TX Group'], ['HLEE', 'Highlight Event & Entertainment'], ['APGN', 'APG|SGA'],
+    ['MOZN', 'mobilezone'], ['OFN', 'Orell Füssli'], ['MCHN', 'MCH Group']
+  ]],
+  ['Énergie & services publics', [
+    ['BKW', 'BKW'], ['HREN', 'Romande Energie'], ['ESUN', 'Edisun Power']
+  ]]
+];
+
+
 /* ---- Fonctions pures (parsing), globales pour rester testables indépendamment du câblage DOM ---- */
 /* Bougies du relais Market Data -> [{t(ms), o, h, l, c, v}] triées par date croissante.
    Le fournisseur nomme le plus haut/plus bas « max » / « min » (high / low acceptés aussi). */
@@ -7031,8 +7146,10 @@ async function tv(path, opts){
   const c = mkCache.get(key);
   if (c && Date.now() - c.t < 45000) return c.j;
   let r, j = null;
+  const send = () => fetch('/api/tv/' + path, opts.body ? {method: 'POST', headers: {'Content-Type': 'application/json'}, body: opts.body} : undefined);
   try {
-    r = await fetch('/api/tv/' + path, opts.body ? {method: 'POST', headers: {'Content-Type': 'application/json'}, body: opts.body} : undefined);
+    r = await send();
+    if (r.status === 429) { await new Promise(res => setTimeout(res, 1300)); r = await send(); } /* limite de débit du forfait (2 requêtes/s en Basic) */
   } catch (e) { throw new Error("Relais Market Data injoignable — page ouverte hors du site Cloudflare, ou hors-ligne ?"); }
   try { j = await r.json(); } catch (e) {}
   if (!r.ok || !j || j.success === false) {
@@ -7104,20 +7221,26 @@ async function syncWatch(){
 }
 const inWatch = s => WATCH.some(w => w.s === s);
 
+let batchOk = false; /* le format de réponse groupée a déjà été reconnu au moins une fois */
+const FATAL = {NO_KEY: 1, BAD_KEY: 1, CAP: 1};
+const sleep = ms => new Promise(res => setTimeout(res, ms));
 async function fetchQuotes(symbols){
   const map = {};
   for (let i = 0; i < symbols.length; i += 10) {
+    if (i) await sleep(450); /* reste sous 2 requêtes/s */
     const chunk = symbols.slice(i, i + 10);
-    let got = {};
+    let got = {}, threw = false;
     try {
       const j = await tv('quote/batch', {body: JSON.stringify({symbols: chunk})});
       got = mktParseBatchQuotes(j);
-    } catch (e) { if (e.code === 'NO_KEY' || e.code === 'BAD_KEY' || e.code === 'CAP') throw e; got = {}; }
+    } catch (e) { if (FATAL[e.code]) throw e; got = {}; threw = true; }
+    if (Object.keys(got).length) batchOk = true;
     chunk.forEach(s => { if (got[s]) map[s] = got[s]; });
-    /* forme de réponse groupée inattendue : repli cote par cote (coûte plus d'appels, mis en cache) */
-    if (!Object.keys(got).length) {
+    /* repli cote par cote (coûte plus d'appels, mais mis en cache) : lot refusé (un symbole invalide peut suffire)
+       ou format groupé jamais reconnu jusque-là */
+    if (threw || (!batchOk && !Object.keys(got).length)) {
       for (const s of chunk) {
-        try { const j = await tv('quote/' + symPath(s)); const f = mktQuoteFields(j.data) || (j.data && j.data.data); if (f) map[s] = f; } catch (e) { if (e.code) throw e; }
+        try { const j = await tv('quote/' + symPath(s)); const f = mktQuoteFields(j.data) || (j.data && j.data.data); if (f) map[s] = f; } catch (e) { if (FATAL[e.code]) throw e; }
       }
     }
   }
@@ -7230,7 +7353,6 @@ function drawSym(){
     +   (isFinite(per) ? kp('Sur la période', signed(per, 1, ' %'), c.length + ' bougies', cls(per)) : '')
     +   (isFinite(+q.high_price) ? kp('Haut / bas séance', px(+q.high_price) + ' / ' + px(+q.low_price)) : '')
     +   (isFinite(+q.bid) && isFinite(+q.ask) ? kp('Bid / Ask', px(+q.bid) + ' / ' + px(+q.ask)) : '')
-    +   (isFinite(+q.volume) ? kp('Volume', bigNum(+q.volume)) : '')
     + '</div>'
     + '<div class="fx-bar" style="margin:10px 0 6px">'
     +   '<select id="mkTf" aria-label="Période des bougies">' + Object.keys(TFS).map(k => '<option value="' + k + '"' + (k === cur.tf ? ' selected' : '') + '>' + TFS[k].label + '</option>').join('') + '</select>'
@@ -7388,6 +7510,97 @@ $('mkLoaded').addEventListener('click', e => {
   const b = e.target.closest('button[data-key]'); if (b) { removeLoaded(b.dataset.key); return; }
   const a = e.target.closest('[data-open-s]'); if (a) openSymbol(a.dataset.openS);
 });
+
+
+/* ---------------------------------------------------------------- liste SPI par secteur (composition : mkt_spi_data.js) */
+const SPI_Q = {};          /* symbole -> champs de cote */
+const SPI_MISS = new Set(); /* symboles interrogés mais sans cote */
+const spiSym = t => 'SIX:' + t;
+let spiBuilt = false, spiBusy = false;
+function spiFilterOk(t, n, f){ return !f || (t + ' ' + n).toLowerCase().indexOf(f) >= 0; }
+function buildSpi(){
+  if (spiBuilt) return; spiBuilt = true;
+  const total = MKT_SPI.reduce((a, g) => a + g[1].length, 0);
+  $('mkSpiInfo').textContent = total + ' titres · ' + MKT_SPI.length + ' secteurs · cotes chargées à l\'ouverture de chaque secteur';
+  $('mkSpi').innerHTML = MKT_SPI.map((g, i) =>
+      '<details class="mk-sec" data-i="' + i + '"><summary><span class="sn">' + esc(g[0]) + '</span><span class="sc">' + g[1].length + ' titres</span><span class="sa fx-delta" id="mkSa' + i + '"></span></summary>'
+    + '<div class="mk-rows">' + g[1].map(m => {
+        const sym = spiSym(m[0]);
+        return '<div class="mk-row" data-s="' + esc(sym) + '" data-n="' + esc(m[1]) + '" data-f="' + esc((m[0] + ' ' + m[1]).toLowerCase()) + '"><span class="n">' + esc(m[1]) + '</span><span class="t">' + esc(m[0]) + '</span><span class="p">·</span><span class="c fx-delta"></span><button type="button" class="mk-star" data-w="' + esc(sym) + '" title="Suivre dans la watchlist partagée">' + (inWatch(sym) ? '★' : '☆') + '</button></div>';
+      }).join('') + '</div></details>').join('');
+}
+function paintSpi(){
+  MKT_SPI.forEach((g, i) => {
+    const det = $('mkSpi').querySelector('details[data-i="' + i + '"]'); if (!det) return;
+    let sum = 0, n = 0;
+    det.querySelectorAll('.mk-row').forEach(row => {
+      const sym = row.dataset.s, f = SPI_Q[sym], p = row.querySelector('.p'), c = row.querySelector('.c');
+      if (f && isFinite(+f.lp)) {
+        p.textContent = px(+f.lp); const chp = +f.chp;
+        c.textContent = isFinite(chp) ? signed(chp, 2, ' %') : ''; c.className = 'c fx-delta ' + (isFinite(chp) ? cls(chp) : '');
+        if (isFinite(chp)) { sum += chp; n++; }
+        row.classList.remove('miss');
+      } else if (SPI_MISS.has(sym)) { p.textContent = '—'; c.textContent = 'sans cote'; c.className = 'c fx-delta'; row.classList.add('miss'); row.title = 'Aucune cote reçue pour ' + sym + ' — ticker à vérifier'; }
+    });
+    const a = $('mkSa' + i); a.textContent = n ? 'moy. ' + signed(sum / n, 2, ' %') : ''; a.className = 'sa fx-delta ' + (n ? cls(sum / n) : '');
+  });
+  const miss = Array.from(SPI_MISS);
+  const box = $('mkSpiMiss');
+  box.hidden = !miss.length;
+  if (miss.length) box.innerHTML = '<b>' + miss.length + ' titre(s) sans cote</b> (ticker différent chez le fournisseur, ou titre sorti de l\'indice) : ' + esc(miss.map(s => s.replace('SIX:', '')).join(', ')) + '.';
+}
+async function loadSpiSectors(idx){
+  if (spiBusy) return; spiBusy = true;
+  try {
+    const syms = [];
+    idx.forEach(i => MKT_SPI[i][1].forEach(m => { const s = spiSym(m[0]); if (!(s in SPI_Q) && !SPI_MISS.has(s)) syms.push(s); }));
+    if (!syms.length) return;
+    const info = $('mkSpiInfo'); info.textContent = 'chargement de ' + syms.length + ' cotes…';
+    const got = await fetchQuotes(syms);
+    syms.forEach(s => { if (got[s]) SPI_Q[s] = got[s]; else SPI_MISS.add(s); });
+    paintSpi();
+    info.textContent = Object.keys(SPI_Q).length + ' cotes chargées · mises à jour le ' + new Date().toLocaleString('fr-CH', {day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'});
+  } catch (e) { $('mkSpiInfo').textContent = e.message; }
+  finally { spiBusy = false; }
+}
+$('mkSpi').addEventListener('toggle', e => {
+  const d = e.target; if (!d.open || !d.dataset || d.dataset.i == null) return;
+  if (status && !status.configured) return;
+  loadSpiSectors([+d.dataset.i]);
+}, true);
+$('mkSpi').addEventListener('click', e => {
+  const st = e.target.closest('.mk-star');
+  if (st) { e.preventDefault(); const row = st.closest('.mk-row'); toggleWatch(st.dataset.w, row.dataset.n); st.textContent = inWatch(st.dataset.w) ? '★' : '☆'; return; }
+  const row = e.target.closest('.mk-row'); if (row) openSymbol(row.dataset.s, row.dataset.n);
+});
+$('mkSpiAll').addEventListener('click', async () => {
+  const idx = MKT_SPI.map((g, i) => i);
+  const n = MKT_SPI.reduce((a, g) => a + g[1].filter(m => !(spiSym(m[0]) in SPI_Q) && !SPI_MISS.has(spiSym(m[0]))).length, 0);
+  if (!n) { $('mkSpiInfo').textContent = 'toutes les cotes sont déjà chargées'; return; }
+  if (n > 40 && !confirm('Charger ' + n + ' cotes ≈ ' + Math.ceil(n / 10) + ' appels à votre forfait Market Data (mis en cache 60 s). Continuer ?')) return;
+  await loadSpiSectors(idx);
+});
+$('mkSpiToggle').addEventListener('click', () => {
+  const ds = Array.from($('mkSpi').querySelectorAll('details')).filter(d => !d.hidden);
+  const open = ds.some(d => !d.open);
+  ds.forEach(d => { d.open = open; });
+  $('mkSpiToggle').textContent = open ? 'Tout replier' : 'Tout déplier';
+});
+$('mkSpiQ').addEventListener('input', () => {
+  const f = $('mkSpiQ').value.trim().toLowerCase();
+  $('mkSpi').querySelectorAll('details').forEach(d => {
+    let any = 0;
+    d.querySelectorAll('.mk-row').forEach(r => { const ok = !f || r.dataset.f.indexOf(f) >= 0; r.hidden = !ok; if (ok) any++; });
+    d.hidden = !any;
+    if (f && any) d.open = true; /* (les cotes du secteur se chargent à l'ouverture) */
+  });
+});
+function showList(which){
+  $('mkMineSec').hidden = which !== 'mine'; $('mkSpiSec').hidden = which !== 'spi';
+  $('mkLists').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.l === which));
+  if (which === 'spi') { buildSpi(); paintSpi(); }
+}
+$('mkLists').addEventListener('click', e => { const b = e.target.closest('[data-l]'); if (b) showList(b.dataset.l); });
 
 /* ---------------------------------------------------------------- démarrage : rien n'est appelé avant la première ouverture de l'écran */
 let started = false;
