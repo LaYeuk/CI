@@ -146,111 +146,111 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenSandbox .extDim label{font-size:10.5px;color:var(--mut)}
 /* ---- Écrans par source : FRED, BNS, OFS (barre de recherche, accueil, listes, fiches) ---- */
 /* ---- FRED (recherche façon fred.stlouisfed.org) ---- */
-:is(#screenFred,#screenSnb,#screenOfs){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
-:is(#screenFred,#screenSnb,#screenOfs) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
-:is(#screenFred,#screenSnb,#screenOfs) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb,#screenOfs) header span{opacity:.75;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
-:is(#screenFred,#screenSnb,#screenOfs) button{font:inherit;cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-hero{padding:18px 20px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-sbox{position:relative}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-go:hover{background:#0a3252}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ac.open{display:block}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ac-item:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ac-item.active,:is(#screenFred,#screenSnb,#screenOfs) .fx-ac-item:hover{background:#EFFCFF}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ac-item .fx-id{min-width:96px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ac-item .t{flex:1}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ac-item .m,:is(#screenFred,#screenSnb,#screenOfs) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-sec{margin-top:20px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-sec-h small{color:var(--mut);font-size:11.5px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tile:hover{border-color:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tile .u{font-size:11px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb,#screenOfs) .fx-delta.down{color:var(--down)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tile svg{display:block}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
-@media(max-width:1000px){:is(#screenFred,#screenSnb,#screenOfs) .fx-cols{grid-template-columns:1fr}}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-list{list-style:none;margin:0;padding:3px 0}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-list li:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-list .clk{cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-list .clk:hover{background:#F7F6F2}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-crumbs a:hover{text-decoration:underline}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-res:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-res:hover{background:#F7F6F2}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-res .fx-id{margin-right:8px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
-:is(#screenFred,#screenSnb,#screenOfs) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
-:is(#screenFred,#screenSnb,#screenOfs) .btn:hover:not(:disabled){background:#EEF7FA}
-:is(#screenFred,#screenSnb,#screenOfs) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb,#screenOfs) .btn.pri:hover:not(:disabled){background:#0a3252}
-:is(#screenFred,#screenSnb,#screenOfs) .btn:disabled{opacity:.4;cursor:not-allowed}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-panel{padding:16px 20px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-kpi .s{font-size:11px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-chart{position:relative}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-chart svg{display:block;width:100%}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-mut{color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt) header span{opacity:.75;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) button{font:inherit;cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-hero{padding:18px 20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-sbox{position:relative}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-go:hover{background:#0a3252}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac.open{display:block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac-item:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac-item.active,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac-item:hover{background:#EFFCFF}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac-item .fx-id{min-width:96px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac-item .t{flex:1}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac-item .m,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-sec{margin-top:20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-sec-h small{color:var(--mut);font-size:11.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tile:hover{border-color:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tile .u{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-delta.down{color:var(--down)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tile svg{display:block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
+@media(max-width:1000px){:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-cols{grid-template-columns:1fr}}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-list{list-style:none;margin:0;padding:3px 0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-list li:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-list .clk{cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-list .clk:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-crumbs a:hover{text-decoration:underline}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-res:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-res:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-res .fx-id{margin-right:8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .btn:hover:not(:disabled){background:#EEF7FA}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .btn.pri:hover:not(:disabled){background:#0a3252}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .btn:disabled{opacity:.4;cursor:not-allowed}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-panel{padding:16px 20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-kpi .s{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-chart{position:relative}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-chart svg{display:block;width:100%}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-mut{color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
 @keyframes fxsk{to{background-position:-200% 0}}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-litem a{cursor:pointer;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-litem .per{color:var(--mut);font-size:11px}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
-:is(#screenFred,#screenSnb,#screenOfs) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs) details.fx-set summary{cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-toast.show{display:flex}
-:is(#screenFred,#screenSnb,#screenOfs) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
-:is(#screenFred,#screenSnb,#screenOfs) [hidden]{display:none!important}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-litem a{cursor:pointer;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-litem .per{color:var(--mut);font-size:11px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) details.fx-set summary{cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-toast.show{display:flex}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt) [hidden]{display:none!important}
 
 /* ---- BNS (recherche façon data.snb.ch/fr/search) — réutilise les styles fx- de l'écran FRED ---- */
 :is(#screenSnb,#screenOfs) .fx-idx{margin-top:10px;font-size:11.5px;color:var(--mut);display:flex;align-items:center;gap:10px;min-height:16px}
@@ -351,6 +351,18 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 /* ---- AM Dashboard : graphiques ajoutés plus grands par défaut, comme dans le Whiteboard ---- */
 #screenAM .destgrid{grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:16px}
 #screenAM .destttl{font-size:13px}
+
+/* Market Data : retrait d'un symbole de la watchlist */
+#screenMkt .fx-tile{position:relative;cursor:pointer}
+#screenMkt .mk-x{position:absolute;top:6px;right:8px;font-size:11px;color:var(--mut);opacity:0;padding:2px 4px;border-radius:5px}
+#screenMkt .fx-tile:hover .mk-x,#screenMkt .fx-tile:focus-within .mk-x{opacity:1}
+#screenMkt .mk-x:hover{color:#C0201B;background:#FDF2F1}
+#screenMkt .fx-err code{background:#fff;border:1px solid #F3C6C1;border-radius:4px;padding:1px 5px}
+#screenMkt #mkSetup{margin-bottom:14px}
+#screenMkt #mkUsage{font-size:11.5px;color:var(--mut);margin-top:10px;line-height:1.4}
+
+#screenHome .tilegrid.five{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+@media (max-width:1100px){#screenHome .tilegrid.five{grid-template-columns:repeat(auto-fill,minmax(235px,1fr))}}
 
 #screenChartPack {--navy:#02182B;--blue:#0a6b8c;--cyan:#00CFFF;--beige:#DDD8C4;--pale:#ECEADF;--tint:#E8F6FA;--grey:#B6C0C6;--bg:#F5F6F5;--line:#DDE3E6;--txt:#12242F;--mut:#5B6B76}
 #screenChartPack * {box-sizing:border-box}
@@ -549,6 +561,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       <button type="button" class="navbtn" data-screen="snb">BNS</button>
       <button type="button" class="navbtn" data-screen="fred">FRED</button>
       <button type="button" class="navbtn" data-screen="ofs">OFS</button>
+      <button type="button" class="navbtn" data-screen="mkt">Market Data</button>
     </div>
     <div class="navbtns">
       <button type="button" class="navbtn" data-screen="chartpack">Chart Pack</button>
@@ -572,7 +585,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     <div class="intro">Choisissez un outil. Les classeurs Excel de référence (Chart Pack et AM Dashboard) sont chargés automatiquement depuis le site.</div>
 
     <h3 class="hsec">Créer un graphique</h3>
-    <div class="tilegrid">
+    <div class="tilegrid five">
       <button type="button" class="tile" data-open="sandbox">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 17L8.5 11.5L12.5 14.5L20 6" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 6H20V10.5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20.5H21" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg></div>
         <h2>Chart Creator</h2>
@@ -595,6 +608,12 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
         <div class="icon"><span class="mono">OFS</span></div>
         <h2>OFS</h2>
         <p>Office fédéral de la statistique : population, prix, logement, tourisme, salaires… (STAT-TAB).</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="mkt">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4v16M6 8h0M6 7h0" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><rect x="4" y="8" width="4" height="7" rx="1" fill="#00CFFF"/><path d="M13 3v18" stroke="white" stroke-width="2" stroke-linecap="round"/><rect x="11" y="6" width="4" height="9" rx="1" fill="white"/><path d="M20 6v14" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><rect x="18" y="10" width="4" height="6" rx="1" fill="#00CFFF"/></svg></div>
+        <h2>Market Data</h2>
+        <p>Cotes et historiques de marché (actions, indices, changes, matières premières, crypto) : watchlist partagée et envoi au Chart Creator.</p>
         <span class="go2">Ouvrir →</span>
       </button>
     </div>
@@ -1182,6 +1201,56 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
   </div>
 </main>
 <div class="fx-toast" id="oxToast"><span id="oxToastMsg"></span><button type="button" id="oxToastBtn">Ouvrir le Chart Creator →</button></div>
+
+</div>
+<div id="screenMkt" class="screen">
+
+<header><h1>Market Data</h1><span>Cotes et historiques de marché — cherchez un symbole, suivez votre watchlist partagée et envoyez l'historique au Chart Creator.</span></header>
+<main>
+  <div class="fx-err" id="mkSetup" hidden></div>
+
+  <section class="fx-card fx-hero">
+    <p class="fx-sub">Nom ou symbole (« Apple », « SMI », « EURCHF », « gold », « NASDAQ:AAPL »).</p>
+    <div class="fx-sbox">
+      <input id="mkQ" type="search" autocomplete="off" placeholder="ex. Nestlé, SIX:SMI, EURCHF, bitcoin…" aria-label="Recherche de symbole">
+      <button type="button" class="fx-go" id="mkGo">Rechercher</button>
+    </div>
+    <div class="fx-chips" id="mkTypes"></div>
+    <div class="fx-idx" id="mkUsage"></div>
+  </section>
+
+  <section class="fx-sec" id="mkLoadedSec" hidden>
+    <div class="fx-sec-h"><h3>Dans le catalogue du Chart Creator</h3><small>disponibles dans la liste des séries du Chart Creator, groupe « Market Data »</small></div>
+    <div class="fx-card fx-loaded" id="mkLoaded"></div>
+  </section>
+
+  <!-- Accueil : watchlist -->
+  <div id="mkHome">
+    <section class="fx-sec">
+      <div class="fx-sec-h"><h3>Watchlist partagée</h3><small id="mkAsOf"></small></div>
+      <div class="fx-tiles" id="mkTiles"></div>
+      <div class="fx-actions" style="margin-top:10px">
+        <button type="button" class="btn" id="mkRefresh">↻ Actualiser les cotes</button>
+        <button type="button" class="btn" id="mkReset">Rétablir la watchlist par défaut</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Résultats de recherche -->
+  <div id="mkListView" hidden>
+    <div class="fx-crumbs"><a id="mkListBack">← Retour à la watchlist</a></div>
+    <div class="fx-card" id="mkResults"></div>
+  </div>
+
+  <!-- Fiche symbole -->
+  <div id="mkSymView" hidden>
+    <div class="fx-crumbs"><a id="mkBack">← Retour</a></div>
+    <div class="fx-card fx-panel" id="mkSym"></div>
+  </div>
+
+  <div class="fx-notes" style="margin-top:18px;font-size:12px">Données fournies par un service tiers non officiel (TradingView Data API, sans lien avec TradingView) : peuvent être différées ou incomplètes — à ne pas substituer à une source officielle pour un document destiné aux clients sans contrôle. La clé API reste sur le Worker ; les réponses sont mises en cache et partagées entre collègues pour ménager le quota.</div>
+</main>
+<div class="fx-toast" id="mkToast"><span id="mkToastMsg"></span><button type="button" id="mkToastBtn">Ouvrir le Chart Creator →</button></div>
 
 </div>
 
@@ -2701,6 +2770,7 @@ let loadIntoSandbox = null;    /* le Chart Creator recharge un graphique existan
    du classeur Excel éventuellement chargé — chaque entrée est un "pseudo-onglet" à une seule série, pour
    permettre à chaque indicateur OFS d'avoir sa propre grille temporelle (fréquences différentes selon la table). */
 let BFS_CATALOG = {};
+let MKT_CATALOG = {}; /* séries de l'onglet Market Data (mkt_module.js) */
 let FRED_CATALOG = {}; /* même principe, alimenté par fred_module.js (séries FRED, Federal Reserve Bank of St. Louis) */
 let SNB_CATALOG = {}; /* même principe, alimenté par bns_module.js (séries BNS, data.snb.ch) */
 let rebuildCombinedCatalog = null; /* défini par cp_module.js (seul module ayant accès à WB) ; recombine buildCatalog(WB) + BFS_CATALOG + FRED_CATALOG + SNB_CATALOG */
@@ -3442,8 +3512,8 @@ let WB = null;
 /* Recombine le classeur Excel (WB, visible seulement dans ce module) avec les séries importées depuis l'OFS
    (BFS_CATALOG, alimenté par bfs_module.js) chaque fois que l'un des deux change. */
 rebuildCombinedCatalog = function() {
-  try { CATALOG = Object.assign(WB ? buildCatalog(WB) : {}, BFS_CATALOG, FRED_CATALOG, SNB_CATALOG); }
-  catch (e) { console.error('catalogue Chart Creator', e); CATALOG = Object.assign({}, BFS_CATALOG, FRED_CATALOG, SNB_CATALOG); }
+  try { CATALOG = Object.assign(WB ? buildCatalog(WB) : {}, BFS_CATALOG, FRED_CATALOG, SNB_CATALOG, MKT_CATALOG); }
+  catch (e) { console.error('catalogue Chart Creator', e); CATALOG = Object.assign({}, BFS_CATALOG, FRED_CATALOG, SNB_CATALOG, MKT_CATALOG); }
   if (typeof onCatalogUpdate === 'function') onCatalogUpdate();
 };
 
@@ -6860,6 +6930,483 @@ snbLoadStore();
 })();
 
 
+
+/* ---- Fonctions pures (parsing), globales pour rester testables indépendamment du câblage DOM ---- */
+/* Bougies du relais Market Data -> [{t(ms), o, h, l, c, v}] triées par date croissante.
+   Le fournisseur nomme le plus haut/plus bas « max » / « min » (high / low acceptés aussi). */
+function mktParseCandles(json, tf){
+  const d = (json && json.data) || {};
+  const list = Array.isArray(d.history) ? d.history.slice() : [];
+  if (d.current && d.current.time != null && !list.some(x => x.time === d.current.time)) list.push(d.current);
+  const daily = tf === 'D' || tf === 'W' || tf === 'M';
+  const out = [];
+  list.forEach(b => {
+    const sec = +b.time; const c = +b.close;
+    if (!isFinite(sec) || !isFinite(c)) return;
+    const ms = daily ? Math.floor(sec * 1000 / 864e5) * 864e5 : sec * 1000;
+    const hi = +(b.max != null ? b.max : b.high), lo = +(b.min != null ? b.min : b.low);
+    out.push({t: ms, o: isFinite(+b.open) ? +b.open : c, h: isFinite(hi) ? hi : c, l: isFinite(lo) ? lo : c, c: c, v: isFinite(+b.volume) ? +b.volume : 0});
+  });
+  out.sort((a, b) => a.t - b.t);
+  /* un seul point par date (la bougie « courante » peut doublonner la dernière) */
+  return out.filter((b, i) => !i || b.t !== out[i - 1].t);
+}
+/* Résultats de /search/market -> [{full, symbol, exchange, type, desc}] */
+function mktParseSearch(json){
+  const d = json && json.data;
+  const arr = Array.isArray(d) ? d : (d && (d.markets || d.symbols || d.results)) || [];
+  return arr.map(m => {
+    const exch = m.exchange || m.source_id || '';
+    const sym = String(m.symbol || '').replace(/<[^>]*>/g, '');
+    const full = m.full_name || (exch && sym.indexOf(':') < 0 ? exch + ':' + sym : sym);
+    return {full: String(full).replace(/<[^>]*>/g, ''), symbol: sym, exchange: exch, type: m.type || '', desc: String(m.description || '').replace(/<[^>]*>/g, '')};
+  }).filter(m => m.full);
+}
+/* Cote : /quote/{s} -> data.data ; /quote/batch -> liste d'éléments {symbol, data:{lp,...}} (forme tolérante) */
+function mktQuoteFields(item){
+  if (!item || typeof item !== 'object') return null;
+  if (item.data && typeof item.data === 'object' && !Array.isArray(item.data) && ('lp' in item.data || 'ch' in item.data || 'chp' in item.data)) return item.data;
+  if ('lp' in item || 'chp' in item) return item;
+  return null;
+}
+function mktParseBatchQuotes(json){
+  const d = json && json.data;
+  let arr = Array.isArray(d) ? d : (d && (d.quotes || d.results || d.items || d.data)) || null;
+  const map = {};
+  if (Array.isArray(arr)) {
+    arr.forEach(it => { const f = mktQuoteFields(it); const s = it && (it.symbol || (it.data && it.data.symbol) || (f && f.pro_name)); if (f && s) map[s] = f; });
+  } else if (d && typeof d === 'object') {
+    Object.keys(d).forEach(k => { const f = mktQuoteFields(d[k]); if (f) map[k] = f; });
+  }
+  return map;
+}
+
+(function MktModule(){
+"use strict";
+
+/* ============================================================================================
+   Écran « Market Data » — cotes et historiques via le relais /api/tv/... du Worker (clé API secrète côté Worker,
+   cache D1 partagé). La watchlist est partagée par toute l'équipe (D1, clé mkt_watchlist) avec repli local.
+   « Ajouter au Chart Creator » injecte la clôture dans MKT_CATALOG (groupe « Market Data »).
+   ============================================================================================ */
+
+const MK_STORE_KEY = 'gip_mkt_series_v1';
+const MK_WATCH_KEY = 'gip_mkt_watch_v1';
+const MK_DEFAULT_WATCH = [
+  {s: 'SP:SPX', n: 'S&P 500'}, {s: 'NASDAQ:NDX', n: 'Nasdaq 100'}, {s: 'SIX:SMI', n: 'SMI'}, {s: 'TVC:SX5E', n: 'Euro Stoxx 50'},
+  {s: 'FX_IDC:EURCHF', n: 'EUR/CHF'}, {s: 'FX_IDC:USDCHF', n: 'USD/CHF'}, {s: 'TVC:DXY', n: 'Dollar Index'},
+  {s: 'TVC:US10Y', n: 'US Treasury 10 ans'}, {s: 'TVC:GOLD', n: 'Or (once)'}, {s: 'BITSTAMP:BTCUSD', n: 'Bitcoin / USD'}
+];
+const TYPES = [['', 'Tous'], ['stock', 'Actions'], ['index', 'Indices'], ['forex', 'Forex'], ['futures', 'Futures'], ['crypto', 'Crypto'], ['funds', 'Fonds / ETF'], ['bond', 'Obligations']];
+const TYPE_FR = {stock: 'Action', index: 'Indice', forex: 'Forex', futures: 'Future', crypto: 'Crypto', fund: 'Fonds', funds: 'Fonds', bond: 'Obligation', dr: 'DR', economic: 'Économie', commodity: 'Matière première', cfd: 'CFD'};
+const TFS = {
+  D: {label: 'Journalier', ranges: [['1M', 22], ['3M', 66], ['1A', 260], ['5A', 1300], ['Max', 3000]], def: 2},
+  W: {label: 'Hebdomadaire', ranges: [['1A', 52], ['5A', 260], ['10A', 520], ['Max', 1500]], def: 1},
+  M: {label: 'Mensuel', ranges: [['5A', 60], ['10A', 120], ['20A', 240], ['Max', 600]], def: 1},
+  '60': {label: '1 heure', ranges: [['5J', 40], ['1M', 170], ['3M', 500]], def: 1}
+};
+
+let MK_LOADED = [];
+let WATCH = null;
+let status = null;
+let typeFilter = '';
+let cur = null; // {symbol, name, meta, quote, tf, ri, candles, kind}
+
+const nf = d => new Intl.NumberFormat('fr-CH', {maximumFractionDigits: d, minimumFractionDigits: d});
+function pxDec(v){ const a = Math.abs(v); return a >= 100 ? 2 : a >= 10 ? 3 : a >= 1 ? 4 : 5; }
+const px = v => (v == null || !isFinite(v)) ? '–' : nf(pxDec(v)).format(v);
+const signed = (v, d, suf) => (v >= 0 ? '+' : '−') + nf(d).format(Math.abs(v)) + (suf || '');
+function cls(v){ return v > 0 ? 'up' : v < 0 ? 'down' : ''; }
+function bigNum(v){ if (v == null || !isFinite(v)) return '–'; const a = Math.abs(v); return a >= 1e9 ? nf(2).format(v / 1e9) + ' Md' : a >= 1e6 ? nf(2).format(v / 1e6) + ' M' : a >= 1e3 ? nf(1).format(v / 1e3) + ' k' : nf(0).format(v); }
+function dateFr(ms, intraday){
+  const d = new Date(ms);
+  return intraday ? d.toLocaleString('fr-CH', {day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'UTC'}) : d.toLocaleDateString('fr-CH', {day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC'});
+}
+
+/* ---------------------------------------------------------------- appels */
+const mkCache = new Map();
+async function tv(path, opts){
+  opts = opts || {};
+  const key = (opts.method || 'GET') + ' ' + path + (opts.body || '');
+  const c = mkCache.get(key);
+  if (c && Date.now() - c.t < 45000) return c.j;
+  let r, j = null;
+  try {
+    r = await fetch('/api/tv/' + path, opts.body ? {method: 'POST', headers: {'Content-Type': 'application/json'}, body: opts.body} : undefined);
+  } catch (e) { throw new Error("Relais Market Data injoignable — page ouverte hors du site Cloudflare, ou hors-ligne ?"); }
+  try { j = await r.json(); } catch (e) {}
+  if (!r.ok || !j || j.success === false) {
+    const em = j && (j.error_message || (j.error && (j.error.message || j.error.code)));
+    if (r.status === 404 && !em) throw new Error("Route /api/tv introuvable (404) : le Worker déployé n'est pas à jour — relancez « npx wrangler deploy » avec le _worker.js fourni.");
+    const e = new Error(em || ('HTTP ' + r.status)); e.code = j && j.error_code; throw e;
+  }
+  mkCache.set(key, {t: Date.now(), j: j});
+  refreshUsage();
+  return j;
+}
+const symPath = s => encodeURIComponent(s).replace(/%3A/gi, ':');
+
+async function refreshUsage(){
+  try {
+    const r = await fetch('/api/tv/status'); if (!r.ok) throw 0;
+    status = await r.json();
+  } catch (e) { status = null; }
+  renderUsage();
+}
+function renderUsage(){
+  const setup = $('mkSetup'), u = $('mkUsage');
+  if (!status) { u.textContent = ''; setup.hidden = false; setup.innerHTML = "Relais Market Data injoignable : ouvrez l'outil depuis le site (Worker Cloudflare) — le Worker déployé doit aussi être à jour."; return; }
+  if (!status.configured) {
+    setup.hidden = false;
+    setup.innerHTML = "<b>Clé API non configurée.</b> Dans le dossier du dépôt, lancez <code>npx wrangler secret put TV_API_KEY</code>, collez la clé créée sur console.tvapis.com, puis rechargez cette page (effet immédiat, pas besoin de redéployer).";
+    u.textContent = ''; return;
+  }
+  setup.hidden = true;
+  u.textContent = 'Appels envoyés au fournisseur ce mois-ci : ' + nf(0).format(status.used) + ' / plafond de sécurité ' + nf(0).format(status.cap) + ' — les réponses sont mises en cache et partagées entre collègues.';
+}
+
+/* ---------------------------------------------------------------- vues */
+function show(id){ ['mkHome', 'mkListView', 'mkSymView'].forEach(v => { $(v).hidden = v !== id; }); }
+function toast(msg, withBtn, id){
+  $('mkToastMsg').textContent = msg;
+  $('mkToastBtn').style.display = withBtn ? '' : 'none';
+  $('mkToast').classList.add('show');
+  toast._id = id;
+  clearTimeout(toast._t); toast._t = setTimeout(() => $('mkToast').classList.remove('show'), 4500);
+}
+$('mkToastBtn').addEventListener('click', () => {
+  $('mkToast').classList.remove('show');
+  const nb = document.querySelector('.navbtn[data-screen="sandbox"]'); if (nb) nb.click();
+  const s = $('sbSearch');
+  if (s && toast._id) { s.value = toast._id; s.dispatchEvent(new Event('input', {bubbles: true})); }
+});
+
+/* ---------------------------------------------------------------- watchlist partagée */
+function loadWatchLocal(){
+  try { const a = JSON.parse(localStorage.getItem(MK_WATCH_KEY) || 'null'); if (Array.isArray(a) && a.length) return a; } catch (e) {}
+  return null;
+}
+let pushTimer = null;
+function saveWatch(){
+  try { localStorage.setItem(MK_WATCH_KEY, JSON.stringify(WATCH)); } catch (e) {}
+  if (pushTimer) clearTimeout(pushTimer);
+  pushTimer = setTimeout(() => { pushTimer = null; dbWrite('/api/db/kv/mkt_watchlist', 'PUT', WATCH); }, 600);
+}
+async function syncWatch(){
+  const j = await dbReadJson('/api/db/kv/mkt_watchlist');
+  if (!j || pushTimer) return false;
+  if (j.data === null) { if (loadWatchLocal()) dbWrite('/api/db/kv/mkt_watchlist', 'PUT', WATCH); return false; }
+  if (!Array.isArray(j.data) || !j.data.length) return false;
+  if (JSON.stringify(j.data) === JSON.stringify(WATCH)) return false;
+  WATCH = j.data;
+  try { localStorage.setItem(MK_WATCH_KEY, JSON.stringify(WATCH)); } catch (e) {}
+  return true;
+}
+const inWatch = s => WATCH.some(w => w.s === s);
+
+async function fetchQuotes(symbols){
+  const map = {};
+  for (let i = 0; i < symbols.length; i += 10) {
+    const chunk = symbols.slice(i, i + 10);
+    let got = {};
+    try {
+      const j = await tv('quote/batch', {body: JSON.stringify({symbols: chunk})});
+      got = mktParseBatchQuotes(j);
+    } catch (e) { if (e.code === 'NO_KEY' || e.code === 'BAD_KEY' || e.code === 'CAP') throw e; got = {}; }
+    chunk.forEach(s => { if (got[s]) map[s] = got[s]; });
+    /* forme de réponse groupée inattendue : repli cote par cote (coûte plus d'appels, mis en cache) */
+    if (!Object.keys(got).length) {
+      for (const s of chunk) {
+        try { const j = await tv('quote/' + symPath(s)); const f = mktQuoteFields(j.data) || (j.data && j.data.data); if (f) map[s] = f; } catch (e) { if (e.code) throw e; }
+      }
+    }
+  }
+  return map;
+}
+
+async function renderTiles(){
+  const box = $('mkTiles');
+  box.innerHTML = WATCH.map(w => '<div class="fx-tile" role="button" tabindex="0" data-s="' + esc(w.s) + '"><div class="lbl">' + esc(w.n) + '</div><div class="fx-skel" style="height:44px"></div></div>').join('');
+  if (status && !status.configured) return;
+  let q = {};
+  try { q = await fetchQuotes(WATCH.map(w => w.s)); }
+  catch (e) { $('mkAsOf').textContent = e.message; box.querySelectorAll('.fx-skel').forEach(n => n.outerHTML = '<div class="fx-mut" style="font-size:12px">indisponible</div>'); return; }
+  WATCH.forEach(w => {
+    const el = box.querySelector('[data-s="' + (window.CSS && CSS.escape ? CSS.escape(w.s) : w.s) + '"]'); if (!el) return;
+    const f = q[w.s];
+    const x = '<span class="mk-x" data-rm="' + esc(w.s) + '" title="Retirer de la watchlist">✕</span>';
+    if (!f) { el.innerHTML = x + '<div class="lbl">' + esc(w.n) + '</div><div class="fx-mut" style="font-size:12px">' + esc(w.s) + ' — pas de cote</div>'; return; }
+    const chp = +f.chp;
+    el.innerHTML = x + '<div class="lbl">' + esc(w.n) + '</div>'
+      + '<div class="row"><div><div class="v">' + px(+f.lp) + '</div><div class="u">' + esc(f.currency_code || '') + '</div></div></div>'
+      + '<div class="d"><span>' + esc(w.s) + '</span><span class="fx-delta ' + cls(chp) + '">' + (isFinite(chp) ? signed(chp, 2, ' %') : '') + '</span></div>';
+  });
+  $('mkAsOf').textContent = 'cotes du ' + new Date().toLocaleString('fr-CH', {day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'}) + ' (cache partagé ≈ 1 min)';
+}
+$('mkTiles').addEventListener('click', e => {
+  const rm = e.target.closest('[data-rm]');
+  if (rm) { e.stopPropagation(); WATCH = WATCH.filter(w => w.s !== rm.dataset.rm); saveWatch(); const t = rm.closest('.fx-tile'); if (t) t.remove(); return; }
+  const t = e.target.closest('[data-s]'); if (t) openSymbol(t.dataset.s);
+});
+$('mkTiles').addEventListener('keydown', e => { if (e.key === 'Enter') { const t = e.target.closest('[data-s]'); if (t) openSymbol(t.dataset.s); } });
+$('mkRefresh').addEventListener('click', () => { mkCache.clear(); renderTiles(); });
+$('mkReset').addEventListener('click', () => { if (!confirm('Rétablir la watchlist par défaut pour toute l\'équipe ?')) return; WATCH = MK_DEFAULT_WATCH.map(w => Object.assign({}, w)); saveWatch(); renderTiles(); });
+function toggleWatch(sym, name){
+  if (inWatch(sym)) WATCH = WATCH.filter(w => w.s !== sym); else WATCH.push({s: sym, n: name || sym});
+  saveWatch();
+}
+
+/* ---------------------------------------------------------------- recherche */
+function renderTypes(){
+  $('mkTypes').innerHTML = TYPES.map(t => '<button type="button" class="fx-chip" data-t="' + t[0] + '" style="' + (t[0] === typeFilter ? 'border-color:var(--ink2);color:var(--ink);font-weight:700' : '') + '">' + t[1] + '</button>').join('');
+}
+$('mkTypes').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; typeFilter = b.dataset.t; renderTypes(); if ($('mkQ').value.trim()) runSearch(); });
+async function runSearch(){
+  const q = $('mkQ').value.trim();
+  if (!q) { show('mkHome'); return; }
+  show('mkListView');
+  const box = $('mkResults');
+  box.innerHTML = '<div class="fx-res"><div class="fx-skel" style="height:18px;width:50%"></div></div><div class="fx-res"><div class="fx-skel" style="height:18px;width:40%"></div></div>';
+  try {
+    const j = await tv('search/market/' + encodeURIComponent(q) + (typeFilter ? '?filter=' + typeFilter : ''));
+    const res = mktParseSearch(j).slice(0, 60);
+    box.innerHTML = res.map(m => '<div class="fx-res" data-s="' + esc(m.full) + '" data-n="' + esc(m.desc || m.symbol) + '">'
+      + '<div class="t"><span class="fx-id">' + esc(m.full) + '</span>' + esc(m.desc) + '</div>'
+      + '<div><button type="button" class="btn mk-wl" data-w="' + esc(m.full) + '" data-n="' + esc(m.desc || m.symbol) + '">' + (inWatch(m.full) ? '★ Suivi' : '☆ Suivre') + '</button></div>'
+      + '<div class="m">' + esc(TYPE_FR[m.type] || m.type) + (m.exchange ? ' · ' + esc(m.exchange) : '') + '</div></div>').join('')
+      || '<div class="fx-res"><div class="fx-mut">Aucun symbole — essayez un autre nom ou un autre type.</div></div>';
+  } catch (e) { box.innerHTML = '<div class="fx-err">' + esc(e.message) + '</div>'; }
+}
+$('mkGo').addEventListener('click', runSearch);
+$('mkQ').addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(); });
+$('mkListBack').addEventListener('click', () => show('mkHome'));
+$('mkResults').addEventListener('click', e => {
+  const w = e.target.closest('[data-w]');
+  if (w) { e.stopPropagation(); toggleWatch(w.dataset.w, w.dataset.n); w.textContent = inWatch(w.dataset.w) ? '★ Suivi' : '☆ Suivre'; return; }
+  const r = e.target.closest('[data-s]'); if (r) openSymbol(r.dataset.s, r.dataset.n);
+});
+
+/* ---------------------------------------------------------------- fiche symbole */
+$('mkBack').addEventListener('click', () => show(cur && cur.back || 'mkHome'));
+async function openSymbol(sym, name){
+  const back = !$('mkListView').hidden ? 'mkListView' : 'mkHome';
+  show('mkSymView');
+  cur = {symbol: sym, name: name || (WATCH.find(w => w.s === sym) || {}).n || sym, quote: null, tf: 'D', ri: TFS.D.def, candles: [], kind: 'line', back: back};
+  const w = WATCH.find(x => x.s === sym); if (w) cur.name = w.n;
+  $('mkSym').innerHTML = '<div class="fx-skel" style="height:26px;width:60%"></div><div class="fx-skel" style="height:300px;margin-top:16px"></div>';
+  try {
+    const [qj, pj] = await Promise.all([tv('quote/' + symPath(sym)).catch(e => { if (e.code) throw e; return null; }), loadCandles()]);
+    cur.quote = qj ? (mktQuoteFields(qj.data) || (qj.data && qj.data.data) || null) : null;
+    if (cur.quote && cur.quote.description && (!name && cur.name === sym)) cur.name = cur.quote.description;
+    drawSym();
+  } catch (e) { $('mkSym').innerHTML = '<div class="fx-err">Impossible de charger ' + esc(sym) + ' — ' + esc(e.message) + '</div>'; }
+}
+async function loadCandles(){
+  const T = TFS[cur.tf], n = T.ranges[cur.ri][1];
+  const j = await tv('price/' + symPath(cur.symbol) + '?timeframe=' + cur.tf + '&range=' + n + '&type=Japanese');
+  cur.candles = mktParseCandles(j, cur.tf);
+  cur.info = (j.data && j.data.info) || cur.info || {};
+  return j;
+}
+const isIntra = () => cur.tf !== 'D' && cur.tf !== 'W' && cur.tf !== 'M';
+const keyOf = (sym, tf) => sym + '|' + tf;
+const isLoaded = (sym, tf) => MK_LOADED.some(x => x.symbol === sym && x.tf === tf);
+
+function drawSym(){
+  const c = cur.candles, q = cur.quote || {}, last = c[c.length - 1], first = c[0];
+  const lp = isFinite(+q.lp) ? +q.lp : (last ? last.c : NaN);
+  const chp = isFinite(+q.chp) ? +q.chp : NaN, ch = isFinite(+q.ch) ? +q.ch : NaN;
+  const per = (first && last && first.c) ? (last.c / first.c - 1) * 100 : NaN;
+  const T = TFS[cur.tf];
+  const kp = (k, v, s, c2) => '<div class="fx-kpi"><div class="k">' + k + '</div><div class="v' + (c2 ? ' fx-delta ' + c2 : '') + '">' + v + '</div>' + (s ? '<div class="s">' + s + '</div>' : '') + '</div>';
+  const wl = inWatch(cur.symbol), inCc = isLoaded(cur.symbol, cur.tf);
+  const exch = (cur.info && (cur.info.exchange || cur.info.listed_exchange)) || q.exchange || '';
+  $('mkSym').innerHTML =
+      '<h2>' + esc(cur.name) + '</h2>'
+    + '<div class="fx-ids"><span class="fx-id">' + esc(cur.symbol) + '</span>' + (exch ? ' · ' + esc(exch) : '') + (q.currency_code ? ' · ' + esc(q.currency_code) : '') + ((cur.info && cur.info.timezone) ? ' · ' + esc(cur.info.timezone) : '') + '</div>'
+    + '<div class="fx-kpis">'
+    +   kp('Dernier', px(lp), q.currency_code ? esc(q.currency_code) : '')
+    +   (isFinite(chp) ? kp('Variation séance', signed(chp, 2, ' %'), isFinite(ch) ? signed(ch, pxDec(ch) > 4 ? 4 : 2) : '', cls(chp)) : '')
+    +   (isFinite(per) ? kp('Sur la période', signed(per, 1, ' %'), c.length + ' bougies', cls(per)) : '')
+    +   (isFinite(+q.high_price) ? kp('Haut / bas séance', px(+q.high_price) + ' / ' + px(+q.low_price)) : '')
+    +   (isFinite(+q.bid) && isFinite(+q.ask) ? kp('Bid / Ask', px(+q.bid) + ' / ' + px(+q.ask)) : '')
+    +   (isFinite(+q.volume) ? kp('Volume', bigNum(+q.volume)) : '')
+    + '</div>'
+    + '<div class="fx-bar" style="margin:10px 0 6px">'
+    +   '<select id="mkTf" aria-label="Période des bougies">' + Object.keys(TFS).map(k => '<option value="' + k + '"' + (k === cur.tf ? ' selected' : '') + '>' + TFS[k].label + '</option>').join('') + '</select>'
+    +   '<span class="fx-ranges" id="mkRanges" style="margin:0">' + T.ranges.map((r, i) => '<button type="button" data-i="' + i + '" class="' + (i === cur.ri ? 'on' : '') + '">' + r[0] + '</button>').join('') + '</span>'
+    +   '<span class="fx-ranges" id="mkKind" style="margin:0 0 0 auto"><button type="button" data-k="line" class="' + (cur.kind === 'line' ? 'on' : '') + '">Ligne</button><button type="button" data-k="candles" class="' + (cur.kind === 'candles' ? 'on' : '') + '">Chandeliers</button></span>'
+    + '</div>'
+    + '<div class="fx-chart" id="mkChart"><div class="fx-tip" id="mkTip"></div></div>'
+    + '<div class="fx-actions">'
+    +   '<button type="button" class="btn pri" id="mkAdd">' + (inCc ? '↻ Mettre à jour dans le Chart Creator' : '+ Ajouter au Chart Creator') + '</button>'
+    +   (inCc ? '<span class="fx-in">déjà dans le catalogue (' + esc(T.label.toLowerCase()) + ')</span>' : '')
+    +   '<button type="button" class="btn" id="mkWatch">' + (wl ? '★ Dans la watchlist' : '☆ Suivre') + '</button>'
+    +   '<button type="button" class="btn" id="mkCsv">Télécharger CSV</button>'
+    +   '<a class="btn" target="_blank" rel="noopener" href="https://www.tradingview.com/symbols/' + encodeURIComponent(cur.symbol.replace(':', '-')) + '/">Voir sur TradingView ↗</a>'
+    + '</div>';
+  $('mkTf').addEventListener('change', async e => { cur.tf = e.target.value; cur.ri = TFS[cur.tf].def; await reload(); });
+  $('mkRanges').addEventListener('click', async e => { const b = e.target.closest('[data-i]'); if (!b) return; cur.ri = +b.dataset.i; await reload(); });
+  $('mkKind').addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (!b) return; cur.kind = b.dataset.k; $('mkKind').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); drawChart(); });
+  $('mkAdd').addEventListener('click', addToSandbox);
+  $('mkWatch').addEventListener('click', () => { toggleWatch(cur.symbol, cur.name); $('mkWatch').textContent = inWatch(cur.symbol) ? '★ Dans la watchlist' : '☆ Suivre'; });
+  $('mkCsv').addEventListener('click', downloadCsv);
+  drawChart();
+}
+async function reload(){
+  const box = $('mkChart'); if (box) box.style.opacity = .5;
+  try { await loadCandles(); drawSym(); }
+  catch (e) { drawSym(); const b = $('mkChart'); if (b) b.insertAdjacentHTML('afterbegin', '<div class="fx-err">' + esc(e.message) + '</div>'); }
+}
+
+function ticksFor(x0, x1, intra){
+  const n = 6, out = [];
+  const span = x1 - x0, days = span / 864e5;
+  for (let i = 0; i <= n; i++) {
+    const t = x0 + span * i / n, d = new Date(t);
+    out.push([t, intra ? d.toLocaleString('fr-CH', {day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'UTC'}) : days > 500 ? d.toLocaleDateString('fr-CH', {month: 'short', year: '2-digit', timeZone: 'UTC'}) : d.toLocaleDateString('fr-CH', {day: '2-digit', month: 'short', timeZone: 'UTC'})]);
+  }
+  return out;
+}
+function niceTicks(lo, hi, n){
+  n = n || 5;
+  const span = (hi - lo) || Math.abs(hi) || 1;
+  const step0 = span / n, mag = Math.pow(10, Math.floor(Math.log10(step0)));
+  const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= step0);
+  const t = [];
+  for (let v = Math.floor(lo / step) * step; v <= hi + step * 0.001; v += step) t.push(+v.toFixed(10));
+  return t;
+}
+function drawChart(){
+  const el = $('mkChart'), tip = $('mkTip');
+  if (!el) return;
+  Array.from(el.querySelectorAll('svg,p')).forEach(n => n.remove());
+  const P = cur.candles;
+  if (P.length < 2) { el.insertAdjacentHTML('afterbegin', '<p class="fx-mut">Pas assez de données pour ce symbole / cette période.</p>'); return; }
+  const candles = cur.kind === 'candles';
+  const W = Math.max(320, el.clientWidth || 800), H = 340, m = {t: 12, r: 16, b: 28, l: 62};
+  const xs = P.map(p => p.t);
+  let lo = Math.min.apply(null, P.map(p => candles ? p.l : p.c)), hi = Math.max.apply(null, P.map(p => candles ? p.h : p.c));
+  const yt = niceTicks(lo, hi); lo = Math.min(lo, yt[0]); hi = Math.max(hi, yt[yt.length - 1]);
+  const x0 = xs[0], x1 = xs[xs.length - 1];
+  const X = t => m.l + ((t - x0) / ((x1 - x0) || 1)) * (W - m.l - m.r);
+  const Y = v => m.t + (1 - (v - lo) / ((hi - lo) || 1)) * (H - m.t - m.b);
+  const ydec = pxDec(yt[yt.length - 1] || 1) > 3 ? pxDec(yt[yt.length - 1]) : (hi - lo) < 5 ? 3 : 2;
+  const xt = ticksFor(x0, x1, isIntra());
+  let body;
+  if (candles) {
+    const bw = Math.max(1, Math.min(10, (W - m.l - m.r) / P.length * 0.7));
+    body = P.map(p => { const up = p.c >= p.o, col = up ? '#1B8A4B' : '#C0201B', x = X(p.t);
+      return '<line x1="' + x.toFixed(1) + '" x2="' + x.toFixed(1) + '" y1="' + Y(p.h).toFixed(1) + '" y2="' + Y(p.l).toFixed(1) + '" stroke="' + col + '"/>'
+        + '<rect x="' + (x - bw / 2).toFixed(1) + '" y="' + Y(Math.max(p.o, p.c)).toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + Math.max(1, Math.abs(Y(p.o) - Y(p.c))).toFixed(1) + '" fill="' + col + '"/>'; }).join('');
+  } else {
+    body = '<path d="' + P.map((p, i) => (i ? 'L' : 'M') + X(p.t).toFixed(1) + ',' + Y(p.c).toFixed(1)).join('') + '" fill="none" stroke="#0086B3" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+  }
+  el.insertAdjacentHTML('afterbegin', '<svg viewBox="0 0 ' + W + ' ' + H + '" height="' + H + '" role="img" aria-label="' + esc(cur.name) + '">'
+    + yt.map(v => '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="#ECEAE4"/><text x="' + (m.l - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end" font-size="11" fill="#6B6F76">' + nf(ydec).format(v) + '</text>').join('')
+    + xt.map(x => '<text x="' + X(x[0]) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="#6B6F76">' + x[1] + '</text>').join('')
+    + body
+    + '<line class="xh" y1="' + m.t + '" y2="' + (H - m.b) + '" stroke="#02182B" stroke-opacity=".35" stroke-dasharray="3 3" visibility="hidden"/>'
+    + '<rect class="hit" x="' + m.l + '" y="' + m.t + '" width="' + (W - m.l - m.r) + '" height="' + (H - m.t - m.b) + '" fill="transparent"/>'
+    + '</svg>');
+  const svg = el.querySelector('svg'), xh = svg.querySelector('.xh'), hit = svg.querySelector('.hit');
+  const intra = isIntra();
+  hit.addEventListener('mousemove', e => {
+    const r = svg.getBoundingClientRect(), mx = ((e.clientX - r.left) / r.width) * W;
+    const t = x0 + ((mx - m.l) / (W - m.l - m.r)) * (x1 - x0);
+    let a = 0, b = xs.length - 1;
+    while (b - a > 1) { const mid = (a + b) >> 1; if (xs[mid] < t) a = mid; else b = mid; }
+    const i = Math.abs(xs[a] - t) < Math.abs(xs[b] - t) ? a : b, p = P[i];
+    const pxl = X(p.t);
+    xh.setAttribute('x1', pxl); xh.setAttribute('x2', pxl); xh.setAttribute('visibility', 'visible');
+    tip.style.display = 'block';
+    tip.style.left = (pxl / W) * r.width + 'px'; tip.style.top = (Y(p.c) / H) * r.height + 'px';
+    tip.innerHTML = esc(dateFr(p.t, intra)) + '<br><b>' + px(p.c) + '</b>' + (candles ? '<br>O ' + px(p.o) + ' · H ' + px(p.h) + ' · B ' + px(p.l) : '') + (p.v ? '<br>Vol. ' + bigNum(p.v) : '');
+  });
+  hit.addEventListener('mouseleave', () => { xh.setAttribute('visibility', 'hidden'); tip.style.display = 'none'; });
+}
+let rT = null;
+window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (cur && !$('mkSymView').hidden && $('screenMkt').classList.contains('on')) drawChart(); }, 150); });
+
+function downloadCsv(){
+  const csv = 'date;open;high;low;close;volume\n' + cur.candles.map(p => new Date(p.t).toISOString().slice(0, isIntra() ? 19 : 10) + ';' + [p.o, p.h, p.l, p.c, p.v].join(';')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv'}));
+  a.download = cur.symbol.replace(/[^A-Za-z0-9]+/g, '_') + '_' + cur.tf + '.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+/* ---------------------------------------------------------------- catalogue du Chart Creator (MKT_CATALOG) + persistance */
+function catKey(it){ return 'Market Data — ' + it.title; }
+function addToSandbox(){
+  if (!cur.candles.length) { toast('Aucune donnée exploitable pour ' + cur.symbol, false); return; }
+  const tfTag = cur.tf === 'D' ? '' : ' · ' + TFS[cur.tf].label.toLowerCase();
+  const existing = MK_LOADED.find(x => x.symbol === cur.symbol && x.tf === cur.tf);
+  if (existing) removeLoaded(existing.key, true);
+  addLoaded({title: cur.name + ' (' + cur.symbol + ')' + tfTag, symbol: cur.symbol, tf: cur.tf, t: cur.candles.map(p => p.t), values: cur.candles.map(p => p.c)});
+  toast((existing ? cur.symbol + ' mis à jour' : cur.symbol + ' ajouté') + ' — ' + cur.candles.length + ' points disponibles dans le Chart Creator', true, cur.symbol);
+  drawSym();
+}
+function injectCatalog(it){
+  MKT_CATALOG[catKey(it)] = {t: Float64Array.from(it.t), cols: {[it.title]: Float64Array.from(it.values)}, names: [it.title], cat: {[it.title]: 'Market Data'}, hasCat: true};
+}
+function saveStore(){
+  try { localStorage.setItem(MK_STORE_KEY, JSON.stringify(MK_LOADED)); }
+  catch (e) { toast('Stockage local plein : la série est disponible pour cette session seulement.', false); }
+}
+function loadStore(){
+  try { MK_LOADED = JSON.parse(localStorage.getItem(MK_STORE_KEY) || '[]') || []; } catch (e) { MK_LOADED = []; }
+  MK_LOADED.forEach(injectCatalog);
+  if (typeof rebuildCombinedCatalog === 'function') rebuildCombinedCatalog();
+  renderLoaded();
+}
+function addLoaded(it){
+  it.key = 'mkt_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+  MK_LOADED.push(it); injectCatalog(it); saveStore();
+  if (typeof rebuildCombinedCatalog === 'function') rebuildCombinedCatalog();
+  renderLoaded();
+}
+function removeLoaded(key, silent){
+  const it = MK_LOADED.find(x => x.key === key); if (!it) return;
+  MK_LOADED = MK_LOADED.filter(x => x.key !== key);
+  delete MKT_CATALOG[catKey(it)];
+  if (silent) return;
+  saveStore();
+  if (typeof rebuildCombinedCatalog === 'function') rebuildCombinedCatalog();
+  renderLoaded();
+  if (cur && !$('mkSymView').hidden) drawSym();
+}
+function renderLoaded(){
+  $('mkLoadedSec').hidden = !MK_LOADED.length;
+  $('mkLoaded').innerHTML = MK_LOADED.map(it => {
+    const n = it.t.length, per = n ? (new Date(it.t[0]).getUTCFullYear() + '–' + new Date(it.t[n - 1]).getUTCFullYear()) : '';
+    return '<span class="fx-litem"><a data-open-s="' + esc(it.symbol) + '" title="' + esc(it.title) + '">' + esc(it.symbol) + (it.tf !== 'D' ? ' (' + esc(it.tf) + ')' : '') + '</a><span class="per">' + esc(per) + '</span><button type="button" data-key="' + esc(it.key) + '" title="Retirer du catalogue">✕</button></span>';
+  }).join('');
+}
+$('mkLoaded').addEventListener('click', e => {
+  const b = e.target.closest('button[data-key]'); if (b) { removeLoaded(b.dataset.key); return; }
+  const a = e.target.closest('[data-open-s]'); if (a) openSymbol(a.dataset.openS);
+});
+
+/* ---------------------------------------------------------------- démarrage : rien n'est appelé avant la première ouverture de l'écran */
+let started = false;
+async function init(){
+  if (started) { return; }
+  started = true;
+  await refreshUsage();
+  if (await syncWatch()) { /* watchlist d'équipe plus récente */ }
+  renderTiles();
+}
+document.querySelectorAll('[data-screen="mkt"],[data-open="mkt"]').forEach(b => b.addEventListener('click', init));
+
+WATCH = loadWatchLocal() || MK_DEFAULT_WATCH.map(w => Object.assign({}, w));
+renderTypes();
+loadStore();
+
+})();
+
+
 (function SandboxModule(){
 "use strict";
 
@@ -7657,7 +8204,7 @@ setInterval(() => { if (!document.querySelector('.wbcat.dragging, .destcard.drag
 
 (function NavModule(){
 "use strict";
-const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), ofs: document.getElementById('screenOfs'), whiteboard: document.getElementById('screenWhiteboard')};
+const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), ofs: document.getElementById('screenOfs'), mkt: document.getElementById('screenMkt'), whiteboard: document.getElementById('screenWhiteboard')};
 function showScreen(name){
   if (!screens[name]) return;
   Object.keys(screens).forEach(k => { if (screens[k]) screens[k].classList.toggle('on', k === name); });

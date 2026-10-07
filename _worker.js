@@ -545,7 +545,7 @@ async function handleChartpack(request, env) {
 }
 
 /* Petit stockage clé/valeur partagé (ex. les catégories du Whiteboard) : un document JSON par clé. */
-const KV_KEYS = ['wb_categories'];
+const KV_KEYS = ['wb_categories', 'mkt_watchlist'];
 async function handleKv(request, env, key) {
   if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
   if (KV_KEYS.indexOf(key) < 0) return jsonResponse({error_message: 'Clé inconnue.'}, 404);
@@ -570,6 +570,99 @@ async function handleKv(request, env, key) {
   } catch (e) {
     return jsonResponse({error_message: 'Base partagée indisponible (' + e.message + ').'}, 500);
   }
+}
+
+
+/* ----------------------------------------------------------------------------------------------
+ * Market Data (/api/tv/...) — relais vers l'API tierce « TradingView Data API » (api.tradingviewapi.com,
+ * clés gérées sur console.tvapis.com). La clé n'est JAMAIS envoyée au navigateur : elle vit dans le secret
+ * Worker TV_API_KEY ("npx wrangler secret put TV_API_KEY"). Pour ménager le quota mensuel du forfait :
+ *   - cache D1 partagé (cotes 60 s, bougies intrajournalières 60 s, journalières 15 min, hebdo/mensuelles 1 h,
+ *     recherche de symboles 24 h) — tous les collègues partagent les mêmes réponses ;
+ *   - compteur d'appels réellement envoyés à l'amont (clé D1 tv_usage_AAAA-MM) et plafond TV_MONTHLY_CAP
+ *     (défaut 30 000, modifiable par variable) : au-delà, seul le cache est servi ;
+ *   - seules les requêtes issues du site lui-même sont acceptées (en-tête Origin / Sec-Fetch-Site).
+ * GET /api/tv/status -> {configured, used, cap, month}   (sans appel amont)
+ * ---------------------------------------------------------------------------------------------- */
+const TV_BASE = 'https://api.tradingviewapi.com/api';
+const TV_ALLOWED = /^(search\/market\/[^/]+|price\/[^/]+|quote\/[^/]+|options\/[^/]+|etf\/[^/]+|quote\/batch|price\/batch)$/;
+function tvMonth() { return new Date().toISOString().slice(0, 7); }
+function tvTtl(sub, url, method) {
+  if (sub.startsWith('search/')) return 24 * 3600 * 1000;
+  if (sub.startsWith('quote') || sub.startsWith('options') || sub.startsWith('etf')) return 60 * 1000;
+  if (sub.startsWith('price')) {
+    const tf = url.searchParams.get('timeframe') || '5';
+    if (method === 'POST') return 60 * 1000;
+    if (tf === 'D') return 15 * 60 * 1000;
+    if (tf === 'W' || tf === 'M') return 3600 * 1000;
+    return 60 * 1000;
+  }
+  return 60 * 1000;
+}
+function tvJson(obj, status) {
+  return new Response(JSON.stringify(obj), {status: status || 200, headers: {'Content-Type': 'application/json', 'Cache-Control': 'no-store'}});
+}
+async function tvUsage(env) {
+  try {
+    await ensureSchema(env.DB);
+    const r = await env.DB.prepare('SELECT data FROM kv_store WHERE k = ?').bind('tv_usage_' + tvMonth()).first();
+    return r ? (parseInt(r.data, 10) || 0) : 0;
+  } catch (e) { return 0; }
+}
+async function tvCount(env) {
+  try {
+    await ensureSchema(env.DB);
+    await env.DB.prepare("INSERT INTO kv_store (k, data, updated_at) VALUES (?, '1', ?) ON CONFLICT(k) DO UPDATE SET data = CAST(CAST(data AS INTEGER) + 1 AS TEXT), updated_at = excluded.updated_at")
+      .bind('tv_usage_' + tvMonth(), new Date().toISOString()).run();
+  } catch (e) {}
+}
+async function tvProxy(request, env, ctx) {
+  const url = new URL(request.url);
+  const sub = url.pathname.replace(/^\/api\/tv\/?/, '');
+  const cap = parseInt(env.TV_MONTHLY_CAP, 10) || 30000;
+  /* Même origine uniquement (le Worker est public : sans cela, n'importe qui pourrait consommer le quota). */
+  const origin = request.headers.get('Origin');
+  const sfs = request.headers.get('Sec-Fetch-Site');
+  if ((origin && origin !== url.origin) || (sfs && sfs !== 'same-origin' && sfs !== 'none')) {
+    return tvJson({error_message: 'Market Data : requête refusée (origine différente du site).'}, 403);
+  }
+  if (request.method === 'OPTIONS') return new Response(null, {status: 204});
+  if (sub === 'status') {
+    return tvJson({configured: !!env.TV_API_KEY, used: await tvUsage(env), cap: cap, month: tvMonth()});
+  }
+  if (!env.TV_API_KEY) {
+    return tvJson({error_code: 'NO_KEY', error_message: 'Clé API Market Data non configurée sur le Worker (npx wrangler secret put TV_API_KEY).'}, 503);
+  }
+  if (!TV_ALLOWED.test(sub) || (request.method !== 'GET' && !(request.method === 'POST' && /\/batch$/.test(sub)))) {
+    return tvJson({error_message: 'Route Market Data non autorisée.'}, 404);
+  }
+  const target = TV_BASE + '/' + sub + url.search;
+  const body = request.method === 'POST' ? await request.text() : null;
+  const ttl = tvTtl(sub, url, request.method);
+  const cacheKey = 'tv:' + request.method + ':' + sub + url.search + (body ? '|' + body : '');
+  const hit = await cacheGet(env, cacheKey);
+  if (hit && hit.age < ttl) return new Response(hit.data, {status: 200, headers: {'Content-Type': 'application/json', 'X-GIP-Cache': 'HIT', 'Cache-Control': 'no-store'}});
+  if (await tvUsage(env) >= cap) {
+    if (hit) return new Response(hit.data, {status: 200, headers: {'Content-Type': 'application/json', 'X-GIP-Cache': 'STALE-CAP', 'Cache-Control': 'no-store'}});
+    return tvJson({error_code: 'CAP', error_message: 'Plafond mensuel d\'appels Market Data atteint (' + cap + ') — modifiable via la variable TV_MONTHLY_CAP.'}, 429);
+  }
+  let up;
+  try {
+    const init = {method: request.method, headers: {Authorization: 'Bearer ' + env.TV_API_KEY, Accept: 'application/json'}};
+    if (body) { init.body = body; init.headers['Content-Type'] = 'application/json'; }
+    await tvCount(env);
+    up = await fetch(target, init);
+  } catch (e) {
+    if (hit) return new Response(hit.data, {status: 200, headers: {'Content-Type': 'application/json', 'X-GIP-Cache': 'STALE', 'Cache-Control': 'no-store'}});
+    return tvJson({error_message: 'Market Data : échec de connexion à l\'API (' + e.message + ')'}, 502);
+  }
+  const text = await up.text();
+  if (up.status === 200 && ctx) {
+    let ok = true; try { ok = JSON.parse(text).success !== false; } catch (e) { ok = false; }
+    if (ok) ctx.waitUntil(cachePut(env, cacheKey, text));
+  }
+  if (up.status === 401 || up.status === 403) return tvJson({error_code: 'BAD_KEY', error_message: 'Clé Market Data refusée par le fournisseur (vérifiez TV_API_KEY et votre forfait sur console.tvapis.com).'}, 502);
+  return new Response(text, {status: up.status, headers: {'Content-Type': up.headers.get('Content-Type') || 'application/json', 'Cache-Control': 'no-store'}});
 }
 
 /* Ordre important : les préfixes les plus spécifiques d'abord (aucun souci ici, les 4 préfixes
@@ -616,6 +709,7 @@ export default {
         return jsonResponse({ofs: {total: st.ofs.total, indexed: st.ofs.indexed, stale: st.ofs.stale.length}, snb: {total: st.snb.total, indexed: st.snb.indexed, stale: st.snb.stale.length}});
       } catch (e) { return jsonResponse({error_message: 'État indisponible (' + e.message + ').'}, 500); }
     }
+    if (url.pathname === '/api/tv' || url.pathname.startsWith('/api/tv/')) return tvProxy(request, env, ctx);
     if (url.pathname === '/api/db/chartpack') return handleChartpack(request, env);
     const kvMatch = url.pathname.match(/^\/api\/db\/kv\/([a-z_]+)$/);
     if (kvMatch) return handleKv(request, env, kvMatch[1]);
