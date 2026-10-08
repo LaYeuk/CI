@@ -23,9 +23,54 @@ Pour mettre les données à jour :
 Remarque : les fichiers de data/ sont aussi publics que le site lui-même (adresse /data/R2_Data.xlsx). Si ces données doivent rester confidentielles,
 il faut protéger le site avec Cloudflare Access (je peux détailler).
 
+================ MARKET DATA (nouvel onglet) ================
+Cotes et historiques de marché via l'API tierce « TradingView Data API » (tradingviewapi.com ; clés sur console.tvapis.com).
+Service NON officiel (sans lien avec TradingView) : données possiblement différées.
+  1. Créer la clé sur https://console.tvapis.com/api-keys (ne la collez ni dans le dépôt, ni dans une discussion).
+  2. Dans le dossier CI :   npx wrangler secret put TV_API_KEY      puis coller la clé. (Effet immédiat.)
+  3. Recharger le site, onglet « Market Data ». Sans clé, l'onglet affiche ces instructions.
+La clé reste sur le Worker : elle n'est jamais envoyée au navigateur. Le Worker n'accepte que les appels venant du site lui-même.
+Économie de quota (forfait Basic = 150 appels/mois, Pro = 40 000) : réponses mises en cache dans D1 et partagées entre collègues
+(cotes 60 s, bougies journalières 15 min, hebdo/mensuelles 1 h, recherche 24 h) ; compteur d'appels affiché dans l'onglet ;
+plafond de sécurité 30 000 appels/mois (variable TV_MONTHLY_CAP pour le changer : Cloudflare > Workers > ci > Settings > Variables).
+Avec le forfait gratuit (150 appels), la watchlist de 10 symboles ne coûte qu'1 appel par actualisation (toutes les 60 s au plus).
+Onglet « SPI par secteur » : ~200 titres du Swiss Performance Index en 15 secteurs ; les cotes d'un secteur ne sont chargées qu'à son ouverture
+(≈ 1 appel par 10 titres ; « Charger toutes les cotes » ≈ 21 appels). La composition est dans Outils_GIP.html (tableau MKT_SPI) et se met à jour à la main
+lors de la révision annuelle de l'indice ; un ticker sans cote est signalé « sans cote ».
+Watchlist : partagée par toute l'équipe (D1) ; clic sur une tuile = fiche (bougies jour/semaine/mois/1 h, ligne ou chandeliers) ;
+« Ajouter au Chart Creator » envoie la clôture dans le groupe « Market Data » du Chart Creator.
+
+Mise à jour Market Data (2e version) :
+  - Onglets : « SPI par secteur » (par défaut), « Indices », « Ma watchlist partagée ».
+  - SPI : colonnes Prix, Jour, Dividende (rendement + montant ≈ par titre), P/E, Perf. YTD, Perf. 3 ans ; tri en cliquant sur les en-têtes.
+  - Indices : SMI, SPI, Euro Stoxx 50, Stoxx Europe 600, CAC 40, DAX, Nasdaq 100 / Composite, S&P 500, FTSE MIB, IBEX 35 — niveau, jour, YTD, 1 an, 3 ans,
+    en prix ET en total return. Les symboles de total return sont cherchés automatiquement s'ils ne sont pas reconnus ; ✎ permet de les corriger (partagé).
+  - Performances calculées par le Worker (routes /api/tv-perf et /api/tv-fund) : le Worker (_worker.js) DOIT être redéployé avec cette version.
+  - En cas de colonne vide : Market Data > « Diagnostic technique » en bas de page, puis copier le résultat.
+
 ================ AUTRES NOUVEAUTÉS ================
-  - Menu sur deux lignes (Chart Creator, BNS, FRED, OFS / Chart Pack, AM Dashboard, Whiteboard) ; export PNG dans le Chart Creator.
+  - Menu sur deux lignes (Chart Creator, BNS, FRED, OFS, Market Data / Chart Pack, AM Dashboard, Whiteboard) ; export PNG dans le Chart Creator.
   - Index de recherche OFS / BNS mémorisé dans la base D1, complété par le cron (état : /api/index-status).
 
 Attention : .assetsignore commence par un point. Il peut être masqué dans l'Explorateur Windows (Affichage > Éléments masqués).
 Si un ancien dossier functions/ existe encore dans CI, il ne sert plus (le Worker _worker.js le remplace) : vous pouvez le supprimer.
+
+Mise à jour Market Data (3e version) :
+  - Indices : symboles TradingView mis à jour (SMI, SPI, Euro Stoxx 50, Stoxx 600, DAX, CAC 40, FTSE 100, FTSE MIB, IBEX 35, S&P 500, Nasdaq 100, Nasdaq Composite) + nouveaux : Nikkei 225 (Japon), SSE Composite (Chine, sans total return), Nifty 50 (Inde).
+    Les symboles introuvables sont cherchés automatiquement ; les anciens choix mémorisés (version précédente) sont réinitialisés. Corriger au besoin avec le crayon.
+  - SPI par secteur : titres classés par capitalisation boursière décroissante (nouvelle colonne « Cap. »), recalculée depuis le Worker.
+  - Le fichier _worker.js a changé (capitalisation) : le redéployer (git push ou npx wrangler deploy).
+
+Mise à jour Market Data / Market Lab (4e version) :
+  - SPI par secteur : colonnes YTD et 3 ans retirées (moins d'appels au forfait), lignes alternées, logos des sociétés avant le nom (favicon du site officiel, pastille d'initiales si indisponible), cases à cocher par titre / par secteur / « Tout cocher » ; barre d'actions : « Comparer sur un graphique » (base 100, périodes 1M à 5A, export CSV, ajout au Chart Creator) et « Corrélation (Market Lab) ».
+  - Nouvel onglet Market Lab : choix libre des titres (SPI complet, par secteur, ou ajout d'autres symboles), historique réglable (90 jours par défaut), matrice de corrélation (rendements quotidiens ou niveaux de prix), classement par secteur ou par similarité, paires extrêmes, export CSV / PNG.
+  - Le fichier _worker.js a changé (nouvelle route /api/tv-series) : le redéployer (git push ou npx wrangler deploy). Aucun nouveau secret requis.
+
+Mise à jour Market Lab (5e version) :
+  - Matrice croisée : bouton « Croisée A × B » dans l'onglet « Matrice de corrélation ». Deux listes de titres (Liste A en lignes, Liste B en colonnes), choisies chacune avec les mêmes cases à cocher ; mêmes réglages (historique, rendements ou niveaux), classement par secteur ou par corrélation moyenne, paires extrêmes, CSV / PNG.
+  - Nouvel onglet « Corrélation glissante » : on choisit un titre (nom ou ticker) et l'outil trace 5 graphiques de sa corrélation glissante contre SPI Index, ZGLD SW Equity, SBR14T Index, BCCMS SW Equity et SIMA SW Equity (échelle -1 / +1, curseur synchronisé, KPI actuelle / moyenne / min / max, export CSV). Historique 3, 5 (défaut) ou 7 ans.
+  - Deux sources pour les séries de référence :
+      Excel · mensuel (défaut) : feuille « Monthly data » du classeur ; ces séries étant mensuelles, la corrélation porte sur les rendements mensuels et la fenêtre se règle en mois (24 par défaut) : 90 jours ne donneraient que 3 points.
+      TradingView · quotidien : fenêtre de 90 jours possible ; SIX:SPI, SIX:ZGLD, SIX:BCCMS, SIX:SIMA à contrôler ; SBR14T n'a pas de série quotidienne.
+  - ATTENTION données : dans l'Excel, la colonne « BCCMS SW Equity » (catalogue « BCOM (2) ») contient des dates au lieu de cours. L'outil le détecte, la remplace par l'indice BCOM (colonne « BCOM ») et l'indique sous le graphique. Corriger la colonne dans l'Excel pour utiliser BCCMS.
+  - Seul Outils_GIP.html change (le _worker.js est identique à la version précédente).

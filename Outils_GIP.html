@@ -500,6 +500,32 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 
 #screenMkt main{padding-bottom:86px}
 
+#screenLab [hidden]{display:none!important}
+#screenLab .lb-tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:14px 0 0}
+#screenLab .lb-tabs button{border:0;background:none;padding:9px 18px;font:inherit;font-size:13.5px;font-weight:600;color:var(--mut);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+#screenLab .lb-tabs button:hover{color:var(--navy)}
+#screenLab .lb-tabs button.on{color:var(--navy);border-bottom-color:#0086B3}
+#screenLab .lb-ltabs button.on{background:#0086B3;border-color:#0086B3}
+#screenLab .lb-refs{margin-top:10px;font-size:12.5px;color:var(--mut)}
+#screenLab .lb-refs b{color:var(--navy)}
+#screenLab .lb-srcnote{margin-top:12px;font-size:12px}
+#screenLab .lb-srcnote code{background:#F1F0EC;padding:0 4px;border-radius:3px}
+#screenLab .lb-rhead h2{margin:10px 0 2px;font-size:19px;color:var(--navy)}
+#screenLab .lb-rhead h2 small{font-size:12px;color:var(--mut);font-weight:500;margin-left:6px}
+#screenLab .lb-rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:14px;margin-top:12px}
+#screenLab .lb-rc{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 12px 8px;min-width:0}
+#screenLab .lb-rc.none{background:#FAF9F6}
+#screenLab .lb-rh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+#screenLab .lb-rh i{display:inline-block;width:10px;height:10px;border-radius:50%;align-self:center}
+#screenLab .lb-rh b{color:var(--navy);font-size:13.5px}
+#screenLab .lb-rh small{color:var(--mut);font-size:11.5px}
+#screenLab .lb-hv{margin-left:auto;font-size:12px;color:var(--navy);font-variant-numeric:tabular-nums;font-weight:600}
+#screenLab .lb-rk{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:6px 0 2px}
+#screenLab .lb-rk b{color:var(--ink);font-variant-numeric:tabular-nums}
+#screenLab .lb-rk b.p{color:#0A6EA8}
+#screenLab .lb-rk b.n{color:#B5501C}
+#screenLab .lb-rn{margin:4px 0 0;font-size:11px;color:var(--mut)}
+
 #screenChartPack {--navy:#02182B;--blue:#0a6b8c;--cyan:#00CFFF;--beige:#DDD8C4;--pale:#ECEADF;--tint:#E8F6FA;--grey:#B6C0C6;--bg:#F5F6F5;--line:#DDE3E6;--txt:#12242F;--mut:#5B6B76}
 #screenChartPack * {box-sizing:border-box}
 #screenChartPack {margin:0;background:var(--bg);color:var(--txt);font:14px/1.4 Aspekta,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
@@ -1438,12 +1464,20 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 </div>
 <div id="screenLab" class="screen">
 
-<header><h1>Market Lab</h1><span>Laboratoire d'analyse — matrice de corrélation entre les titres du SPI (ou de votre choix), sur l'historique de votre choix.</span></header>
+<header><h1>Market Lab</h1><span>Laboratoire d'analyse — matrices de corrélation (carrée ou croisée) et corrélation glissante d'un titre contre vos séries de référence.</span></header>
 <main>
   <div class="fx-err" id="lbSetup" hidden></div>
 
+  <div class="lb-tabs" id="lbTabs" role="tablist"><button type="button" data-t="mat" class="on" role="tab">Matrice de corrélation</button><button type="button" data-t="roll" role="tab">Corrélation glissante</button></div>
+
+<div id="lbPanMat">
   <section class="fx-card lb-card">
     <div class="lb-h"><h3>1 · Choisir les titres</h3><span class="lb-count" id="lbCount"></span></div>
+    <div class="fx-bar" style="margin-top:8px">
+      <span class="lb-lbl">Type de matrice</span>
+      <span class="fx-ranges" id="lbKind" style="margin:0"><button type="button" data-k="square" class="on" title="Chaque titre de la sélection contre tous les autres">Carrée</button><button type="button" data-k="cross" title="Deux listes distinctes : les titres de la liste A en lignes, ceux de la liste B en colonnes">Croisée A × B</button></span>
+      <span class="fx-ranges lb-ltabs" id="lbListTabs" style="margin:0" hidden><button type="button" data-l="A" class="on">Liste A</button><button type="button" data-l="B">Liste B</button></span>
+    </div>
     <div class="fx-bar" style="margin-top:6px">
       <button type="button" class="btn" id="lbAll">Tout le SPI</button>
       <button type="button" class="btn" id="lbNone">Tout décocher</button>
@@ -1483,6 +1517,44 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     <div class="lb-pairs" id="lbPairs"></div>
     <div class="fx-notes" style="margin-top:12px;font-size:12px">Corrélation de Pearson calculée par paires sur les dates communes (au moins 15 observations, sinon « n.d. »). Sur rendements quotidiens, une valeur proche de +1 signifie que deux titres bougent ensemble au jour le jour ; proche de 0, qu'ils sont indépendants ; négative, qu'ils évoluent en sens inverse. Les titres d'un même émetteur (Roche, Schindler, Lindt, Swatch) sont exclus des classements de paires. Source : TradingView Data API (service tiers non officiel) — données indicatives.</div>
   </section>
+</div>
+
+<div id="lbPanRoll" hidden>
+  <section class="fx-card lb-card">
+    <div class="lb-h"><h3>1 · Titre à analyser</h3></div>
+    <div class="fx-bar" style="margin-top:8px">
+      <input id="lbRTitle" type="search" list="lbRDl" autocomplete="off" placeholder="Nom ou ticker d'un titre du SPI (ex. Nestlé, NESN) ou symbole complet (ex. SIX:ROG)…" aria-label="Titre à analyser">
+      <datalist id="lbRDl"></datalist>
+    </div>
+    <div class="lb-refs">Séries de référence : <b>SPI Index</b> · <b>ZGLD SW Equity</b> (or) · <b>SBR14T Index</b> (obligations) · <b>BCCMS SW Equity</b> (matières premières) · <b>SIMA SW Equity</b> (immobilier)</div>
+  </section>
+
+  <section class="fx-card lb-card">
+    <div class="lb-h"><h3>2 · Paramètres</h3></div>
+    <div class="lb-params">
+      <div class="lb-p"><label>Source des séries de référence</label>
+        <span class="fx-ranges" id="lbRSrc" style="margin:0"><button type="button" data-s="xls" class="on" title="Séries du classeur Excel (feuille Monthly data), fréquence mensuelle">Excel · mensuel</button><button type="button" data-s="tv" title="Séries quotidiennes via TradingView">TradingView · quotidien</button></span>
+      </div>
+      <div class="lb-p"><label>Historique affiché</label>
+        <span class="fx-ranges" id="lbRHist" style="margin:0"><button type="button" data-y="1095">3 ans</button><button type="button" data-y="1826" class="on">5 ans</button><button type="button" data-y="2555">7 ans</button></span>
+      </div>
+      <div class="lb-p"><label>Fenêtre glissante</label>
+        <span style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="fx-ranges" id="lbRWinBtns" style="margin:0"></span>
+        <span class="lb-days"><input id="lbRWin" type="number" step="1" value="24" aria-label="Taille de la fenêtre"> <span id="lbRUnit"></span></span></span>
+      </div>
+      <div class="lb-p"><label>&nbsp;</label><button type="button" class="btn pri" id="lbRRun">Calculer les 5 corrélations</button></div>
+    </div>
+    <div class="fx-notes lb-srcnote" id="lbRSrcNote"></div>
+    <div class="lb-est" id="lbREst"></div>
+  </section>
+
+  <section class="fx-card lb-card" id="lbRRes" hidden>
+    <div class="lb-h"><h3>3 · Corrélation glissante</h3><button type="button" class="btn" id="lbRCsv">Télécharger CSV</button></div>
+    <div class="lb-rhead" id="lbRHead"></div>
+    <div class="lb-rgrid" id="lbRGrid"></div>
+    <div class="fx-notes" style="margin-top:12px;font-size:12px">Chaque courbe est la corrélation de Pearson, recalculée à chaque date sur la fenêtre glissante précédente, entre les rendements du titre et ceux de la série de référence (échelle fixe −1 à +1 ; ligne pointillée = 0). Le curseur est synchronisé sur les cinq graphiques. Données indicatives.</div>
+  </section>
+</div>
 </main>
 </div>
 
@@ -8357,10 +8429,9 @@ showList('spi');
 })();
 
 /* ---- Market Lab : fonctions pures (globales, testables sans DOM) ---- */
-/* Matrice de corrélation (Pearson, par paires) entre des séries {t: [jours depuis 1970], c: [clôtures]}.
-   Fenêtre = `days` jours calendaires jusqu'à la dernière date disponible ; mode 'ret' = rendements quotidiens, 'px' = niveaux de prix.
-   Retourne {n, mat: Float64Array(n*n) (NaN = indisponible), obs: Int32Array(n*n), from, to, dates}. */
-function mktCorrMatrix(series, days, mode, minObs){
+/* Prépare des séries {t: [jours depuis 1970], c: [clôtures]} pour la corrélation : fenêtre de `days` jours calendaires jusqu'à la dernière date
+   disponible, alignement sur l'union des dates, puis rendements (mode 'ret') ou niveaux (mode 'px'). */
+function mktAlignReturns(series, days, mode){
   const n = series.length;
   let end = 0;
   series.forEach(S => { if (S && S.t && S.t.length) end = Math.max(end, S.t[S.t.length - 1]); });
@@ -8382,24 +8453,38 @@ function mktCorrMatrix(series, days, mode, minObs){
     for (let j = 1; j < T; j++) if (isFinite(v[j]) && isFinite(v[j - 1]) && v[j - 1] > 0) r[j] = v[j] / v[j - 1] - 1;
     return r;
   });
+  return {n, R, T, j0: mode === 'px' ? 0 : 1, from: all[mode === 'px' ? 0 : Math.min(1, T - 1)] || 0, to: all[T - 1] || 0, dates: T - (mode === 'px' ? 0 : 1)};
+}
+function mktPearsonPair(x, y, j0, T){
+  let m = 0, sx = 0, sy = 0, sxx = 0, syy = 0, sxy = 0;
+  for (let j = j0; j < T; j++) { const u = x[j], w = y[j]; if (u === u && w === w) { m++; sx += u; sy += w; sxx += u * u; syy += w * w; sxy += u * w; } }
+  if (!m) return {m: 0, r: NaN};
+  const cov = sxy - sx * sy / m, vx = sxx - sx * sx / m, vy = syy - sy * sy / m;
+  let r = (vx > 1e-18 && vy > 1e-18) ? cov / Math.sqrt(vx * vy) : NaN;
+  if (r === r) r = Math.max(-1, Math.min(1, r));
+  return {m, r};
+}
+/* Matrice de corrélation carrée (Pearson, par paires). Retourne {n, mat: Float64Array(n*n) (NaN = indisponible), obs: Int32Array(n*n), from, to, dates}. */
+function mktCorrMatrix(series, days, mode, minObs){
+  const A = mktAlignReturns(series, days, mode), n = A.n, need = minObs == null ? 15 : minObs;
   const mat = new Float64Array(n * n).fill(NaN), obs = new Int32Array(n * n);
-  const need = minObs == null ? 15 : minObs;
-  const j0 = mode === 'px' ? 0 : 1;
-  for (let a = 0; a < n; a++) {
-    const x = R[a];
-    for (let b = a; b < n; b++) {
-      const y = R[b];
-      let m = 0, sx = 0, sy = 0, sxx = 0, syy = 0, sxy = 0;
-      for (let j = j0; j < T; j++) { const u = x[j], w = y[j]; if (u === u && w === w) { m++; sx += u; sy += w; sxx += u * u; syy += w * w; sxy += u * w; } }
-      obs[a * n + b] = obs[b * n + a] = m;
-      if (m < need) continue;
-      const cov = sxy - sx * sy / m, vx = sxx - sx * sx / m, vy = syy - sy * sy / m;
-      let r = (vx > 1e-18 && vy > 1e-18) ? cov / Math.sqrt(vx * vy) : NaN;
-      if (r === r) r = Math.max(-1, Math.min(1, r));
-      mat[a * n + b] = mat[b * n + a] = a === b ? (r === r ? 1 : NaN) : r;
-    }
+  for (let a = 0; a < n; a++) for (let b = a; b < n; b++) {
+    const p = mktPearsonPair(A.R[a], A.R[b], A.j0, A.T);
+    obs[a * n + b] = obs[b * n + a] = p.m;
+    if (p.m >= need && p.r === p.r) mat[a * n + b] = mat[b * n + a] = p.r;
   }
-  return {n, mat, obs, from: all[mode === 'px' ? 0 : Math.min(1, T - 1)] || 0, to: all[T - 1] || 0, dates: T - (mode === 'px' ? 0 : 1)};
+  return {n, mat, obs, from: A.from, to: A.to, dates: A.dates};
+}
+/* Matrice croisée : lignes = liste A, colonnes = liste B (seulement les paires A × B sont calculées). mat[i * nB + j]. */
+function mktCorrCross(sA, sB, days, mode, minObs){
+  const A = mktAlignReturns(sA.concat(sB), days, mode), nA = sA.length, nB = sB.length, need = minObs == null ? 15 : minObs;
+  const mat = new Float64Array(nA * nB).fill(NaN), obs = new Int32Array(nA * nB);
+  for (let a = 0; a < nA; a++) for (let b = 0; b < nB; b++) {
+    const p = mktPearsonPair(A.R[a], A.R[nA + b], A.j0, A.T);
+    obs[a * nB + b] = p.m;
+    if (p.m >= need && p.r === p.r) mat[a * nB + b] = p.r;
+  }
+  return {nA, nB, mat, obs, from: A.from, to: A.to, dates: A.dates};
 }
 /* Ordre des feuilles d'une classification hiérarchique (liaison moyenne, distance 1 − ρ) : les titres proches se retrouvent côte à côte. */
 function mktClusterOrder(mat, n){
@@ -8419,65 +8504,138 @@ function mktClusterOrder(mat, n){
   }
   return members[alive.findIndex(a => a)];
 }
+/* Clôtures -> dernière clôture de chaque mois : {k: [clé année*12+mois], t: [jour de fin de mois], c: [clôtures]} */
+function mktMonthly(t, c){
+  const k = [], tt = [], cc = [];
+  for (let i = 0; i < t.length; i++) {
+    if (!isFinite(c[i])) continue;
+    const d = new Date(t[i] * 864e5), key = d.getUTCFullYear() * 12 + d.getUTCMonth();
+    if (k.length && k[k.length - 1] === key) { cc[cc.length - 1] = c[i]; }
+    else { k.push(key); tt.push(Math.round(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0) / 864e5)); cc.push(c[i]); }
+  }
+  return {k, t: tt, c: cc};
+}
+/* Corrélation glissante entre deux séries de cours. freq 'd' : dates communes jour par jour ; freq 'm' : fins de mois communes (rendements mensuels).
+   Fenêtre de `windowDays` jours calendaires ; résultats restreints aux `histDays` derniers jours. Retourne {pts: [{d, r, n}], N, minObs}. */
+function mktRollingCorr(tA, cA, tB, cB, windowDays, histDays, freq){
+  let keyA, keyB, posA, cAa, cBb;
+  if (freq === 'm') {
+    const a = mktMonthly(tA, cA), b = mktMonthly(tB, cB);
+    const mb = new Map(); b.k.forEach((k, i) => mb.set(k, i));
+    posA = []; cAa = []; cBb = [];
+    a.k.forEach((k, i) => { const j = mb.get(k); if (j != null && a.c[i] > 0 && b.c[j] > 0) { posA.push(a.t[i]); cAa.push(a.c[i]); cBb.push(b.c[j]); } });
+  } else {
+    const mb = new Map(); for (let i = 0; i < tB.length; i++) if (isFinite(cB[i])) mb.set(tB[i], cB[i]);
+    posA = []; cAa = []; cBb = [];
+    for (let i = 0; i < tA.length; i++) { const v = mb.get(tA[i]); if (v != null && isFinite(cA[i]) && cA[i] > 0 && v > 0) { posA.push(tA[i]); cAa.push(cA[i]); cBb.push(v); } }
+  }
+  const N = posA.length - 1;
+  if (N < 3) return {pts: [], N: Math.max(N, 0), minObs: 0};
+  const rd = new Array(N), ra = new Float64Array(N), rb = new Float64Array(N);
+  for (let i = 1; i <= N; i++) { rd[i - 1] = posA[i]; ra[i - 1] = cAa[i] / cAa[i - 1] - 1; rb[i - 1] = cBb[i] / cBb[i - 1] - 1; }
+  const avgGap = (rd[N - 1] - rd[0]) / Math.max(1, N - 1) || 1;
+  const minObs = Math.max(5, Math.floor(0.7 * windowDays / avgGap));
+  const P = k => { const p = new Float64Array(N + 1); for (let i = 0; i < N; i++) p[i + 1] = p[i] + k(i); return p; };
+  const Sa = P(i => ra[i]), Sb = P(i => rb[i]), Saa = P(i => ra[i] * ra[i]), Sbb = P(i => rb[i] * rb[i]), Sab = P(i => ra[i] * rb[i]);
+  const pts = [], lo = rd[N - 1] - histDays;
+  let s = 0;
+  for (let i = 0; i < N; i++) {
+    while (rd[s] <= rd[i] - windowDays) s++;
+    const n = i - s + 1;
+    if (n < minObs || rd[i] < lo) continue;
+    const sx = Sa[i + 1] - Sa[s], sy = Sb[i + 1] - Sb[s], sxx = Saa[i + 1] - Saa[s], syy = Sbb[i + 1] - Sbb[s], sxy = Sab[i + 1] - Sab[s];
+    const vx = sxx - sx * sx / n, vy = syy - sy * sy / n;
+    if (vx > 1e-18 && vy > 1e-18) pts.push({d: rd[i], r: Math.max(-1, Math.min(1, (sxy - sx * sy / n) / Math.sqrt(vx * vy))), n: n});
+  }
+  return {pts, N, minObs};
+}
 
 (function LabModule(){
 "use strict";
 
 /* ============================================================================================
-   Écran « Market Lab » — sélection libre de titres (SPI par secteur + ajout de n'importe quel symbole), historique réglable,
-   matrice de corrélation (rendements quotidiens ou niveaux de prix). Les historiques viennent du Worker (/api/tv-series).
+   Écran « Market Lab » — (1) matrice de corrélation (carrée, ou croisée liste A × liste B) entre titres du SPI ou de votre choix,
+   (2) corrélation glissante d'un titre contre 5 séries de référence (SPI, or, obligations, matières premières, immobilier).
+   Les historiques viennent du Worker (/api/tv-series) ; les séries de référence du classeur « R2 Data » (feuille Monthly data) ou de TradingView.
    ============================================================================================ */
 const nf = d => new Intl.NumberFormat('fr-CH', {maximumFractionDigits: d, minimumFractionDigits: d});
-const LS_KEY = 'gip_lab_sel_v1';
+const LS_KEY = 'gip_lab_sel_v2';
 const SAME_ISSUER = [['ROG', 'RO'], ['SCHN', 'SCHP'], ['LISN', 'LISP'], ['UHR', 'UHRN']];
-const sameIssuer = (a, b) => { const x = a.replace('SIX:', ''), y = b.replace('SIX:', ''); return SAME_ISSUER.some(p => (p[0] === x && p[1] === y) || (p[0] === y && p[1] === x)); };
+const sameIssuer = (a, b) => { const x = a.replace('SIX:', ''), y = b.replace('SIX:', ''); return x === y || SAME_ISSUER.some(p => (p[0] === x && p[1] === y) || (p[0] === y && p[1] === x)); };
 
 /* Univers SPI : symbole -> {n, sec (index de secteur), o (rang dans le secteur)} */
 const SPI_INFO = {};
 MKT_SPI.forEach((g, si) => g[1].forEach((m, oi) => { SPI_INFO['SIX:' + m[0]] = {n: m[1], tk: m[0], sec: si, o: oi}; }));
 const SPI_COUNT = Object.keys(SPI_INFO).length;
 
-const LAB = {sel: new Map(), days: 90, mode: 'ret', order: 'sector', cell: 0, res: null, running: false};
-function saveSel(){ try { localStorage.setItem(LS_KEY, JSON.stringify(Array.from(LAB.sel, a => [a[0], a[1]]))); } catch (e) {} }
+const LAB = {lists: {A: new Map(), B: new Map()}, active: 'A', cross: false, days: 90, mode: 'ret', order: 'sector', cell: 0, res: null, running: false};
+const SEL = () => LAB.lists[LAB.active];
+function saveSel(){ try { localStorage.setItem(LS_KEY, JSON.stringify({A: Array.from(LAB.lists.A), B: Array.from(LAB.lists.B)})); } catch (e) {} }
 function loadSel(){
-  try { const a = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); if (Array.isArray(a)) a.forEach(x => { if (Array.isArray(x) && typeof x[0] === 'string') LAB.sel.set(x[0], String(x[1] || x[0])); }); } catch (e) {}
+  try {
+    const o = JSON.parse(localStorage.getItem(LS_KEY) || 'null') || {};
+    ['A', 'B'].forEach(k => { if (Array.isArray(o[k])) o[k].forEach(x => { if (Array.isArray(x) && typeof x[0] === 'string') LAB.lists[k].set(x[0], String(x[1] || x[0])); }); });
+  } catch (e) {}
 }
-const nameOf = s => (SPI_INFO[s] ? SPI_INFO[s].n : (LAB.sel.get(s) || s));
+const nameOf = s => (SPI_INFO[s] ? SPI_INFO[s].n : (LAB.lists.A.get(s) || LAB.lists.B.get(s) || s));
 const shortOf = s => s.replace(/^[A-Z0-9_]+:/, '');
 const secOf = s => SPI_INFO[s] ? SPI_INFO[s].sec : 99;
+const plural = (n, w) => n + ' ' + w + (n > 1 ? 's' : '');
+
+/* ---------------------------------------------------------------- onglets de l'écran */
+let TAB = 'mat';
+function showTab(t){
+  TAB = t;
+  $('lbTabs').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
+  $('lbPanMat').hidden = t !== 'mat'; $('lbPanRoll').hidden = t !== 'roll';
+}
+$('lbTabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) showTab(b.dataset.t); });
 
 /* ---------------------------------------------------------------- choix des titres */
 function buildTree(){
   $('lbTree').innerHTML = MKT_SPI.map((g, i) =>
       '<details class="lb-sec" data-i="' + i + '"><summary><input type="checkbox" class="lb-ckall" data-i="' + i + '" aria-label="Tout le secteur ' + esc(g[0]) + '"><span class="sn">' + esc(g[0]) + '</span><span class="sc" id="lbSc' + i + '"></span></summary>'
     + '<div class="lb-names">' + g[1].map(m => '<label class="lb-nm" title="' + esc(m[1]) + ' (' + esc(m[0]) + ')"><input type="checkbox" class="lb-ck" data-s="SIX:' + esc(m[0]) + '"><span>' + esc(m[1]) + '</span><small>' + esc(m[0]) + '</small></label>').join('') + '</div></details>').join('');
+  $('lbRDl').innerHTML = MKT_SPI.map(g => g[1].map(m => '<option value="' + esc(m[1] + ' (' + m[0] + ')') + '"></option>').join('')).join('');
 }
 function syncSel(){
-  $('lbTree').querySelectorAll('.lb-ck').forEach(c => { c.checked = LAB.sel.has(c.dataset.s); });
+  const S = SEL();
+  $('lbTree').querySelectorAll('.lb-ck').forEach(c => { c.checked = S.has(c.dataset.s); });
   MKT_SPI.forEach((g, i) => {
-    const n = g[1].filter(m => LAB.sel.has('SIX:' + m[0])).length, a = $('lbTree').querySelector('.lb-ckall[data-i="' + i + '"]');
+    const n = g[1].filter(m => S.has('SIX:' + m[0])).length, a = $('lbTree').querySelector('.lb-ckall[data-i="' + i + '"]');
     if (a) { a.checked = n === g[1].length; a.indeterminate = n > 0 && n < g[1].length; }
     $('lbSc' + i).textContent = n + ' / ' + g[1].length;
     $('lbSc' + i).classList.toggle('on', n > 0);
   });
-  const extras = Array.from(LAB.sel.keys()).filter(s => !SPI_INFO[s]);
+  const extras = Array.from(S.keys()).filter(s => !SPI_INFO[s]);
   $('lbExtra').hidden = !extras.length;
   $('lbExtra').innerHTML = extras.length ? '<span class="lb-lbl">Autres titres :</span>' + extras.map(s => '<span class="lb-chip" data-s="' + esc(s) + '" title="' + esc(s) + '">' + esc(nameOf(s)) + ' <b>✕</b></span>').join('') : '';
-  const n = LAB.sel.size, inSpi = n - extras.length;
-  $('lbCount').textContent = n + ' titre' + (n > 1 ? 's' : '') + ' sélectionné' + (n > 1 ? 's' : '') + (extras.length ? ' (dont ' + extras.length + ' hors SPI)' : '');
+  const nA = LAB.lists.A.size, nB = LAB.lists.B.size, inSpi = S.size - extras.length;
+  $('lbCount').textContent = LAB.cross ? ('Liste A : ' + plural(nA, 'titre') + ' · Liste B : ' + plural(nB, 'titre')) : (plural(nA, 'titre') + ' sélectionné' + (nA > 1 ? 's' : '') + (Array.from(LAB.lists.A.keys()).some(s => !SPI_INFO[s]) ? ' (dont ' + Array.from(LAB.lists.A.keys()).filter(s => !SPI_INFO[s]).length + ' hors SPI)' : ''));
   $('lbAll').textContent = inSpi === SPI_COUNT ? 'SPI complet ✓' : 'Tout le SPI (' + SPI_COUNT + ')';
+  $('lbListTabs').hidden = !LAB.cross;
+  $('lbListTabs').querySelectorAll('button').forEach(b => { b.classList.toggle('on', b.dataset.l === LAB.active); b.textContent = 'Liste ' + b.dataset.l + ' (' + (b.dataset.l === 'A' ? nA : nB) + ')'; });
   updateEst(); saveSel();
 }
 $('lbTree').addEventListener('change', e => {
-  const c = e.target;
-  if (c.classList.contains('lb-ck')) { if (c.checked) LAB.sel.set(c.dataset.s, nameOf(c.dataset.s)); else LAB.sel.delete(c.dataset.s); }
-  else if (c.classList.contains('lb-ckall')) { MKT_SPI[+c.dataset.i][1].forEach(m => { const s = 'SIX:' + m[0]; if (c.checked) LAB.sel.set(s, m[1]); else LAB.sel.delete(s); }); }
+  const c = e.target, S = SEL();
+  if (c.classList.contains('lb-ck')) { if (c.checked) S.set(c.dataset.s, nameOf(c.dataset.s)); else S.delete(c.dataset.s); }
+  else if (c.classList.contains('lb-ckall')) { MKT_SPI[+c.dataset.i][1].forEach(m => { const s = 'SIX:' + m[0]; if (c.checked) S.set(s, m[1]); else S.delete(s); }); }
   syncSel();
 });
 $('lbTree').addEventListener('click', e => { if (e.target.classList.contains('lb-ckall')) e.stopPropagation(); }, true);
-$('lbAll').addEventListener('click', () => { MKT_SPI.forEach(g => g[1].forEach(m => LAB.sel.set('SIX:' + m[0], m[1]))); syncSel(); });
-$('lbNone').addEventListener('click', () => { LAB.sel.clear(); syncSel(); });
-$('lbExtra').addEventListener('click', e => { const c = e.target.closest('.lb-chip'); if (c) { LAB.sel.delete(c.dataset.s); syncSel(); } });
+$('lbAll').addEventListener('click', () => { const S = SEL(); MKT_SPI.forEach(g => g[1].forEach(m => S.set('SIX:' + m[0], m[1]))); syncSel(); });
+$('lbNone').addEventListener('click', () => { SEL().clear(); syncSel(); });
+$('lbExtra').addEventListener('click', e => { const c = e.target.closest('.lb-chip'); if (c) { SEL().delete(c.dataset.s); syncSel(); } });
+$('lbListTabs').addEventListener('click', e => { const b = e.target.closest('[data-l]'); if (b) { LAB.active = b.dataset.l; syncSel(); } });
+$('lbKind').addEventListener('click', e => {
+  const b = e.target.closest('[data-k]'); if (!b) return;
+  LAB.cross = b.dataset.k === 'cross';
+  if (!LAB.cross) LAB.active = 'A';
+  $('lbKind').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+  $('lbRes').hidden = true; LAB.res = null;
+  syncSel();
+});
 
 /* Ajout d'un symbole hors SPI (recherche du relais Market Data) */
 let addT = null;
@@ -8497,15 +8655,16 @@ $('lbAdd').addEventListener('input', () => {
 });
 $('lbAddRes').addEventListener('click', e => {
   const b = e.target.closest('.lb-hit'); if (!b) return;
-  LAB.sel.set(b.dataset.s, SPI_INFO[b.dataset.s] ? SPI_INFO[b.dataset.s].n : b.dataset.n);
+  SEL().set(b.dataset.s, SPI_INFO[b.dataset.s] ? SPI_INFO[b.dataset.s].n : b.dataset.n);
   $('lbAdd').value = ''; $('lbAddRes').hidden = true; syncSel();
 });
 
-/* Appelé depuis Market Data (cases cochées / comparaison) : remplace la sélection */
+/* Appelé depuis Market Data (cases cochées / comparaison) : remplace la liste A */
 window.mktLabOpen = function(list){
-  LAB.sel.clear();
-  (list || []).forEach(x => LAB.sel.set(x.s, x.n || x.s));
+  LAB.lists.A.clear(); LAB.active = 'A';
+  (list || []).forEach(x => LAB.lists.A.set(x.s, x.n || x.s));
   LAB.res = null; $('lbRes').hidden = true;
+  showTab('mat');
   syncSel();
 };
 
@@ -8520,23 +8679,27 @@ $('lbRanges').addEventListener('click', e => { const b = e.target.closest('[data
 $('lbDays').addEventListener('change', () => setDays($('lbDays').value));
 $('lbMode').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (!b) return; LAB.mode = b.dataset.m; $('lbMode').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); });
 const labBars = () => Math.ceil(LAB.days * 0.7) + 15;
+const unionSyms = () => Array.from(new Set(LAB.cross ? Array.from(LAB.lists.A.keys()).concat(Array.from(LAB.lists.B.keys())) : Array.from(LAB.lists.A.keys())));
+const needLoad = (syms, bars) => syms.filter(s => { const S = MKT_SERIES[s]; return !S || S.none || (S.bars < bars && !S.full); }).length;
 function updateEst(){
-  const syms = Array.from(LAB.sel.keys());
+  const syms = unionSyms(), nA = LAB.lists.A.size, nB = LAB.lists.B.size;
   const bars = MKT_BAR_STEPS.find(x => x >= labBars()) || 2000;
-  const need = syms.filter(s => { const S = MKT_SERIES[s]; return !S || S.none || (S.bars < bars && !S.full); }).length;
-  $('lbEst').innerHTML = syms.length < 3 ? 'Sélectionnez au moins 3 titres.' : (need
+  const need = needLoad(syms, bars);
+  const valid = LAB.cross ? (nA >= 1 && nB >= 1 && syms.length >= 2) : nA >= 3;
+  $('lbEst').innerHTML = !valid ? (LAB.cross ? 'Choisissez au moins un titre dans chacune des deux listes (onglets « Liste A » / « Liste B » ci-dessus).' : 'Sélectionnez au moins 3 titres.') : (need
     ? 'Historiques à charger : jusqu\'à ' + need + ' titres ≈ ' + Math.ceil(need / 10) + ' appels à votre forfait Market Data (mis en cache 3 h et partagés entre collègues).'
     : 'Historiques déjà chargés : le calcul est immédiat.');
-  $('lbRun').disabled = syms.length < 3 || LAB.running;
+  $('lbRun').disabled = !valid || LAB.running;
 }
 
 /* ---------------------------------------------------------------- calcul */
 async function run(){
   if (LAB.running) return;
-  const syms = Array.from(LAB.sel.keys());
-  if (syms.length < 3) return;
+  const syms = unionSyms();
+  const nA = LAB.lists.A.size, nB = LAB.lists.B.size;
+  if (LAB.cross ? !(nA >= 1 && nB >= 1 && syms.length >= 2) : nA < 3) return;
   const bars = MKT_BAR_STEPS.find(x => x >= labBars()) || 2000;
-  const need = syms.filter(s => { const S = MKT_SERIES[s]; return !S || S.none || (S.bars < bars && !S.full); }).length;
+  const need = needLoad(syms, bars);
   if (need > 40 && !confirm('Charger l\'historique de ' + need + ' titres ≈ ' + Math.ceil(need / 10) + ' appels à votre forfait Market Data (mis en cache 3 h et partagés). Continuer ?')) return;
   LAB.running = true; $('lbRun').disabled = true;
   const est = $('lbEst');
@@ -8545,11 +8708,24 @@ async function run(){
     await mktFetchSeries(syms, labBars(), (d, t) => { est.textContent = 'Chargement des historiques… ' + d + ' / ' + t; });
     est.textContent = 'Calcul…';
     await new Promise(r => setTimeout(r, 20));
-    const ok = syms.filter(s => MKT_SERIES[s] && MKT_SERIES[s].t && MKT_SERIES[s].t.length > 1);
-    const missing = syms.filter(s => ok.indexOf(s) < 0);
-    if (ok.length < 3) throw new Error('Moins de 3 titres avec un historique exploitable' + (mktFetchSeries.err ? ' (' + mktFetchSeries.err + ')' : '') + '.');
-    const M = mktCorrMatrix(ok.map(s => MKT_SERIES[s]), LAB.days, LAB.mode);
-    LAB.res = {syms: ok, M, missing, days: LAB.days, mode: LAB.mode};
+    const has = s => MKT_SERIES[s] && MKT_SERIES[s].t && MKT_SERIES[s].t.length > 1;
+    const missing = syms.filter(s => !has(s));
+    if (LAB.cross) {
+      const rows = Array.from(LAB.lists.A.keys()).filter(has), cols = Array.from(LAB.lists.B.keys()).filter(has);
+      if (!rows.length || !cols.length) throw new Error('Une des deux listes n\'a aucun historique exploitable' + (mktFetchSeries.err ? ' (' + mktFetchSeries.err + ')' : '') + '.');
+      const M = mktCorrCross(rows.map(s => MKT_SERIES[s]), cols.map(s => MKT_SERIES[s]), LAB.days, LAB.mode);
+      LAB.res = {cross: true, rows, cols, M, missing, days: LAB.days, mode: LAB.mode, nR: rows.length, nC: cols.length,
+        val: (i, j) => M.mat[i * cols.length + j], ob: (i, j) => M.obs[i * cols.length + j]};
+    } else {
+      const ok = syms.filter(has);
+      if (ok.length < 3) throw new Error('Moins de 3 titres avec un historique exploitable' + (mktFetchSeries.err ? ' (' + mktFetchSeries.err + ')' : '') + '.');
+      const M = mktCorrMatrix(ok.map(s => MKT_SERIES[s]), LAB.days, LAB.mode);
+      LAB.res = {cross: false, rows: ok, cols: ok, M, missing, days: LAB.days, mode: LAB.mode, nR: ok.length, nC: ok.length,
+        val: (i, j) => M.mat[i * ok.length + j], ob: (i, j) => M.obs[i * ok.length + j]};
+    }
+    LAB.order = 'sector';
+    $('lbOrder').querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.o === 'sector'));
+    $('lbOrder').querySelector('[data-o="cluster"]').textContent = LAB.cross ? 'Par corrélation moyenne' : 'Par similarité';
     render();
     est.textContent = '';
     updateEst();
@@ -8558,7 +8734,7 @@ async function run(){
 }
 $('lbRun').addEventListener('click', run);
 
-/* ---------------------------------------------------------------- rendu */
+/* ---------------------------------------------------------------- rendu de la matrice */
 const C_POS = [10, 110, 168], C_NEG = [214, 97, 38], C_MID = [247, 246, 242];
 function corrRgb(v){
   if (v !== v) return null;
@@ -8566,67 +8742,74 @@ function corrRgb(v){
   return [Math.round(C_MID[0] + (c[0] - C_MID[0]) * t), Math.round(C_MID[1] + (c[1] - C_MID[1]) * t), Math.round(C_MID[2] + (c[2] - C_MID[2]) * t)];
 }
 const corrTxt = v => v === v ? nf(2).format(v) : 'n.d.';
+const bySector = (list) => { const ix = list.map((s, i) => i); ix.sort((a, b) => { const A = list[a], B = list[b], sa = secOf(A), sb = secOf(B); if (sa !== sb) return sa - sb; if (sa === 99) return nameOf(A).localeCompare(nameOf(B), 'fr'); return SPI_INFO[A].o - SPI_INFO[B].o; }); return ix; };
 function currentOrder(){
-  const R = LAB.res, n = R.syms.length;
-  if (LAB.order === 'cluster') { if (!R.clu) R.clu = mktClusterOrder(R.M.mat, n); return R.clu; }
-  const ix = R.syms.map((s, i) => i);
-  ix.sort((a, b) => {
-    const A = R.syms[a], B = R.syms[b], sa = secOf(A), sb = secOf(B);
-    if (sa !== sb) return sa - sb;
-    if (sa === 99) return nameOf(A).localeCompare(nameOf(B), 'fr');
-    return SPI_INFO[A].o - SPI_INFO[B].o;
-  });
-  return ix;
+  const R = LAB.res;
+  if (!R.cross) {
+    if (LAB.order === 'cluster') { if (!R.clu) R.clu = mktClusterOrder(R.M.mat, R.nR); return {ro: R.clu, co: R.clu}; }
+    const o = bySector(R.rows); return {ro: o, co: o};
+  }
+  if (LAB.order === 'cluster') {   /* lignes / colonnes triées par corrélation moyenne décroissante */
+    const avgR = i => { let s = 0, n = 0; for (let j = 0; j < R.nC; j++) { const v = R.val(i, j); if (v === v) { s += v; n++; } } return n ? s / n : -2; };
+    const avgC = j => { let s = 0, n = 0; for (let i = 0; i < R.nR; i++) { const v = R.val(i, j); if (v === v) { s += v; n++; } } return n ? s / n : -2; };
+    return {ro: R.rows.map((s, i) => i).sort((a, b) => avgR(b) - avgR(a)), co: R.cols.map((s, j) => j).sort((a, b) => avgC(b) - avgC(a))};
+  }
+  return {ro: bySector(R.rows), co: bySector(R.cols)};
 }
 let LAYOUT = null;
+function groupsOf(list, order){ const g = []; let s0 = 0; for (let a = 1; a <= order.length; a++) { if (a === order.length || secOf(list[order[a]]) !== secOf(list[order[s0]])) { g.push({from: s0, to: a, sec: secOf(list[order[s0]])}); s0 = a; } } return g; }
 function render(){
   const R = LAB.res; if (!R) return;
   $('lbRes').hidden = false;
-  const n = R.syms.length, M = R.M;
-  const order = currentOrder();
-  /* statistiques */
+  const nR = R.nR, nC = R.nC;
+  const {ro, co} = currentOrder();
+  /* statistiques (paires distinctes uniquement) */
   const vals = [];
-  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const v = M.mat[i * n + j]; if (v === v) vals.push(v); }
+  for (let i = 0; i < nR; i++) for (let j = (R.cross ? 0 : i + 1); j < nC; j++) { if (R.rows[i] === R.cols[j]) continue; const v = R.val(i, j); if (v === v) vals.push(v); }
   vals.sort((a, b) => a - b);
   const avg = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : NaN, med = vals.length ? vals[Math.floor(vals.length / 2)] : NaN;
   const pct = f => vals.length ? Math.round(vals.filter(f).length / vals.length * 100) + ' %' : '–';
   const kp = (k, v, s) => '<div class="fx-kpi"><div class="k">' + k + '</div><div class="v">' + v + '</div>' + (s ? '<div class="s">' + s + '</div>' : '') + '</div>';
   const d2 = d => new Date(d * 864e5).toLocaleDateString('fr-CH', {day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC'});
-  $('lbResInfo').textContent = n + ' titres · ' + (R.mode === 'ret' ? 'rendements quotidiens' : 'niveaux de prix') + ' · ' + R.days + ' jours';
-  $('lbKpis').innerHTML = kp('Corrélation moyenne', corrTxt(avg), vals.length + ' paires') + kp('Médiane', corrTxt(med), '') + kp('Paires > 0,7', pct(v => v > 0.7), '') + kp('Paires < 0', pct(v => v < 0), '') + kp('Période', d2(M.from) + ' → ' + d2(M.to), M.dates + (R.mode === 'ret' ? ' rendements' : ' observations'));
+  $('lbResInfo').textContent = (R.cross ? 'A × B : ' + nR + ' × ' + nC + ' titres' : nR + ' titres') + ' · ' + (R.mode === 'ret' ? 'rendements quotidiens' : 'niveaux de prix') + ' · ' + R.days + ' jours';
+  $('lbKpis').innerHTML = kp('Corrélation moyenne', corrTxt(avg), vals.length + ' paires') + kp('Médiane', corrTxt(med), '') + kp('Paires > 0,7', pct(v => v > 0.7), '') + kp('Paires < 0', pct(v => v < 0), '') + kp('Période', d2(R.M.from) + ' → ' + d2(R.M.to), R.M.dates + (R.mode === 'ret' ? ' rendements' : ' observations'));
   const miss = $('lbMiss');
   miss.hidden = !R.missing.length;
   miss.innerHTML = R.missing.length ? '<b>' + R.missing.length + ' titre(s) sans historique reçu</b> (exclus de la matrice) : ' + esc(R.missing.map(shortOf).join(', ')) + '.' : '';
   /* dessin */
   const wrap = $('lbWrap');
   const avail = Math.max(300, wrap.clientWidth || 900);
-  const lblOf = i => R.syms[i];
-  let cell = LAB.cell || Math.max(3, Math.min(34, Math.floor((avail - 170) / n)));
-  if (!LAB.cell) { $('lbCell').value = cell; }
+  const rowSym = i => R.rows[i], colSym = j => R.cols[j];
+  let cell = LAB.cell;
+  if (!cell) {
+    cell = Math.max(3, Math.min(34, Math.floor((avail - 170) / nC)));
+    if (R.cross) cell = Math.max(3, Math.min(cell, Math.max(10, Math.floor(2000 / nR))));
+    $('lbCell').value = cell;
+  }
   $('lbCellV').textContent = cell + ' px';
   const dpr = Math.max(1, window.devicePixelRatio || 1);
   const cv = $('lbCanvas'), ctx = cv.getContext('2d');
   const fontPx = Math.max(9, Math.min(12, cell - 1));
   ctx.font = fontPx + 'px system-ui, sans-serif';
   const showLbl = cell >= 10, showSec = LAB.order === 'sector';
-  const rawName = i => cell >= 17 ? (nameOf(lblOf(i)) + ' · ' + shortOf(lblOf(i))) : shortOf(lblOf(i));
+  const rawName = s => cell >= 17 ? (nameOf(s) + ' · ' + shortOf(s)) : shortOf(s);
   let leftW = 0, topH = 0;
   if (showLbl) {
-    order.forEach(i => { leftW = Math.max(leftW, ctx.measureText(rawName(i)).width); topH = Math.max(topH, ctx.measureText(shortOf(lblOf(i))).width); });
+    ro.forEach(i => { leftW = Math.max(leftW, ctx.measureText(rawName(rowSym(i))).width); });
+    co.forEach(j => { topH = Math.max(topH, ctx.measureText(shortOf(colSym(j))).width); });
     leftW = Math.min(230, Math.ceil(leftW) + 14); topH = Math.min(110, Math.ceil(topH) + 12);
   } else if (showSec) leftW = 150;
   const fit = (t, maxW) => { if (ctx.measureText(t).width <= maxW) return t; while (t.length > 3 && ctx.measureText(t + '…').width > maxW) t = t.slice(0, -1); return t + '…'; };
-  const nameFor = i => fit(rawName(i), leftW - 12);
   const pad = 6;
-  const W = pad + leftW + n * cell + pad, H = pad + topH + n * cell + pad;
+  const W = pad + leftW + nC * cell + pad, H = pad + topH + nR * cell + pad;
   cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cv.style.width = W + 'px'; cv.style.height = H + 'px';
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
   ctx.font = fontPx + 'px system-ui, sans-serif'; ctx.textBaseline = 'middle';
   const ox = pad + leftW, oy = pad + topH;
-  for (let a = 0; a < n; a++) {
-    for (let b = 0; b < n; b++) {
-      const v = M.mat[order[a] * n + order[b]], rgb = corrRgb(v);
+  for (let a = 0; a < nR; a++) {
+    for (let b = 0; b < nC; b++) {
+      const v = R.val(ro[a], co[b]), rgb = corrRgb(v);
       ctx.fillStyle = rgb ? 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')' : '#ECEAE4';
       ctx.fillRect(ox + b * cell, oy + a * cell, cell, cell);
       if (cell >= 30) {
@@ -8636,32 +8819,30 @@ function render(){
     }
   }
   /* séparateurs de secteurs + libellés */
-  const groups = [];
-  if (showSec) { let s0 = 0; for (let a = 1; a <= n; a++) { if (a === n || secOf(lblOf(order[a])) !== secOf(lblOf(order[s0]))) { groups.push({from: s0, to: a, sec: secOf(lblOf(order[s0]))}); s0 = a; } } }
-  if (showSec && groups.length > 1) {
-    ctx.strokeStyle = 'rgba(2,24,43,.55)'; ctx.lineWidth = 1;
-    groups.forEach(g => { const p = g.from * cell; if (g.from) { ctx.beginPath(); ctx.moveTo(ox, oy + p + .5); ctx.lineTo(ox + n * cell, oy + p + .5); ctx.moveTo(ox + p + .5, oy); ctx.lineTo(ox + p + .5, oy + n * cell); ctx.stroke(); } });
-  }
+  const gR = showSec ? groupsOf(R.rows, ro) : [], gC = showSec ? groupsOf(R.cols, co) : [];
+  ctx.strokeStyle = 'rgba(2,24,43,.55)'; ctx.lineWidth = 1;
+  gR.forEach(g => { if (g.from && gR.length > 1) { const p = Math.round(g.from * cell) + .5; ctx.beginPath(); ctx.moveTo(ox, oy + p); ctx.lineTo(ox + nC * cell, oy + p); ctx.stroke(); } });
+  gC.forEach(g => { if (g.from && gC.length > 1) { const p = Math.round(g.from * cell) + .5; ctx.beginPath(); ctx.moveTo(ox + p, oy); ctx.lineTo(ox + p, oy + nR * cell); ctx.stroke(); } });
   ctx.fillStyle = '#02182B';
   if (showLbl) {
     ctx.textAlign = 'right';
-    for (let a = 0; a < n; a++) ctx.fillText(nameFor(order[a]), ox - 6, oy + a * cell + cell / 2);
+    for (let a = 0; a < nR; a++) ctx.fillText(fit(rawName(rowSym(ro[a])), leftW - 12), ox - 6, oy + a * cell + cell / 2);
     ctx.textAlign = 'left';
-    for (let b = 0; b < n; b++) { ctx.save(); ctx.translate(ox + b * cell + cell / 2, oy - 6); ctx.rotate(-Math.PI / 2); ctx.fillText(shortOf(lblOf(order[b])), 0, 0); ctx.restore(); }
+    for (let b = 0; b < nC; b++) { ctx.save(); ctx.translate(ox + b * cell + cell / 2, oy - 6); ctx.rotate(-Math.PI / 2); ctx.fillText(shortOf(colSym(co[b])), 0, 0); ctx.restore(); }
   } else if (showSec) {
     ctx.textAlign = 'right'; ctx.font = '600 11px system-ui, sans-serif';
-    groups.forEach(g => { const h = (g.to - g.from) * cell; if (h >= 11) ctx.fillText(g.sec === 99 ? 'Autres' : MKT_SPI[g.sec][0].replace(/ &.*$/, '').replace(/,.*$/, ''), ox - 8, oy + g.from * cell + h / 2); });
+    gR.forEach(g => { const h = (g.to - g.from) * cell; if (h >= 11) ctx.fillText(g.sec === 99 ? 'Autres' : MKT_SPI[g.sec][0].replace(/ &.*$/, '').replace(/,.*$/, ''), ox - 8, oy + g.from * cell + h / 2); });
   }
-  ctx.strokeStyle = 'rgba(2,24,43,.25)'; ctx.strokeRect(ox + .5, oy + .5, n * cell - 1, n * cell - 1);
-  LAYOUT = {ox, oy, cell, n, order, W, H};
+  ctx.strokeStyle = 'rgba(2,24,43,.25)'; ctx.strokeRect(ox + .5, oy + .5, nC * cell - 1, nR * cell - 1);
+  LAYOUT = {ox, oy, cell, nR, nC, ro, co, W, H};
   renderPairs();
 }
 function renderPairs(){
-  const R = LAB.res, n = R.syms.length, M = R.M, pairs = [];
-  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const v = M.mat[i * n + j]; if (v === v && !sameIssuer(R.syms[i], R.syms[j])) pairs.push({a: R.syms[i], b: R.syms[j], v, o: M.obs[i * n + j]}); }
+  const R = LAB.res, pairs = [];
+  for (let i = 0; i < R.nR; i++) for (let j = (R.cross ? 0 : i + 1); j < R.nC; j++) { const v = R.val(i, j); if (v === v && !sameIssuer(R.rows[i], R.cols[j])) pairs.push({a: R.rows[i], b: R.cols[j], v, o: R.ob(i, j)}); }
   pairs.sort((x, y) => y.v - x.v);
   const row = p => '<tr><td>' + esc(nameOf(p.a)) + ' <small>' + esc(shortOf(p.a)) + '</small></td><td>' + esc(nameOf(p.b)) + ' <small>' + esc(shortOf(p.b)) + '</small></td><td class="r"><b style="color:' + (p.v >= 0 ? '#0A6EA8' : '#C0501B') + '">' + nf(2).format(p.v) + '</b></td><td class="r"><small>' + p.o + '</small></td></tr>';
-  const tbl = (title, list) => '<div><h4>' + title + '</h4><table><thead><tr><th>Titre A</th><th>Titre B</th><th class="r">Corr.</th><th class="r">obs.</th></tr></thead><tbody>' + list.map(row).join('') + '</tbody></table></div>';
+  const tbl = (title, list) => '<div><h4>' + title + '</h4><table><thead><tr><th>' + (R.cross ? 'Liste A' : 'Titre A') + '</th><th>' + (R.cross ? 'Liste B' : 'Titre B') + '</th><th class="r">Corr.</th><th class="r">obs.</th></tr></thead><tbody>' + list.map(row).join('') + '</tbody></table></div>';
   $('lbPairs').innerHTML = pairs.length >= 2 ? tbl('Paires les plus corrélées', pairs.slice(0, 10)) + tbl('Paires les moins corrélées', pairs.slice(-10).reverse()) : '';
 }
 /* Survol : valeur de la paire */
@@ -8671,35 +8852,226 @@ function renderPairs(){
     if (!LAYOUT || !LAB.res) return null;
     const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
     const j = Math.floor((x - LAYOUT.ox) / LAYOUT.cell), i = Math.floor((y - LAYOUT.oy) / LAYOUT.cell);
-    if (i < 0 || j < 0 || i >= LAYOUT.n || j >= LAYOUT.n) return null;
+    if (i < 0 || j < 0 || i >= LAYOUT.nR || j >= LAYOUT.nC) return null;
     return {i, j};
   }
   cv.addEventListener('mousemove', e => {
     const p = pos(e); if (!p) { tip.style.display = 'none'; hl.hidden = true; return; }
-    const R = LAB.res, n = LAYOUT.n, a = LAYOUT.order[p.i], b = LAYOUT.order[p.j], v = R.M.mat[a * n + b];
+    const R = LAB.res, a = LAYOUT.ro[p.i], b = LAYOUT.co[p.j], v = R.val(a, b);
     hl.hidden = false; hl.style.left = (cv.offsetLeft + LAYOUT.ox + p.j * LAYOUT.cell) + 'px'; hl.style.top = (cv.offsetTop + LAYOUT.oy + p.i * LAYOUT.cell) + 'px'; hl.style.width = hl.style.height = LAYOUT.cell + 'px';
     tip.style.display = 'block'; tip.style.left = (cv.offsetLeft + LAYOUT.ox + p.j * LAYOUT.cell + LAYOUT.cell / 2) + 'px'; tip.style.top = (cv.offsetTop + LAYOUT.oy + p.i * LAYOUT.cell) + 'px';
-    tip.innerHTML = esc(nameOf(R.syms[a])) + ' × ' + esc(nameOf(R.syms[b])) + '<br>ρ = <b>' + corrTxt(v) + '</b> <small>(' + R.M.obs[a * n + b] + ' obs.)</small>';
+    tip.innerHTML = esc(nameOf(R.rows[a])) + ' × ' + esc(nameOf(R.cols[b])) + '<br>ρ = <b>' + corrTxt(v) + '</b> <small>(' + R.ob(a, b) + ' obs.)</small>';
   });
   cv.addEventListener('mouseleave', () => { tip.style.display = 'none'; hl.hidden = true; });
 })();
 $('lbOrder').addEventListener('click', e => { const b = e.target.closest('[data-o]'); if (!b) return; LAB.order = b.dataset.o; $('lbOrder').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); render(); });
 $('lbCell').addEventListener('input', () => { LAB.cell = +$('lbCell').value; render(); });
 let rT = null;
-window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (LAB.res && !LAB.cell && $('screenLab').classList.contains('on')) render(); }, 200); });
+window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (!$('screenLab').classList.contains('on')) return; if (LAB.res && !LAB.cell && TAB === 'mat') render(); if (ROLL.res && TAB === 'roll') drawRoll(); }, 200); });
 $('lbCsv').addEventListener('click', () => {
-  const R = LAB.res; if (!R) return; const n = R.syms.length, order = currentOrder();
-  const csv = ';' + order.map(i => R.syms[i]).join(';') + '\n' + order.map(a => R.syms[a] + ';' + order.map(b => { const v = R.M.mat[a * n + b]; return v === v ? v.toFixed(4) : ''; }).join(';')).join('\n');
+  const R = LAB.res; if (!R) return; const {ro, co} = currentOrder();
+  const csv = ';' + co.map(j => R.cols[j]).join(';') + '\n' + ro.map(a => R.rows[a] + ';' + co.map(b => { const v = R.val(a, b); return v === v ? v.toFixed(4) : ''; }).join(';')).join('\n');
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv'}));
-  a.download = 'correlation_' + R.syms.length + 'titres_' + R.days + 'j.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  a.download = 'correlation_' + (R.cross ? R.nR + 'x' + R.nC : R.nR + 'titres') + '_' + R.days + 'j.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 });
 $('lbPng').addEventListener('click', () => {
   if (!LAB.res) return;
-  $('lbCanvas').toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'matrice_correlation_' + LAB.res.syms.length + 'titres.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); });
+  $('lbCanvas').toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'matrice_correlation_' + LAB.res.nR + 'x' + LAB.res.nC + '.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); });
+});
+
+/* ================================================================ corrélation glissante d'un titre contre 5 séries de référence */
+/* Séries de référence : classeur « R2 Data » (feuille Monthly data, bloc « CH Assets », cours de fin de mois) ou, en quotidien, TradingView. */
+const REFS = [
+  {k: 'spi',  n: 'SPI Index',       d: 'Actions suisses',     xls: ['SPI (2)', 'SPI'], tv: 'SIX:SPI',   col: '#0086B3'},
+  {k: 'gold', n: 'ZGLD SW Equity',  d: 'Or',                  xls: ['GOLD'],           tv: 'SIX:ZGLD',  col: '#B8860B'},
+  {k: 'bond', n: 'SBR14T Index',    d: 'Obligations suisses', xls: ['Bonds'],          tv: null,        col: '#2E8B57'},
+  {k: 'bcom', n: 'BCCMS SW Equity', d: 'Matières premières',  xls: ['BCOM (2)'], xlsAlt: ['BCOM'], tv: 'SIX:BCCMS', col: '#7E57C2'},
+  {k: 'rest', n: 'SIMA SW Equity',  d: 'Immobilier suisse',   xls: ['RE'],             tv: 'SIX:SIMA',  col: '#C0392B'}
+];
+const ROLL = {title: null, src: 'xls', hist: 1826, win: 24, res: null, running: false, hover: null};
+/* Lecture d'une colonne du catalogue (Monthly data en priorité). Une colonne qui ne contient que les dates (exports Bloomberg cassés) est refusée. */
+function xlsSeries(names){
+  if (typeof CATALOG === 'undefined' || !CATALOG) return null;
+  const sheets = CATALOG['Monthly data'] ? ['Monthly data'] : Object.keys(CATALOG);
+  for (const nm of names) {
+    for (const sn of sheets) {
+      const C = CATALOG[sn]; if (!C || !C.cols || !C.cols[nm]) continue;
+      const v = C.cols[nm], t = [], c = []; let serial = 0, tot = 0;
+      for (let i = 0; i < v.length; i++) {
+        if (!isFinite(v[i])) continue;
+        const day = Math.round(C.t[i] / 864e5);
+        t.push(day); c.push(v[i]); tot++;
+        if (Math.abs(v[i] - (day + 25569)) <= 1) serial++;
+      }
+      if (tot < 12) continue;
+      if (serial / tot > 0.8) return {bad: true, name: nm, sheet: sn};   /* la colonne contient les dates, pas des cours */
+      const o = t.map((x, i) => i).sort((a, b) => t[a] - t[b]);
+      return {t: o.map(i => t[i]), c: o.map(i => c[i]), name: nm, sheet: sn};
+    }
+  }
+  return null;
+}
+function resolveRefXls(r){
+  let s = xlsSeries(r.xls), note = '';
+  if (s && s.bad) {
+    note = 'la colonne « ' + r.n + ' » de l\'Excel contient des dates au lieu de cours';
+    const alt = r.xlsAlt ? xlsSeries(r.xlsAlt) : null;
+    if (alt && !alt.bad) { s = alt; note += ' — remplacée par l\'indice BCOM (colonne « ' + alt.name + ' »)'; }
+    else { s = null; }
+  }
+  return s ? {t: s.t, c: s.c, note: note, src: 'Excel R2 Data · ' + s.sheet + ' · « ' + s.name + ' »'} : {none: true, note: note || 'série introuvable dans le classeur chargé'};
+}
+function parseTitle(txt){
+  txt = String(txt || '').trim(); if (!txt) return null;
+  const m = txt.match(/\(([A-Z0-9]+)\)\s*$/);
+  if (m && SPI_INFO['SIX:' + m[1]]) return {s: 'SIX:' + m[1], n: SPI_INFO['SIX:' + m[1]].n};
+  if (/^[A-Za-z0-9_]+:[A-Za-z0-9_.\-&]+$/.test(txt)) return {s: txt.toUpperCase(), n: SPI_INFO[txt.toUpperCase()] ? SPI_INFO[txt.toUpperCase()].n : txt.toUpperCase()};
+  const k = Object.keys(SPI_INFO).find(s => SPI_INFO[s].n.toLowerCase() === txt.toLowerCase() || SPI_INFO[s].tk.toLowerCase() === txt.toLowerCase());
+  return k ? {s: k, n: SPI_INFO[k].n} : null;
+}
+function rollUnitDays(){ return ROLL.src === 'xls' ? ROLL.win * 30.4375 : ROLL.win; }
+function buildWinBtns(){
+  const opts = ROLL.src === 'xls' ? [[12, '12 mois'], [24, '24 mois'], [36, '36 mois'], [60, '60 mois']] : [[60, '60 j'], [90, '90 j'], [120, '120 j'], [180, '180 j']];
+  $('lbRWinBtns').innerHTML = opts.map(o => '<button type="button" data-w="' + o[0] + '" class="' + (o[0] === ROLL.win ? 'on' : '') + '">' + o[1] + '</button>').join('');
+  $('lbRUnit').textContent = ROLL.src === 'xls' ? 'mois (rendements mensuels)' : 'jours calendaires (rendements quotidiens)';
+  $('lbRWin').value = ROLL.win;
+  $('lbRWin').min = ROLL.src === 'xls' ? 6 : 20; $('lbRWin').max = ROLL.src === 'xls' ? 120 : 400;
+}
+function setSrc(s){
+  ROLL.src = s;
+  ROLL.win = s === 'xls' ? 24 : 90;
+  $('lbRSrc').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.s === s));
+  $('lbRSrcNote').innerHTML = s === 'xls'
+    ? 'Les séries de référence du classeur Excel (feuille <em>Monthly data</em>) sont <b>mensuelles</b> : la corrélation porte sur les <b>rendements mensuels</b>, la fenêtre se règle en mois (une fenêtre de 90 jours ne contiendrait que 3 points).'
+    : 'Séries <b>quotidiennes</b> TradingView (<code>SIX:SPI</code>, <code>SIX:ZGLD</code>, <code>SIX:BCCMS</code>, <code>SIX:SIMA</code>) : fenêtre de 90 jours possible. <b>SBR14T Index</b> n\'a pas d\'équivalent quotidien : utilisez le mode Excel pour les obligations. Symboles à contrôler.';
+  buildWinBtns(); rollEst();
+}
+$('lbRSrc').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) setSrc(b.dataset.s); });
+$('lbRHist').addEventListener('click', e => { const b = e.target.closest('[data-y]'); if (!b) return; ROLL.hist = +b.dataset.y; $('lbRHist').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); rollEst(); });
+$('lbRWinBtns').addEventListener('click', e => { const b = e.target.closest('[data-w]'); if (!b) return; ROLL.win = +b.dataset.w; buildWinBtns(); rollEst(); });
+$('lbRWin').addEventListener('change', () => { const v = Math.round(+$('lbRWin').value); ROLL.win = Math.max(+$('lbRWin').min, Math.min(+$('lbRWin').max, v || ROLL.win)); buildWinBtns(); rollEst(); });
+$('lbRTitle').addEventListener('input', () => { ROLL.title = parseTitle($('lbRTitle').value); rollEst(); });
+$('lbRTitle').addEventListener('change', () => { ROLL.title = parseTitle($('lbRTitle').value); rollEst(); });
+const rollBars = () => Math.ceil((ROLL.hist + rollUnitDays()) * 0.7) + 15;
+function rollEst(){
+  const t = ROLL.title, el = $('lbREst');
+  if (!t) { el.textContent = 'Choisissez un titre (nom ou ticker, ex. « Nestlé », « NESN », ou un symbole complet comme SIX:ROG).'; $('lbRRun').disabled = true; return; }
+  const bars = MKT_BAR_STEPS.find(x => x >= rollBars()) || 2000;
+  const syms = [t.s].concat(ROLL.src === 'tv' ? REFS.filter(r => r.tv).map(r => r.tv) : []);
+  const need = needLoad(syms, bars);
+  const maxDays = 2000 / 0.7 - 20;
+  el.innerHTML = (ROLL.hist + rollUnitDays() > maxDays + 30 ? 'Le fournisseur plafonne l\'historique à environ ' + nf(1).format(maxDays / 365.25) + ' ans (historique + fenêtre) : le début de la période affichée sera légèrement raccourci. ' : '')
+    + (need ? 'Historiques à charger : ' + need + ' série' + (need > 1 ? 's' : '') + ' ≈ ' + Math.ceil(need / 10) + ' appel' + (need > 10 ? 's' : '') + ' à votre forfait Market Data.' : 'Historiques déjà chargés : le calcul est immédiat.');
+  $('lbRRun').disabled = ROLL.running;
+}
+async function rollRun(){
+  if (ROLL.running || !ROLL.title) return;
+  ROLL.running = true; $('lbRRun').disabled = true;
+  const est = $('lbREst'), t = ROLL.title;
+  try {
+    const tvRefs = ROLL.src === 'tv' ? REFS.filter(r => r.tv).map(r => r.tv) : [];
+    est.textContent = 'Chargement de l\'historique de ' + t.n + '…';
+    await mktFetchSeries([t.s].concat(tvRefs), rollBars(), (d, n) => { est.textContent = 'Chargement des historiques… ' + d + ' / ' + n; });
+    const S = MKT_SERIES[t.s];
+    if (!S || !S.t || S.t.length < 30) throw new Error('Aucun historique reçu pour ' + t.s + (mktFetchSeries.err ? ' (' + mktFetchSeries.err + ')' : '') + '.');
+    const freq = ROLL.src === 'xls' ? 'm' : 'd', win = rollUnitDays() - (freq === 'm' ? 3 : 0); /* 3 j de marge : 24 mois = 730 ou 731 jours selon les années bissextiles, la fenêtre doit toujours contenir exactement 24 rendements */
+    const charts = REFS.map(r => {
+      let ref;
+      if (ROLL.src === 'xls') ref = resolveRefXls(r);
+      else if (!r.tv) ref = {none: true, note: 'pas de série quotidienne pour ' + r.n + ' — utilisez le mode « Excel mensuel »'};
+      else { const X = MKT_SERIES[r.tv]; ref = (X && X.t && X.t.length > 30) ? {t: X.t, c: X.c, note: '', src: 'TradingView · ' + r.tv} : {none: true, note: r.tv + ' : aucune donnée reçue du fournisseur'}; }
+      if (ref.none) return {r, none: true, note: ref.note};
+      const res = mktRollingCorr(S.t, S.c, ref.t, ref.c, win, ROLL.hist, freq);
+      if (!res.pts.length) return {r, none: true, note: 'pas assez d\'observations communes (' + res.N + ' ' + (freq === 'm' ? 'rendements mensuels' : 'rendements') + ')'};
+      const v = res.pts.map(p => p.r);
+      return {r, pts: res.pts, note: ref.note, src: ref.src, last: v[v.length - 1], mean: v.reduce((a, b) => a + b, 0) / v.length, min: Math.min.apply(null, v), max: Math.max.apply(null, v), N: res.N, minObs: res.minObs};
+    });
+    ROLL.res = {title: t, charts, src: ROLL.src, win: ROLL.win, hist: ROLL.hist, freq};
+    drawRoll();
+    est.textContent = ''; rollEst();
+  } catch (e) { est.innerHTML = '<span style="color:#7A1A12">' + esc(e.message) + '</span>'; }
+  finally { ROLL.running = false; $('lbRRun').disabled = !ROLL.title; }
+}
+$('lbRRun').addEventListener('click', rollRun);
+function xTicks(d0, d1){
+  const spanM = (d1 - d0) / 30.4375, step = spanM <= 14 ? 2 : spanM <= 30 ? 3 : spanM <= 66 ? 6 : 12, out = [];
+  const a = new Date(d0 * 864e5);
+  let y = a.getUTCFullYear(), m = Math.ceil(a.getUTCMonth() / step) * step;
+  for (let k = 0; k < 60; k++) {
+    const dd = Math.round(Date.UTC(y, m, 1) / 864e5); if (dd > d1) break;
+    if (dd >= d0) out.push([dd, step >= 12 ? String(new Date(dd * 864e5).getUTCFullYear()) : new Date(dd * 864e5).toLocaleDateString('fr-CH', {month: 'short', year: '2-digit', timeZone: 'UTC'})]);
+    m += step; while (m >= 12) { m -= 12; y++; }
+  }
+  return out;
+}
+const dFr = d => new Date(d * 864e5).toLocaleDateString('fr-CH', {day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC'});
+function drawRoll(){
+  const R = ROLL.res; if (!R) return;
+  const ok = R.charts.filter(c => !c.none);
+  let d0 = Infinity, d1 = -Infinity; ok.forEach(c => { d0 = Math.min(d0, c.pts[0].d); d1 = Math.max(d1, c.pts[c.pts.length - 1].d); });
+  $('lbRRes').hidden = false;
+  $('lbRHead').innerHTML = '<h2>' + esc(R.title.n) + ' <small>' + esc(R.title.s) + '</small></h2><div class="fx-ids">Corrélation glissante des ' + (R.freq === 'm' ? 'rendements mensuels' : 'rendements quotidiens') + ' · fenêtre ' + R.win + (R.src === 'xls' ? ' mois' : ' jours') + ' · historique affiché ' + (R.hist >= 365 ? Math.round(R.hist / 365.25) + ' ans' : R.hist + ' j') + (ok.length ? ' · du ' + dFr(d0) + ' au ' + dFr(d1) : '') + '</div>';
+  const W = Math.max(360, Math.floor(($('lbRGrid').clientWidth || 1000) / (($('lbRGrid').clientWidth || 1000) >= 1040 ? 2 : 1)) - 24), H = 190, m = {t: 8, r: 12, b: 24, l: 40};
+  const xt = ok.length ? xTicks(d0, d1) : [];
+  ROLL.charts = [];
+  $('lbRGrid').innerHTML = R.charts.map((c, i) => {
+    if (c.none) return '<div class="lb-rc none"><div class="lb-rh"><i style="background:' + c.r.col + '"></i><b>' + esc(R.title.n) + ' vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small></div><p class="fx-mut">Indisponible — ' + esc(c.note) + '.</p></div>';
+    return '<div class="lb-rc" data-i="' + i + '"><div class="lb-rh"><i style="background:' + c.r.col + '"></i><b>vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small><span class="lb-hv" id="lbHv' + i + '"></span></div>'
+      + '<div class="lb-rk"><span>Actuelle <b class="' + (c.last >= 0 ? 'p' : 'n') + '">' + nf(2).format(c.last) + '</b></span><span>Moyenne <b>' + nf(2).format(c.mean) + '</b></span><span>Min <b>' + nf(2).format(c.min) + '</b></span><span>Max <b>' + nf(2).format(c.max) + '</b></span></div>'
+      + '<div class="fx-chart" id="lbRc' + i + '"><div class="fx-tip" id="lbRt' + i + '"></div></div>'
+      + (c.note ? '<p class="lb-rn">⚠ ' + esc(c.note) + '. ' + esc(c.src) + '</p>' : '<p class="lb-rn">' + esc(c.src) + '</p>') + '</div>';
+  }).join('');
+  const X = d => m.l + ((d - d0) / ((d1 - d0) || 1)) * (W - m.l - m.r), Y = v => m.t + (1 - (v + 1) / 2) * (H - m.t - m.b);
+  R.charts.forEach((c, i) => {
+    if (c.none) return;
+    const el = $('lbRc' + i);
+    const grid = [-1, -0.5, 0, 0.5, 1].map(v => '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="' + (v === 0 ? '#9AA0A6' : '#ECEAE4') + '"' + (v === 0 ? ' stroke-dasharray="4 3"' : '') + '/><text x="' + (m.l - 6) + '" y="' + (Y(v) + 4) + '" text-anchor="end" font-size="10.5" fill="#6B6F76">' + nf(1).format(v) + '</text>').join('');
+    const xs = xt.map(x => '<text x="' + X(x[0]) + '" y="' + (H - 7) + '" text-anchor="middle" font-size="10.5" fill="#6B6F76">' + x[1] + '</text>').join('');
+    /* ligne en segments : on coupe quand deux points consécutifs sont éloignés (> 4 × la fenêtre de pas) */
+    const gap = (R.freq === 'm' ? 70 : 12);
+    let path = ''; c.pts.forEach((p, k) => { path += ((k && p.d - c.pts[k - 1].d <= gap) ? 'L' : 'M') + X(p.d).toFixed(1) + ',' + Y(p.r).toFixed(1); });
+    el.insertAdjacentHTML('afterbegin', '<svg viewBox="0 0 ' + W + ' ' + H + '" height="' + H + '" role="img" aria-label="Corrélation glissante vs ' + esc(c.r.n) + '">' + grid + xs
+      + '<path d="' + path + '" fill="none" stroke="' + c.r.col + '" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>'
+      + '<line class="xh" y1="' + m.t + '" y2="' + (H - m.b) + '" stroke="#02182B" stroke-opacity=".35" stroke-dasharray="3 3" visibility="hidden"/>'
+      + '<circle class="dot" r="4" fill="#fff" stroke="' + c.r.col + '" stroke-width="2" visibility="hidden"/>'
+      + '<rect class="hit" x="' + m.l + '" y="' + m.t + '" width="' + (W - m.l - m.r) + '" height="' + (H - m.t - m.b) + '" fill="transparent"/></svg>');
+    ROLL.charts[i] = {c, svg: el.querySelector('svg'), tip: $('lbRt' + i), hv: $('lbHv' + i), X, Y, W, H, m};
+    el.querySelector('.hit').addEventListener('mousemove', e => {
+      const r = el.querySelector('svg').getBoundingClientRect(), mx = ((e.clientX - r.left) / r.width) * W;
+      setHover(d0 + ((mx - m.l) / (W - m.l - m.r)) * (d1 - d0), i);
+    });
+    el.querySelector('.hit').addEventListener('mouseleave', () => setHover(null));
+  });
+}
+/* Curseur synchronisé sur les 5 graphiques */
+function setHover(d, from){
+  (ROLL.charts || []).forEach((ch, i) => {
+    if (!ch) return;
+    const xh = ch.svg.querySelector('.xh'), dot = ch.svg.querySelector('.dot');
+    if (d == null) { xh.setAttribute('visibility', 'hidden'); dot.setAttribute('visibility', 'hidden'); ch.tip.style.display = 'none'; ch.hv.textContent = ''; return; }
+    const pts = ch.c.pts; let a = 0, b = pts.length - 1;
+    while (b - a > 1) { const mid = (a + b) >> 1; if (pts[mid].d < d) a = mid; else b = mid; }
+    const p = Math.abs(pts[a].d - d) <= Math.abs(pts[b].d - d) ? pts[a] : pts[b];
+    if (Math.abs(p.d - d) > (ROLL.res.freq === 'm' ? 40 : 10)) { xh.setAttribute('visibility', 'hidden'); dot.setAttribute('visibility', 'hidden'); ch.tip.style.display = 'none'; ch.hv.textContent = ''; return; }
+    const x = ch.X(p.d), y = ch.Y(p.r);
+    xh.setAttribute('x1', x); xh.setAttribute('x2', x); xh.setAttribute('visibility', 'visible');
+    dot.setAttribute('cx', x); dot.setAttribute('cy', y); dot.setAttribute('visibility', 'visible');
+    ch.hv.innerHTML = dFr(p.d) + ' · <b>' + nf(2).format(p.r) + '</b>';
+    if (i === from) { const rr = ch.svg.getBoundingClientRect(); ch.tip.style.display = 'block'; ch.tip.style.left = (x / ch.W) * rr.width + 'px'; ch.tip.style.top = (y / ch.H) * rr.height + 'px'; ch.tip.innerHTML = dFr(p.d) + '<br>ρ = <b>' + nf(2).format(p.r) + '</b> <small>(' + p.n + ' obs.)</small>'; }
+    else ch.tip.style.display = 'none';
+  });
+}
+$('lbRCsv').addEventListener('click', () => {
+  const R = ROLL.res; if (!R) return;
+  const ok = R.charts.filter(c => !c.none); if (!ok.length) return;
+  const days = Array.from(new Set([].concat.apply([], ok.map(c => c.pts.map(p => p.d))))).sort((a, b) => a - b);
+  const maps = ok.map(c => { const m = new Map(); c.pts.forEach(p => m.set(p.d, p.r)); return m; });
+  const csv = 'date;' + ok.map(c => R.title.s + ' vs ' + c.r.n).join(';') + '\n' + days.map(d => new Date(d * 864e5).toISOString().slice(0, 10) + ';' + maps.map(m => m.has(d) ? m.get(d).toFixed(4) : '').join(';')).join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv'}));
+  a.download = 'correlation_glissante_' + R.title.s.replace(/[^A-Za-z0-9]+/g, '_') + '.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 });
 
 /* ---------------------------------------------------------------- démarrage */
-buildTree(); loadSel(); syncSel(); setDays(90);
 let statusChecked = false;
 function checkStatus(){
   if (statusChecked) return; statusChecked = true;
@@ -8711,6 +9083,7 @@ function checkStatus(){
 }
 /* rien n'est appelé avant la première ouverture de l'écran */
 new MutationObserver(() => { if ($('screenLab').classList.contains('on')) checkStatus(); }).observe($('screenLab'), {attributes: true, attributeFilter: ['class']});
+buildTree(); loadSel(); syncSel(); setDays(90); setSrc('xls'); showTab('mat');
 })();
 
 
