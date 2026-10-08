@@ -374,18 +374,42 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenMkt .mk-sec .sc{font-size:12px;color:var(--mut)}
 #screenMkt .mk-sec .sa{margin-left:auto;font-size:12.5px}
 #screenMkt .mk-rows{border-top:1px solid #F1F0EC}
-#screenMkt .mk-row{display:grid;grid-template-columns:1fr 70px 100px 90px 30px;gap:8px;align-items:center;padding:7px 14px;border-top:1px solid #F7F6F2;cursor:pointer;font-size:13px}
+
 #screenMkt .mk-row:first-child{border-top:0}
 #screenMkt .mk-row:hover{background:#F7F6F2}
 #screenMkt .mk-row[hidden]{display:none}
 #screenMkt .mk-row .n{color:var(--navy);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#screenMkt .mk-row .t{color:var(--mut);font-size:11.5px}
-#screenMkt .mk-row .p{text-align:right;font-variant-numeric:tabular-nums}
-#screenMkt .mk-row .c{text-align:right;font-size:12.5px}
 #screenMkt .mk-row.miss{opacity:.55}
 #screenMkt .mk-star{border:0;background:none;font-size:15px;color:#B88A00;padding:0}
 #screenMkt #mkSpiMiss{margin:0 0 10px}
-@media (max-width:640px){#screenMkt .mk-row{grid-template-columns:1fr 80px 70px 26px}#screenMkt .mk-row .t{display:none}}
+
+#screenMkt .mk-head,#screenMkt .mk-row{display:grid;grid-template-columns:minmax(150px,1fr) 92px 74px 92px 56px 84px 84px 28px;gap:8px;align-items:center;padding:7px 14px}
+#screenMkt .mk-head{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;border-top:1px solid #F1F0EC;background:#FAF9F6}
+#screenMkt .mk-head span{cursor:pointer;user-select:none}
+#screenMkt .mk-head span:not(.h-name){text-align:right}
+#screenMkt .mk-head span.on{color:var(--navy);font-weight:700}
+#screenMkt .mk-row{border-top:1px solid #F7F6F2;cursor:pointer;font-size:13px}
+#screenMkt .mk-row .n small{display:block;color:var(--mut);font-size:11px;font-weight:400}
+#screenMkt .mk-row .p,#screenMkt .mk-row .pe,#screenMkt .mk-row .dv{text-align:right;font-variant-numeric:tabular-nums}
+#screenMkt .mk-row .dv small{display:block;color:var(--mut);font-size:11px}
+#screenMkt .mk-row .c{text-align:right;font-size:12.5px;font-variant-numeric:tabular-nums}
+#screenMkt .mk-sec .sa{display:flex;gap:14px;margin-left:auto;font-size:12px;color:var(--mut)}
+@media (max-width:760px){#screenMkt .mk-head,#screenMkt .mk-row{grid-template-columns:minmax(110px,1fr) 70px 60px 64px 50px;font-size:12px}#screenMkt .mk-head span:nth-child(n+4):nth-child(-n+5),#screenMkt .mk-row>span:nth-child(n+4):nth-child(-n+5){display:none}}
+/* Indices */
+#screenMkt .mk-idx{overflow-x:auto}
+#screenMkt .ix-grp,#screenMkt .ix-head,#screenMkt .ix-row{display:grid;grid-template-columns:minmax(190px,1.4fr) 90px 70px repeat(6,78px);gap:8px;align-items:center;padding:8px 14px;min-width:900px}
+#screenMkt .ix-grp{padding-bottom:0;font-size:11.5px;font-weight:700;color:var(--navy)}
+#screenMkt .ix-grp .g1{grid-column:4/7;border-bottom:2px solid #00CFFF;padding-bottom:3px;text-align:center}
+#screenMkt .ix-grp .g2{grid-column:7/10;border-bottom:2px solid var(--navy);padding-bottom:3px;text-align:center}
+#screenMkt .ix-head{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid #F1F0EC}
+#screenMkt .ix-head span:not(:first-child){text-align:right}
+#screenMkt .ix-row{border-top:1px solid #F7F6F2;font-size:13px}
+#screenMkt .ix-n{font-weight:700;color:var(--navy)}
+#screenMkt .ix-n small{display:block;color:var(--mut);font-size:10.5px;font-weight:400}
+#screenMkt .ix-edit{border:0;background:none;color:var(--mut);font-size:12px;padding:0 4px;opacity:.5;cursor:pointer}
+#screenMkt .ix-row:hover .ix-edit{opacity:1}
+#screenMkt .ix-lvl{text-align:right;font-variant-numeric:tabular-nums}
+#screenMkt .ix-row .c{text-align:right;font-variant-numeric:tabular-nums}
 
 #screenChartPack {--navy:#02182B;--blue:#0a6b8c;--cyan:#00CFFF;--beige:#DDD8C4;--pale:#ECEADF;--tint:#E8F6FA;--grey:#B6C0C6;--bg:#F5F6F5;--line:#DDE3E6;--txt:#12242F;--mut:#5B6B76}
 #screenChartPack * {box-sizing:border-box}
@@ -1249,9 +1273,31 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 
   <!-- Accueil : listes -->
   <div id="mkHome">
-    <div class="fx-ranges" id="mkLists" style="margin:0 0 14px"><button type="button" data-l="mine" class="on">Ma watchlist partagée</button><button type="button" data-l="spi">SPI par secteur</button></div>
+    <div class="fx-ranges" id="mkLists" style="margin:0 0 14px"><button type="button" data-l="spi" class="on">SPI par secteur</button><button type="button" data-l="idx">Indices</button><button type="button" data-l="mine">Ma watchlist partagée</button></div>
 
-    <section class="fx-sec" id="mkMineSec">
+    <section class="fx-sec" id="mkSpiSec">
+      <div class="fx-sec-h"><h3>Swiss Performance Index (SPI) — par secteur</h3><small id="mkSpiInfo"></small></div>
+      <div class="fx-bar" style="margin-top:0">
+        <input id="mkSpiQ" type="search" placeholder="Filtrer par nom ou ticker…" aria-label="Filtrer les titres du SPI" style="font:inherit;font-size:12.5px;padding:6px 10px;border:1px solid var(--line);border-radius:7px;min-width:240px">
+        <button type="button" class="btn" id="mkSpiAll">Charger tous les secteurs</button>
+        <button type="button" class="btn" id="mkSpiToggle">Tout déplier</button>
+      </div>
+      <div id="mkSpiMiss" class="fx-notes" hidden></div>
+      <div id="mkSpi"></div>
+    </section>
+
+    <section class="fx-sec" id="mkIdxSec" hidden>
+      <div class="fx-sec-h"><h3>Indices — prix et total return</h3><small id="mkIdxInfo"></small></div>
+      <div class="fx-card mk-idx">
+        <div class="ix-grp"><span></span><span></span><span></span><span class="g1">Indice de prix</span><span class="g2">Total return (dividendes réinvestis)</span></div>
+        <div class="ix-head"><span>Indice</span><span>Niveau</span><span>Jour</span><span>YTD</span><span>1 an</span><span>3 ans</span><span>YTD</span><span>1 an</span><span>3 ans</span></div>
+        <div id="mkIdxBody"></div>
+      </div>
+      <div class="fx-actions" style="margin-top:10px"><button type="button" class="btn" id="mkIdxRefresh">↻ Actualiser</button></div>
+      <div class="fx-notes" style="margin-top:10px;font-size:12px">Performances calculées sur les cours de clôture (YTD = depuis le dernier jour de bourse de l'année précédente ; 1 et 3 ans = même date, ou la dernière clôture avant). « ~ » = estimation sur données hebdomadaires. Le SPI et le DAX sont des indices de performance par construction. Si un symbole de total return n'est pas reconnu, il est cherché automatiquement ; corrigez-le au besoin avec ✎ (le choix est partagé avec l'équipe).</div>
+    </section>
+
+    <section class="fx-sec" id="mkMineSec" hidden>
       <div class="fx-sec-h"><h3>Watchlist partagée</h3><small id="mkAsOf"></small></div>
       <div class="fx-tiles" id="mkTiles"></div>
       <div class="fx-actions" style="margin-top:10px">
@@ -1260,16 +1306,12 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       </div>
     </section>
 
-    <section class="fx-sec" id="mkSpiSec" hidden>
-      <div class="fx-sec-h"><h3>Swiss Performance Index (SPI) — par secteur</h3><small id="mkSpiInfo"></small></div>
-      <div class="fx-bar" style="margin-top:0">
-        <input id="mkSpiQ" type="search" placeholder="Filtrer par nom ou ticker…" aria-label="Filtrer les titres du SPI" style="font:inherit;font-size:12.5px;padding:6px 10px;border:1px solid var(--line);border-radius:7px;min-width:240px">
-        <button type="button" class="btn" id="mkSpiAll">Charger toutes les cotes</button>
-        <button type="button" class="btn" id="mkSpiToggle">Tout déplier</button>
-      </div>
-      <div id="mkSpiMiss" class="fx-notes" hidden></div>
-      <div id="mkSpi"></div>
-    </section>
+    <details class="fx-set" id="mkDiag">
+      <summary>Diagnostic technique (réponses brutes du fournisseur)</summary>
+      <div style="margin-top:8px">À utiliser si une colonne reste vide (P/E, dividende, performances) : le résultat montre ce que l'API renvoie réellement.</div>
+      <div class="fx-actions" style="margin-top:8px"><button type="button" class="btn" id="mkDiagRun">Lancer le diagnostic (≈ 4 appels)</button><button type="button" class="btn" id="mkDiagCopy">Copier</button></div>
+      <pre id="mkDiagOut" style="white-space:pre-wrap;word-break:break-all;font-size:11px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:8px;max-height:360px;overflow:auto"></pre>
+    </details>
   </div>
 
   <!-- Résultats de recherche -->
@@ -7096,6 +7138,26 @@ function mktParseBatchQuotes(json){
   return map;
 }
 
+
+/* P/E et rendement du dividende lus dans une cote (noms de champs tolérants) ; null si absents */
+function mktFundFromQuote(f){
+  if (!f || typeof f !== 'object') return {pe: null, dy: null};
+  const pick = names => { for (const k of names) if (f[k] != null && isFinite(+f[k])) return +f[k]; return null; };
+  return {
+    pe: pick(['price_earnings_ttm', 'price_to_earnings_ttm', 'pe_ratio', 'pe']),
+    dy: pick(['dividends_yield_current', 'dividends_yield', 'dividend_yield_recent', 'dividend_yield_fwd', 'dividend_yield'])
+  };
+}
+/* Résultat de recherche d'indice le plus plausible : tr=true -> indice « total/net/gross return », sinon indice de prix. */
+function mktPickIndexHit(results, name, tr){
+  const isTr = d => /(total|net|gross)\s*return|\b(TR|NR|GR)\b|performance\s*index|rendement\s*total/i.test(d || '');
+  const toks = String(name).toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(t => t.length > 1 && !/^(index|indice)$/.test(t));
+  const ok = results.filter(r => /index/i.test(r.type || '') || !r.type).filter(r => toks.every(t => (r.desc + ' ' + r.symbol).toLowerCase().indexOf(t) >= 0));
+  const hit = ok.find(r => tr ? isTr(r.desc) : !isTr(r.desc));
+  return hit || null;
+}
+const mktPctTxt = (v, d, approx) => (v == null || !isFinite(v)) ? '–' : ((v >= 0 ? '+' : '−') + new Intl.NumberFormat('fr-CH', {minimumFractionDigits: d, maximumFractionDigits: d}).format(Math.abs(v)) + ' %' + (approx ? ' ~' : ''));
+
 (function MktModule(){
 "use strict";
 
@@ -7146,7 +7208,8 @@ async function tv(path, opts){
   const c = mkCache.get(key);
   if (c && Date.now() - c.t < 45000) return c.j;
   let r, j = null;
-  const send = () => fetch('/api/tv/' + path, opts.body ? {method: 'POST', headers: {'Content-Type': 'application/json'}, body: opts.body} : undefined);
+  const base = path.charAt(0) === '@' ? '/api/' + path.slice(1) : '/api/tv/' + path;
+  const send = () => fetch(base, opts.body ? {method: 'POST', headers: {'Content-Type': 'application/json'}, body: opts.body} : undefined);
   try {
     r = await send();
     if (r.status === 429) { await new Promise(res => setTimeout(res, 1300)); r = await send(); } /* limite de débit du forfait (2 requêtes/s en Basic) */
@@ -7512,55 +7575,124 @@ $('mkLoaded').addEventListener('click', e => {
 });
 
 
+/* ---------------------------------------------------------------- performances (Worker : /api/tv-perf) et fondamentaux (/api/tv-fund) */
+const PERF = {};     /* symbole -> {last, lastT, d1, ytd, y1, y3, approx} | null */
+async function fetchPerf(symbols){
+  const need = symbols.filter(s => !(s in PERF));
+  for (let i = 0; i < need.length; i += 30) {
+    const chunk = need.slice(i, i + 30);
+    try {
+      const j = await tv('@tv-perf?symbols=' + encodeURIComponent(chunk.join(',')));
+      chunk.forEach(s => { PERF[s] = (j.perf && j.perf[s]) || null; });
+    } catch (e) { if (FATAL[e.code]) throw e; chunk.forEach(s => { PERF[s] = null; }); fetchPerf.err = e.message; }
+  }
+}
+let FUND = null, FUND_ERR = '', fundPromise = null;
+function ensureFund(){
+  if (fundPromise) return fundPromise;
+  fundPromise = (async () => {
+    try { const j = await tv('@tv-fund'); FUND = j.fund || {}; }
+    catch (e) { FUND = {}; FUND_ERR = e.message; if (FATAL[e.code]) fundPromise = null; }
+  })();
+  return fundPromise;
+}
+
 /* ---------------------------------------------------------------- liste SPI par secteur (composition : mkt_spi_data.js) */
 const SPI_Q = {};          /* symbole -> champs de cote */
 const SPI_MISS = new Set(); /* symboles interrogés mais sans cote */
 const spiSym = t => 'SIX:' + t;
+const spiSort = {k: 'name', dir: 1};
 let spiBuilt = false, spiBusy = false;
-function spiFilterOk(t, n, f){ return !f || (t + ' ' + n).toLowerCase().indexOf(f) >= 0; }
+const SORT_COLS = [['name', 'Titre'], ['p', 'Prix'], ['d1', 'Jour'], ['dy', 'Dividende'], ['pe', 'P/E'], ['ytd', 'YTD'], ['y3', '3 ans']];
+function rowFund(row){
+  const t = row.dataset.s.replace('SIX:', ''), q = SPI_Q[row.dataset.s] || {};
+  const fq = mktFundFromQuote(q), fs = (FUND && FUND[t]) || {};
+  return {pe: fq.pe != null ? fq.pe : (fs.pe != null ? fs.pe : null), dy: fq.dy != null ? fq.dy : (fs.dy != null ? fs.dy : null)};
+}
 function buildSpi(){
   if (spiBuilt) return; spiBuilt = true;
   const total = MKT_SPI.reduce((a, g) => a + g[1].length, 0);
-  $('mkSpiInfo').textContent = total + ' titres · ' + MKT_SPI.length + ' secteurs · cotes chargées à l\'ouverture de chaque secteur';
+  $('mkSpiInfo').textContent = total + ' titres · ' + MKT_SPI.length + ' secteurs · les chiffres se chargent à l\'ouverture de chaque secteur';
+  const head = '<div class="mk-head">' + SORT_COLS.map(c => '<span class="h-' + c[0] + '" data-sort="' + c[0] + '" title="Trier">' + c[1] + '</span>').join('') + '<span></span></div>';
   $('mkSpi').innerHTML = MKT_SPI.map((g, i) =>
-      '<details class="mk-sec" data-i="' + i + '"><summary><span class="sn">' + esc(g[0]) + '</span><span class="sc">' + g[1].length + ' titres</span><span class="sa fx-delta" id="mkSa' + i + '"></span></summary>'
-    + '<div class="mk-rows">' + g[1].map(m => {
+      '<details class="mk-sec" data-i="' + i + '"><summary><span class="sn">' + esc(g[0]) + '</span><span class="sc">' + g[1].length + ' titres</span><span class="sa" id="mkSa' + i + '"></span></summary>'
+    + head + '<div class="mk-rows">' + g[1].map(m => {
         const sym = spiSym(m[0]);
-        return '<div class="mk-row" data-s="' + esc(sym) + '" data-n="' + esc(m[1]) + '" data-f="' + esc((m[0] + ' ' + m[1]).toLowerCase()) + '"><span class="n">' + esc(m[1]) + '</span><span class="t">' + esc(m[0]) + '</span><span class="p">·</span><span class="c fx-delta"></span><button type="button" class="mk-star" data-w="' + esc(sym) + '" title="Suivre dans la watchlist partagée">' + (inWatch(sym) ? '★' : '☆') + '</button></div>';
+        return '<div class="mk-row" data-s="' + esc(sym) + '" data-n="' + esc(m[1]) + '" data-f="' + esc((m[0] + ' ' + m[1]).toLowerCase()) + '">'
+          + '<span class="n">' + esc(m[1]) + '<small>' + esc(m[0]) + '</small></span><span class="p">·</span><span class="c d1 fx-delta"></span><span class="dv"></span><span class="pe"></span><span class="c ytd fx-delta"></span><span class="c y3 fx-delta"></span>'
+          + '<button type="button" class="mk-star" data-w="' + esc(sym) + '" title="Suivre dans la watchlist partagée">' + (inWatch(sym) ? '★' : '☆') + '</button></div>';
       }).join('') + '</div></details>').join('');
 }
+function setPct(el, v, approx){
+  const ok = v != null && isFinite(v);
+  el.textContent = ok ? mktPctTxt(v, 1, approx) : '';
+  el.className = el.className.replace(/\b(up|down)\b/g, '').trim() + (ok ? ' ' + cls(v) : '');
+}
 function paintSpi(){
+  const avg = (a) => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
   MKT_SPI.forEach((g, i) => {
     const det = $('mkSpi').querySelector('details[data-i="' + i + '"]'); if (!det) return;
-    let sum = 0, n = 0;
+    const dd = [], yy = [];
     det.querySelectorAll('.mk-row').forEach(row => {
-      const sym = row.dataset.s, f = SPI_Q[sym], p = row.querySelector('.p'), c = row.querySelector('.c');
-      if (f && isFinite(+f.lp)) {
-        p.textContent = px(+f.lp); const chp = +f.chp;
-        c.textContent = isFinite(chp) ? signed(chp, 2, ' %') : ''; c.className = 'c fx-delta ' + (isFinite(chp) ? cls(chp) : '');
-        if (isFinite(chp)) { sum += chp; n++; }
-        row.classList.remove('miss');
-      } else if (SPI_MISS.has(sym)) { p.textContent = '—'; c.textContent = 'sans cote'; c.className = 'c fx-delta'; row.classList.add('miss'); row.title = 'Aucune cote reçue pour ' + sym + ' — ticker à vérifier'; }
+      const sym = row.dataset.s, f = SPI_Q[sym], pf = PERF[sym];
+      const p = row.querySelector('.p'), d1 = row.querySelector('.d1');
+      let price = null, day = null;
+      if (f && isFinite(+f.lp)) { price = +f.lp; day = isFinite(+f.chp) ? +f.chp : null; row.classList.remove('miss'); }
+      else if (pf && isFinite(pf.last)) { price = pf.last; day = pf.d1; row.classList.remove('miss'); }
+      if (price != null) { p.textContent = px(price); setPct(d1, day, false); d1.textContent = day != null ? mktPctTxt(day, 2) : ''; }
+      else if (SPI_MISS.has(sym)) { p.textContent = '—'; d1.textContent = 'sans cote'; d1.className = 'c d1 fx-delta'; row.classList.add('miss'); row.title = 'Aucune cote reçue pour ' + sym + ' — ticker à vérifier'; }
+      const fd = rowFund(row);
+      row.querySelector('.dv').innerHTML = fd.dy != null ? '<b>' + nf(2).format(fd.dy) + ' %</b>' + (price != null ? '<small>≈ ' + nf(2).format(fd.dy / 100 * price) + '</small>' : '') : '';
+      row.querySelector('.pe').textContent = fd.pe != null ? nf(1).format(fd.pe) : '';
+      setPct(row.querySelector('.ytd'), pf ? pf.ytd : null, pf && pf.approx);
+      setPct(row.querySelector('.y3'), pf ? pf.y3 : null, pf && pf.approx);
+      row.dataset.v_p = price != null ? price : ''; row.dataset.v_d1 = day != null ? day : '';
+      row.dataset.v_dy = fd.dy != null ? fd.dy : ''; row.dataset.v_pe = fd.pe != null ? fd.pe : '';
+      row.dataset.v_ytd = pf && pf.ytd != null ? pf.ytd : ''; row.dataset.v_y3 = pf && pf.y3 != null ? pf.y3 : '';
+      if (day != null) dd.push(day); if (pf && pf.ytd != null) yy.push(pf.ytd);
     });
-    const a = $('mkSa' + i); a.textContent = n ? 'moy. ' + signed(sum / n, 2, ' %') : ''; a.className = 'sa fx-delta ' + (n ? cls(sum / n) : '');
+    const a = $('mkSa' + i), ad = avg(dd), ay = avg(yy);
+    a.innerHTML = (ad != null ? '<span>jour <b class="fx-delta ' + cls(ad) + '">' + mktPctTxt(ad, 2) + '</b></span>' : '') + (ay != null ? '<span>YTD <b class="fx-delta ' + cls(ay) + '">' + mktPctTxt(ay, 1) + '</b></span>' : '');
   });
-  const miss = Array.from(SPI_MISS);
-  const box = $('mkSpiMiss');
-  box.hidden = !miss.length;
-  if (miss.length) box.innerHTML = '<b>' + miss.length + ' titre(s) sans cote</b> (ticker différent chez le fournisseur, ou titre sorti de l\'indice) : ' + esc(miss.map(s => s.replace('SIX:', '')).join(', ')) + '.';
+  applySpiSort();
+  const miss = Array.from(SPI_MISS), box = $('mkSpiMiss');
+  const notes = [];
+  if (miss.length) notes.push('<b>' + miss.length + ' titre(s) sans cote</b> (ticker différent chez le fournisseur, ou titre sorti de l\'indice) : ' + esc(miss.map(s => s.replace('SIX:', '')).join(', ')) + '.');
+  if (FUND && !Object.keys(FUND).length && FUND_ERR) notes.push('P/E et dividendes indisponibles : ' + esc(FUND_ERR) + ' (voir « Diagnostic » en bas de page).');
+  if (fetchPerf.err) notes.push('Performances partiellement indisponibles : ' + esc(fetchPerf.err));
+  box.hidden = !notes.length; box.innerHTML = notes.join('<br>');
+}
+function applySpiSort(){
+  const k = spiSort.k, dir = spiSort.dir;
+  $('mkSpi').querySelectorAll('.mk-head [data-sort]').forEach(h => h.classList.toggle('on', h.dataset.sort === k));
+  $('mkSpi').querySelectorAll('.mk-rows').forEach(box => {
+    const rows = Array.from(box.children);
+    rows.sort((a, b) => {
+      if (k === 'name') return dir * a.dataset.n.localeCompare(b.dataset.n, 'fr');
+      const x = a.dataset['v_' + k], y = b.dataset['v_' + k];
+      const xn = x === '' || x == null, yn = y === '' || y == null;
+      if (xn && yn) return 0; if (xn) return 1; if (yn) return -1;
+      return dir * (+x - +y);
+    });
+    rows.forEach(r => box.appendChild(r));
+  });
 }
 async function loadSpiSectors(idx){
   if (spiBusy) return; spiBusy = true;
+  const info = $('mkSpiInfo');
   try {
     const syms = [];
-    idx.forEach(i => MKT_SPI[i][1].forEach(m => { const s = spiSym(m[0]); if (!(s in SPI_Q) && !SPI_MISS.has(s)) syms.push(s); }));
-    if (!syms.length) return;
-    const info = $('mkSpiInfo'); info.textContent = 'chargement de ' + syms.length + ' cotes…';
-    const got = await fetchQuotes(syms);
-    syms.forEach(s => { if (got[s]) SPI_Q[s] = got[s]; else SPI_MISS.add(s); });
-    paintSpi();
-    info.textContent = Object.keys(SPI_Q).length + ' cotes chargées · mises à jour le ' + new Date().toLocaleString('fr-CH', {day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'});
-  } catch (e) { $('mkSpiInfo').textContent = e.message; }
+    idx.forEach(i => MKT_SPI[i][1].forEach(m => { const s = spiSym(m[0]); if (!(s in SPI_Q) && !SPI_MISS.has(s) && !(s in PERF)) syms.push(s); }));
+    if (!syms.length) { paintSpi(); return; }
+    info.textContent = 'chargement de ' + syms.length + ' titres…';
+    fetchPerf.err = '';
+    const pQ = fetchQuotes(syms).then(got => { syms.forEach(s => { if (got[s]) SPI_Q[s] = got[s]; else SPI_MISS.add(s); }); });
+    const pF = ensureFund();
+    const pP = fetchPerf(syms);
+    await pQ; paintSpi();
+    await Promise.all([pF, pP]); paintSpi();
+    info.textContent = Object.keys(SPI_Q).length + ' cotes · ' + Object.keys(PERF).filter(k => PERF[k]).length + ' performances · mis à jour le ' + new Date().toLocaleString('fr-CH', {day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'});
+  } catch (e) { info.textContent = e.message; }
   finally { spiBusy = false; }
 }
 $('mkSpi').addEventListener('toggle', e => {
@@ -7569,6 +7701,8 @@ $('mkSpi').addEventListener('toggle', e => {
   loadSpiSectors([+d.dataset.i]);
 }, true);
 $('mkSpi').addEventListener('click', e => {
+  const sh = e.target.closest('[data-sort]');
+  if (sh) { const k = sh.dataset.sort; if (spiSort.k === k) spiSort.dir = -spiSort.dir; else { spiSort.k = k; spiSort.dir = (k === 'name') ? 1 : -1; } applySpiSort(); return; }
   const st = e.target.closest('.mk-star');
   if (st) { e.preventDefault(); const row = st.closest('.mk-row'); toggleWatch(st.dataset.w, row.dataset.n); st.textContent = inWatch(st.dataset.w) ? '★' : '☆'; return; }
   const row = e.target.closest('.mk-row'); if (row) openSymbol(row.dataset.s, row.dataset.n);
@@ -7576,8 +7710,8 @@ $('mkSpi').addEventListener('click', e => {
 $('mkSpiAll').addEventListener('click', async () => {
   const idx = MKT_SPI.map((g, i) => i);
   const n = MKT_SPI.reduce((a, g) => a + g[1].filter(m => !(spiSym(m[0]) in SPI_Q) && !SPI_MISS.has(spiSym(m[0]))).length, 0);
-  if (!n) { $('mkSpiInfo').textContent = 'toutes les cotes sont déjà chargées'; return; }
-  if (n > 40 && !confirm('Charger ' + n + ' cotes ≈ ' + Math.ceil(n / 10) + ' appels à votre forfait Market Data (mis en cache 60 s). Continuer ?')) return;
+  if (!n) { $('mkSpiInfo').textContent = 'toutes les données sont déjà chargées'; return; }
+  if (n > 40 && !confirm('Charger ' + n + ' titres ≈ ' + Math.ceil(n / 10) * 2 + ' appels à votre forfait Market Data (cotes + historiques, mis en cache 1 min / 30 min). Continuer ?')) return;
   await loadSpiSectors(idx);
 });
 $('mkSpiToggle').addEventListener('click', () => {
@@ -7592,15 +7726,141 @@ $('mkSpiQ').addEventListener('input', () => {
     let any = 0;
     d.querySelectorAll('.mk-row').forEach(r => { const ok = !f || r.dataset.f.indexOf(f) >= 0; r.hidden = !ok; if (ok) any++; });
     d.hidden = !any;
-    if (f && any) d.open = true; /* (les cotes du secteur se chargent à l'ouverture) */
+    if (f && any) d.open = true; /* (les chiffres du secteur se chargent à l'ouverture) */
   });
 });
+
+/* ---------------------------------------------------------------- indices : prix et total return */
+/* Symboles de départ (TradingView) ; si un symbole ne répond pas, les suivants sont essayés, puis une recherche automatique d'indice
+   est tentée. Les symboles retenus se corrigent avec ✎ et sont partagés avec l'équipe (D1, clé mkt_indices). */
+const INDICES = [
+  {id: 'smi',  n: 'SMI',                price: ['SIX:SMI'],                          tr: ['SIX:SMIC', 'SIX:SMIT']},
+  {id: 'spi',  n: 'SPI',                price: ['SIX:SPIP'],            tr: ['SIX:SPI'], note: 'Le SPI est par construction un indice de performance (dividendes réinvestis).'},
+  {id: 'sx5e', n: 'Euro Stoxx 50',      price: ['TVC:SX5E', 'STOXX:SX5E'],           tr: ['STOXX:SX5T', 'TVC:SX5T', 'STOXX:SX5GT']},
+  {id: 'sxxp', n: 'Stoxx Europe 600',   price: ['TVC:SXXP', 'STOXX:SXXP'],           tr: ['STOXX:SXXR', 'TVC:SXXR', 'STOXX:SXXGR']},
+  {id: 'cac',  n: 'CAC 40',             price: ['TVC:CAC40', 'EURONEXT:PX1'],        tr: ['EURONEXT:PX1GR', 'EURONEXT:CACGR', 'EURONEXT:PX1NR']},
+  {id: 'dax',  n: 'DAX',                price: ['XETR:DAXK', 'TVC:DAXK'],            tr: ['XETR:DAX', 'TVC:DAX'], note: 'Le DAX est par construction un indice de performance (dividendes réinvestis).'},
+  {id: 'ndx',  n: 'Nasdaq 100',         price: ['NASDAQ:NDX'],                       tr: ['NASDAQ:XNDX']},
+  {id: 'ixic', n: 'Nasdaq Composite',   price: ['NASDAQ:IXIC'],                      tr: ['NASDAQ:XCMP']},
+  {id: 'spx',  n: 'S&P 500',            price: ['SP:SPX'],                           tr: ['SP:SPXTR', 'TVC:SPXTR']},
+  {id: 'mib',  n: 'FTSE MIB (Italie)',  price: ['INDEX:FTSEMIB', 'TVC:FTMIB'],       tr: ['INDEX:FTSEMIBTR', 'INDEX:FTSEMIBGR']},
+  {id: 'ibex', n: 'IBEX 35 (Espagne)',  price: ['BME:IBC', 'TVC:IBEX35'],            tr: ['BME:IBEXTR', 'BME:IBEXD']}
+];
+let IDX_OVR = {};   /* id -> {price, tr} choisis / mémorisés (partagés) */
+const IDX_RES = {}; /* id -> {price:{sym,perf,tried[]}, tr:{...}} */
+let idxLoaded = false, idxBusy = false;
+async function idxLoadOverrides(){
+  const j = await dbReadJson('/api/db/kv/mkt_indices');
+  if (j && j.data && typeof j.data === 'object' && !Array.isArray(j.data)) IDX_OVR = j.data;
+}
+function idxSave(){ dbWrite('/api/db/kv/mkt_indices', 'PUT', IDX_OVR); }
+const idxCands = (ix, kind) => { const o = IDX_OVR[ix.id] && IDX_OVR[ix.id][kind]; return o ? [o].concat(ix[kind].filter(x => x !== o)) : ix[kind].slice(); };
+async function idxSearch(ix, kind){
+  try {
+    const q = kind === 'tr' ? ix.n + ' total return' : ix.n;
+    const j = await tv('search/market/' + encodeURIComponent(q) + '?filter=index');
+    const hit = mktPickIndexHit(mktParseSearch(j), ix.n.replace(/\s*\(.*\)\s*/, ''), kind === 'tr');
+    return hit ? hit.full : null;
+  } catch (e) { if (FATAL[e.code]) throw e; return null; }
+}
+async function loadIndices(only){
+  if (idxBusy) return; idxBusy = true;
+  const info = $('mkIdxInfo');
+  try {
+    const list = only ? INDICES.filter(x => x.id === only) : INDICES;
+    list.forEach(ix => { IDX_RES[ix.id] = {price: {sym: null, perf: null, tried: []}, tr: {sym: null, perf: null, tried: []}}; });
+    paintIdx();
+    info.textContent = 'chargement…';
+    fetchPerf.err = '';
+    let round = 0, learned = false;
+    const slots = [];
+    list.forEach(ix => ['price', 'tr'].forEach(k => slots.push({ix, k, c: idxCands(ix, k)})));
+    for (round = 0; round < 3; round++) {
+      const todo = slots.filter(sl => !IDX_RES[sl.ix.id][sl.k].perf && sl.c[round]);
+      if (!todo.length) break;
+      const syms = Array.from(new Set(todo.map(sl => sl.c[round])));
+      syms.forEach(s => { delete PERF[s]; });
+      await fetchPerf(syms);
+      todo.forEach(sl => { const r = IDX_RES[sl.ix.id][sl.k], s = sl.c[round]; r.tried.push(s); if (PERF[s] && PERF[s].last != null) { r.sym = s; r.perf = PERF[s]; if (round > 0 && s !== sl.c[0]) learned = true; } });
+      paintIdx();
+    }
+    /* recherche automatique pour les symboles toujours introuvables */
+    for (const sl of slots) {
+      const r = IDX_RES[sl.ix.id][sl.k]; if (r.perf) continue;
+      const s = await idxSearch(sl.ix, sl.k);
+      if (!s || r.tried.indexOf(s) >= 0) continue;
+      r.tried.push(s); delete PERF[s]; await fetchPerf([s]);
+      if (PERF[s] && PERF[s].last != null) { r.sym = s; r.perf = PERF[s]; learned = true; }
+      paintIdx();
+    }
+    if (learned) { list.forEach(ix => ['price', 'tr'].forEach(k => { const r = IDX_RES[ix.id][k]; if (r.sym && r.sym !== ix[k][0]) { IDX_OVR[ix.id] = Object.assign(IDX_OVR[ix.id] || {}, {[k]: r.sym}); } })); idxSave(); }
+    paintIdx();
+    const nd = slots.filter(sl => !IDX_RES[sl.ix.id][sl.k].perf).length;
+    info.textContent = 'mis à jour le ' + new Date().toLocaleString('fr-CH', {day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'}) + (nd ? ' · ' + nd + ' symbole(s) introuvable(s) — corrigez-les avec ✎' : '');
+  } catch (e) { info.textContent = e.message; }
+  finally { idxBusy = false; }
+}
+function buildIdx(){
+  $('mkIdxBody').innerHTML = INDICES.map(ix =>
+      '<div class="ix-row" data-id="' + ix.id + '"><span class="ix-n">' + esc(ix.n) + '<button type="button" class="ix-edit" data-id="' + ix.id + '" title="Modifier les symboles">✎</button><small class="ix-sym"></small></span>'
+    + '<span class="ix-lvl"></span><span class="c ix-d1 fx-delta"></span>'
+    + '<span class="c ix-pytd fx-delta"></span><span class="c ix-py1 fx-delta"></span><span class="c ix-py3 fx-delta"></span>'
+    + '<span class="c ix-tytd fx-delta"></span><span class="c ix-ty1 fx-delta"></span><span class="c ix-ty3 fx-delta"></span></div>').join('');
+}
+function paintIdx(){
+  INDICES.forEach(ix => {
+    const row = $('mkIdxBody').querySelector('.ix-row[data-id="' + ix.id + '"]'); if (!row) return;
+    const R = IDX_RES[ix.id]; if (!R) return;
+    const P = R.price.perf, T = R.tr.perf;
+    row.querySelector('.ix-lvl').textContent = P ? px(P.last) : (T && !R.price.sym ? '' : '');
+    setPct(row.querySelector('.ix-d1'), P ? P.d1 : null, false); if (P && P.d1 != null) row.querySelector('.ix-d1').textContent = mktPctTxt(P.d1, 2);
+    [['pytd', P, 'ytd'], ['py1', P, 'y1'], ['py3', P, 'y3'], ['tytd', T, 'ytd'], ['ty1', T, 'y1'], ['ty3', T, 'y3']].forEach(a => {
+      const el = row.querySelector('.ix-' + a[0]);
+      setPct(el, a[1] ? a[1][a[2]] : null, a[1] && a[1].approx);
+      if (!a[1] || a[1][a[2]] == null) el.textContent = (IDX_RES[ix.id][a[0].charAt(0) === 'p' ? 'price' : 'tr'].tried.length && !a[1]) ? 'n.d.' : (a[1] ? 'n.d.' : '');
+    });
+    const sy = row.querySelector('.ix-sym');
+    sy.textContent = [R.price.sym ? R.price.sym : '', R.tr.sym ? 'TR ' + R.tr.sym : ''].filter(Boolean).join(' · ');
+    row.title = ix.note ? ix.note : '';
+    ['price', 'tr'].forEach(k => { if (!R[k].perf && R[k].tried.length) row.querySelectorAll(k === 'price' ? '.ix-pytd,.ix-py1,.ix-py3' : '.ix-tytd,.ix-ty1,.ix-ty3').forEach(el => { el.title = 'Symboles essayés : ' + R[k].tried.join(', '); }); });
+  });
+}
+$('mkIdxBody').addEventListener('click', e => {
+  const ed = e.target.closest('.ix-edit'); if (!ed) { const r = e.target.closest('.ix-row'); return; }
+  const ix = INDICES.find(x => x.id === ed.dataset.id), R = IDX_RES[ix.id] || {price: {}, tr: {}};
+  const p = prompt('Symbole TradingView de l\'indice de PRIX pour « ' + ix.n + ' » (ex. SIX:SMI) :', R.price.sym || idxCands(ix, 'price')[0]);
+  if (p === null) return;
+  const t = prompt('Symbole TradingView de l\'indice TOTAL RETURN pour « ' + ix.n + ' » (laisser tel quel si inchangé) :', R.tr.sym || idxCands(ix, 'tr')[0]);
+  if (t === null) return;
+  IDX_OVR[ix.id] = {price: p.trim() || undefined, tr: t.trim() || undefined}; idxSave();
+  loadIndices(ix.id);
+});
+$('mkIdxRefresh').addEventListener('click', () => { mkCache.clear(); Object.keys(PERF).forEach(k => { delete PERF[k]; }); loadIndices(); });
+
+/* ---------------------------------------------------------------- onglets Market Data : SPI par secteur (par défaut) · Indices · Ma watchlist */
+let tilesDone = false;
 function showList(which){
-  $('mkMineSec').hidden = which !== 'mine'; $('mkSpiSec').hidden = which !== 'spi';
+  $('mkSpiSec').hidden = which !== 'spi'; $('mkIdxSec').hidden = which !== 'idx'; $('mkMineSec').hidden = which !== 'mine';
   $('mkLists').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.l === which));
   if (which === 'spi') { buildSpi(); paintSpi(); }
+  if (which === 'idx' && started) { if (!idxLoaded) { idxLoaded = true; buildIdx(); (async () => { await idxLoadOverrides(); loadIndices(); })(); } }
+  if (which === 'mine' && started && !tilesDone) { tilesDone = true; renderTiles(); }
+  showList.cur = which;
 }
 $('mkLists').addEventListener('click', e => { const b = e.target.closest('[data-l]'); if (b) showList(b.dataset.l); });
+
+/* ---------------------------------------------------------------- diagnostic technique (réponses brutes du fournisseur) */
+$('mkDiagRun').addEventListener('click', async () => {
+  const out = $('mkDiagOut'); out.textContent = 'diagnostic en cours…';
+  const get = async (label, url) => { try { const r = await fetch(url); const t = await r.text(); return '### ' + label + '  (HTTP ' + r.status + ')\n' + t.slice(0, 1800) + (t.length > 1800 ? ' …' : '') + '\n'; } catch (e) { return '### ' + label + '\n' + e.message + '\n'; } };
+  let txt = '';
+  txt += await get('cote SIX:NESN', '/api/tv/quote/SIX:NESN');
+  txt += await get('screener (marché suisse, aperçu brut)', '/api/tv-fund?diag=1');
+  txt += await get('performances SIX:NESN', '/api/tv-perf?symbols=SIX:NESN');
+  txt += await get('statut', '/api/tv/status');
+  out.textContent = txt;
+});
+$('mkDiagCopy').addEventListener('click', () => { const t = $('mkDiagOut').textContent; if (navigator.clipboard) navigator.clipboard.writeText(t).catch(() => {}); });
 
 /* ---------------------------------------------------------------- démarrage : rien n'est appelé avant la première ouverture de l'écran */
 let started = false;
@@ -7608,14 +7868,15 @@ async function init(){
   if (started) { return; }
   started = true;
   await refreshUsage();
-  if (await syncWatch()) { /* watchlist d'équipe plus récente */ }
-  renderTiles();
+  await syncWatch();
+  if (showList.cur === 'idx' || showList.cur === 'mine') showList(showList.cur);
 }
 document.querySelectorAll('[data-screen="mkt"],[data-open="mkt"]').forEach(b => b.addEventListener('click', init));
 
 WATCH = loadWatchLocal() || MK_DEFAULT_WATCH.map(w => Object.assign({}, w));
 renderTypes();
 loadStore();
+showList('spi');
 
 })();
 

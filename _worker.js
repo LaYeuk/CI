@@ -545,7 +545,7 @@ async function handleChartpack(request, env) {
 }
 
 /* Petit stockage clé/valeur partagé (ex. les catégories du Whiteboard) : un document JSON par clé. */
-const KV_KEYS = ['wb_categories', 'mkt_watchlist'];
+const KV_KEYS = ['wb_categories', 'mkt_watchlist', 'mkt_indices'];
 async function handleKv(request, env, key) {
   if (request.method === 'OPTIONS') return new Response(null, {status: 204, headers: corsHeaders()});
   if (KV_KEYS.indexOf(key) < 0) return jsonResponse({error_message: 'Clé inconnue.'}, 404);
@@ -616,16 +616,21 @@ async function tvCount(env) {
       .bind('tv_usage_' + tvMonth(), new Date().toISOString()).run();
   } catch (e) {}
 }
-async function tvProxy(request, env, ctx) {
-  const url = new URL(request.url);
-  const sub = url.pathname.replace(/^\/api\/tv\/?/, '');
-  const cap = parseInt(env.TV_MONTHLY_CAP, 10) || 30000;
-  /* Même origine uniquement (le Worker est public : sans cela, n'importe qui pourrait consommer le quota). */
+/* Même origine uniquement (le Worker est public : sans cela, n'importe qui pourrait consommer le quota). */
+function tvGuard(request, url) {
   const origin = request.headers.get('Origin');
   const sfs = request.headers.get('Sec-Fetch-Site');
   if ((origin && origin !== url.origin) || (sfs && sfs !== 'same-origin' && sfs !== 'none')) {
     return tvJson({error_message: 'Market Data : requête refusée (origine différente du site).'}, 403);
   }
+  return null;
+}
+async function tvProxy(request, env, ctx) {
+  const url = new URL(request.url);
+  const sub = url.pathname.replace(/^\/api\/tv\/?/, '');
+  const cap = parseInt(env.TV_MONTHLY_CAP, 10) || 30000;
+  const denied = tvGuard(request, url);
+  if (denied) return denied;
   if (request.method === 'OPTIONS') return new Response(null, {status: 204});
   if (sub === 'status') {
     return tvJson({configured: !!env.TV_API_KEY, used: await tvUsage(env), cap: cap, month: tvMonth()});
@@ -663,6 +668,176 @@ async function tvProxy(request, env, ctx) {
   }
   if (up.status === 401 || up.status === 403) return tvJson({error_code: 'BAD_KEY', error_message: 'Clé Market Data refusée par le fournisseur (vérifiez TV_API_KEY et votre forfait sur console.tvapis.com).'}, 502);
   return new Response(text, {status: up.status, headers: {'Content-Type': up.headers.get('Content-Type') || 'application/json', 'Cache-Control': 'no-store'}});
+}
+
+
+/* ---- Performances (YTD / 1 an / 3 ans) calculées côté Worker à partir de l'historique journalier ------------
+   GET /api/tv-perf?symbols=SIX:NESN,SIX:ROG,...  (30 symboles max par appel)
+   -> {perf: {"SIX:NESN": {last, lastT, d1, ytd, y1, y3, approx} | null}, source}
+   L'historique (≈ 830 bougies par symbole) reste côté Worker ; seuls quelques chiffres par symbole sont renvoyés et mis en cache
+   dans D1 (30 min, partagés entre collègues). Un appel groupé du fournisseur (10 symboles) alimente 10 symboles. */
+const TV_PERF_TTL = 30 * 60 * 1000;
+async function tvUpstream(env, method, path, bodyObj) {
+  await tvCount(env);
+  const r = await fetch(TV_BASE + path, {method: method, headers: Object.assign({Authorization: 'Bearer ' + env.TV_API_KEY, Accept: 'application/json'}, bodyObj ? {'Content-Type': 'application/json'} : {}), body: bodyObj ? JSON.stringify(bodyObj) : undefined});
+  let j = null; try { j = await r.json(); } catch (e) {}
+  return {status: r.status, json: j};
+}
+/* Une réponse « bougies » (forme tolérante) -> {sym, candles:[{t, c}]} triées par date */
+function tvItemCandles(it, daily) {
+  if (!it || typeof it !== 'object') return null;
+  const d = (it.data && typeof it.data === 'object' && !Array.isArray(it.data)) ? it.data : it;
+  const list = Array.isArray(d.history) ? d.history.slice() : [];
+  if (d.current && d.current.time != null) list.push(d.current);
+  const out = [];
+  list.forEach(b => {
+    const sec = +b.time, c = +b.close;
+    if (!isFinite(sec) || !isFinite(c)) return;
+    out.push({t: daily ? Math.floor(sec * 1000 / 864e5) * 864e5 : sec * 1000, c: c});
+  });
+  out.sort((a, b) => a.t - b.t);
+  const cs = out.filter((b, i) => !i || b.t !== out[i - 1].t);
+  return {sym: d.symbol || (d.info && d.info.full_name) || it.symbol || null, candles: cs};
+}
+function tvBatchItems(j) {
+  const d = j && j.data;
+  if (Array.isArray(d)) return d;
+  if (d && Array.isArray(d.results)) return d.results;
+  if (d && Array.isArray(d.responses)) return d.responses;
+  if (d && Array.isArray(d.items)) return d.items;
+  if (d && typeof d === 'object' && !d.history) return Object.keys(d).map(k => { const v = d[k]; return (v && typeof v === 'object') ? Object.assign({symbol: k}, v) : null; }).filter(Boolean);
+  return [];
+}
+function tvPerfFromCandles(cs, tolDays) {
+  const n = cs.length; if (n < 2) return null;
+  const last = cs[n - 1], prev = cs[n - 2];
+  const at = ms => { let lo = 0, hi = n - 1, res = -1; while (lo <= hi) { const m = (lo + hi) >> 1; if (cs[m].t <= ms) { res = m; lo = m + 1; } else hi = m - 1; } return res; };
+  const d = new Date(last.t), Y = d.getUTCFullYear(), M = d.getUTCMonth(), D = d.getUTCDate();
+  const ref = (target) => { const i = at(target); if (i < 0) return null; if (target - cs[i].t > tolDays * 864e5) return null; return cs[i].c; };
+  const pct = r => (r && r > 0) ? Math.round((last.c / r - 1) * 10000) / 100 : null;
+  const first = cs[0].t;
+  return {
+    last: last.c, lastT: last.t, d1: pct(prev.c),
+    ytd: (first <= Date.UTC(Y, 0, 1) - 1 + tolDays * 864e5) ? pct(ref(Date.UTC(Y, 0, 1) - 1)) : null,
+    y1: pct(ref(Date.UTC(Y - 1, M, D))),
+    y3: pct(ref(Date.UTC(Y - 3, M, D)))
+  };
+}
+async function tvPerf(request, env, ctx) {
+  const url = new URL(request.url);
+  const denied = tvGuard(request, url); if (denied) return denied;
+  if (!env.TV_API_KEY) return tvJson({error_code: 'NO_KEY', error_message: 'Clé API Market Data non configurée sur le Worker (npx wrangler secret put TV_API_KEY).'}, 503);
+  const syms = Array.from(new Set((url.searchParams.get('symbols') || '').split(',').map(x => x.trim()).filter(x => /^[A-Za-z0-9_.:\-&]+$/.test(x)))).slice(0, 30);
+  if (!syms.length) return tvJson({error_message: 'Aucun symbole.'}, 400);
+  const cap = parseInt(env.TV_MONTHLY_CAP, 10) || 30000;
+  const keys = syms.map(s => 'tvperf:v1:' + s);
+  const cached = await cacheGetMany(env, keys);
+  const perf = {}, todo = [];
+  const stale = {};
+  syms.forEach((s, i) => {
+    const h = cached.get(keys[i]);
+    if (h) { try { const v = JSON.parse(h.data); if (h.age < TV_PERF_TTL) { perf[s] = v; return; } stale[s] = v; } catch (e) {} }
+    todo.push(s);
+  });
+  const rows = [];
+  let source = todo.length ? 'upstream' : 'cache', errMsg = '';
+  if (todo.length && await tvUsage(env) >= cap) { todo.forEach(s => { perf[s] = stale[s] || null; }); return tvJson({perf, source: 'cache-cap', error_message: 'Plafond mensuel atteint.'}); }
+  const fetchGroup = async (group, tf, range) => {
+    const found = {};
+    const daily = tf === 'D' || tf === 'W' || tf === 'M';
+    let res;
+    try { res = await tvUpstream(env, 'POST', '/price/batch', {requests: group.map(s => ({symbol: s, timeframe: tf, range: range, type: 'Japanese'}))}); }
+    catch (e) { errMsg = e.message; res = null; }
+    if (res && res.status === 200 && res.json && res.json.success !== false) {
+      const items = tvBatchItems(res.json);
+      items.forEach((it, i) => { const c = tvItemCandles(it, daily); if (!c || !c.candles.length) return; const sym = (c.sym && group.indexOf(c.sym) >= 0) ? c.sym : (items.length === group.length ? group[i] : null); if (sym) found[sym] = c.candles; });
+    } else if (res && (res.status === 401 || res.status === 403)) { errMsg = 'BAD_KEY'; return found; }
+    else if (res && res.status === 429) { errMsg = 'Limite de débit du fournisseur (429).'; return found; }
+    /* repli : symbole par symbole pour ceux que le groupe n'a pas fournis */
+    for (const s of group) {
+      if (found[s] || errMsg === 'BAD_KEY') continue;
+      try {
+        const r1 = await tvUpstream(env, 'GET', '/price/' + encodeURIComponent(s).replace(/%3A/gi, ':') + '?timeframe=' + tf + '&range=' + range + '&type=Japanese');
+        if (r1.status === 200 && r1.json && r1.json.success !== false) { const c = tvItemCandles(r1.json, daily); if (c && c.candles.length) found[s] = c.candles; }
+        else if (r1.status === 429) { errMsg = 'Limite de débit du fournisseur (429).'; break; }
+      } catch (e) { errMsg = e.message; }
+    }
+    return found;
+  };
+  for (let i = 0; i < todo.length; i += 10) {
+    const group = todo.slice(i, i + 10);
+    const daily = await fetchGroup(group, 'D', 830);
+    group.forEach(s => { if (daily[s]) { const p = tvPerfFromCandles(daily[s], 7); if (p) { p.approx = false; perf[s] = p; rows.push({k: 'tvperf:v1:' + s, data: JSON.stringify(p)}); } } });
+    const miss = group.filter(s => !perf[s]);
+    if (miss.length && errMsg !== 'BAD_KEY') {
+      /* historique journalier indisponible (plafond de bougies ?) : repli hebdomadaire, valeurs approchées */
+      const weekly = await fetchGroup(miss, 'W', 170);
+      miss.forEach(s => { if (weekly[s]) { const p = tvPerfFromCandles(weekly[s], 14); if (p) { p.approx = true; perf[s] = p; rows.push({k: 'tvperf:v1:' + s, data: JSON.stringify(p)}); } } });
+    }
+  }
+  if (errMsg === 'BAD_KEY') return tvJson({error_code: 'BAD_KEY', error_message: 'Clé Market Data refusée par le fournisseur (vérifiez TV_API_KEY et votre forfait).'}, 502);
+  todo.forEach(s => { if (!perf[s]) perf[s] = stale[s] || null; });
+  if (rows.length && ctx) ctx.waitUntil(cachePutMany(env, rows));
+  return tvJson({perf, source, error_message: errMsg || undefined});
+}
+
+/* ---- Fondamentaux (P/E, rendement du dividende) : écran « Screener » du fournisseur, marché suisse, une seule requête mise en cache 6 h.
+   GET /api/tv-fund            -> {fund: {"NESN": {pe, dy, name, sector}}, count, diag}
+   GET /api/tv-fund?diag=1     -> idem + 1re ligne brute de la réponse du fournisseur (pour diagnostic). */
+const TV_FUND_TTL = 6 * 3600 * 1000;
+const TV_FUND_KEYS = {
+  pe: ['price_earnings_ttm', 'price_to_earnings_ttm', 'pe_ratio', 'pe'],
+  dy: ['dividends_yield_current', 'dividends_yield', 'dividend_yield_recent', 'dividend_yield_fwd', 'dividend_yield', 'dividends_yield_fy']
+};
+function tvPickNum(o, names) {
+  for (const k of names) { if (o[k] != null && isFinite(+o[k])) return +o[k]; }
+  const low = {}; Object.keys(o).forEach(k => { low[k.toLowerCase()] = o[k]; });
+  for (const k of names) { const v = low[k.toLowerCase()]; if (v != null && isFinite(+v)) return +v; }
+  return null;
+}
+/* Réponse du screener (forme tolérante) -> lignes {sym, o:{colonne: valeur}} */
+function tvScanRows(j) {
+  const d = j && (j.data !== undefined ? j.data : j);
+  let arr = Array.isArray(d) ? d : (d && (d.data || d.rows || d.results || d.items || d.symbols)) || [];
+  const cols = (d && (d.columns || d.fields)) || (j && (j.columns || j.fields)) || null;
+  if (!Array.isArray(arr)) return [];
+  return arr.map(r => {
+    if (!r || typeof r !== 'object') return null;
+    if (Array.isArray(r.d) && r.s) { const o = {}; if (Array.isArray(cols)) cols.forEach((c, i) => { o[typeof c === 'string' ? c : (c && (c.id || c.name))] = r.d[i]; }); return {sym: r.s, o: o}; }
+    const o = (r.data && typeof r.data === 'object' && !Array.isArray(r.data)) ? Object.assign({}, r, r.data) : r;
+    return {sym: o.s || o.symbol || o.ticker || o.name || null, o: o};
+  }).filter(Boolean);
+}
+async function tvFund(request, env, ctx) {
+  const url = new URL(request.url);
+  const denied = tvGuard(request, url); if (denied) return denied;
+  if (!env.TV_API_KEY) return tvJson({error_code: 'NO_KEY', error_message: 'Clé API Market Data non configurée sur le Worker (npx wrangler secret put TV_API_KEY).'}, 503);
+  const wantDiag = !!url.searchParams.get('diag');
+  const ck = 'tvfund:v1:switzerland';
+  const hit = await cacheGet(env, ck);
+  if (hit && hit.age < TV_FUND_TTL && !wantDiag) { try { return tvJson(JSON.parse(hit.data)); } catch (e) {} }
+  if (await tvUsage(env) >= (parseInt(env.TV_MONTHLY_CAP, 10) || 30000)) {
+    if (hit) { try { return tvJson(JSON.parse(hit.data)); } catch (e) {} }
+    return tvJson({error_code: 'CAP', error_message: "Plafond mensuel d'appels Market Data atteint."}, 429);
+  }
+  const fund = {}; let diag = {}, count = 0, firstErr = '';
+  for (let page = 0; page < 3; page++) {
+    let res;
+    try { res = await tvUpstream(env, 'POST', '/screener/scan', {market: 'switzerland', range: [page * 250, page * 250 + 250], preset_fields: ['overview'], sort: {sortBy: 'market_cap_basic', sortOrder: 'desc'}}); }
+    catch (e) { firstErr = e.message; break; }
+    if (page === 0) diag = {status: res.status, head: JSON.stringify(res.json).slice(0, 1800)};
+    if (res.status !== 200 || !res.json || res.json.success === false) { firstErr = (res.json && ((res.json.error && (res.json.error.message || res.json.error.code)) || res.json.error_message)) || ('HTTP ' + res.status); break; }
+    const rows = tvScanRows(res.json);
+    rows.forEach(r => {
+      const sym = String(r.sym || '').replace(/^SIX:/, '').toUpperCase();
+      const pe = tvPickNum(r.o, TV_FUND_KEYS.pe), dy = tvPickNum(r.o, TV_FUND_KEYS.dy);
+      if (sym) { fund[sym] = {pe: pe, dy: dy, name: r.o.description || r.o.name || null, sector: r.o.sector || null}; count++; }
+    });
+    if (rows.length < 250) break;
+  }
+  const out = {fund: fund, count: count, diag: diag, error_message: count ? undefined : (firstErr || 'Aucune ligne reçue du screener.')};
+  if (count && ctx) { const slim = {fund: fund, count: count, diag: {status: diag.status, head: (diag.head || '').slice(0, 600)}}; ctx.waitUntil(cachePut(env, ck, JSON.stringify(slim))); }
+  return tvJson(out, count ? 200 : 502);
 }
 
 /* Ordre important : les préfixes les plus spécifiques d'abord (aucun souci ici, les 4 préfixes
@@ -709,6 +884,8 @@ export default {
         return jsonResponse({ofs: {total: st.ofs.total, indexed: st.ofs.indexed, stale: st.ofs.stale.length}, snb: {total: st.snb.total, indexed: st.snb.indexed, stale: st.snb.stale.length}});
       } catch (e) { return jsonResponse({error_message: 'État indisponible (' + e.message + ').'}, 500); }
     }
+    if (url.pathname === '/api/tv-perf') return tvPerf(request, env, ctx);
+    if (url.pathname === '/api/tv-fund') return tvFund(request, env, ctx);
     if (url.pathname === '/api/tv' || url.pathname.startsWith('/api/tv/')) return tvProxy(request, env, ctx);
     if (url.pathname === '/api/db/chartpack') return handleChartpack(request, env);
     const kvMatch = url.pathname.match(/^\/api\/db\/kv\/([a-z_]+)$/);
