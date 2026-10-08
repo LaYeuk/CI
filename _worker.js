@@ -723,6 +723,30 @@ function tvPerfFromCandles(cs, tolDays) {
     y3: pct(ref(Date.UTC(Y - 3, M, D)))
   };
 }
+/* Historique d'un groupe de symboles (appel groupé, puis repli symbole par symbole) -> {symbole: [{t, c}]} ; st.err reçoit le dernier message d'erreur. */
+async function tvFetchGroup(env, group, tf, range, st) {
+  const found = {};
+  const daily = tf === 'D' || tf === 'W' || tf === 'M';
+  let res;
+  try { res = await tvUpstream(env, 'POST', '/price/batch', {requests: group.map(s => ({symbol: s, timeframe: tf, range: range, type: 'Japanese'}))}); }
+  catch (e) { st.err = e.message; res = null; }
+  if (res && res.status === 200 && res.json && res.json.success !== false) {
+    const items = tvBatchItems(res.json);
+    items.forEach((it, i) => { const c = tvItemCandles(it, daily); if (!c || !c.candles.length) return; const sym = (c.sym && group.indexOf(c.sym) >= 0) ? c.sym : (items.length === group.length ? group[i] : null); if (sym) found[sym] = c.candles; });
+  } else if (res && (res.status === 401 || res.status === 403)) { st.err = 'BAD_KEY'; return found; }
+  else if (res && res.status === 429) { st.err = 'Limite de débit du fournisseur (429).'; return found; }
+  /* repli : symbole par symbole pour ceux que le groupe n'a pas fournis */
+  for (const s of group) {
+    if (found[s] || st.err === 'BAD_KEY') continue;
+    try {
+      const r1 = await tvUpstream(env, 'GET', '/price/' + encodeURIComponent(s).replace(/%3A/gi, ':') + '?timeframe=' + tf + '&range=' + range + '&type=Japanese');
+      if (r1.status === 200 && r1.json && r1.json.success !== false) { const c = tvItemCandles(r1.json, daily); if (c && c.candles.length) found[s] = c.candles; }
+      else if (r1.status === 429) { st.err = 'Limite de débit du fournisseur (429).'; break; }
+    } catch (e) { st.err = e.message; }
+  }
+  return found;
+}
+
 async function tvPerf(request, env, ctx) {
   const url = new URL(request.url);
   const denied = tvGuard(request, url); if (denied) return denied;
@@ -739,46 +763,78 @@ async function tvPerf(request, env, ctx) {
     if (h) { try { const v = JSON.parse(h.data); if (h.age < TV_PERF_TTL) { perf[s] = v; return; } stale[s] = v; } catch (e) {} }
     todo.push(s);
   });
+  const st = {err: ''};
   const rows = [];
-  let source = todo.length ? 'upstream' : 'cache', errMsg = '';
+  let source = todo.length ? 'upstream' : 'cache';
   if (todo.length && await tvUsage(env) >= cap) { todo.forEach(s => { perf[s] = stale[s] || null; }); return tvJson({perf, source: 'cache-cap', error_message: 'Plafond mensuel atteint.'}); }
-  const fetchGroup = async (group, tf, range) => {
-    const found = {};
-    const daily = tf === 'D' || tf === 'W' || tf === 'M';
-    let res;
-    try { res = await tvUpstream(env, 'POST', '/price/batch', {requests: group.map(s => ({symbol: s, timeframe: tf, range: range, type: 'Japanese'}))}); }
-    catch (e) { errMsg = e.message; res = null; }
-    if (res && res.status === 200 && res.json && res.json.success !== false) {
-      const items = tvBatchItems(res.json);
-      items.forEach((it, i) => { const c = tvItemCandles(it, daily); if (!c || !c.candles.length) return; const sym = (c.sym && group.indexOf(c.sym) >= 0) ? c.sym : (items.length === group.length ? group[i] : null); if (sym) found[sym] = c.candles; });
-    } else if (res && (res.status === 401 || res.status === 403)) { errMsg = 'BAD_KEY'; return found; }
-    else if (res && res.status === 429) { errMsg = 'Limite de débit du fournisseur (429).'; return found; }
-    /* repli : symbole par symbole pour ceux que le groupe n'a pas fournis */
-    for (const s of group) {
-      if (found[s] || errMsg === 'BAD_KEY') continue;
-      try {
-        const r1 = await tvUpstream(env, 'GET', '/price/' + encodeURIComponent(s).replace(/%3A/gi, ':') + '?timeframe=' + tf + '&range=' + range + '&type=Japanese');
-        if (r1.status === 200 && r1.json && r1.json.success !== false) { const c = tvItemCandles(r1.json, daily); if (c && c.candles.length) found[s] = c.candles; }
-        else if (r1.status === 429) { errMsg = 'Limite de débit du fournisseur (429).'; break; }
-      } catch (e) { errMsg = e.message; }
-    }
-    return found;
-  };
+  const fetchGroup = (group, tf, range) => tvFetchGroup(env, group, tf, range, st);
   for (let i = 0; i < todo.length; i += 10) {
     const group = todo.slice(i, i + 10);
     const daily = await fetchGroup(group, 'D', 830);
     group.forEach(s => { if (daily[s]) { const p = tvPerfFromCandles(daily[s], 7); if (p) { p.approx = false; perf[s] = p; rows.push({k: 'tvperf:v1:' + s, data: JSON.stringify(p)}); } } });
     const miss = group.filter(s => !perf[s]);
-    if (miss.length && errMsg !== 'BAD_KEY') {
+    if (miss.length && st.err !== 'BAD_KEY') {
       /* historique journalier indisponible (plafond de bougies ?) : repli hebdomadaire, valeurs approchées */
       const weekly = await fetchGroup(miss, 'W', 170);
       miss.forEach(s => { if (weekly[s]) { const p = tvPerfFromCandles(weekly[s], 14); if (p) { p.approx = true; perf[s] = p; rows.push({k: 'tvperf:v1:' + s, data: JSON.stringify(p)}); } } });
     }
   }
-  if (errMsg === 'BAD_KEY') return tvJson({error_code: 'BAD_KEY', error_message: 'Clé Market Data refusée par le fournisseur (vérifiez TV_API_KEY et votre forfait).'}, 502);
+  if (st.err === 'BAD_KEY') return tvJson({error_code: 'BAD_KEY', error_message: 'Clé Market Data refusée par le fournisseur (vérifiez TV_API_KEY et votre forfait).'}, 502);
   todo.forEach(s => { if (!perf[s]) perf[s] = stale[s] || null; });
   if (rows.length && ctx) ctx.waitUntil(cachePutMany(env, rows));
-  return tvJson({perf, source, error_message: errMsg || undefined});
+  return tvJson({perf, source, error_message: st.err || undefined});
+}
+
+/* ---- Séries de clôtures journalières (graphique de comparaison, Market Lab) -----------------------------------
+   GET /api/tv-series?symbols=SIX:NESN,SIX:ROG,...&bars=N   (30 symboles max par appel)
+   -> {series: {"SIX:NESN": {t: [jours depuis 1970], c: [clôtures]} | null}, error_message?}
+   Les historiques sont mis en cache dans D1 (3 h, partagés entre collègues) par symbole ; le nombre de bougies demandé est arrondi
+   à un palier (130 / 260 / 780 / 1300 / 2000) pour qu'une même ligne en cache serve plusieurs fenêtres. */
+const TV_SERIES_TTL = 3 * 3600 * 1000;
+const TV_SERIES_STEPS = [130, 260, 780, 1300, 2000];
+async function tvSeries(request, env, ctx) {
+  const url = new URL(request.url);
+  const denied = tvGuard(request, url); if (denied) return denied;
+  if (!env.TV_API_KEY) return tvJson({error_code: 'NO_KEY', error_message: 'Clé API Market Data non configurée sur le Worker (npx wrangler secret put TV_API_KEY).'}, 503);
+  const syms = Array.from(new Set((url.searchParams.get('symbols') || '').split(',').map(x => x.trim()).filter(x => /^[A-Za-z0-9_.:\-&]+$/.test(x)))).slice(0, 30);
+  if (!syms.length) return tvJson({error_message: 'Aucun symbole.'}, 400);
+  const want = Math.max(20, Math.min(2000, parseInt(url.searchParams.get('bars'), 10) || 130));
+  const bars = TV_SERIES_STEPS.find(x => x >= want) || 2000;
+  const cap = parseInt(env.TV_MONTHLY_CAP, 10) || 30000;
+  const keys = syms.map(s => 'tvser:v1:' + s);
+  const cached = await cacheGetMany(env, keys);
+  const series = {}, todo = [], stale = {};
+  syms.forEach((s, i) => {
+    const h = cached.get(keys[i]);
+    if (h) { try { const v = JSON.parse(h.data); if (v && v.t && v.t.length) { if (h.age < TV_SERIES_TTL && (v.bars >= bars || v.full)) { series[s] = {t: v.t, c: v.c}; return; } stale[s] = {t: v.t, c: v.c}; } } catch (e) {} }
+    todo.push(s);
+  });
+  if (todo.length && await tvUsage(env) >= cap) { todo.forEach(s => { series[s] = stale[s] || null; }); return tvJson({series, error_message: 'Plafond mensuel atteint.'}); }
+  const st = {err: ''}, rows = [];
+  for (let i = 0; i < todo.length; i += 10) {
+    if (i) await new Promise(r => setTimeout(r, 450)); /* 2 requêtes/s maximum (forfait Basic) */
+    const group = todo.slice(i, i + 10);
+    let found = await tvFetchGroup(env, group, 'D', bars, st);
+    /* plafond de bougies du forfait ? on retente avec un palier plus petit pour les symboles manquants */
+    let miss = group.filter(s => !found[s]);
+    for (const smaller of [830, 260]) {
+      if (!miss.length || smaller >= bars || st.err === 'BAD_KEY') continue;
+      const f2 = await tvFetchGroup(env, miss, 'D', smaller, st);
+      miss.forEach(s => { if (f2[s]) found[s] = f2[s]; });
+      miss = group.filter(s => !found[s]);
+    }
+    group.forEach(s => {
+      const cs = found[s]; if (!cs || !cs.length) return;
+      const t = [], c = [];
+      cs.forEach(b => { t.push(Math.round(b.t / 864e5)); c.push(Math.round(b.c * 1e4) / 1e4); });
+      series[s] = {t, c};
+      rows.push({k: 'tvser:v1:' + s, data: JSON.stringify({bars: bars, full: cs.length < bars * 0.9, t, c})});
+    });
+  }
+  if (st.err === 'BAD_KEY') return tvJson({error_code: 'BAD_KEY', error_message: 'Clé Market Data refusée par le fournisseur (vérifiez TV_API_KEY et votre forfait).'}, 502);
+  todo.forEach(s => { if (!series[s]) series[s] = stale[s] || null; });
+  if (rows.length && ctx) ctx.waitUntil(cachePutMany(env, rows));
+  return tvJson({series, error_message: st.err || undefined});
 }
 
 /* ---- Fondamentaux (P/E, rendement du dividende) : écran « Screener » du fournisseur, marché suisse, une seule requête mise en cache 6 h.
@@ -886,6 +942,7 @@ export default {
       } catch (e) { return jsonResponse({error_message: 'État indisponible (' + e.message + ').'}, 500); }
     }
     if (url.pathname === '/api/tv-perf') return tvPerf(request, env, ctx);
+    if (url.pathname === '/api/tv-series') return tvSeries(request, env, ctx);
     if (url.pathname === '/api/tv-fund') return tvFund(request, env, ctx);
     if (url.pathname === '/api/tv' || url.pathname.startsWith('/api/tv/')) return tvProxy(request, env, ctx);
     if (url.pathname === '/api/db/chartpack') return handleChartpack(request, env);
