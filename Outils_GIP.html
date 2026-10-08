@@ -383,18 +383,18 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenMkt .mk-star{border:0;background:none;font-size:15px;color:#B88A00;padding:0}
 #screenMkt #mkSpiMiss{margin:0 0 10px}
 
-#screenMkt .mk-head,#screenMkt .mk-row{display:grid;grid-template-columns:minmax(150px,1fr) 92px 74px 92px 56px 84px 84px 28px;gap:8px;align-items:center;padding:7px 14px}
+#screenMkt .mk-head,#screenMkt .mk-row{display:grid;grid-template-columns:minmax(150px,1fr) 70px 92px 74px 92px 56px 84px 84px 28px;gap:8px;align-items:center;padding:7px 14px}
 #screenMkt .mk-head{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;border-top:1px solid #F1F0EC;background:#FAF9F6}
 #screenMkt .mk-head span{cursor:pointer;user-select:none}
 #screenMkt .mk-head span:not(.h-name){text-align:right}
 #screenMkt .mk-head span.on{color:var(--navy);font-weight:700}
 #screenMkt .mk-row{border-top:1px solid #F7F6F2;cursor:pointer;font-size:13px}
 #screenMkt .mk-row .n small{display:block;color:var(--mut);font-size:11px;font-weight:400}
-#screenMkt .mk-row .p,#screenMkt .mk-row .pe,#screenMkt .mk-row .dv{text-align:right;font-variant-numeric:tabular-nums}
+#screenMkt .mk-row .p,#screenMkt .mk-row .pe,#screenMkt .mk-row .dv,#screenMkt .mk-row .mc{text-align:right;font-variant-numeric:tabular-nums}
 #screenMkt .mk-row .dv small{display:block;color:var(--mut);font-size:11px}
 #screenMkt .mk-row .c{text-align:right;font-size:12.5px;font-variant-numeric:tabular-nums}
 #screenMkt .mk-sec .sa{display:flex;gap:14px;margin-left:auto;font-size:12px;color:var(--mut)}
-@media (max-width:760px){#screenMkt .mk-head,#screenMkt .mk-row{grid-template-columns:minmax(110px,1fr) 70px 60px 64px 50px;font-size:12px}#screenMkt .mk-head span:nth-child(n+4):nth-child(-n+5),#screenMkt .mk-row>span:nth-child(n+4):nth-child(-n+5){display:none}}
+@media (max-width:760px){#screenMkt .mk-head,#screenMkt .mk-row{grid-template-columns:minmax(110px,1fr) 70px 60px 64px 50px 26px;font-size:12px}#screenMkt .mk-head span:nth-child(2),#screenMkt .mk-head span:nth-child(5),#screenMkt .mk-head span:nth-child(6),#screenMkt .mk-row>span:nth-child(2),#screenMkt .mk-row>span:nth-child(5),#screenMkt .mk-row>span:nth-child(6){display:none}}
 /* Indices */
 #screenMkt .mk-idx{overflow-x:auto}
 #screenMkt .ix-grp,#screenMkt .ix-head,#screenMkt .ix-row{display:grid;grid-template-columns:minmax(190px,1.4fr) 90px 70px repeat(6,78px);gap:8px;align-items:center;padding:8px 14px;min-width:900px}
@@ -1277,6 +1277,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 
     <section class="fx-sec" id="mkSpiSec">
       <div class="fx-sec-h"><h3>Swiss Performance Index (SPI) — par secteur</h3><small id="mkSpiInfo"></small></div>
+      <div class="fx-notes" style="margin:0 0 8px;font-size:12px">Dans chaque secteur, les titres sont classés par capitalisation boursière décroissante (cliquez sur un en-tête de colonne pour trier autrement).</div>
       <div class="fx-bar" style="margin-top:0">
         <input id="mkSpiQ" type="search" placeholder="Filtrer par nom ou ticker…" aria-label="Filtrer les titres du SPI" style="font:inherit;font-size:12.5px;padding:6px 10px;border:1px solid var(--line);border-radius:7px;min-width:240px">
         <button type="button" class="btn" id="mkSpiAll">Charger tous les secteurs</button>
@@ -1294,7 +1295,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
         <div id="mkIdxBody"></div>
       </div>
       <div class="fx-actions" style="margin-top:10px"><button type="button" class="btn" id="mkIdxRefresh">↻ Actualiser</button></div>
-      <div class="fx-notes" style="margin-top:10px;font-size:12px">Performances calculées sur les cours de clôture (YTD = depuis le dernier jour de bourse de l'année précédente ; 1 et 3 ans = même date, ou la dernière clôture avant). « ~ » = estimation sur données hebdomadaires. Le SPI et le DAX sont des indices de performance par construction. Si un symbole de total return n'est pas reconnu, il est cherché automatiquement ; corrigez-le au besoin avec ✎ (le choix est partagé avec l'équipe).</div>
+      <div class="fx-notes" style="margin-top:10px;font-size:12px">Performances calculées sur les cours de clôture (YTD = depuis le dernier jour de bourse de l'année précédente ; 1 et 3 ans = même date, ou la dernière clôture avant). « ~ » = estimation sur données hebdomadaires. Le SPI et le DAX sont des indices de performance par construction ; le SSE Composite n'a pas de version total return ; « Nifty » = Nifty 50. Si un symbole de total return n'est pas reconnu, il est cherché automatiquement ; corrigez-le au besoin avec ✎ (le choix est partagé avec l'équipe).</div>
     </section>
 
     <section class="fx-sec" id="mkMineSec" hidden>
@@ -7011,76 +7012,91 @@ snbLoadStore();
 
 /* Composition du Swiss Performance Index (SPI), regroupée par secteur (classification simplifiée inspirée d'ICB, pensée pour la gestion de portefeuille :
    banques / assurances / services financiers / immobilier séparés). Format : [secteur, [[ticker SIX, nom], ...]].
+   Dans chaque secteur, les titres sont classés par capitalisation boursière décroissante (ordre de repli estimé ; l'ordre réel est recalculé à partir de la capitalisation fournie par le Worker dès qu'elle est disponible).
    L'indice est révisé chaque année (septembre) : les entrées / sorties se corrigent ici, dans ce seul tableau.
    Les symboles sont envoyés sous la forme « SIX:<ticker> » ; un ticker sans cote est signalé dans l'onglet (« sans cote »). */
 const MKT_SPI = [
   ['Banques', [
-    ['UBSG', 'UBS Group'], ['BAER', 'Julius Bär'], ['VONN', 'Vontobel'], ['EFGN', 'EFG International'], ['SNBN', 'Banque nationale suisse'],
-    ['BCVN', 'Banque Cantonale Vaudoise'], ['BCGE', 'Banque Cantonale de Genève'], ['BCJ', 'Banque Cantonale du Jura'], ['WKB', 'Banque Cantonale du Valais'],
-    ['BEKN', 'Berner Kantonalbank'], ['BLKB', 'Basellandschaftliche Kantonalbank'], ['BSKP', 'Basler Kantonalbank'], ['GLKBN', 'Glarner Kantonalbank'],
-    ['GRKP', 'Graubündner Kantonalbank'], ['LUKN', 'Luzerner Kantonalbank'], ['SGKN', 'St.Galler Kantonalbank'], ['TKBP', 'Thurgauer Kantonalbank'],
-    ['ZG', 'Zuger Kantonalbank'], ['HBLN', 'Hypothekarbank Lenzburg'], ['VATN', 'Valiant'], ['VPBN', 'VP Bank'], ['LLBN', 'Liechtensteinische Landesbank'],
-    ['BPDG', 'Banque Profil de Gestion']
+    ['UBSG', 'UBS Group'], ['BAER', 'Julius Bär'], ['BCVN', 'Banque Cantonale Vaudoise'], ['EFGN', 'EFG International'],
+    ['VONN', 'Vontobel'], ['ZG', 'Zuger Kantonalbank'], ['GRKP', 'Graubündner Kantonalbank'], ['LUKN', 'Luzerner Kantonalbank'],
+    ['SGKN', 'St.Galler Kantonalbank'], ['BEKN', 'Berner Kantonalbank'], ['BSKP', 'Basler Kantonalbank'], ['BCGE', 'Banque Cantonale de Genève'],
+    ['VPBN', 'VP Bank'], ['VATN', 'Valiant'], ['LLBN', 'Liechtensteinische Landesbank'], ['WKB', 'Banque Cantonale du Valais'],
+    ['HBLN', 'Hypothekarbank Lenzburg'], ['BLKB', 'Basellandschaftliche Kantonalbank'], ['TKBP', 'Thurgauer Kantonalbank'], ['GLKBN', 'Glarner Kantonalbank'],
+    ['BCJ', 'Banque Cantonale du Jura'], ['SNBN', 'Banque nationale suisse'], ['BPDG', 'Banque Profil de Gestion']
   ]],
   ['Assurances', [
-    ['ZURN', 'Zurich Insurance'], ['SREN', 'Swiss Re'], ['SLHN', 'Swiss Life'], ['HBAN', 'Helvetia Baloise'], ['VAHN', 'Vaudoise Assurances']
+    ['ZURN', 'Zurich Insurance'], ['SREN', 'Swiss Re'], ['SLHN', 'Swiss Life'], ['HBAN', 'Helvetia Baloise'],
+    ['VAHN', 'Vaudoise Assurances']
   ]],
   ['Services financiers', [
-    ['PGHN', 'Partners Group'], ['SQN', 'Swissquote'], ['CMBN', 'Cembra Money Bank'], ['LEON', 'Leonteq'], ['VZN', 'VZ Holding'],
-    ['BION', 'BB Biotech'], ['HBMN', 'HBM Healthcare Investments'], ['PEHN', 'Private Equity Holding'], ['GAM', 'GAM Holding'],
-    ['BBN', 'Bellevue Group'], ['CFT', 'Compagnie Financière Tradition']
+    ['PGHN', 'Partners Group'], ['SQN', 'Swissquote'], ['BION', 'BB Biotech'], ['CMBN', 'Cembra Money Bank'],
+    ['VZN', 'VZ Holding'], ['HBMN', 'HBM Healthcare Investments'], ['CFT', 'Compagnie Financière Tradition'], ['LEON', 'Leonteq'],
+    ['BBN', 'Bellevue Group'], ['PEHN', 'Private Equity Holding'], ['GAM', 'GAM Holding']
   ]],
   ['Immobilier', [
-    ['SPSN', 'Swiss Prime Site'], ['PSPN', 'PSP Swiss Property'], ['ALLN', 'Allreal'], ['MOBN', 'Mobimo'], ['IREN', 'Investis'], ['INA', 'Ina Invest'],
-    ['HIAG', 'HIAG Immobilien'], ['ISN', 'Intershop'], ['SFPN', 'SF Urban Properties'], ['ZUGN', 'Zug Estates'], ['WARN', 'Warteck Invest'],
-    ['FREN', 'Fundamenta Real Estate'], ['NREN', 'Novavest Real Estate'], ['PEAN', 'Peach Property'], ['VARN', 'Varia US Properties'],
-    ['ZUBN', 'Züblin Immobilien'], ['PLAN', 'Plazza'], ['EPIC', 'EPIC Suisse'], ['CSP', 'Cham Swiss Properties']
+    ['SPSN', 'Swiss Prime Site'], ['PSPN', 'PSP Swiss Property'], ['ALLN', 'Allreal'], ['MOBN', 'Mobimo'],
+    ['ZUGN', 'Zug Estates'], ['HIAG', 'HIAG Immobilien'], ['IREN', 'Investis'], ['NREN', 'Novavest Real Estate'],
+    ['ISN', 'Intershop'], ['PLAN', 'Plazza'], ['EPIC', 'EPIC Suisse'], ['INA', 'Ina Invest'],
+    ['SFPN', 'SF Urban Properties'], ['PEAN', 'Peach Property'], ['CSP', 'Cham Swiss Properties'], ['FREN', 'Fundamenta Real Estate'],
+    ['WARN', 'Warteck Invest'], ['VARN', 'Varia US Properties'], ['ZUBN', 'Züblin Immobilien']
   ]],
   ['Pharma & biotechnologie', [
-    ['ROG', 'Roche (BJ)'], ['RO', 'Roche (porteur)'], ['NOVN', 'Novartis'], ['SDZ', 'Sandoz'], ['GALD', 'Galderma'], ['LONN', 'Lonza'], ['BANB', 'Bachem'],
-    ['SFZN', 'Siegfried'], ['PPGN', 'PolyPeptide'], ['DESN', 'Dottikon ES'], ['IDIA', 'Idorsia'], ['BSLN', 'Basilea Pharmaceutica'], ['COPN', 'Cosmo Pharmaceuticals'],
-    ['MOLN', 'Molecular Partners'], ['NWRN', 'Newron Pharmaceuticals'], ['SANN', 'Santhera'], ['KURN', 'Kuros Biosciences'], ['ADXN', 'Addex Therapeutics'],
-    ['RLF', 'Relief Therapeutics'], ['BIOV', 'BioVersys']
+    ['ROG', 'Roche (BJ)'], ['RO', 'Roche (porteur)'], ['NOVN', 'Novartis'], ['LONN', 'Lonza'],
+    ['GALD', 'Galderma'], ['SDZ', 'Sandoz'], ['BANB', 'Bachem'], ['SFZN', 'Siegfried'],
+    ['DESN', 'Dottikon ES'], ['BSLN', 'Basilea Pharmaceutica'], ['COPN', 'Cosmo Pharmaceuticals'], ['IDIA', 'Idorsia'],
+    ['PPGN', 'PolyPeptide'], ['BIOV', 'BioVersys'], ['KURN', 'Kuros Biosciences'], ['MOLN', 'Molecular Partners'],
+    ['SANN', 'Santhera'], ['NWRN', 'Newron Pharmaceuticals'], ['RLF', 'Relief Therapeutics'], ['ADXN', 'Addex Therapeutics']
   ]],
   ['Medtech & services de santé', [
-    ['ALC', 'Alcon'], ['SOON', 'Sonova'], ['STMN', 'Straumann'], ['TECN', 'Tecan'], ['YPSN', 'Ypsomed'], ['MED', 'Medartis'], ['MOVE', 'Medacta'],
-    ['SKAN', 'SKAN Group'], ['GALE', 'Galenica'], ['DOCM', 'DocMorris'], ['AEVS', 'Aevis Victoria'], ['VBSN', 'IVF Hartmann'], ['CLTN', 'Coltene']
+    ['ALC', 'Alcon'], ['STMN', 'Straumann'], ['SOON', 'Sonova'], ['GALE', 'Galenica'],
+    ['YPSN', 'Ypsomed'], ['TECN', 'Tecan'], ['SKAN', 'SKAN Group'], ['MOVE', 'Medacta'],
+    ['MED', 'Medartis'], ['DOCM', 'DocMorris'], ['AEVS', 'Aevis Victoria'], ['CLTN', 'Coltene'],
+    ['VBSN', 'IVF Hartmann']
   ]],
   ['Alimentation & boissons', [
-    ['NESN', 'Nestlé'], ['LISN', 'Lindt & Sprüngli (BP)'], ['LISP', 'Lindt & Sprüngli (BJ)'], ['BARN', 'Barry Callebaut'], ['EMMN', 'Emmi'], ['BELL', 'Bell Food Group'],
-    ['ORON', 'Orior'], ['GMI', 'Groupe Minoteries'], ['VILN', 'Villars Holding'], ['ARYN', 'Aryzta']
+    ['NESN', 'Nestlé'], ['LISP', 'Lindt & Sprüngli (BP)'], ['LISN', 'Lindt & Sprüngli (nominatif)'], ['BARN', 'Barry Callebaut'],
+    ['EMMN', 'Emmi'], ['ARYN', 'Aryzta'], ['BELL', 'Bell Food Group'], ['ORON', 'Orior'],
+    ['VILN', 'Villars Holding'], ['GMI', 'Groupe Minoteries']
   ]],
   ['Consommation, luxe & loisirs', [
-    ['CFR', 'Richemont'], ['UHR', 'Swatch Group (porteur)'], ['UHRN', 'Swatch Group (nominatif)'], ['AVOL', 'Avolta'], ['CALN', 'Calida'], ['LLQ', 'Lalique Group'],
-    ['JFN', 'Jungfraubahn'], ['TIBN', 'Titlis Bergbahnen'], ['AUTN', 'Autoneum'], ['BMAG', 'Bajaj Mobility'], ['LMN', 'lastminute.com'], ['ASWN', 'ASmallWorld']
+    ['CFR', 'Richemont'], ['UHR', 'Swatch Group (porteur)'], ['AVOL', 'Avolta'], ['JFN', 'Jungfraubahn'],
+    ['AUTN', 'Autoneum'], ['UHRN', 'Swatch Group (nominatif)'], ['LLQ', 'Lalique Group'], ['LMN', 'lastminute.com'],
+    ['CALN', 'Calida'], ['TIBN', 'Titlis Bergbahnen'], ['BMAG', 'Bajaj Mobility'], ['ASWN', 'ASmallWorld']
   ]],
   ['Matériaux de base & chimie', [
-    ['GIVN', 'Givaudan'], ['SIKA', 'Sika'], ['CLN', 'Clariant'], ['EMSN', 'EMS-Chemie'], ['STLN', 'Swiss Steel Group'], ['VETN', 'Vetropack'], ['CPHN', 'CPH Chemie + Papier'],
-    ['GUR', 'Gurit']
+    ['GIVN', 'Givaudan'], ['SIKA', 'Sika'], ['EMSN', 'EMS-Chemie'], ['CLN', 'Clariant'],
+    ['VETN', 'Vetropack'], ['GUR', 'Gurit'], ['CPHN', 'CPH Chemie + Papier'], ['STLN', 'Swiss Steel Group']
   ]],
   ['Construction & matériaux de construction', [
-    ['HOLN', 'Holcim'], ['AMRZ', 'Amrize'], ['GEBN', 'Geberit'], ['IMPN', 'Implenia'], ['ARBN', 'Arbonia'], ['ZEHN', 'Zehnder Group'], ['FORN', 'Forbo'],
-    ['BRKN', 'Burkhalter'], ['MTG', 'Meier Tobler']
+    ['HOLN', 'Holcim'], ['AMRZ', 'Amrize'], ['GEBN', 'Geberit'], ['FORN', 'Forbo'],
+    ['ZEHN', 'Zehnder Group'], ['ARBN', 'Arbonia'], ['IMPN', 'Implenia'], ['BRKN', 'Burkhalter'],
+    ['MTG', 'Meier Tobler']
   ]],
   ['Industrie', [
-    ['ABBN', 'ABB'], ['SCHN', 'Schindler (nominatif)'], ['SCHP', 'Schindler (BP)'], ['SIGN', 'SIG Group'], ['SUN', 'Sulzer'], ['GF', 'Georg Fischer'], ['DOKA', 'dormakaba'],
-    ['BEAN', 'Belimo'], ['KARN', 'Kardex'], ['KOMN', 'Komax'], ['INRN', 'Interroll'], ['HUBN', 'Huber+Suhner'], ['LAND', 'Landis+Gyr'], ['METN', 'Metall Zug'],
-    ['PM', 'Phoenix Mecano'], ['RIEN', 'Rieter'], ['SWTQ', 'Schweiter Technologies'], ['STGN', 'Starrag'], ['TOHN', 'Tornos'], ['VZUG', 'V-Zug'], ['SFSN', 'SFS Group'],
-    ['BYS', 'Bystronic'], ['ACLN', 'Accelleron'], ['MEDX', 'medmix'], ['RSGN', 'R&S Group'], ['AERO', 'Montana Aerospace'], ['BCHN', 'Burckhardt Compression'],
-    ['BOSN', 'Bossard'], ['BUCN', 'Bucher Industries'], ['OERL', 'OC Oerlikon'], ['STRN', 'Schlatter'], ['GAV', 'Carlo Gavazzi'], ['BOBNN', 'Bobst'],
-    ['SRAIL', 'Stadler Rail'], ['DAE', 'Dätwyler'], ['FTON', 'Feintool'], ['KLIN', 'Klingelnberg'], ['LEHN', 'LEM Holding'], ['MIKN', 'Mikron'], ['ADVN', 'Adval Tech']
+    ['ABBN', 'ABB'], ['SCHN', 'Schindler (nominatif)'], ['SCHP', 'Schindler (BP)'], ['BEAN', 'Belimo'],
+    ['SIGN', 'SIG Group'], ['GF', 'Georg Fischer'], ['SUN', 'Sulzer'], ['ACLN', 'Accelleron'],
+    ['SFSN', 'SFS Group'], ['BUCN', 'Bucher Industries'], ['DOKA', 'dormakaba'], ['SRAIL', 'Stadler Rail'],
+    ['KARN', 'Kardex'], ['BCHN', 'Burckhardt Compression'], ['HUBN', 'Huber+Suhner'], ['INRN', 'Interroll'],
+    ['BOSN', 'Bossard'], ['MEDX', 'medmix'], ['KOMN', 'Komax'], ['AERO', 'Montana Aerospace'],
+    ['OERL', 'OC Oerlikon'], ['DAE', 'Dätwyler'], ['SWTQ', 'Schweiter Technologies'], ['LAND', 'Landis+Gyr'],
+    ['RSGN', 'R&S Group'], ['VZUG', 'V-Zug'], ['LEHN', 'LEM Holding'], ['PM', 'Phoenix Mecano'],
+    ['METN', 'Metall Zug'], ['RIEN', 'Rieter'], ['BYS', 'Bystronic'], ['STGN', 'Starrag'],
+    ['GAV', 'Carlo Gavazzi'], ['TOHN', 'Tornos'], ['FTON', 'Feintool'], ['STRN', 'Schlatter'],
+    ['BOBNN', 'Bobst'], ['KLIN', 'Klingelnberg'], ['MIKN', 'Mikron'], ['ADVN', 'Adval Tech']
   ]],
   ['Transports, logistique & services aux entreprises', [
-    ['KNIN', 'Kühne + Nagel'], ['FHZN', 'Flughafen Zürich'], ['ADEN', 'Adecco'], ['SGSN', 'SGS'], ['DKSH', 'DKSH'], ['BVZN', 'BVZ Holding']
+    ['KNIN', 'Kühne + Nagel'], ['SGSN', 'SGS'], ['FHZN', 'Flughafen Zürich'], ['DKSH', 'DKSH'],
+    ['ADEN', 'Adecco'], ['BVZN', 'BVZ Holding']
   ]],
   ['Technologie', [
-    ['LOGN', 'Logitech'], ['TEMN', 'Temenos'], ['SENS', 'Sensirion'], ['AMS', 'ams-OSRAM'], ['SWON', 'SoftwareOne'], ['ALSN', 'ALSO Holding'], ['KUD', 'Kudelski'],
-    ['WIHN', 'WISeKey'], ['ASCN', 'Ascom'], ['SMGN', 'Swiss Marketplace Group'], ['LECN', 'Leclanché'], ['VACN', 'VAT Group'], ['COTN', 'Comet'], ['IFCN', 'Inficon'],
-    ['CICN', 'Cicor Technologies']
+    ['LOGN', 'Logitech'], ['VACN', 'VAT Group'], ['TEMN', 'Temenos'], ['SMGN', 'Swiss Marketplace Group'],
+    ['IFCN', 'Inficon'], ['ALSN', 'ALSO Holding'], ['AMS', 'ams-OSRAM'], ['SENS', 'Sensirion'],
+    ['COTN', 'Comet'], ['SWON', 'SoftwareOne'], ['CICN', 'Cicor Technologies'], ['KUD', 'Kudelski'],
+    ['ASCN', 'Ascom'], ['WIHN', 'WISeKey'], ['LECN', 'Leclanché']
   ]],
   ['Télécoms & médias', [
-    ['SCMN', 'Swisscom'], ['SUNN', 'Sunrise Communications'], ['TXGN', 'TX Group'], ['HLEE', 'Highlight Event & Entertainment'], ['APGN', 'APG|SGA'],
-    ['MOZN', 'mobilezone'], ['OFN', 'Orell Füssli'], ['MCHN', 'MCH Group']
+    ['SCMN', 'Swisscom'], ['SUNN', 'Sunrise Communications'], ['TXGN', 'TX Group'], ['APGN', 'APG|SGA'],
+    ['HLEE', 'Highlight Event & Entertainment'], ['MOZN', 'mobilezone'], ['OFN', 'Orell Füssli'], ['MCHN', 'MCH Group']
   ]],
   ['Énergie & services publics', [
     ['BKW', 'BKW'], ['HREN', 'Romande Energie'], ['ESUN', 'Edisun Power']
@@ -7141,11 +7157,12 @@ function mktParseBatchQuotes(json){
 
 /* P/E et rendement du dividende lus dans une cote (noms de champs tolérants) ; null si absents */
 function mktFundFromQuote(f){
-  if (!f || typeof f !== 'object') return {pe: null, dy: null};
+  if (!f || typeof f !== 'object') return {pe: null, dy: null, mc: null};
   const pick = names => { for (const k of names) if (f[k] != null && isFinite(+f[k])) return +f[k]; return null; };
   return {
     pe: pick(['price_earnings_ttm', 'price_to_earnings_ttm', 'pe_ratio', 'pe']),
-    dy: pick(['dividends_yield_current', 'dividends_yield', 'dividend_yield_recent', 'dividend_yield_fwd', 'dividend_yield'])
+    dy: pick(['dividends_yield_current', 'dividends_yield', 'dividend_yield_recent', 'dividend_yield_fwd', 'dividend_yield']),
+    mc: pick(['market_cap_basic', 'market_cap', 'market_cap_calc'])
   };
 }
 /* Résultat de recherche d'indice le plus plausible : tr=true -> indice « total/net/gross return », sinon indice de prix. */
@@ -7601,25 +7618,26 @@ function ensureFund(){
 const SPI_Q = {};          /* symbole -> champs de cote */
 const SPI_MISS = new Set(); /* symboles interrogés mais sans cote */
 const spiSym = t => 'SIX:' + t;
-const spiSort = {k: 'name', dir: 1};
+const spiSort = {k: 'mc', dir: -1};  /* par défaut : capitalisation boursière décroissante */
 let spiBuilt = false, spiBusy = false;
-const SORT_COLS = [['name', 'Titre'], ['p', 'Prix'], ['d1', 'Jour'], ['dy', 'Dividende'], ['pe', 'P/E'], ['ytd', 'YTD'], ['y3', '3 ans']];
+const SORT_COLS = [['name', 'Titre'], ['mc', 'Cap.'], ['p', 'Prix'], ['d1', 'Jour'], ['dy', 'Dividende'], ['pe', 'P/E'], ['ytd', 'YTD'], ['y3', '3 ans']];
 function rowFund(row){
   const t = row.dataset.s.replace('SIX:', ''), q = SPI_Q[row.dataset.s] || {};
   const fq = mktFundFromQuote(q), fs = (FUND && FUND[t]) || {};
-  return {pe: fq.pe != null ? fq.pe : (fs.pe != null ? fs.pe : null), dy: fq.dy != null ? fq.dy : (fs.dy != null ? fs.dy : null)};
+  return {pe: fq.pe != null ? fq.pe : (fs.pe != null ? fs.pe : null), dy: fq.dy != null ? fq.dy : (fs.dy != null ? fs.dy : null),
+          mc: fq.mc != null ? fq.mc : (fs.mc != null && isFinite(+fs.mc) ? +fs.mc : null)};
 }
 function buildSpi(){
   if (spiBuilt) return; spiBuilt = true;
   const total = MKT_SPI.reduce((a, g) => a + g[1].length, 0);
   $('mkSpiInfo').textContent = total + ' titres · ' + MKT_SPI.length + ' secteurs · les chiffres se chargent à l\'ouverture de chaque secteur';
-  const head = '<div class="mk-head">' + SORT_COLS.map(c => '<span class="h-' + c[0] + '" data-sort="' + c[0] + '" title="Trier">' + c[1] + '</span>').join('') + '<span></span></div>';
+  const head = '<div class="mk-head">' + SORT_COLS.map(c => '<span class="h-' + c[0] + '" data-sort="' + c[0] + '" title="' + (c[0] === 'mc' ? 'Capitalisation boursière (devise de cotation) — tri par défaut, du plus gros au plus petit' : 'Trier') + '">' + c[1] + '</span>').join('') + '<span></span></div>';
   $('mkSpi').innerHTML = MKT_SPI.map((g, i) =>
       '<details class="mk-sec" data-i="' + i + '"><summary><span class="sn">' + esc(g[0]) + '</span><span class="sc">' + g[1].length + ' titres</span><span class="sa" id="mkSa' + i + '"></span></summary>'
-    + head + '<div class="mk-rows">' + g[1].map(m => {
+    + head + '<div class="mk-rows">' + g[1].map((m, oi) => {
         const sym = spiSym(m[0]);
-        return '<div class="mk-row" data-s="' + esc(sym) + '" data-n="' + esc(m[1]) + '" data-f="' + esc((m[0] + ' ' + m[1]).toLowerCase()) + '">'
-          + '<span class="n">' + esc(m[1]) + '<small>' + esc(m[0]) + '</small></span><span class="p">·</span><span class="c d1 fx-delta"></span><span class="dv"></span><span class="pe"></span><span class="c ytd fx-delta"></span><span class="c y3 fx-delta"></span>'
+        return '<div class="mk-row" data-o="' + oi + '" data-s="' + esc(sym) + '" data-n="' + esc(m[1]) + '" data-f="' + esc((m[0] + ' ' + m[1]).toLowerCase()) + '">'
+          + '<span class="n">' + esc(m[1]) + '<small>' + esc(m[0]) + '</small></span><span class="mc"></span><span class="p">·</span><span class="c d1 fx-delta"></span><span class="dv"></span><span class="pe"></span><span class="c ytd fx-delta"></span><span class="c y3 fx-delta"></span>'
           + '<button type="button" class="mk-star" data-w="' + esc(sym) + '" title="Suivre dans la watchlist partagée">' + (inWatch(sym) ? '★' : '☆') + '</button></div>';
       }).join('') + '</div></details>').join('');
 }
@@ -7628,6 +7646,7 @@ function setPct(el, v, approx){
   el.textContent = ok ? mktPctTxt(v, 1, approx) : '';
   el.className = el.className.replace(/\b(up|down)\b/g, '').trim() + (ok ? ' ' + cls(v) : '');
 }
+function mcTxt(v){ return v >= 1e9 ? nf(v >= 1e11 ? 0 : 1).format(v / 1e9) + ' Mds' : nf(0).format(v / 1e6) + ' M'; }
 function paintSpi(){
   const avg = (a) => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
   MKT_SPI.forEach((g, i) => {
@@ -7647,6 +7666,8 @@ function paintSpi(){
       setPct(row.querySelector('.ytd'), pf ? pf.ytd : null, pf && pf.approx);
       setPct(row.querySelector('.y3'), pf ? pf.y3 : null, pf && pf.approx);
       row.dataset.v_p = price != null ? price : ''; row.dataset.v_d1 = day != null ? day : '';
+      row.querySelector('.mc').textContent = fd.mc != null ? mcTxt(fd.mc) : '';
+      row.dataset.v_mc = fd.mc != null ? fd.mc : '';
       row.dataset.v_dy = fd.dy != null ? fd.dy : ''; row.dataset.v_pe = fd.pe != null ? fd.pe : '';
       row.dataset.v_ytd = pf && pf.ytd != null ? pf.ytd : ''; row.dataset.v_y3 = pf && pf.y3 != null ? pf.y3 : '';
       if (day != null) dd.push(day); if (pf && pf.ytd != null) yy.push(pf.ytd);
@@ -7668,11 +7689,12 @@ function applySpiSort(){
   $('mkSpi').querySelectorAll('.mk-rows').forEach(box => {
     const rows = Array.from(box.children);
     rows.sort((a, b) => {
+      const so = (+a.dataset.o) - (+b.dataset.o);  /* ordre d'origine (classement de repli par capitalisation) */
       if (k === 'name') return dir * a.dataset.n.localeCompare(b.dataset.n, 'fr');
       const x = a.dataset['v_' + k], y = b.dataset['v_' + k];
       const xn = x === '' || x == null, yn = y === '' || y == null;
-      if (xn && yn) return 0; if (xn) return 1; if (yn) return -1;
-      return dir * (+x - +y);
+      if (xn && yn) return so; if (xn) return 1; if (yn) return -1;
+      return (dir * (+x - +y)) || so;
     });
     rows.forEach(r => box.appendChild(r));
   });
@@ -7734,34 +7756,49 @@ $('mkSpiQ').addEventListener('input', () => {
 /* Symboles de départ (TradingView) ; si un symbole ne répond pas, les suivants sont essayés, puis une recherche automatique d'indice
    est tentée. Les symboles retenus se corrigent avec ✎ et sont partagés avec l'équipe (D1, clé mkt_indices). */
 const INDICES = [
-  {id: 'smi',  n: 'SMI',                price: ['SIX:SMI'],                          tr: ['SIX:SMIC', 'SIX:SMIT']},
-  {id: 'spi',  n: 'SPI',                price: ['SIX:SPIP'],            tr: ['SIX:SPI'], note: 'Le SPI est par construction un indice de performance (dividendes réinvestis).'},
-  {id: 'sx5e', n: 'Euro Stoxx 50',      price: ['TVC:SX5E', 'STOXX:SX5E'],           tr: ['STOXX:SX5T', 'TVC:SX5T', 'STOXX:SX5GT']},
-  {id: 'sxxp', n: 'Stoxx Europe 600',   price: ['TVC:SXXP', 'STOXX:SXXP'],           tr: ['STOXX:SXXR', 'TVC:SXXR', 'STOXX:SXXGR']},
-  {id: 'cac',  n: 'CAC 40',             price: ['TVC:CAC40', 'EURONEXT:PX1'],        tr: ['EURONEXT:PX1GR', 'EURONEXT:CACGR', 'EURONEXT:PX1NR']},
-  {id: 'dax',  n: 'DAX',                price: ['XETR:DAXK', 'TVC:DAXK'],            tr: ['XETR:DAX', 'TVC:DAX'], note: 'Le DAX est par construction un indice de performance (dividendes réinvestis).'},
-  {id: 'ndx',  n: 'Nasdaq 100',         price: ['NASDAQ:NDX'],                       tr: ['NASDAQ:XNDX']},
-  {id: 'ixic', n: 'Nasdaq Composite',   price: ['NASDAQ:IXIC'],                      tr: ['NASDAQ:XCMP']},
-  {id: 'spx',  n: 'S&P 500',            price: ['SP:SPX'],                           tr: ['SP:SPXTR', 'TVC:SPXTR']},
-  {id: 'mib',  n: 'FTSE MIB (Italie)',  price: ['INDEX:FTSEMIB', 'TVC:FTMIB'],       tr: ['INDEX:FTSEMIBTR', 'INDEX:FTSEMIBGR']},
-  {id: 'ibex', n: 'IBEX 35 (Espagne)',  price: ['BME:IBC', 'TVC:IBEX35'],            tr: ['BME:IBEXTR', 'BME:IBEXD']}
+  /* tk = ticker TradingView sans préfixe de place (tel qu'affiché dans les listes TradingView) ; price / tr = symboles complets essayés dans l'ordre. */
+  {id: 'smi',   tk: 'SMI',    n: 'SMI (Suisse)',          price: ['SIX:SMI', 'TVC:SMI'],                       tr: ['SIX:SMIC', 'SIX:SMIT', 'SIX:SMIRT']},
+  {id: 'spi',   tk: 'SPI',    n: 'SPI (Suisse)',          price: ['SIX:SPIP', 'SIX:SPIX'],                     tr: ['SIX:SPI'], note: 'Le SPI est par construction un indice de performance (dividendes réinvestis) : SIX:SPI.'},
+  {id: 'sx5e',  tk: 'SX5E',   n: 'Euro Stoxx 50',         price: ['TVC:SX5E', 'STOXX:SX5E', 'SX5E'],           tr: ['STOXX:SX5T', 'TVC:SX5T', 'STOXX:SX5GT']},
+  {id: 'sxxp',  tk: 'SXXP',   n: 'Stoxx Europe 600',      price: ['TVC:SXXP', 'STOXX:SXXP', 'SXXP'],           tr: ['STOXX:SXXR', 'TVC:SXXR', 'STOXX:SXXGR']},
+  {id: 'dax',   tk: 'DAX',    n: 'DAX (Allemagne)',       price: ['XETR:DAXK', 'TVC:DAXK'],                    tr: ['XETR:DAX', 'TVC:DAX', 'TVC:DEU40'], note: 'Le DAX est par construction un indice de performance (dividendes réinvestis) : XETR:DAX.'},
+  {id: 'cac',   tk: 'PX1',    n: 'CAC 40 (France)',       price: ['EURONEXT:PX1', 'TVC:CAC40'],                tr: ['EURONEXT:PX1GR', 'EURONEXT:CACGR', 'EURONEXT:PX1NR']},
+  {id: 'ukx',   tk: 'UKX',    n: 'FTSE 100 (Royaume-Uni)', price: ['FTSE:UKX', 'TVC:UKX'],                     tr: ['FTSE:TUKXG', 'FTSE:UKXTR', 'TVC:UKXTR']},
+  {id: 'mib',   tk: 'FTMIB',  n: 'FTSE MIB (Italie)',     price: ['TVC:FTMIB', 'INDEX:FTSEMIB', 'MIL:FTSEMIB'], tr: ['INDEX:FTSEMIBTR', 'TVC:FTMIBTR', 'INDEX:FTSEMIBGR']},
+  {id: 'ibex',  tk: 'IBC',    n: 'IBEX 35 (Espagne)',     price: ['BME:IBC', 'TVC:IBEX35'],                    tr: ['BME:IBEXTR', 'BME:IBEXD', 'BME:IBCTR']},
+  {id: 'spx',   tk: 'SPX',    n: 'S&P 500 (États-Unis)',  price: ['SP:SPX', 'TVC:SPX'],                        tr: ['SP:SPXTR', 'TVC:SPXTR', 'SP:SPTR']},
+  {id: 'ndx',   tk: 'NDX',    n: 'Nasdaq 100',            price: ['NASDAQ:NDX', 'TVC:NDX'],                    tr: ['NASDAQ:XNDX', 'NASDAQ:NDXTR']},
+  {id: 'ixic',  tk: 'IXIC',   n: 'Nasdaq Composite',      price: ['NASDAQ:IXIC', 'TVC:IXIC'],                  tr: ['NASDAQ:XCMP', 'NASDAQ:IXICTR']},
+  {id: 'ni225', tk: 'NI225',  n: 'Nikkei 225 (Japon)',    price: ['TVC:NI225', 'INDEX:NKY', 'TVC:NKY'],        tr: ['NIKKEI:NI225TR', 'TVC:NI225TR', 'INDEX:NKYTR']},
+  {id: 'sse',   tk: '000001', n: 'SSE Composite (Chine)', price: ['SSE:000001', 'TVC:SHCOMP'],                 tr: [], noTr: true, note: "L'indice SSE Composite n'a pas de version total return publiée."},
+  {id: 'nifty', tk: 'NIFTY',  n: 'Nifty 50 (Inde)',       price: ['NSE:NIFTY', 'TVC:CNXNIFTY', 'NSE:NIFTY50'], tr: ['NSE:NIFTYTRI', 'NSE:NIFTY_TR', 'NSE:NIFTY50TRI']}
 ];
+const IDX_VER = 2;
 let IDX_OVR = {};   /* id -> {price, tr} choisis / mémorisés (partagés) */
 const IDX_RES = {}; /* id -> {price:{sym,perf,tried[]}, tr:{...}} */
 let idxLoaded = false, idxBusy = false;
 async function idxLoadOverrides(){
   const j = await dbReadJson('/api/db/kv/mkt_indices');
-  if (j && j.data && typeof j.data === 'object' && !Array.isArray(j.data)) IDX_OVR = j.data;
+  /* les choix mémorisés d'une ancienne version de la liste (symboles devinés) sont ignorés */
+  if (j && j.data && typeof j.data === 'object' && !Array.isArray(j.data) && j.data.__v === IDX_VER) IDX_OVR = j.data;
 }
-function idxSave(){ dbWrite('/api/db/kv/mkt_indices', 'PUT', IDX_OVR); }
+function idxSave(){ IDX_OVR.__v = IDX_VER; dbWrite('/api/db/kv/mkt_indices', 'PUT', IDX_OVR); }
 const idxCands = (ix, kind) => { const o = IDX_OVR[ix.id] && IDX_OVR[ix.id][kind]; return o ? [o].concat(ix[kind].filter(x => x !== o)) : ix[kind].slice(); };
-async function idxSearch(ix, kind){
-  try {
-    const q = kind === 'tr' ? ix.n + ' total return' : ix.n;
-    const j = await tv('search/market/' + encodeURIComponent(q) + '?filter=index');
-    const hit = mktPickIndexHit(mktParseSearch(j), ix.n.replace(/\s*\(.*\)\s*/, ''), kind === 'tr');
-    return hit ? hit.full : null;
-  } catch (e) { if (FATAL[e.code]) throw e; return null; }
+/* Recherche automatique : 1) par ticker exact (ex. « SX5E »), 2) par nom ; pour le total return, par nom + « total / net / gross return ». */
+async function idxSearch(ix, kind, tried){
+  const skip = s => !s || (tried && tried.indexOf(s) >= 0);
+  const qs = kind === 'tr' ? [ix.n.replace(/\s*\(.*\)\s*/, '') + ' total return', ix.n.replace(/\s*\(.*\)\s*/, '') + ' net return'] : [ix.tk, ix.n.replace(/\s*\(.*\)\s*/, '')];
+  for (const q of qs) {
+    try {
+      const j = await tv('search/market/' + encodeURIComponent(q) + '?filter=index');
+      const res = mktParseSearch(j);
+      let hit = null;
+      if (kind === 'price' && q === ix.tk) hit = res.find(r => r.symbol.toUpperCase() === ix.tk.toUpperCase() && (/index/i.test(r.type) || !r.type) && !skip(r.full));
+      if (!hit) { const h = mktPickIndexHit(res, ix.n.replace(/\s*\(.*\)\s*/, ''), kind === 'tr'); if (h && !skip(h.full)) hit = h; }
+      if (hit) return hit.full;
+    } catch (e) { if (FATAL[e.code]) throw e; }
+  }
+  return null;
 }
 async function loadIndices(only){
   if (idxBusy) return; idxBusy = true;
@@ -7774,8 +7811,8 @@ async function loadIndices(only){
     fetchPerf.err = '';
     let round = 0, learned = false;
     const slots = [];
-    list.forEach(ix => ['price', 'tr'].forEach(k => slots.push({ix, k, c: idxCands(ix, k)})));
-    for (round = 0; round < 3; round++) {
+    list.forEach(ix => ['price', 'tr'].forEach(k => { if (k === 'tr' && ix.noTr) return; slots.push({ix, k, c: idxCands(ix, k)}); }));
+    for (round = 0; round < 4; round++) {
       const todo = slots.filter(sl => !IDX_RES[sl.ix.id][sl.k].perf && sl.c[round]);
       if (!todo.length) break;
       const syms = Array.from(new Set(todo.map(sl => sl.c[round])));
@@ -7787,7 +7824,7 @@ async function loadIndices(only){
     /* recherche automatique pour les symboles toujours introuvables */
     for (const sl of slots) {
       const r = IDX_RES[sl.ix.id][sl.k]; if (r.perf) continue;
-      const s = await idxSearch(sl.ix, sl.k);
+      const s = await idxSearch(sl.ix, sl.k, r.tried);
       if (!s || r.tried.indexOf(s) >= 0) continue;
       r.tried.push(s); delete PERF[s]; await fetchPerf([s]);
       if (PERF[s] && PERF[s].last != null) { r.sym = s; r.perf = PERF[s]; learned = true; }
@@ -7819,6 +7856,7 @@ function paintIdx(){
       setPct(el, a[1] ? a[1][a[2]] : null, a[1] && a[1].approx);
       if (!a[1] || a[1][a[2]] == null) el.textContent = (IDX_RES[ix.id][a[0].charAt(0) === 'p' ? 'price' : 'tr'].tried.length && !a[1]) ? 'n.d.' : (a[1] ? 'n.d.' : '');
     });
+    if (ix.noTr) row.querySelectorAll('.ix-tytd,.ix-ty1,.ix-ty3').forEach(el => { el.textContent = '—'; el.className = el.className.replace(/\b(up|down)\b/g, '').trim(); el.title = 'Pas de version total return publiée'; });
     const sy = row.querySelector('.ix-sym');
     sy.textContent = [R.price.sym ? R.price.sym : '', R.tr.sym ? 'TR ' + R.tr.sym : ''].filter(Boolean).join(' · ');
     row.title = ix.note ? ix.note : '';
@@ -7830,8 +7868,11 @@ $('mkIdxBody').addEventListener('click', e => {
   const ix = INDICES.find(x => x.id === ed.dataset.id), R = IDX_RES[ix.id] || {price: {}, tr: {}};
   const p = prompt('Symbole TradingView de l\'indice de PRIX pour « ' + ix.n + ' » (ex. SIX:SMI) :', R.price.sym || idxCands(ix, 'price')[0]);
   if (p === null) return;
-  const t = prompt('Symbole TradingView de l\'indice TOTAL RETURN pour « ' + ix.n + ' » (laisser tel quel si inchangé) :', R.tr.sym || idxCands(ix, 'tr')[0]);
-  if (t === null) return;
+  let t = '';
+  if (!ix.noTr) {
+    t = prompt('Symbole TradingView de l\'indice TOTAL RETURN pour « ' + ix.n + ' » (laisser tel quel si inchangé) :', R.tr.sym || idxCands(ix, 'tr')[0]);
+    if (t === null) return;
+  }
   IDX_OVR[ix.id] = {price: p.trim() || undefined, tr: t.trim() || undefined}; idxSave();
   loadIndices(ix.id);
 });

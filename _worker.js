@@ -782,11 +782,12 @@ async function tvPerf(request, env, ctx) {
 }
 
 /* ---- Fondamentaux (P/E, rendement du dividende) : écran « Screener » du fournisseur, marché suisse, une seule requête mise en cache 6 h.
-   GET /api/tv-fund            -> {fund: {"NESN": {pe, dy, name, sector}}, count, diag}
+   GET /api/tv-fund            -> {fund: {"NESN": {pe, dy, mc, name, sector}}, count, diag}
    GET /api/tv-fund?diag=1     -> idem + 1re ligne brute de la réponse du fournisseur (pour diagnostic). */
 const TV_FUND_TTL = 6 * 3600 * 1000;
 const TV_FUND_KEYS = {
   pe: ['price_earnings_ttm', 'price_to_earnings_ttm', 'pe_ratio', 'pe'],
+  mc: ['market_cap_basic', 'market_cap', 'market_cap_calc', 'market_cap_fq'],
   dy: ['dividends_yield_current', 'dividends_yield', 'dividend_yield_recent', 'dividend_yield_fwd', 'dividend_yield', 'dividends_yield_fy']
 };
 function tvPickNum(o, names) {
@@ -813,7 +814,7 @@ async function tvFund(request, env, ctx) {
   const denied = tvGuard(request, url); if (denied) return denied;
   if (!env.TV_API_KEY) return tvJson({error_code: 'NO_KEY', error_message: 'Clé API Market Data non configurée sur le Worker (npx wrangler secret put TV_API_KEY).'}, 503);
   const wantDiag = !!url.searchParams.get('diag');
-  const ck = 'tvfund:v1:switzerland';
+  const ck = 'tvfund:v2:switzerland';
   const hit = await cacheGet(env, ck);
   if (hit && hit.age < TV_FUND_TTL && !wantDiag) { try { return tvJson(JSON.parse(hit.data)); } catch (e) {} }
   if (await tvUsage(env) >= (parseInt(env.TV_MONTHLY_CAP, 10) || 30000)) {
@@ -830,8 +831,8 @@ async function tvFund(request, env, ctx) {
     const rows = tvScanRows(res.json);
     rows.forEach(r => {
       const sym = String(r.sym || '').replace(/^SIX:/, '').toUpperCase();
-      const pe = tvPickNum(r.o, TV_FUND_KEYS.pe), dy = tvPickNum(r.o, TV_FUND_KEYS.dy);
-      if (sym) { fund[sym] = {pe: pe, dy: dy, name: r.o.description || r.o.name || null, sector: r.o.sector || null}; count++; }
+      const pe = tvPickNum(r.o, TV_FUND_KEYS.pe), dy = tvPickNum(r.o, TV_FUND_KEYS.dy), mc = tvPickNum(r.o, TV_FUND_KEYS.mc);
+      if (sym) { fund[sym] = {pe: pe, dy: dy, mc: mc, name: r.o.description || r.o.name || null, sector: r.o.sector || null}; count++; }
     });
     if (rows.length < 250) break;
   }
