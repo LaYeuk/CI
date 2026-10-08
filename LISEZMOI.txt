@@ -74,3 +74,7 @@ Mise à jour Market Lab (5e version) :
       TradingView · quotidien : fenêtre de 90 jours possible ; SIX:SPI, SIX:ZGLD, SIX:BCCMS, SIX:SIMA à contrôler ; SBR14T n'a pas de série quotidienne.
   - ATTENTION données : dans l'Excel, la colonne « BCCMS SW Equity » (catalogue « BCOM (2) ») contient des dates au lieu de cours. L'outil le détecte, la remplace par l'indice BCOM (colonne « BCOM ») et l'indique sous le graphique. Corriger la colonne dans l'Excel pour utiliser BCCMS.
   - Seul Outils_GIP.html change (le _worker.js est identique à la version précédente).
+
+Ajustement Market Lab (5e version, suite) :
+  - Corrélation glissante : source par défaut = TradingView quotidien, avec SIX:SPIX (SPI), SIX:ZGLD (or), SIX:SBR14T (obligations), SIX:BCCMS (matières premières) et SIX:SIMA (immobilier). Fenêtre de 90 jours, historique 5 ans. Le mode « Excel · mensuel » reste disponible en second choix.
+  - Logos des sociétés (comme dans Market Data) partout dans le Market Lab : liste de sélection, titres ajoutés, libellés de la matrice (lignes et colonnes), tableaux de paires, titre analysé et graphiques de corrélation glissante. Les symboles hors SPI affichent leurs initiales.

@@ -386,9 +386,9 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenMkt .mk-row[hidden]{display:none}
 #screenMkt .mk-row .n{display:flex;align-items:center;gap:9px;min-width:0;color:var(--navy);font-weight:600}
 #screenMkt .mk-row .nt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#screenMkt .lg{position:relative;flex:none;width:24px;height:24px;border-radius:50%;background:hsl(var(--h) 40% 90%);color:hsl(var(--h) 45% 30%);display:inline-flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(2,24,43,.08)}
-#screenMkt .lg i{font-style:normal;letter-spacing:-.02em}
-#screenMkt .lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;box-sizing:border-box}
+#screenMkt .lg,#screenLab .lg{position:relative;flex:none;width:24px;height:24px;border-radius:50%;background:hsl(var(--h) 40% 90%);color:hsl(var(--h) 45% 30%);display:inline-flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(2,24,43,.08)}
+#screenMkt .lg i,#screenLab .lg i{font-style:normal;letter-spacing:-.02em}
+#screenMkt .lg img,#screenLab .lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;box-sizing:border-box}
 #screenMkt .mk-row .ck,#screenMkt .mk-head .h-ck{display:flex;align-items:center;justify-content:center}
 #screenMkt .mk-head .h-ck{cursor:default}
 #screenMkt .mk-row input[type=checkbox],#screenMkt .mk-head input[type=checkbox]{width:15px;height:15px;margin:0;accent-color:var(--navy);cursor:pointer}
@@ -468,7 +468,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenLab .lb-nm{display:flex;align-items:center;gap:8px;padding:4px 12px;font-size:12.5px;cursor:pointer;color:var(--ink)}
 #screenLab .lb-nm:nth-child(even){background:#F6F5F1}
 #screenLab .lb-nm:hover{background:#EFEDE6}
-#screenLab .lb-nm span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#screenLab .lb-nm>span:not(.lg){flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #screenLab .lb-nm small{color:var(--mut);font-size:11px}
 #screenLab input[type=checkbox]{width:15px;height:15px;margin:0;accent-color:var(--navy);cursor:pointer}
 #screenLab .lb-params{display:flex;flex-wrap:wrap;gap:18px 28px;align-items:flex-end;margin-top:8px}
@@ -516,7 +516,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenLab .lb-rc{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 12px 8px;min-width:0}
 #screenLab .lb-rc.none{background:#FAF9F6}
 #screenLab .lb-rh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-#screenLab .lb-rh i{display:inline-block;width:10px;height:10px;border-radius:50%;align-self:center}
+#screenLab .lb-rh>i{display:inline-block;width:10px;height:10px;border-radius:50%;align-self:center}
 #screenLab .lb-rh b{color:var(--navy);font-size:13.5px}
 #screenLab .lb-rh small{color:var(--mut);font-size:11.5px}
 #screenLab .lb-hv{margin-left:auto;font-size:12px;color:var(--navy);font-variant-numeric:tabular-nums;font-weight:600}
@@ -525,6 +525,17 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenLab .lb-rk b.p{color:#0A6EA8}
 #screenLab .lb-rk b.n{color:#B5501C}
 #screenLab .lb-rn{margin:4px 0 0;font-size:11px;color:var(--mut)}
+#screenLab .lg.md{width:30px;height:30px;font-size:11.5px}
+#screenLab .lg.sm{width:18px;height:18px;font-size:7.5px}
+#screenLab .lg.xs{width:16px;height:16px;font-size:7px;margin-right:6px;vertical-align:-3px}
+#screenLab .lg.sm img{padding:2px}
+#screenLab .lg.xs img{padding:2px}
+#screenLab .lb-rlogo{display:inline-flex}
+#screenLab .lb-rhead h2{display:flex;align-items:center;gap:10px}
+#screenLab .lb-rh .lg{align-self:center;margin-right:0}
+#screenLab .lb-hit{display:flex;align-items:center}
+#screenLab .lb-chip .lg{margin-right:0}
+#screenLab .lb-nm .lg{margin-right:0}
 
 #screenChartPack {--navy:#02182B;--blue:#0a6b8c;--cyan:#00CFFF;--beige:#DDD8C4;--pale:#ECEADF;--tint:#E8F6FA;--grey:#B6C0C6;--bg:#F5F6F5;--line:#DDE3E6;--txt:#12242F;--mut:#5B6B76}
 #screenChartPack * {box-sizing:border-box}
@@ -1523,17 +1534,18 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
   <section class="fx-card lb-card">
     <div class="lb-h"><h3>1 · Titre à analyser</h3></div>
     <div class="fx-bar" style="margin-top:8px">
+      <span id="lbRLogo" class="lb-rlogo"></span>
       <input id="lbRTitle" type="search" list="lbRDl" autocomplete="off" placeholder="Nom ou ticker d'un titre du SPI (ex. Nestlé, NESN) ou symbole complet (ex. SIX:ROG)…" aria-label="Titre à analyser">
       <datalist id="lbRDl"></datalist>
     </div>
-    <div class="lb-refs">Séries de référence : <b>SPI Index</b> · <b>ZGLD SW Equity</b> (or) · <b>SBR14T Index</b> (obligations) · <b>BCCMS SW Equity</b> (matières premières) · <b>SIMA SW Equity</b> (immobilier)</div>
+    <div class="lb-refs">Séries de référence : <b>SPI Index</b> (SIX:SPIX) · <b>ZGLD SW Equity</b> (or) · <b>SBR14T Index</b> (obligations) · <b>BCCMS SW Equity</b> (matières premières) · <b>SIMA SW Equity</b> (immobilier) — tous issus de TradingView</div>
   </section>
 
   <section class="fx-card lb-card">
     <div class="lb-h"><h3>2 · Paramètres</h3></div>
     <div class="lb-params">
       <div class="lb-p"><label>Source des séries de référence</label>
-        <span class="fx-ranges" id="lbRSrc" style="margin:0"><button type="button" data-s="xls" class="on" title="Séries du classeur Excel (feuille Monthly data), fréquence mensuelle">Excel · mensuel</button><button type="button" data-s="tv" title="Séries quotidiennes via TradingView">TradingView · quotidien</button></span>
+        <span class="fx-ranges" id="lbRSrc" style="margin:0"><button type="button" data-s="tv" class="on" title="Séries quotidiennes via TradingView">TradingView · quotidien</button><button type="button" data-s="xls" title="Séries du classeur Excel (feuille Monthly data), fréquence mensuelle">Excel · mensuel</button></span>
       </div>
       <div class="lb-p"><label>Historique affiché</label>
         <span class="fx-ranges" id="lbRHist" style="margin:0"><button type="button" data-y="1095">3 ans</button><button type="button" data-y="1826" class="on">5 ans</button><button type="button" data-y="2555">7 ans</button></span>
@@ -8580,6 +8592,44 @@ function loadSel(){
 const nameOf = s => (SPI_INFO[s] ? SPI_INFO[s].n : (LAB.lists.A.get(s) || LAB.lists.B.get(s) || s));
 const shortOf = s => s.replace(/^[A-Z0-9_]+:/, '');
 const secOf = s => SPI_INFO[s] ? SPI_INFO[s].sec : 99;
+/* ---- Logos (comme dans Market Data) : pastille d'initiales + favicon du site officiel ; pour les symboles hors SPI, initiales seules. */
+const lgTick = s => String(s).replace(/^[A-Z0-9_]+:/, '');
+const lgDom = s => /^SIX:/.test(s) ? MKT_LOGO_DOMAINS[lgTick(s)] : null;
+const lgHue = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360; return h; };
+function lgInit(name){
+  const w = String(name).replace(/\(.*?\)/g, ' ').split(/[\s\-+&.|,]+/).filter(x => x.length > 1 && !/^(de|du|la|le|des|group|holding|ag|sa)$/i.test(x));
+  if (!w.length) return String(name).slice(0, 2).toUpperCase();
+  return (w.length > 1 ? w[0][0] + w[1][0] : w[0].slice(0, 2)).toUpperCase();
+}
+function lgHtml(sym, name, cls){
+  const d = lgDom(sym);
+  return '<span class="lg ' + (cls || '') + '" style="--h:' + lgHue(lgTick(sym)) + '"><i>' + esc(lgInit(name)) + '</i>' + (d ? '<img loading="lazy" alt="" referrerpolicy="no-referrer" src="https://www.google.com/s2/favicons?domain=' + d + '&sz=64">' : '') + '</span>';
+}
+/* logo indisponible : on garde les initiales */
+document.addEventListener('error', e => { if (e.target && e.target.tagName === 'IMG' && e.target.parentNode && e.target.parentNode.classList && e.target.parentNode.classList.contains('lg')) e.target.remove(); }, true);
+/* Version canvas (matrice) : l'image n'est dessinée que si le serveur l'autorise (CORS), sinon initiales — le PNG exporté reste exportable. */
+const LG = {}; let lgTimer = null;
+function lgImg(sym){
+  const d = lgDom(sym); if (!d) return null;
+  let e = LG[d];
+  if (!e) {
+    e = LG[d] = {img: null};
+    const im = new Image(); im.crossOrigin = 'anonymous'; im.referrerPolicy = 'no-referrer';
+    im.onload = () => { e.img = im; clearTimeout(lgTimer); lgTimer = setTimeout(() => { if (LAB.res && $('screenLab').classList.contains('on')) render(); }, 200); };
+    im.src = 'https://www.google.com/s2/favicons?domain=' + d + '&sz=64';
+  }
+  return e.img;
+}
+function lgDraw(ctx, sym, name, x, y, size){
+  const t = lgTick(sym), im = lgImg(sym), r = size / 2;
+  ctx.save();
+  ctx.beginPath(); ctx.arc(x + r, y + r, r, 0, 6.2832); ctx.closePath(); ctx.clip();
+  ctx.fillStyle = 'hsl(' + lgHue(t) + ',40%,90%)'; ctx.fillRect(x, y, size, size);
+  if (im) { ctx.fillStyle = '#fff'; ctx.fillRect(x, y, size, size); const pd = size * 0.14; ctx.drawImage(im, x + pd, y + pd, size - 2 * pd, size - 2 * pd); }
+  else { ctx.fillStyle = 'hsl(' + lgHue(t) + ',45%,30%)'; ctx.font = '700 ' + Math.max(7, Math.round(size * 0.42)) + 'px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(lgInit(name), x + r, y + r + 0.5); }
+  ctx.restore();
+  ctx.save(); ctx.strokeStyle = 'rgba(2,24,43,.12)'; ctx.beginPath(); ctx.arc(x + r, y + r, r - 0.5, 0, 6.2832); ctx.stroke(); ctx.restore();
+}
 const plural = (n, w) => n + ' ' + w + (n > 1 ? 's' : '');
 
 /* ---------------------------------------------------------------- onglets de l'écran */
@@ -8595,7 +8645,7 @@ $('lbTabs').addEventListener('click', e => { const b = e.target.closest('[data-t
 function buildTree(){
   $('lbTree').innerHTML = MKT_SPI.map((g, i) =>
       '<details class="lb-sec" data-i="' + i + '"><summary><input type="checkbox" class="lb-ckall" data-i="' + i + '" aria-label="Tout le secteur ' + esc(g[0]) + '"><span class="sn">' + esc(g[0]) + '</span><span class="sc" id="lbSc' + i + '"></span></summary>'
-    + '<div class="lb-names">' + g[1].map(m => '<label class="lb-nm" title="' + esc(m[1]) + ' (' + esc(m[0]) + ')"><input type="checkbox" class="lb-ck" data-s="SIX:' + esc(m[0]) + '"><span>' + esc(m[1]) + '</span><small>' + esc(m[0]) + '</small></label>').join('') + '</div></details>').join('');
+    + '<div class="lb-names">' + g[1].map(m => '<label class="lb-nm" title="' + esc(m[1]) + ' (' + esc(m[0]) + ')"><input type="checkbox" class="lb-ck" data-s="SIX:' + esc(m[0]) + '">' + lgHtml('SIX:' + m[0], m[1], 'sm') + '<span>' + esc(m[1]) + '</span><small>' + esc(m[0]) + '</small></label>').join('') + '</div></details>').join('');
   $('lbRDl').innerHTML = MKT_SPI.map(g => g[1].map(m => '<option value="' + esc(m[1] + ' (' + m[0] + ')') + '"></option>').join('')).join('');
 }
 function syncSel(){
@@ -8609,7 +8659,7 @@ function syncSel(){
   });
   const extras = Array.from(S.keys()).filter(s => !SPI_INFO[s]);
   $('lbExtra').hidden = !extras.length;
-  $('lbExtra').innerHTML = extras.length ? '<span class="lb-lbl">Autres titres :</span>' + extras.map(s => '<span class="lb-chip" data-s="' + esc(s) + '" title="' + esc(s) + '">' + esc(nameOf(s)) + ' <b>✕</b></span>').join('') : '';
+  $('lbExtra').innerHTML = extras.length ? '<span class="lb-lbl">Autres titres :</span>' + extras.map(s => '<span class="lb-chip" data-s="' + esc(s) + '" title="' + esc(s) + '">' + lgHtml(s, nameOf(s), 'xs') + esc(nameOf(s)) + ' <b>✕</b></span>').join('') : '';
   const nA = LAB.lists.A.size, nB = LAB.lists.B.size, inSpi = S.size - extras.length;
   $('lbCount').textContent = LAB.cross ? ('Liste A : ' + plural(nA, 'titre') + ' · Liste B : ' + plural(nB, 'titre')) : (plural(nA, 'titre') + ' sélectionné' + (nA > 1 ? 's' : '') + (Array.from(LAB.lists.A.keys()).some(s => !SPI_INFO[s]) ? ' (dont ' + Array.from(LAB.lists.A.keys()).filter(s => !SPI_INFO[s]).length + ' hors SPI)' : ''));
   $('lbAll').textContent = inSpi === SPI_COUNT ? 'SPI complet ✓' : 'Tout le SPI (' + SPI_COUNT + ')';
@@ -8649,7 +8699,7 @@ $('lbAdd').addEventListener('input', () => {
       if (!r.ok || j.success === false) throw new Error(j.error_message || (j.error && j.error.message) || ('HTTP ' + r.status));
       const res = mktParseSearch(j).slice(0, 8);
       $('lbAddRes').hidden = false;
-      $('lbAddRes').innerHTML = res.length ? res.map(x => '<button type="button" class="lb-hit" data-s="' + esc(x.full) + '" data-n="' + esc(x.desc || x.symbol) + '"><b>' + esc(x.full) + '</b> ' + esc(x.desc) + ' <small>' + esc(x.type) + '</small></button>').join('') : '<span class="fx-mut">Aucun résultat.</span>';
+      $('lbAddRes').innerHTML = res.length ? res.map(x => '<button type="button" class="lb-hit" data-s="' + esc(x.full) + '" data-n="' + esc(x.desc || x.symbol) + '">' + lgHtml(x.full, x.desc || x.symbol, 'xs') + '<b>' + esc(x.full) + '</b> ' + esc(x.desc) + ' <small>' + esc(x.type) + '</small></button>').join('') : '<span class="fx-mut">Aucun résultat.</span>';
     } catch (e) { $('lbAddRes').hidden = false; $('lbAddRes').innerHTML = '<span class="fx-mut">Recherche impossible : ' + esc(e.message) + '</span>'; }
   }, 350);
 });
@@ -8794,10 +8844,11 @@ function render(){
   const showLbl = cell >= 10, showSec = LAB.order === 'sector';
   const rawName = s => cell >= 17 ? (nameOf(s) + ' · ' + shortOf(s)) : shortOf(s);
   let leftW = 0, topH = 0;
+  const lgS = cell >= 14 ? Math.min(18, cell - 3) : 0;   /* taille des logos dans les libellés */
   if (showLbl) {
     ro.forEach(i => { leftW = Math.max(leftW, ctx.measureText(rawName(rowSym(i))).width); });
     co.forEach(j => { topH = Math.max(topH, ctx.measureText(shortOf(colSym(j))).width); });
-    leftW = Math.min(230, Math.ceil(leftW) + 14); topH = Math.min(110, Math.ceil(topH) + 12);
+    leftW = Math.min(230, Math.ceil(leftW) + 14) + (lgS ? lgS + 5 : 0); topH = Math.min(110, Math.ceil(topH) + 12) + (lgS ? lgS + 4 : 0);
   } else if (showSec) leftW = 150;
   const fit = (t, maxW) => { if (ctx.measureText(t).width <= maxW) return t; while (t.length > 3 && ctx.measureText(t + '…').width > maxW) t = t.slice(0, -1); return t + '…'; };
   const pad = 6;
@@ -8826,9 +8877,18 @@ function render(){
   ctx.fillStyle = '#02182B';
   if (showLbl) {
     ctx.textAlign = 'right';
-    for (let a = 0; a < nR; a++) ctx.fillText(fit(rawName(rowSym(ro[a])), leftW - 12), ox - 6, oy + a * cell + cell / 2);
-    ctx.textAlign = 'left';
-    for (let b = 0; b < nC; b++) { ctx.save(); ctx.translate(ox + b * cell + cell / 2, oy - 6); ctx.rotate(-Math.PI / 2); ctx.fillText(shortOf(colSym(co[b])), 0, 0); ctx.restore(); }
+    for (let a = 0; a < nR; a++) {
+      const sy = rowSym(ro[a]), txt = fit(rawName(sy), leftW - 12 - (lgS ? lgS + 5 : 0));
+      ctx.fillStyle = '#02182B'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(txt, ox - 6, oy + a * cell + cell / 2);
+      if (lgS) lgDraw(ctx, sy, nameOf(sy), ox - 6 - ctx.measureText(txt).width - lgS - 4, oy + a * cell + (cell - lgS) / 2, lgS);
+    }
+    ctx.fillStyle = '#02182B'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    for (let b = 0; b < nC; b++) {
+      const sy = colSym(co[b]), tx = shortOf(sy), tw = ctx.measureText(tx).width;
+      ctx.save(); ctx.translate(ox + b * cell + cell / 2, oy - 6); ctx.rotate(-Math.PI / 2); ctx.fillText(tx, 0, 0); ctx.restore();
+      if (lgS) lgDraw(ctx, sy, nameOf(sy), ox + b * cell + (cell - lgS) / 2, oy - 6 - tw - lgS - 3, lgS);
+    }
+    ctx.fillStyle = '#02182B';
   } else if (showSec) {
     ctx.textAlign = 'right'; ctx.font = '600 11px system-ui, sans-serif';
     gR.forEach(g => { const h = (g.to - g.from) * cell; if (h >= 11) ctx.fillText(g.sec === 99 ? 'Autres' : MKT_SPI[g.sec][0].replace(/ &.*$/, '').replace(/,.*$/, ''), ox - 8, oy + g.from * cell + h / 2); });
@@ -8841,7 +8901,7 @@ function renderPairs(){
   const R = LAB.res, pairs = [];
   for (let i = 0; i < R.nR; i++) for (let j = (R.cross ? 0 : i + 1); j < R.nC; j++) { const v = R.val(i, j); if (v === v && !sameIssuer(R.rows[i], R.cols[j])) pairs.push({a: R.rows[i], b: R.cols[j], v, o: R.ob(i, j)}); }
   pairs.sort((x, y) => y.v - x.v);
-  const row = p => '<tr><td>' + esc(nameOf(p.a)) + ' <small>' + esc(shortOf(p.a)) + '</small></td><td>' + esc(nameOf(p.b)) + ' <small>' + esc(shortOf(p.b)) + '</small></td><td class="r"><b style="color:' + (p.v >= 0 ? '#0A6EA8' : '#C0501B') + '">' + nf(2).format(p.v) + '</b></td><td class="r"><small>' + p.o + '</small></td></tr>';
+  const row = p => '<tr><td>' + lgHtml(p.a, nameOf(p.a), 'xs') + esc(nameOf(p.a)) + ' <small>' + esc(shortOf(p.a)) + '</small></td><td>' + lgHtml(p.b, nameOf(p.b), 'xs') + esc(nameOf(p.b)) + ' <small>' + esc(shortOf(p.b)) + '</small></td><td class="r"><b style="color:' + (p.v >= 0 ? '#0A6EA8' : '#C0501B') + '">' + nf(2).format(p.v) + '</b></td><td class="r"><small>' + p.o + '</small></td></tr>';
   const tbl = (title, list) => '<div><h4>' + title + '</h4><table><thead><tr><th>' + (R.cross ? 'Liste A' : 'Titre A') + '</th><th>' + (R.cross ? 'Liste B' : 'Titre B') + '</th><th class="r">Corr.</th><th class="r">obs.</th></tr></thead><tbody>' + list.map(row).join('') + '</tbody></table></div>';
   $('lbPairs').innerHTML = pairs.length >= 2 ? tbl('Paires les plus corrélées', pairs.slice(0, 10)) + tbl('Paires les moins corrélées', pairs.slice(-10).reverse()) : '';
 }
@@ -8882,13 +8942,13 @@ $('lbPng').addEventListener('click', () => {
 /* ================================================================ corrélation glissante d'un titre contre 5 séries de référence */
 /* Séries de référence : classeur « R2 Data » (feuille Monthly data, bloc « CH Assets », cours de fin de mois) ou, en quotidien, TradingView. */
 const REFS = [
-  {k: 'spi',  n: 'SPI Index',       d: 'Actions suisses',     xls: ['SPI (2)', 'SPI'], tv: 'SIX:SPI',   col: '#0086B3'},
+  {k: 'spi',  n: 'SPI Index',       d: 'Actions suisses',     xls: ['SPI (2)', 'SPI'], tv: 'SIX:SPIX',  col: '#0086B3'},
   {k: 'gold', n: 'ZGLD SW Equity',  d: 'Or',                  xls: ['GOLD'],           tv: 'SIX:ZGLD',  col: '#B8860B'},
-  {k: 'bond', n: 'SBR14T Index',    d: 'Obligations suisses', xls: ['Bonds'],          tv: null,        col: '#2E8B57'},
+  {k: 'bond', n: 'SBR14T Index',    d: 'Obligations suisses', xls: ['Bonds'],          tv: 'SIX:SBR14T', col: '#2E8B57'},
   {k: 'bcom', n: 'BCCMS SW Equity', d: 'Matières premières',  xls: ['BCOM (2)'], xlsAlt: ['BCOM'], tv: 'SIX:BCCMS', col: '#7E57C2'},
   {k: 'rest', n: 'SIMA SW Equity',  d: 'Immobilier suisse',   xls: ['RE'],             tv: 'SIX:SIMA',  col: '#C0392B'}
 ];
-const ROLL = {title: null, src: 'xls', hist: 1826, win: 24, res: null, running: false, hover: null};
+const ROLL = {title: null, src: 'tv', hist: 1826, win: 24, res: null, running: false, hover: null};
 /* Lecture d'une colonne du catalogue (Monthly data en priorité). Une colonne qui ne contient que les dates (exports Bloomberg cassés) est refusée. */
 function xlsSeries(names){
   if (typeof CATALOG === 'undefined' || !CATALOG) return null;
@@ -8943,15 +9003,16 @@ function setSrc(s){
   $('lbRSrc').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.s === s));
   $('lbRSrcNote').innerHTML = s === 'xls'
     ? 'Les séries de référence du classeur Excel (feuille <em>Monthly data</em>) sont <b>mensuelles</b> : la corrélation porte sur les <b>rendements mensuels</b>, la fenêtre se règle en mois (une fenêtre de 90 jours ne contiendrait que 3 points).'
-    : 'Séries <b>quotidiennes</b> TradingView (<code>SIX:SPI</code>, <code>SIX:ZGLD</code>, <code>SIX:BCCMS</code>, <code>SIX:SIMA</code>) : fenêtre de 90 jours possible. <b>SBR14T Index</b> n\'a pas d\'équivalent quotidien : utilisez le mode Excel pour les obligations. Symboles à contrôler.';
+    : 'Séries <b>quotidiennes</b> TradingView : <code>SIX:SPIX</code>, <code>SIX:ZGLD</code>, <code>SIX:SBR14T</code>, <code>SIX:BCCMS</code>, <code>SIX:SIMA</code> — rendements quotidiens, fenêtre de 90 jours par défaut. Le mode « Excel · mensuel » reste disponible (rendements mensuels, fenêtre en mois).';
   buildWinBtns(); rollEst();
 }
 $('lbRSrc').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) setSrc(b.dataset.s); });
 $('lbRHist').addEventListener('click', e => { const b = e.target.closest('[data-y]'); if (!b) return; ROLL.hist = +b.dataset.y; $('lbRHist').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); rollEst(); });
 $('lbRWinBtns').addEventListener('click', e => { const b = e.target.closest('[data-w]'); if (!b) return; ROLL.win = +b.dataset.w; buildWinBtns(); rollEst(); });
 $('lbRWin').addEventListener('change', () => { const v = Math.round(+$('lbRWin').value); ROLL.win = Math.max(+$('lbRWin').min, Math.min(+$('lbRWin').max, v || ROLL.win)); buildWinBtns(); rollEst(); });
-$('lbRTitle').addEventListener('input', () => { ROLL.title = parseTitle($('lbRTitle').value); rollEst(); });
-$('lbRTitle').addEventListener('change', () => { ROLL.title = parseTitle($('lbRTitle').value); rollEst(); });
+const onTitle = () => { ROLL.title = parseTitle($('lbRTitle').value); $('lbRLogo').innerHTML = ROLL.title ? lgHtml(ROLL.title.s, ROLL.title.n, 'md') : ''; rollEst(); };
+$('lbRTitle').addEventListener('input', onTitle);
+$('lbRTitle').addEventListener('change', onTitle);
 const rollBars = () => Math.ceil((ROLL.hist + rollUnitDays()) * 0.7) + 15;
 function rollEst(){
   const t = ROLL.title, el = $('lbREst');
@@ -9010,13 +9071,13 @@ function drawRoll(){
   const ok = R.charts.filter(c => !c.none);
   let d0 = Infinity, d1 = -Infinity; ok.forEach(c => { d0 = Math.min(d0, c.pts[0].d); d1 = Math.max(d1, c.pts[c.pts.length - 1].d); });
   $('lbRRes').hidden = false;
-  $('lbRHead').innerHTML = '<h2>' + esc(R.title.n) + ' <small>' + esc(R.title.s) + '</small></h2><div class="fx-ids">Corrélation glissante des ' + (R.freq === 'm' ? 'rendements mensuels' : 'rendements quotidiens') + ' · fenêtre ' + R.win + (R.src === 'xls' ? ' mois' : ' jours') + ' · historique affiché ' + (R.hist >= 365 ? Math.round(R.hist / 365.25) + ' ans' : R.hist + ' j') + (ok.length ? ' · du ' + dFr(d0) + ' au ' + dFr(d1) : '') + '</div>';
+  $('lbRHead').innerHTML = '<h2>' + lgHtml(R.title.s, R.title.n, 'md') + esc(R.title.n) + ' <small>' + esc(R.title.s) + '</small></h2><div class="fx-ids">Corrélation glissante des ' + (R.freq === 'm' ? 'rendements mensuels' : 'rendements quotidiens') + ' · fenêtre ' + R.win + (R.src === 'xls' ? ' mois' : ' jours') + ' · historique affiché ' + (R.hist >= 365 ? Math.round(R.hist / 365.25) + ' ans' : R.hist + ' j') + (ok.length ? ' · du ' + dFr(d0) + ' au ' + dFr(d1) : '') + '</div>';
   const W = Math.max(360, Math.floor(($('lbRGrid').clientWidth || 1000) / (($('lbRGrid').clientWidth || 1000) >= 1040 ? 2 : 1)) - 24), H = 190, m = {t: 8, r: 12, b: 24, l: 40};
   const xt = ok.length ? xTicks(d0, d1) : [];
   ROLL.charts = [];
   $('lbRGrid').innerHTML = R.charts.map((c, i) => {
-    if (c.none) return '<div class="lb-rc none"><div class="lb-rh"><i style="background:' + c.r.col + '"></i><b>' + esc(R.title.n) + ' vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small></div><p class="fx-mut">Indisponible — ' + esc(c.note) + '.</p></div>';
-    return '<div class="lb-rc" data-i="' + i + '"><div class="lb-rh"><i style="background:' + c.r.col + '"></i><b>vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small><span class="lb-hv" id="lbHv' + i + '"></span></div>'
+    if (c.none) return '<div class="lb-rc none"><div class="lb-rh"><i style="background:' + c.r.col + '"></i>' + lgHtml(R.title.s, R.title.n, 'xs') + '<b>' + esc(R.title.n) + ' vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small></div><p class="fx-mut">Indisponible — ' + esc(c.note) + '.</p></div>';
+    return '<div class="lb-rc" data-i="' + i + '"><div class="lb-rh"><i style="background:' + c.r.col + '"></i>' + lgHtml(R.title.s, R.title.n, 'xs') + '<b>vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small><span class="lb-hv" id="lbHv' + i + '"></span></div>'
       + '<div class="lb-rk"><span>Actuelle <b class="' + (c.last >= 0 ? 'p' : 'n') + '">' + nf(2).format(c.last) + '</b></span><span>Moyenne <b>' + nf(2).format(c.mean) + '</b></span><span>Min <b>' + nf(2).format(c.min) + '</b></span><span>Max <b>' + nf(2).format(c.max) + '</b></span></div>'
       + '<div class="fx-chart" id="lbRc' + i + '"><div class="fx-tip" id="lbRt' + i + '"></div></div>'
       + (c.note ? '<p class="lb-rn">⚠ ' + esc(c.note) + '. ' + esc(c.src) + '</p>' : '<p class="lb-rn">' + esc(c.src) + '</p>') + '</div>';
@@ -9083,7 +9144,7 @@ function checkStatus(){
 }
 /* rien n'est appelé avant la première ouverture de l'écran */
 new MutationObserver(() => { if ($('screenLab').classList.contains('on')) checkStatus(); }).observe($('screenLab'), {attributes: true, attributeFilter: ['class']});
-buildTree(); loadSel(); syncSel(); setDays(90); setSrc('xls'); showTab('mat');
+buildTree(); loadSel(); syncSel(); setDays(90); setSrc('tv'); showTab('mat');
 })();
 
 
