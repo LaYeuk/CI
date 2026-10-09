@@ -149,111 +149,111 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenSandbox .extDim label{font-size:10.5px;color:var(--mut)}
 /* ---- Écrans par source : FRED, BNS, OFS (barre de recherche, accueil, listes, fiches) ---- */
 /* ---- FRED (recherche façon fred.stlouisfed.org) ---- */
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) header span{opacity:.75;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) button{font:inherit;cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-hero{padding:18px 20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sbox{position:relative}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-go:hover{background:#0a3252}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac.open{display:block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item.active,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item:hover{background:#EFFCFF}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item .fx-id{min-width:96px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item .t{flex:1}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item .m,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sec{margin-top:20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sec-h small{color:var(--mut);font-size:11.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile:hover{border-color:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile .u{font-size:11px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-delta.down{color:var(--down)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile svg{display:block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
-@media(max-width:1000px){:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-cols{grid-template-columns:1fr}}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list{list-style:none;margin:0;padding:3px 0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list li:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list .clk{cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list .clk:hover{background:#F7F6F2}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-crumbs a:hover{text-decoration:underline}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res:hover{background:#F7F6F2}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res .fx-id{margin-right:8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .btn:hover:not(:disabled){background:#EEF7FA}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .btn.pri:hover:not(:disabled){background:#0a3252}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .btn:disabled{opacity:.4;cursor:not-allowed}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-panel{padding:16px 20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-kpi .s{font-size:11px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-chart{position:relative}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-chart svg{display:block;width:100%}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-mut{color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) header span{opacity:.75;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) button{font:inherit;cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-hero{padding:18px 20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sbox{position:relative}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-go:hover{background:#0a3252}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac.open{display:block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item.active,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item:hover{background:#EFFCFF}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item .fx-id{min-width:96px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item .t{flex:1}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item .m,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sec{margin-top:20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sec-h small{color:var(--mut);font-size:11.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile:hover{border-color:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile .u{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-delta.down{color:var(--down)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile svg{display:block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
+@media(max-width:1000px){:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-cols{grid-template-columns:1fr}}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list{list-style:none;margin:0;padding:3px 0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list li:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list .clk{cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list .clk:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-crumbs a:hover{text-decoration:underline}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res .fx-id{margin-right:8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .btn:hover:not(:disabled){background:#EEF7FA}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .btn.pri:hover:not(:disabled){background:#0a3252}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .btn:disabled{opacity:.4;cursor:not-allowed}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-panel{padding:16px 20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-kpi .s{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-chart{position:relative}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-chart svg{display:block;width:100%}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-mut{color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
 @keyframes fxsk{to{background-position:-200% 0}}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-litem a{cursor:pointer;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-litem .per{color:var(--mut);font-size:11px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) details.fx-set summary{cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-toast.show{display:flex}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) [hidden]{display:none!important}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-litem a{cursor:pointer;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-litem .per{color:var(--mut);font-size:11px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) details.fx-set summary{cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-toast.show{display:flex}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) [hidden]{display:none!important}
 
 /* ---- BNS (recherche façon data.snb.ch/fr/search) — réutilise les styles fx- de l'écran FRED ---- */
 :is(#screenSnb,#screenOfs) .fx-idx{margin-top:10px;font-size:11.5px;color:var(--mut);display:flex;align-items:center;gap:10px;min-height:16px}
@@ -994,6 +994,88 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenOfs .ox-tbl th{position:sticky;top:0;background:#FAFAF8;font-size:11px;color:var(--mut);font-weight:700;white-space:normal;min-width:70px;vertical-align:bottom}
 #screenOfs .ox-tbl .l{text-align:left}
 #screenOfs .ox-tbl tbody tr:hover td{background:#F7FBFC}
+/* ---- Écran « Portfolio Constructor » ---- */
+#screenPc main{max-width:1400px}
+#screenPc .pc-grid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:1000px){#screenPc .pc-grid{grid-template-columns:1fr}}
+#screenPc .pc-side{position:sticky;top:96px;max-height:calc(100vh - 110px);overflow:auto;padding-bottom:10px}
+@media (max-width:1000px){#screenPc .pc-side{position:static;max-height:none}}
+#screenPc .pc-card{padding:14px 16px;margin-bottom:12px}
+#screenPc .pc-h{margin:0 0 10px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--navy);font-weight:700}
+#screenPc .pc-field{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--mut);margin-bottom:10px}
+#screenPc .pc-field .fx-ranges{margin:0}
+#screenPc select,#screenPc input[type=number]{font:inherit;font-size:12.5px;padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
+#screenPc input[type=number]{width:72px}
+#screenPc .pc-in{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink)}
+#screenPc .pc-tog{display:grid;grid-template-columns:auto 1fr;gap:0 8px;align-items:start;padding:7px 0;border-top:1px solid #F1F0EC;cursor:pointer;font-size:13px}
+#screenPc .pc-tog:first-of-type{border-top:0}
+#screenPc .pc-tog input{margin-top:3px}
+#screenPc .pc-tog b{color:var(--ink);font-weight:600}
+#screenPc .pc-tog em{grid-column:2;font-style:normal;font-size:11.5px;color:var(--mut)}
+#screenPc .pc-sub{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 8px 22px;font-size:12px;color:var(--mut)}
+#screenPc .pc-sub.pc-col{flex-direction:column;align-items:flex-start}
+#screenPc .pc-sub.off{display:none}
+#screenPc .pc-sub .fx-ranges{margin:0}
+#screenPc .pc-tier{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ink)}
+#screenPc .pc-tier input{width:56px}
+#screenPc .pc-tier button{border:0;background:none;color:var(--mut);cursor:pointer;font-size:14px}
+#screenPc .pc-link{border:0;background:none;color:#0086B3;font-size:12px;cursor:pointer;padding:0}
+#screenPc .pc-go{width:100%;padding:11px;font-size:14px;font-weight:700}
+#screenPc .pc-st{font-size:12px;color:var(--mut);margin-top:8px;min-height:1.2em;line-height:1.45}
+#screenPc .pc-univ-sum{font-size:12.5px;color:var(--ink);margin-bottom:8px;line-height:1.5}
+#screenPc .pc-row{display:flex;gap:8px}
+#screenPc .pc-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+#screenPc .pc-bar .sp{flex:1}
+#screenPc .pc-search{width:260px}
+#screenPc .pc-search input{padding:7px 10px;font-size:12.5px}
+#screenPc .pc-hits{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;max-height:320px;overflow:auto;min-width:380px}
+#screenPc .pc-hit{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;border-top:1px solid #F1F0EC;background:#fff;padding:7px 12px;font-size:12.5px;color:var(--ink);cursor:pointer}
+#screenPc .pc-hit:hover{background:#EFFCFF}
+#screenPc .pc-hit b{font:700 11px ui-monospace,Consolas,monospace;color:#0086B3;min-width:100px}
+#screenPc .pc-groups{columns:3 260px;column-gap:16px}
+#screenPc .pc-grp{break-inside:avoid;margin-bottom:10px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff}
+#screenPc .pc-grp > label{display:flex;gap:6px;align-items:center;font-size:11.5px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.03em;cursor:pointer}
+#screenPc .pc-grp > label small{margin-left:auto;font-weight:400;color:var(--mut);text-transform:none}
+#screenPc .pc-items{display:flex;flex-direction:column;gap:1px;margin-top:4px}
+#screenPc .pc-items label{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--ink);cursor:pointer;padding:1px 0}
+#screenPc .pc-items label.off{color:var(--mut);text-decoration:line-through}
+#screenPc .pc-items small{color:var(--mut);font:10.5px ui-monospace,Consolas,monospace;margin-left:auto}
+#screenPc .pc-items button{border:0;background:none;color:var(--mut);cursor:pointer;padding:0 2px}
+#screenPc .pc-empty{display:flex;flex-direction:column;gap:6px;padding:30px 10px;text-align:center;font-size:13px;color:var(--mut)}
+#screenPc .pc-empty b{color:var(--navy);font-size:14px}
+#screenPc .pc-warn{background:#FFF8EC;border:1px solid #F2D9A8;color:#6A4A0C;border-radius:8px;padding:8px 12px;font-size:12px;line-height:1.5;margin:8px 0}
+#screenPc .pc-alloc h4{margin:10px 0 6px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+#screenPc .pc-stack{display:flex;height:14px;border-radius:7px;overflow:hidden;background:#EEE}
+#screenPc .pc-stack i{display:block;height:100%}
+#screenPc .pc-keys{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font-size:12px}
+#screenPc .pc-keys span{display:inline-flex;align-items:center;gap:5px}
+#screenPc .pc-keys i{width:9px;height:9px;border-radius:2px;display:inline-block}
+#screenPc .pc-tblwrap{overflow:auto;max-height:640px}
+#screenPc .pc-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+#screenPc .pc-tbl th,#screenPc .pc-tbl td{padding:6px 7px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#screenPc .pc-tbl th{position:sticky;top:0;background:#fff;font-size:11px;color:var(--mut);font-weight:700;z-index:1}
+#screenPc .pc-tbl .l{text-align:left}
+#screenPc .pc-tbl tr.tot td{font-weight:700;border-top:2px solid var(--line)}
+#screenPc .pc-nm{display:flex;align-items:center;gap:8px;white-space:normal;max-width:300px}
+#screenPc .pc-nm small{display:block;color:var(--mut);font-size:10.5px}
+#screenPc .pc-wb{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+#screenPc .pc-wb i{display:inline-block;height:8px;border-radius:4px;background:#0086B3}
+#screenPc .pc-two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:1200px){#screenPc .pc-two{grid-template-columns:1fr}}
+#screenPc .pc-chart{position:relative}
+#screenPc .pc-chart svg{display:block;width:100%;height:auto}
+#screenPc .pc-note{font-size:11.5px;color:var(--mut);line-height:1.5;margin-top:8px}
+#screenPc .pf-lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--mut);margin-bottom:4px}
+#screenPc .pf-lg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:5px;vertical-align:3px}
+#screenPc .pf-tip,#screenPc .pc-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:6px 9px;border-radius:6px;white-space:nowrap;display:none;z-index:5;line-height:1.5}
+#screenPc .pf-tip i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+#screenPc .qd-toast{position:fixed;right:22px;bottom:22px;z-index:200;background:var(--navy);color:#fff;font-size:13px;padding:10px 16px;border-radius:9px;box-shadow:0 8px 24px rgba(2,24,43,.3);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;max-width:420px}
+#screenPc .qd-toast.show{opacity:1;transform:none}
+#screenPc .qd-toast.err{background:#B5361C}
+#screenPc .lg{position:relative;flex:none;width:20px;height:20px;border-radius:50%;background:hsl(var(--h) 40% 90%);color:hsl(var(--h) 45% 30%);display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(2,24,43,.08)}
+#screenPc .lg i{font-style:normal;letter-spacing:-.02em}
+#screenPc .lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:2px;box-sizing:border-box;opacity:0;transition:opacity .15s}
+#screenPc .lg img.ok{opacity:1}
 </style>
 </head>
 <body>
@@ -1011,6 +1093,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       <button type="button" class="navbtn" data-screen="quad">Cadran</button>
       <span class="navsep" aria-hidden="true"></span>
       <button type="button" class="navbtn" data-screen="pf">Portfolio Lab</button>
+      <button type="button" class="navbtn" data-screen="pc">Portfolio Constructor</button>
     </div>
     <div class="navbtns">
       <button type="button" class="navbtn" data-screen="sandbox">Chart Creator</button>
@@ -1073,6 +1156,12 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
         <div class="icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="6.5" width="17" height="13" rx="2" stroke="#00CFFF" stroke-width="1.8"/><path d="M9 6.5V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v1.5" stroke="#00CFFF" stroke-width="1.8"/><path d="M7 15.5L10 12.5L12.5 14.5L17 10" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h2>Portfolio Lab</h2>
         <p>Déposez un portefeuille (positions et évolution de la valeur) : titres, cadran croissance / inflation, volatilité et régression de la performance.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="pc">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20V4" stroke="white" stroke-width="1.4" stroke-linecap="round"/><path d="M4 20H20" stroke="white" stroke-width="1.4" stroke-linecap="round"/><path d="M6.5 17C9 11 12.5 8 19 6.5" stroke="#00CFFF" stroke-width="1.8" stroke-linecap="round"/><circle cx="12.5" cy="9.6" r="2.2" fill="#00CFFF"/><circle cx="9" cy="15" r="1.2" fill="#DDD8C4"/><circle cx="16" cy="13" r="1.2" fill="#DDD8C4"/></svg></div>
+        <h2>Portfolio Constructor</h2>
+        <p>Construisez un portefeuille optimisé dans l'univers du Market Dashboard : Max Sharpe, min variance, dividende, nombre de titres et pondérations.</p>
         <span class="go2">Ouvrir →</span>
       </button>
     </div>
@@ -1952,6 +2041,95 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
   </div>
 </main>
 <div class="qd-toast" id="pfToast"></div>
+</div>
+<div id="screenPc" class="screen">
+
+<header><h1>Portfolio Constructor</h1><span>Construit un portefeuille optimisé à partir de l'univers de titres du Market Dashboard, selon les objectifs et contraintes activés.</span></header>
+<main>
+  <div class="pc-grid">
+    <aside class="pc-side">
+      <section class="fx-card pc-card">
+        <h3 class="pc-h">Univers</h3>
+        <div class="pc-univ-sum" id="pcUnivSum"></div>
+        <div class="pc-row"><button type="button" class="btn" id="pcUnivEdit">Modifier l'univers</button></div>
+      </section>
+
+      <section class="fx-card pc-card">
+        <h3 class="pc-h">Données</h3>
+        <div class="pc-field"><span>Historique</span><div class="fx-ranges" id="pcHist"><button type="button" data-h="52">1 an</button><button type="button" data-h="104">2 ans</button><button type="button" data-h="156">3 ans</button></div></div>
+        <label class="pc-field"><span>Taux sans risque (CHF)</span><span class="pc-in"><input type="number" id="pcRf" step="0.1"> %</span></label>
+        <label class="pc-field"><span>Rendements attendus</span><select id="pcShrink"><option value="0">Historiques bruts</option><option value="0.5">Historiques réduits de moitié vers la moyenne</option><option value="1">Identiques pour tous (seul le risque compte)</option></select></label>
+      </section>
+
+      <section class="fx-card pc-card">
+        <h3 class="pc-h">Objectif</h3>
+        <label class="pc-tog"><input type="checkbox" id="pcObjSharpe"><b>Max Sharpe ratio</b><em>meilleur rendement par unité de risque</em></label>
+        <label class="pc-tog"><input type="checkbox" id="pcObjMinVar"><b>Min variance</b><em>portefeuille le moins volatil</em></label>
+        <label class="pc-tog"><input type="checkbox" id="pcObjDiv"><b>Maximiser le dividende</b><em>seul : rendement du dividende maximal ; combiné : penche vers les dividendes</em></label>
+        <div class="pc-sub" id="pcDivSub"><span>Importance</span><div class="fx-ranges" id="pcDivK"><button type="button" data-k="0.5">Faible</button><button type="button" data-k="1">Moyenne</button><button type="button" data-k="2">Forte</button></div></div>
+      </section>
+
+      <section class="fx-card pc-card">
+        <h3 class="pc-h">Contraintes</h3>
+        <label class="pc-tog"><input type="checkbox" id="pcNOn"><b>Nombre de titres</b></label>
+        <div class="pc-sub" id="pcNSub"><select id="pcNMode"><option value="max">au plus</option><option value="exact">exactement</option></select><span class="pc-in"><input type="number" id="pcN" min="2" step="1"> titres</span></div>
+
+        <label class="pc-tog"><input type="checkbox" id="pcMaxOn"><b>Pondération max</b></label>
+        <div class="pc-sub pc-col" id="pcMaxSub">
+          <span class="pc-in">Par titre : <input type="number" id="pcMaxDef" min="0.5" step="0.5"> %</span>
+          <div id="pcMaxTiers"></div>
+          <button type="button" class="pc-link" id="pcMaxAdd">+ exception (ex. 1 titre jusqu'à 10 %)</button>
+        </div>
+
+        <label class="pc-tog"><input type="checkbox" id="pcMinOn"><b>Pondération min</b></label>
+        <div class="pc-sub pc-col" id="pcMinSub">
+          <span class="pc-in">Par titre retenu : <input type="number" id="pcMinDef" min="0" step="0.5"> %</span>
+          <div id="pcMinTiers"></div>
+          <button type="button" class="pc-link" id="pcMinAdd">+ exception (ex. 5 titres d'au moins 4 %)</button>
+        </div>
+
+        <label class="pc-tog"><input type="checkbox" id="pcVolOn"><b>Volume du portefeuille</b><em>montant investi : calcule le nombre d'actions</em></label>
+        <div class="pc-sub" id="pcVolSub"><span class="pc-in"><input type="number" id="pcVol" min="0" step="10000" style="width:130px"> CHF</span></div>
+      </section>
+
+      <button type="button" class="btn pri pc-go" id="pcRun">Construire le portefeuille</button>
+      <div class="pc-st" id="pcSt"></div>
+    </aside>
+
+    <div class="pc-main">
+      <section class="fx-card pc-card" id="pcUniv" hidden>
+        <div class="pc-bar"><b class="pc-h" style="margin:0">Univers de titres</b><span class="sp"></span>
+          <div class="fx-sbox pc-search"><input id="pcAddQ" type="search" autocomplete="off" placeholder="Ajouter un titre (nom ou symbole)…"><div class="pc-hits" id="pcHits" hidden></div></div>
+          <button type="button" class="btn" id="pcAll">Tout</button><button type="button" class="btn" id="pcNone">Rien</button><button type="button" class="btn" id="pcReset" title="Reprend la liste du Market Dashboard (sans les indices)">Rétablir</button><button type="button" class="btn pri" id="pcUnivClose">Fermer</button></div>
+        <div class="pc-groups" id="pcGroups"></div>
+      </section>
+
+      <section class="fx-card pc-card" id="pcEmpty">
+        <div class="pc-empty"><b>Choisissez l'objectif et les contraintes, puis « Construire le portefeuille ».</b>
+        <span>Les cours de l'univers (≈ 340 titres) sont chargés une fois par jour et partagés entre collègues ; les rendements sont convertis en CHF.</span></div>
+      </section>
+
+      <div id="pcRes" hidden>
+        <section class="fx-card pc-card">
+          <div class="pc-bar"><b class="pc-h" style="margin:0" id="pcResT"></b><span class="sp"></span><button type="button" class="btn" id="pcCsv">CSV</button></div>
+          <div class="fx-kpis" id="pcKpis"></div>
+          <div class="pc-warn" id="pcWarn" hidden></div>
+          <div class="pc-alloc" id="pcAlloc"></div>
+        </section>
+        <section class="fx-card pc-card">
+          <div class="pc-tblwrap"><table class="pc-tbl" id="pcTbl"></table></div>
+        </section>
+        <section class="fx-card pc-card pc-two">
+          <div><h3 class="pc-h">Rendement et risque (frontière efficiente)</h3><div class="pc-chart" id="pcFront"></div></div>
+          <div><h3 class="pc-h">Performance rétrospective en CHF (base 100)</h3><div class="pc-chart" id="pcBack"></div>
+            <div class="pc-note">Poids actuels appliqués au passé, rééquilibrés chaque semaine : illustration flatteuse par construction (les poids sont optimisés sur cette même période).</div></div>
+        </section>
+        <div class="pc-note">Méthode : rendements hebdomadaires en CHF (cours de clôture convertis au change du jour), covariance « réduite » vers une corrélation moyenne pour la stabiliser, rendement attendu = historique (éventuellement réduit) + rendement du dividende s'il est chargé. Les contraintes de nombre et de pondération sont résolues par étapes (heuristique) : le résultat est un très bon portefeuille admissible, pas forcément l'optimum mathématique absolu.</div>
+      </div>
+    </div>
+  </div>
+</main>
+<div class="qd-toast" id="pcToast"></div>
 </div>
 <div id="screenLab" class="screen">
 
@@ -12582,6 +12760,9 @@ $('pfRegAdd').addEventListener('keydown', e => {
 });
 $('pfRegFreq').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (!b) return; CFG.freq = b.dataset.f; saveCfg(); runReg(); });
 
+/* Graphique en courbes réutilisé par le Portfolio Constructor */
+window.gipLineChart = lineChart;
+
 /* API interne (à venir) : window.gipPortfolioSet({meta, pos, nav}) remplace le dépôt des fichiers. */
 window.gipPortfolioSet = function(o){ PF.meta = o.meta || null; PF.pos = o.pos || null; PF.nav = o.nav || null; PF.files = {det: o.pos ? {n: 'API interne', k: o.pos.length + ' positions'} : null, nav: o.nav ? {n: 'API interne', k: o.nav.length + ' dates'} : null}; PF.cache = {}; saveSession(); renderAll(); if (PF.pos) autoMap(); };
 
@@ -12591,9 +12772,583 @@ new MutationObserver(() => { if ($('screenPf').classList.contains('on') && !star
 })();
 
 
+(function PortfolioConstructorModule(){
+"use strict";
+/* ============================================================================================
+   Écran « Portfolio Constructor » — construit un portefeuille optimisé à partir d'un univers de titres
+   (par défaut : la liste du Market Dashboard, sans les indices ; titres retirables / ajoutables).
+   Objectifs (activables) : Max Sharpe, Min variance, Maximiser le dividende (seul ou en inclinaison).
+   Contraintes (activables) : nombre de titres (au plus / exactement), pondération max (par défaut + exceptions
+   « n titres jusqu'à x % »), pondération min (par titre retenu + exceptions « n titres d'au moins x % »),
+   volume du portefeuille (montant -> nombre d'actions entières).
+   Données : clôtures quotidiennes /api/tv-series (instantané du jour, eod=1) -> hebdomadaires, converties en CHF.
+   Optimisation : programme quadratique sous contraintes de bornes (gradient projeté accéléré), Max Sharpe par
+   balayage de l'aversion au risque ; nombre de titres et paliers de pondération résolus par étapes (heuristique).
+   ============================================================================================ */
+const nf = (d, mn) => new Intl.NumberFormat('fr-CH', {maximumFractionDigits: d, minimumFractionDigits: mn == null ? d : mn});
+const pct = (x, d) => (x == null || !isFinite(x)) ? '–' : (x < 0 ? '−' : '') + nf(d == null ? 1 : d).format(Math.abs(x * 100)) + ' %';
+const chf = v => (v == null || !isFinite(v)) ? '–' : nf(0).format(v);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const zDay = () => new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Zurich'}).format(new Date());
+const tick = s => String(s).replace(/^[A-Z0-9_]+:/, '');
+const CFG_KEY = 'gip_pc_cfg_v1', UNIV_KEY = 'gip_pc_univ_v1', CACHE_KEY = 'gip_pc_cache_v1', DIV_KEY = 'gip_pc_div_v1';
+const PAL = ['#02182B', '#0086B3', '#00CFFF', '#E07B00', '#00993D', '#DDD8C4', '#8A9199', '#C0201B', '#6B4FA0', '#B8860B', '#D6619A', '#4F7A28'];
+const DEF = {hist: 156, rf: 0.5, shrink: 0.5, sharpe: true, minvar: false, div: false, divK: 1, nOn: false, nMode: 'max', n: 25,
+  maxOn: true, maxDef: 5, maxTiers: [{n: 1, c: 10}], minOn: false, minDef: 1, minTiers: [], volOn: false, vol: 1000000};
+let CFG = Object.assign({}, DEF);
+try { const c = JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); if (c) CFG = Object.assign({}, DEF, c); } catch (e) {}
+const saveCfg = () => { try { localStorage.setItem(CFG_KEY, JSON.stringify(CFG)); } catch (e) {} };
+function toast(msg, ok){ const el = $('pcToast'); el.textContent = msg; el.classList.toggle('err', ok === false); el.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('show'), 4500); }
+
+/* ---------------------------------------------------------------- univers */
+const BASE = [], seen = new Set();
+DASH_GROUPS.forEach(g => { if (/^index$/i.test(g[0])) return; g[1].forEach(x => { if (/^TVC:/.test(x[0]) || seen.has(x[0])) return; seen.add(x[0]); BASE.push({s: x[0], n: x[1] || tick(x[0]), dom: x[2] || null, g: g[0]}); }); });
+let UNIV = {off: [], added: []};
+try { const u = JSON.parse(localStorage.getItem(UNIV_KEY) || 'null'); if (u) UNIV = {off: u.off || [], added: u.added || []}; } catch (e) {}
+const saveUniv = () => { try { localStorage.setItem(UNIV_KEY, JSON.stringify(UNIV)); } catch (e) {} };
+const allTitles = () => BASE.concat(UNIV.added);
+const universe = () => { const off = new Set(UNIV.off); return allTitles().filter(a => !off.has(a.s)); };
+const INFO = {}; const infoOf = s => INFO[s] || (INFO[s] = allTitles().find(a => a.s === s) || {s, n: tick(s), g: '—'});
+function lg(a){
+  const d = a.dom || (/^SIX:/.test(a.s) && typeof MKT_LOGO_DOMAINS !== 'undefined' ? MKT_LOGO_DOMAINS[tick(a.s)] : null);
+  let h = 0; for (let i = 0; i < a.s.length; i++) h = (h * 31 + a.s.charCodeAt(i)) % 360;
+  const w = String(a.n).replace(/\(.*?\)/g, ' ').split(/[\s\-+&.|,\/]+/).filter(x => x.length > 1 && !/^(de|du|la|le|des|group|holding|ag|sa|se|corp|inc|plc|nv)$/i.test(x));
+  const ini = (w.length > 1 ? w[0][0] + w[1][0] : (w[0] || a.n).slice(0, 2)).toUpperCase();
+  return '<span class="lg" style="--h:' + h + '"><i>' + esc(ini) + '</i>' + (d ? '<img loading="lazy" alt="" referrerpolicy="no-referrer" onload="this.classList.add(\'ok\')" src="https://www.google.com/s2/favicons?domain=' + d + '&sz=64">' : '') + '</span>';
+}
+
+/* ---------------------------------------------------------------- devises */
+const CCY_EX = {SIX: 'CHF', BX: 'CHF', NASDAQ: 'USD', NYSE: 'USD', AMEX: 'USD', CBOE: 'USD', LSIN: 'USD', OTC: 'USD', XETR: 'EUR', FWB: 'EUR', EURONEXT: 'EUR', MIL: 'EUR', BME: 'EUR', VIE: 'EUR', ATHEX: 'EUR', OMXHEX: 'EUR',
+  LSE: 'GBX', OMXSTO: 'SEK', OMXCOP: 'DKK', OSL: 'NOK', TSE: 'JPY', HKEX: 'HKD', KRX: 'KRW', TWSE: 'TWD', TSX: 'CAD', ASX: 'AUD', SSE: 'CNY', SZSE: 'CNY', NSE: 'INR', BSE: 'INR', GPW: 'PLN', SGX: 'SGD', BMFBOVESPA: 'BRL', JSE: 'ZAC'};
+const ccyOf = s => CCY_EX[String(s).split(':')[0]] || 'CHF';
+const fxBase = c => c === 'GBX' ? 'GBP' : c === 'ZAC' ? 'ZAR' : c;
+const fxDiv = c => (c === 'GBX' || c === 'ZAC') ? 100 : 1;
+
+/* ---------------------------------------------------------------- cours : hebdomadaires + dernière clôture, instantané du jour */
+const DS = {};   /* symbole -> {w: [semaines], c: [clôtures], last, lastD} | {none: true} */
+try { const o = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null'); if (o && o.day === zDay() && o.s) Object.assign(DS, o.s); } catch (e) {}
+function saveDay(){ try { const s = {}; Object.keys(DS).forEach(k => { if (!DS[k].tmp) s[k] = DS[k]; }); localStorage.setItem(CACHE_KEY, JSON.stringify({day: zDay(), s})); } catch (e) {} }
+function toWeekly(t, c){
+  const w = [], v = [];
+  for (let i = 0; i < t.length; i++) { const x = +c[i]; if (!(x > 0)) continue; const k = Math.floor((t[i] + 3) / 7); if (w.length && w[w.length - 1] === k) v[v.length - 1] = x; else { w.push(k); v.push(x); } }
+  return {w, c: v, last: v.length ? v[v.length - 1] : null, lastD: t.length ? t[t.length - 1] : null};
+}
+async function loadSeries(syms, onProg){
+  const need = Array.from(new Set(syms.filter(Boolean))).filter(s => !DS[s] || DS[s].tmp);
+  let warn = '';
+  for (let i = 0; i < need.length; i += 30) {
+    if (i) await sleep(350);
+    const chunk = need.slice(i, i + 30);
+    const send = () => fetch('/api/tv-series?symbols=' + encodeURIComponent(chunk.join(',')) + '&bars=780&eod=1');
+    let r, j = null;
+    try { r = await send(); if (r.status === 429) { await sleep(1500); r = await send(); } }
+    catch (e) { throw new Error('Relais Market Data injoignable — page ouverte hors du site Cloudflare, ou hors-ligne ?'); }
+    try { j = await r.json(); } catch (e) {}
+    if (!r.ok && !(j && j.series)) throw new Error((j && j.error_message) || ('HTTP ' + r.status));
+    const ser = (j && j.series) || {}, bad = !!(j && j.error_message);
+    if (bad) warn = j.error_message;
+    chunk.forEach(k => { const S = ser[k]; DS[k] = (S && S.t && S.t.length > 20) ? toWeekly(S.t, S.c) : (bad ? {none: true, tmp: true} : {none: true}); });
+    if (onProg) onProg(Math.min(i + 30, need.length), need.length);
+  }
+  if (need.length) saveDay();
+  return warn;
+}
+const has = s => s && DS[s] && !DS[s].none;
+/* taux de change -> CHF : FX_IDC:XXXCHF, sinon USDCHF / USDXXX */
+async function loadFx(ccys){
+  const bases = Array.from(new Set(ccys.map(fxBase))).filter(c => c !== 'CHF');
+  await loadSeries(bases.map(c => 'FX_IDC:' + c + 'CHF'));
+  const miss = bases.filter(c => !has('FX_IDC:' + c + 'CHF'));
+  if (miss.length) await loadSeries(['FX_IDC:USDCHF'].concat(miss.map(c => 'FX_IDC:USD' + c)));
+  const FX = {};
+  bases.forEach(c => {
+    const m = new Map();
+    if (has('FX_IDC:' + c + 'CHF')) { const S = DS['FX_IDC:' + c + 'CHF']; S.w.forEach((k, i) => m.set(k, S.c[i])); m.last = S.last; }
+    else if (has('FX_IDC:USDCHF') && has('FX_IDC:USD' + c)) {
+      const A = DS['FX_IDC:USDCHF'], B = DS['FX_IDC:USD' + c], mb = new Map(); B.w.forEach((k, i) => mb.set(k, B.c[i]));
+      A.w.forEach((k, i) => { const b = mb.get(k); if (b > 0) m.set(k, A.c[i] / b); }); m.last = A.last / B.last;
+    } else return;
+    FX[c] = m;
+  });
+  return FX;
+}
+
+/* ---------------------------------------------------------------- dividendes (rendement en %, instantané du jour) */
+let DIV = {};
+try { const o = JSON.parse(localStorage.getItem(DIV_KEY) || 'null'); if (o && o.day === zDay() && o.d) DIV = o.d; } catch (e) {}
+async function loadDiv(syms, onProg){
+  const need = syms.filter(s => !(s in DIV));
+  if (!need.length) return '';
+  let err = '';
+  const six = need.filter(s => /^SIX:/.test(s)), other = need.filter(s => !/^SIX:/.test(s));
+  if (six.length) {
+    try { const r = await fetch('/api/tv-fund'); const j = await r.json(); const F = (j && j.fund) || {}; six.forEach(s => { const f = F[tick(s)]; DIV[s] = f && f.dy != null && isFinite(f.dy) ? +f.dy / 100 : null; }); if (!r.ok) err = j.error_message || ('HTTP ' + r.status); }
+    catch (e) { err = e.message; }
+  }
+  for (let i = 0; i < other.length; i += 10) {
+    if (i) await sleep(450);
+    const chunk = other.slice(i, i + 10);
+    try {
+      const r = await fetch('/api/tv/quote/batch', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({symbols: chunk})});
+      const j = await r.json(); const map = mktParseBatchQuotes(j);
+      chunk.forEach(s => { const f = map[s]; const dy = f ? mktFundFromQuote(f).dy : null; DIV[s] = dy != null && isFinite(dy) ? dy / 100 : null; });
+    } catch (e) { err = e.message; chunk.forEach(s => { DIV[s] = null; }); }
+    if (onProg) onProg(Math.min(i + 10, other.length), other.length);
+  }
+  try { localStorage.setItem(DIV_KEY, JSON.stringify({day: zDay(), d: DIV})); } catch (e) {}
+  return err;
+}
+
+/* ---------------------------------------------------------------- estimation : rendements hebdomadaires en CHF, μ, Σ */
+function prepare(univ, FX){
+  const H = CFG.hist, ok = univ.filter(a => has(a.s)), excl = [];
+  univ.filter(a => !has(a.s)).forEach(a => excl.push({a, why: 'aucun cours'}));
+  if (!ok.length) return {assets: [], excl};
+  const ends = ok.map(a => DS[a.s].w[DS[a.s].w.length - 1]).sort((a, b) => a - b);
+  const kEnd = ends[Math.floor(ends.length * 0.8)], k0 = kEnd - H;
+  const assets = [];
+  ok.forEach(a => {
+    const S = DS[a.s], c = ccyOf(a.s), b = fxBase(c), fx = b === 'CHF' ? null : FX[b];
+    if (b !== 'CHF' && !fx) { excl.push({a, why: 'change ' + b + 'CHF indisponible'}); return; }
+    if (S.w[S.w.length - 1] < kEnd - 2) { excl.push({a, why: 'cours trop anciens'}); return; }
+    if (S.w[0] > k0 + 2) { excl.push({a, why: 'historique trop court'}); return; }
+    const L = []; let j = 0, last = null, own = 0, fxl = null;
+    const fxKeys = fx ? Array.from(fx.keys()).sort((x, y) => x - y) : null; let fj = 0;
+    for (let k = k0; k <= kEnd; k++) {
+      while (j < S.w.length && S.w[j] <= k) { if (S.w[j] === k) own++; last = S.c[j]; j++; }
+      if (fx) { while (fj < fxKeys.length && fxKeys[fj] <= k) { fxl = fx.get(fxKeys[fj]); fj++; } }
+      L.push(last == null ? null : last / fxDiv(c) * (fx ? fxl : 1));
+    }
+    if (L.some(v => !(v > 0)) || own < 0.8 * (H + 1)) { excl.push({a, why: 'trop de semaines sans cours'}); return; }
+    const R = new Float64Array(H); for (let t = 0; t < H; t++) R[t] = L[t + 1] / L[t] - 1;
+    const px = S.last / fxDiv(c) * (fx ? (fx.last || fxl) : 1);
+    assets.push({a, c, R, L, px});
+  });
+  return {assets, excl, k0, kEnd};
+}
+function estimate(P){
+  const A = P.assets, n = A.length, T = CFG.hist;
+  const mean = A.map(x => { let s = 0; for (let t = 0; t < T; t++) s += x.R[t]; return s / T; });
+  const S = new Float64Array(n * n);
+  const D = A.map((x, i) => { const d = new Float64Array(T); for (let t = 0; t < T; t++) d[t] = x.R[t] - mean[i]; return d; });
+  for (let i = 0; i < n; i++) for (let j = i; j < n; j++) { const a = D[i], b = D[j]; let s = 0; for (let t = 0; t < T; t++) s += a[t] * b[t]; s = s / (T - 1) * 52; S[i * n + j] = s; S[j * n + i] = s; }
+  const sd = Array.from({length: n}, (_, i) => Math.sqrt(S[i * n + i]));
+  let rs = 0, rc = 0; for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { rs += S[i * n + j] / (sd[i] * sd[j]); rc++; }
+  const rbar = rc ? rs / rc : 0, delta = Math.min(0.8, Math.max(0.2, n / (n + T)));   /* réduction vers une corrélation moyenne */
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) if (i !== j) S[i * n + j] = (1 - delta) * S[i * n + j] + delta * rbar * sd[i] * sd[j];
+  const muH = mean.map(m => m * 52), avg = muH.reduce((s, v) => s + v, 0) / (n || 1);
+  const mu = muH.map(m => (1 - CFG.shrink) * m + CFG.shrink * avg);
+  const dy = A.map(x => CFG.div ? (DIV[x.a.s] != null ? DIV[x.a.s] : 0) : (DIV[x.a.s] != null ? DIV[x.a.s] : 0));
+  const muT = mu.map((m, i) => m + (dy[i] || 0));
+  return {n, S, sd, mu, muT, dy, rbar, delta};
+}
+
+/* ---------------------------------------------------------------- optimisation */
+function project(v, lb, ub, out){
+  let lo = Infinity, hi = -Infinity;
+  for (let i = 0; i < v.length; i++) { lo = Math.min(lo, v[i] - ub[i]); hi = Math.max(hi, v[i] - lb[i]); }
+  lo -= 1; hi += 1;
+  for (let it = 0; it < 100; it++) {
+    const mid = (lo + hi) / 2; let s = 0;
+    for (let i = 0; i < v.length; i++) { const x = v[i] - mid; s += x < lb[i] ? lb[i] : x > ub[i] ? ub[i] : x; }
+    if (s > 1) lo = mid; else hi = mid;
+    if (hi - lo < 1e-12) break;
+  }
+  const tau = (lo + hi) / 2;
+  for (let i = 0; i < v.length; i++) { const x = v[i] - tau; out[i] = x < lb[i] ? lb[i] : x > ub[i] ? ub[i] : x; }
+  return out;
+}
+function lamMax(S, k){ let v = new Float64Array(k).fill(1 / Math.sqrt(k)), l = 0; for (let it = 0; it < 60; it++) { const u = mv(S, v, k); l = Math.sqrt(u.reduce((s, x) => s + x * x, 0)); if (!(l > 0)) return 1e-6; for (let i = 0; i < k; i++) v[i] = u[i] / l; } return l; }
+function mv(S, x, k){ const y = new Float64Array(k); for (let i = 0; i < k; i++) { let s = 0; const o = i * k; for (let j = 0; j < k; j++) s += S[o + j] * x[j]; y[i] = s; } return y; }
+/* max m'w − γ/2 w'Σw  s.c. Σw = 1, lb ≤ w ≤ ub  (gradient projeté accéléré, redémarrage adaptatif) */
+function qp(sub, m, gamma, lb, ub, w0){
+  const k = m.length, S = sub.S, L = gamma * sub.lam + 1e-12, step = 1 / L;
+  let x = project(Float64Array.from(w0 || new Float64Array(k).fill(1 / k)), lb, ub, new Float64Array(k));
+  let y = Float64Array.from(x), t = 1;
+  const v = new Float64Array(k), xn = new Float64Array(k);
+  for (let it = 0; it < 4000; it++) {
+    const Sy = mv(S, y, k);
+    for (let i = 0; i < k; i++) v[i] = y[i] + step * (m[i] - gamma * Sy[i]);
+    project(v, lb, ub, xn);
+    let diff = 0, dir = 0;
+    for (let i = 0; i < k; i++) { diff = Math.max(diff, Math.abs(xn[i] - x[i])); dir += (m[i] - gamma * Sy[i]) * (xn[i] - x[i]); }
+    if (dir < 0) t = 1;
+    const tn = (1 + Math.sqrt(1 + 4 * t * t)) / 2, b = (t - 1) / tn;
+    for (let i = 0; i < k; i++) { const xi = xn[i]; y[i] = xi + b * (xi - x[i]); x[i] = xi; }
+    t = tn;
+    if (diff < 2e-8) break;
+  }
+  return x;
+}
+function subProblem(E, idx){
+  const k = idx.length, n = E.n, S = new Float64Array(k * k);
+  for (let a = 0; a < k; a++) for (let b = 0; b < k; b++) S[a * k + b] = E.S[idx[a] * n + idx[b]];
+  return {S, k, lam: lamMax(S, k)};
+}
+const pVar = (E, w) => { const n = E.n; let s = 0; for (let i = 0; i < n; i++) { if (!w[i]) continue; let r = 0; for (let j = 0; j < n; j++) if (w[j]) r += E.S[i * n + j] * w[j]; s += w[i] * r; } return s; };
+const dot = (a, w) => { let s = 0; for (let i = 0; i < w.length; i++) s += a[i] * w[i]; return s; };
+/* résout l'objectif choisi sur les titres d'ub > 0 ; renvoie des poids sur tout l'univers + points de frontière */
+async function solveObjective(E, lb, ub, w0, wantFront){
+  const idx = []; for (let i = 0; i < E.n; i++) if (ub[i] > 1e-9) idx.push(i);
+  const sub = subProblem(E, idx), k = idx.length;
+  const pick = a => Float64Array.from(idx.map(i => a[i]));
+  const LB = pick(lb), UB = pick(ub), W0 = w0 ? pick(w0) : null;
+  const rf = CFG.rf / 100, kDiv = CFG.divK;
+  const full = x => { const w = new Float64Array(E.n); idx.forEach((i, a) => { w[i] = x[a]; }); return w; };
+  const stats = x => { const w = full(x); const v = Math.sqrt(Math.max(0, pVar(E, w))); const r = dot(E.muT, w); return {w, vol: v, ret: r, sharpe: v > 0 ? (r - rf) / v : 0}; };
+  const front = [];
+  let mObj;
+  if (CFG.minvar || (!CFG.sharpe && !CFG.div)) {
+    mObj = CFG.div ? pick(E.dy).map(d => kDiv * d) : new Float64Array(k);
+    const x = qp(sub, mObj, 1, LB, UB, W0);
+    if (wantFront) await frontier(sub, pick(E.muT), LB, UB, stats, front);
+    return Object.assign(stats(x), {front});
+  }
+  if (!CFG.sharpe && CFG.div) {
+    const x = qp(sub, pick(E.dy), 0.02, LB, UB, W0);
+    if (wantFront) await frontier(sub, pick(E.muT), LB, UB, stats, front);
+    return Object.assign(stats(x), {front});
+  }
+  /* Max Sharpe : balayage de γ (aversion au risque) puis affinage ; avec dividende, rendement incliné μ + k·dy */
+  const muSel = pick(E.muT), dySel = pick(E.dy);
+  mObj = CFG.div ? Float64Array.from(muSel.map((m, i) => m + kDiv * dySel[i])) : muSel;
+  const score = x => { const w = full(x); const v = Math.sqrt(Math.max(1e-12, pVar(E, w))); return (dot(mObj, x) - rf) / v; };
+  const gs = []; for (let e = Math.log(0.3); e <= Math.log(400) + 1e-9; e += (Math.log(400) - Math.log(0.3)) / 15) gs.push(Math.exp(e));
+  let prev = W0, best = null, bi = -1;
+  const res = [];
+  for (let gi = gs.length - 1; gi >= 0; gi--) {
+    const x = qp(sub, mObj, gs[gi], LB, UB, prev); prev = x;
+    const sc = score(x); res[gi] = {x, sc};
+    if (wantFront) { const s = stats(x); front.push({vol: s.vol, ret: s.ret}); }
+    if (!best || sc > best.sc) { best = {x, sc, g: gs[gi]}; bi = gi; }
+    await sleep(0);
+  }
+  /* affinage (section dorée sur log γ entre les voisins du meilleur point) */
+  let a = Math.log(gs[Math.max(0, bi - 1)]), b = Math.log(gs[Math.min(gs.length - 1, bi + 1)]);
+  const phi = (Math.sqrt(5) - 1) / 2;
+  for (let it = 0; it < 8; it++) {
+    const c1 = b - phi * (b - a), c2 = a + phi * (b - a);
+    const x1 = qp(sub, mObj, Math.exp(c1), LB, UB, best.x), x2 = qp(sub, mObj, Math.exp(c2), LB, UB, best.x);
+    const s1 = score(x1), s2 = score(x2);
+    if (s1 > best.sc) best = {x: x1, sc: s1}; if (s2 > best.sc) best = {x: x2, sc: s2};
+    if (s1 > s2) b = c2; else a = c1;
+  }
+  return Object.assign(stats(best.x), {front});
+}
+async function frontier(sub, mu, LB, UB, stats, out){
+  const x0 = qp(sub, new Float64Array(mu.length), 1, LB, UB, null); let prev = x0; out.push((s => ({vol: s.vol, ret: s.ret}))(stats(x0)));
+  for (const g of [200, 60, 25, 10, 5, 2.5, 1.2, 0.6, 0.3]) { const x = qp(sub, mu, g, LB, UB, prev); prev = x; const s = stats(x); out.push({vol: s.vol, ret: s.ret}); await sleep(0); }
+}
+
+/* ---------------------------------------------------------------- contraintes (étapes successives) */
+const EPS = 1e-4;
+function tierCaps(order){   /* order : indices triés par poids décroissant -> plafond de chacun */
+  const tiers = (CFG.maxTiers || []).filter(t => t.n > 0 && t.c > 0).slice().sort((a, b) => b.c - a.c);
+  const caps = new Map(); let p = 0;
+  tiers.forEach(t => { for (let q = 0; q < t.n && p < order.length; q++, p++) caps.set(order[p], Math.max(t.c, CFG.maxDef) / 100); });
+  for (; p < order.length; p++) caps.set(order[p], CFG.maxDef / 100);
+  return caps;
+}
+function tierFloors(order){
+  const tiers = (CFG.minTiers || []).filter(t => t.n > 0 && t.c > 0).slice().sort((a, b) => b.c - a.c);
+  const fl = new Map(); let p = 0;
+  tiers.forEach(t => { for (let q = 0; q < t.n && p < order.length; q++, p++) fl.set(order[p], t.c / 100); });
+  return fl;
+}
+async function build(E, onStep){
+  const n = E.n, warn = [];
+  const capMax = CFG.maxOn ? Math.max(CFG.maxDef, ...(CFG.maxTiers || []).map(t => +t.c || 0)) / 100 : 1;
+  let lb = new Float64Array(n), ub = new Float64Array(n).fill(capMax);
+  const N = CFG.nOn ? Math.max(1, Math.round(CFG.n)) : null;
+  const minW = CFG.minOn ? CFG.minDef / 100 : 0;
+  if (CFG.maxOn && capMax * n < 1) { warn.push('Pondération max trop faible pour l\'univers : relevée à ' + pct(1 / n) + '.'); ub.fill(1 / n + 1e-6); }
+  onStep('Optimisation sur ' + n + ' titres…');
+  let R = await solveObjective(E, lb, ub, null, false);
+  let w = R.w, prevKey = '';
+  const all = Array.from({length: n}, (_, i) => i);
+  /* classement des candidats selon l'objectif : dividende seul -> rendement du dividende ; min variance -> volatilité basse ; sinon rendement / risque */
+  const qv = i => (!CFG.sharpe && !CFG.minvar && CFG.div) ? (E.dy[i] || 0) : CFG.minvar ? -E.sd[i] + (CFG.div ? CFG.divK * (E.dy[i] || 0) : 0) : E.muT[i] / E.sd[i];
+  const quality = all.slice().sort((a, b) => qv(b) - qv(a));
+  const dropped = new Set(), exact = N && CFG.nMode === 'exact';
+  let warned = false;
+  for (let round = 0; round < 10; round++) {
+    const held = all.filter(i => w[i] > EPS).sort((a, b) => w[b] - w[a]);
+    /* pondération min : les positions retenues sous le minimum sont écartées (sauf « exactement N ») */
+    if (minW > 0 && !exact) { const small = held.filter(i => w[i] < minW - 1e-6); if (small.length && small.length < held.length) small.forEach(i => dropped.add(i)); }
+    let keep;
+    if (N) {
+      keep = held.filter(i => !dropped.has(i)).slice(0, N);
+      const fill = quality.filter(i => keep.indexOf(i) < 0 && !dropped.has(i));
+      const capOf = p => CFG.maxOn ? (p < 0 ? CFG.maxDef / 100 : 1) : 1;
+      let sumCap = 0; if (CFG.maxOn) { const c = tierCaps(keep); keep.forEach(i => { sumCap += c.get(i); }); } else sumCap = keep.length ? 1 : 0;
+      /* en mode « exactement N », ou si les plafonds ne permettent pas d'investir 100 %, on complète avec les meilleurs candidats */
+      while (keep.length < N && fill.length && (exact || sumCap < 1 - 1e-9)) { const i = fill.shift(); keep.push(i); sumCap += capOf(-1); }
+    } else {
+      /* sans limite de nombre : titres détenus + meilleurs candidats (rendement / risque), pour garder un problème de taille raisonnable */
+      const cand = quality.filter(i => !dropped.has(i)).slice(0, 90);
+      keep = Array.from(new Set(held.filter(i => !dropped.has(i)).concat(cand)));
+    }
+    const ordK = keep.slice().sort((a, b) => (w[b] - w[a]) || (quality.indexOf(a) - quality.indexOf(b)));
+    const caps = CFG.maxOn ? tierCaps(ordK) : null, floors = CFG.minOn ? tierFloors(ordK.filter(i => w[i] > EPS)) : null;
+    ub = new Float64Array(n); lb = new Float64Array(n);
+    keep.forEach(i => {
+      ub[i] = caps ? caps.get(i) : 1;
+      lb[i] = exact ? Math.max(minW, 0.001) : (minW && w[i] >= minW - 1e-6 ? minW : 0);
+      if (floors && floors.has(i)) lb[i] = Math.max(lb[i], floors.get(i));
+      if (lb[i] > ub[i]) ub[i] = lb[i];
+    });
+    let sumUb = 0, sumLb = 0; keep.forEach(i => { sumUb += ub[i]; sumLb += lb[i]; });
+    if (sumUb < 1 - 1e-9) { const f = 1 / sumUb; keep.forEach(i => { ub[i] = Math.min(1, ub[i] * f + 1e-9); }); if (!warned) { warn.push('Contraintes incompatibles : ' + keep.length + ' titres × plafonds = ' + pct(sumUb) + ' < 100 % — plafonds relevés proportionnellement (augmentez le nombre de titres ou la pondération max).'); warned = true; } }
+    if (sumLb > 1 + 1e-9) { keep.forEach(i => { lb[i] = lb[i] / sumLb; }); if (!warned) { warn.push('Planchers trop élevés (somme ' + pct(sumLb) + ') : réduits proportionnellement.'); warned = true; } }
+    const key = keep.slice().sort((a, b) => a - b).join(',') + '|' + keep.map(i => ub[i].toFixed(4) + '/' + lb[i].toFixed(4)).join(',');
+    if (key === prevKey) break;
+    prevKey = key;
+    onStep('Application des contraintes… (étape ' + (round + 1) + ')');
+    R = await solveObjective(E, lb, ub, w, false);
+    w = R.w;
+  }
+  /* nettoyage : poids résiduels négligeables */
+  for (let i = 0; i < n; i++) if (w[i] < EPS) w[i] = 0;
+  const s = w.reduce((a, b) => a + b, 0); for (let i = 0; i < n; i++) w[i] /= s;
+  onStep('Frontière efficiente…');
+  const F = await solveObjective(E, lb, ub, w, true);
+  const vol = Math.sqrt(pVar(E, w)), ret = dot(E.muT, w);
+  return {w, vol, ret, sharpe: vol > 0 ? (ret - CFG.rf / 100) / vol : 0, front: F.front, lb, ub, warn};
+}
+
+/* ---------------------------------------------------------------- exécution */
+let LAST = null, running = false;
+async function run(){
+  if (running) return;
+  if (!CFG.sharpe && !CFG.minvar && !CFG.div) { toast('Activez au moins un objectif.', false); return; }
+  running = true; $('pcRun').disabled = true;
+  const st = $('pcSt'), say = t => { st.textContent = t; };
+  try {
+    const U = universe();
+    if (U.length < 3) throw new Error('Univers trop petit : cochez au moins 3 titres.');
+    say('Chargement des cours (' + U.length + ' titres)…');
+    const warn = await loadSeries(U.map(a => a.s).concat(['SIX:SPIX']), (d, n) => say('Chargement des cours… ' + d + ' / ' + n));
+    say('Taux de change…');
+    const FX = await loadFx(U.map(a => ccyOf(a.s)));
+    if (CFG.div) { say('Rendements du dividende…'); const e = await loadDiv(U.map(a => a.s), (d, n) => say('Rendements du dividende… ' + d + ' / ' + n)); if (e) toast('Dividendes partiellement indisponibles : ' + e, false); }
+    say('Estimation des rendements et des risques…'); await sleep(10);
+    const P = prepare(U, FX);
+    if (P.assets.length < 3) throw new Error('Trop peu de titres avec un historique suffisant (' + P.assets.length + ').' + (warn ? ' Fournisseur : ' + warn : ''));
+    const E = estimate(P);
+    const B = await build(E, say);
+    LAST = {P, E, B, cfg: JSON.parse(JSON.stringify(CFG)), at: Date.now(), provWarn: warn};
+    render();
+    say('Portefeuille construit · ' + P.assets.length + ' titres analysés' + (P.excl.length ? ', ' + P.excl.length + ' écartés (données)' : '') + '.');
+  } catch (e) { say(e.message); toast(e.message, false); }
+  running = false; $('pcRun').disabled = false;
+}
+
+/* ---------------------------------------------------------------- rendu des résultats */
+function kpi(k, v, s, col){ return '<div class="fx-kpi"><div class="k">' + k + '</div><div class="v"' + (col ? ' style="color:' + col + '"' : '') + '>' + v + '</div>' + (s ? '<div class="s">' + s + '</div>' : '') + '</div>'; }
+function stackHtml(title, parts){
+  const tot = parts.reduce((s, p) => s + p.v, 0) || 1;
+  return '<h4>' + title + '</h4><div class="pc-stack">' + parts.map((p, i) => '<i style="width:' + (p.v / tot * 100).toFixed(2) + '%;background:' + PAL[i % PAL.length] + '" title="' + esc(p.n + ' : ' + pct(p.v / tot)) + '"></i>').join('') + '</div><div class="pc-keys">'
+    + parts.slice(0, 14).map((p, i) => '<span><i style="background:' + PAL[i % PAL.length] + '"></i>' + esc(p.n) + ' <b>' + pct(p.v / tot) + '</b></span>').join('') + (parts.length > 14 ? '<span>…</span>' : '') + '</div>';
+}
+function objLabel(c){
+  const o = []; if (c.sharpe) o.push('Max Sharpe'); if (c.minvar) o.push('Min variance'); if (c.div) o.push(c.sharpe || c.minvar ? 'incliné dividende' : 'Max dividende');
+  return o.join(' · ');
+}
+function holdings(){
+  const {P, E, B, cfg} = LAST, n = E.n, w = B.w;
+  const Sw = new Float64Array(n);
+  for (let i = 0; i < n; i++) { let s = 0; for (let j = 0; j < n; j++) if (w[j]) s += E.S[i * n + j] * w[j]; Sw[i] = s; }
+  const v2 = B.vol * B.vol;
+  const rows = [];
+  for (let i = 0; i < n; i++) if (w[i] > 0) {
+    const A = P.assets[i];
+    const r = {i, a: A.a, w: w[i], mu: E.mu[i], muT: E.muT[i], vol: E.sd[i], dy: DIV[A.a.s], rc: v2 > 0 ? w[i] * Sw[i] / v2 : null, ccy: A.c, px: A.px};
+    if (cfg.volOn && cfg.vol > 0) { r.sh = A.px > 0 ? Math.floor(w[i] * cfg.vol / A.px) : 0; r.amt = r.sh * A.px; }
+    rows.push(r);
+  }
+  rows.sort((a, b) => b.w - a.w);
+  return rows;
+}
+function render(){
+  const {P, E, B, cfg} = LAST, rows = holdings();
+  $('pcEmpty').hidden = true; $('pcRes').hidden = false;
+  $('pcResT').textContent = 'Portefeuille ' + objLabel(cfg) + ' — ' + rows.length + ' titres';
+  const divW = rows.reduce((s, r) => s + r.w * (r.dy || 0), 0), divKnown = rows.filter(r => r.dy != null).reduce((s, r) => s + r.w, 0);
+  const inv = cfg.volOn ? rows.reduce((s, r) => s + (r.amt || 0), 0) : null;
+  $('pcKpis').innerHTML = kpi('Rendement attendu', pct(B.ret), 'annuel, en CHF' + (cfg.div || Object.keys(DIV).length ? ', dividende compris' : ''))
+    + kpi('Volatilité', pct(B.vol), 'annualisée, ex ante') + kpi('Sharpe', nf(2).format(B.sharpe), 'taux sans risque ' + nf(1).format(cfg.rf) + ' %')
+    + (divKnown > 0 ? kpi('Rendement du dividende', pct(divW), divKnown < 0.999 ? 'connu pour ' + pct(divKnown) + ' du poids' : 'pondéré') : '')
+    + kpi('Titres', String(rows.length), 'plus grande position ' + pct(rows[0] ? rows[0].w : 0))
+    + (inv != null ? kpi('Investi', chf(inv), 'liquidités résiduelles ' + chf(cfg.vol - inv) + ' CHF') : '');
+  const warn = B.warn.slice();
+  if (P.excl.length) warn.push(P.excl.length + ' titre(s) écarté(s) faute de données : ' + P.excl.slice(0, 12).map(x => esc(x.a.n) + ' (' + x.why + ')').join(', ') + (P.excl.length > 12 ? '…' : '') + '.');
+  if (cfg.div) { const nd = P.assets.filter(x => DIV[x.a.s] == null).length; if (nd) warn.push('Rendement du dividende inconnu pour ' + nd + ' titre(s) : compté à 0.'); }
+  if (cfg.nOn && rows.length < cfg.n && cfg.nMode === 'max') warn.push('L\'optimum ne retient que ' + rows.length + ' titres (au plus ' + cfg.n + ' autorisés).');
+  if (cfg.volOn) { const z = rows.filter(r => r.sh === 0).length; if (z) warn.push(z + ' position(s) trop petite(s) pour acheter une action entière avec ce montant.'); }
+  if (LAST.provWarn) warn.push('Fournisseur : ' + esc(LAST.provWarn));
+  $('pcWarn').hidden = !warn.length; $('pcWarn').innerHTML = warn.join('<br>');
+  const bySec = new Map(), byCcy = new Map();
+  rows.forEach(r => { bySec.set(r.a.g, (bySec.get(r.a.g) || 0) + r.w); byCcy.set(r.ccy === 'GBX' ? 'GBP' : r.ccy, (byCcy.get(r.ccy === 'GBX' ? 'GBP' : r.ccy) || 0) + r.w); });
+  const srt = m => Array.from(m).map(([n, v]) => ({n, v})).sort((a, b) => b.v - a.v);
+  $('pcAlloc').innerHTML = stackHtml('Par section du Market Dashboard', srt(bySec)) + stackHtml('Par monnaie de cotation', srt(byCcy));
+  const wMax = rows[0] ? rows[0].w : 1, rcMax = Math.max.apply(null, rows.map(r => r.rc || 0).concat([0.01]));
+  const bar = (v, m, c) => '<span class="pc-wb">' + pct(v) + '<i style="width:' + Math.max(1, v / m * 70).toFixed(0) + 'px' + (c ? ';background:' + c : '') + '"></i></span>';
+  $('pcTbl').innerHTML = '<thead><tr><th class="l">Titre</th><th>Poids</th><th>Rendement attendu</th><th>Volatilité</th><th>Dividende</th><th title="Part du risque (variance) du portefeuille">Contribution au risque</th>'
+    + (cfg.volOn ? '<th>Cours (CHF)</th><th>Actions</th><th>Montant (CHF)</th>' : '') + '</tr></thead><tbody>'
+    + rows.map(r => '<tr><td class="l"><div class="pc-nm">' + lg(r.a) + '<span>' + esc(r.a.n) + '<small>' + esc(r.a.s) + ' · ' + esc(r.a.g) + '</small></span></div></td><td>' + bar(r.w, wMax) + '</td><td>' + pct(r.muT) + '</td><td>' + pct(r.vol) + '</td><td>' + (r.dy == null ? '–' : pct(r.dy)) + '</td><td>' + bar(r.rc || 0, rcMax, '#8A9199') + '</td>'
+      + (cfg.volOn ? '<td>' + nf(2).format(r.px) + '</td><td>' + nf(0).format(r.sh) + '</td><td>' + chf(r.amt) + '</td>' : '') + '</tr>').join('')
+    + '<tr class="tot"><td class="l">Total</td><td>100 %</td><td>' + pct(B.ret) + '</td><td>' + pct(B.vol) + '</td><td>' + (divKnown ? pct(divW) : '–') + '</td><td>100 %</td>' + (cfg.volOn ? '<td></td><td></td><td>' + chf(inv) + '</td>' : '') + '</tr></tbody>';
+  drawFrontier(); drawBacktest();
+}
+function drawFrontier(){
+  const {P, E, B} = LAST, el = $('pcFront');
+  const W = 620, H = 380, L = 54, R = 16, T = 14, Bm = 36;
+  const pts = P.assets.map((x, i) => ({vol: E.sd[i], ret: E.muT[i], n: x.a.n, s: x.a.s, w: B.w[i]}));
+  const fr = B.front.filter(p => isFinite(p.vol) && isFinite(p.ret)).sort((a, b) => a.vol - b.vol);
+  const vMax = Math.min(Math.max.apply(null, pts.map(p => p.vol)), Math.max(0.6, B.vol * 3)), all = pts.filter(p => p.vol <= vMax);
+  let r0 = Math.min.apply(null, all.map(p => p.ret).concat(fr.map(p => p.ret), [0])), r1 = Math.max.apply(null, all.map(p => p.ret).concat(fr.map(p => p.ret)));
+  const pr = (r1 - r0) * 0.06; r0 -= pr; r1 += pr;
+  const X = v => L + v / vMax * (W - L - R), Y = r => T + (1 - (r - r0) / (r1 - r0)) * (H - T - Bm);
+  const ticks = (a, b, k) => { const span = b - a; let st = Math.pow(10, Math.floor(Math.log10(span / k))); const e = span / k / st; st *= e >= 7.5 ? 10 : e >= 3.5 ? 5 : e >= 1.5 ? 2 : 1; const o = []; for (let v = Math.ceil(a / st) * st; v <= b + 1e-12; v += st) o.push(v); return o; };
+  let h = '<svg viewBox="0 0 ' + W + ' ' + H + '" font-family="Aspekta, Arial, sans-serif">';
+  ticks(r0, r1, 6).forEach(v => { h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" stroke="' + (Math.abs(v) < 1e-9 ? '#A9AEB4' : '#ECEBE6') + '"/><text x="' + (L - 6) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end" font-size="10.5" fill="#6B6F76">' + nf(0).format(v * 100) + ' %</text>'; });
+  ticks(0, vMax, 6).forEach(v => { h += '<line y1="' + T + '" y2="' + (H - Bm) + '" x1="' + X(v).toFixed(1) + '" x2="' + X(v).toFixed(1) + '" stroke="#F3F2EE"/><text y="' + (H - Bm + 14) + '" x="' + X(v).toFixed(1) + '" text-anchor="middle" font-size="10.5" fill="#6B6F76">' + nf(0).format(v * 100) + ' %</text>'; });
+  h += '<text x="' + (W - R) + '" y="' + (H - 6) + '" text-anchor="end" font-size="11" fill="#1A1F27" font-weight="600">Volatilité annualisée →</text><text transform="translate(12 ' + T + ') rotate(-90)" text-anchor="end" font-size="11" fill="#1A1F27" font-weight="600">Rendement attendu →</text>';
+  all.forEach(p => { h += '<circle cx="' + X(p.vol).toFixed(1) + '" cy="' + Y(p.ret).toFixed(1) + '" r="' + (p.w > 0 ? 4 : 2.5) + '" fill="' + (p.w > 0 ? '#0086B3' : '#A9AEB4') + '" fill-opacity="' + (p.w > 0 ? 0.85 : 0.45) + '"><title>' + esc(p.n + ' (' + p.s + ')\nRendement ' + pct(p.ret) + ' · volatilité ' + pct(p.vol) + (p.w > 0 ? '\nPoids ' + pct(p.w) : '')) + '</title></circle>'; });
+  if (fr.length > 1) h += '<path d="' + fr.map((p, i) => (i ? 'L' : 'M') + X(Math.min(p.vol, vMax)).toFixed(1) + ',' + Y(p.ret).toFixed(1)).join('') + '" fill="none" stroke="#E07B00" stroke-width="2.2"/>';
+  const x = X(B.vol), y = Y(B.ret);
+  h += '<path d="M' + x + ',' + (y - 9) + 'L' + (x + 9) + ',' + y + 'L' + x + ',' + (y + 9) + 'L' + (x - 9) + ',' + y + 'Z" fill="#02182B" stroke="#fff" stroke-width="2"><title>Portefeuille : rendement ' + pct(B.ret) + ' · volatilité ' + pct(B.vol) + ' · Sharpe ' + nf(2).format(B.sharpe) + '</title></path>';
+  h += '<text x="' + (x + 12) + '" y="' + (y + 4) + '" font-size="12" font-weight="800" fill="#02182B">Portefeuille</text>';
+  h += '<g font-size="11" fill="#6B6F76"><circle cx="' + (L + 10) + '" cy="' + (T + 8) + '" r="3" fill="#A9AEB4"/><text x="' + (L + 18) + '" y="' + (T + 12) + '">titres de l\'univers</text><circle cx="' + (L + 130) + '" cy="' + (T + 8) + '" r="4" fill="#0086B3"/><text x="' + (L + 138) + '" y="' + (T + 12) + '">titres retenus</text><line x1="' + (L + 230) + '" x2="' + (L + 250) + '" y1="' + (T + 8) + '" y2="' + (T + 8) + '" stroke="#E07B00" stroke-width="2.2"/><text x="' + (L + 256) + '" y="' + (T + 12) + '">frontière (titres retenus, mêmes bornes)</text></g>';
+  el.innerHTML = h + '</svg>';
+}
+function drawBacktest(){
+  const {P, B} = LAST, el = $('pcBack'), H = CFG.hist, k0 = P.k0;
+  const day = t => (k0 + t) * 7 + 1;
+  const port = [{d: day(0), y: 100}], ew = [{d: day(0), y: 100}];
+  let a = 100, b = 100; const n = P.assets.length;
+  for (let t = 0; t < H; t++) {
+    let rp = 0, re = 0; for (let i = 0; i < n; i++) { const r = P.assets[i].R[t]; rp += B.w[i] * r; re += r / n; }
+    a *= 1 + rp; b *= 1 + re; port.push({d: day(t + 1), y: a}); ew.push({d: day(t + 1), y: b});
+  }
+  const series = [{n: 'Portefeuille construit', c: '#02182B', pts: port, w: 2.4}, {n: 'Univers à poids égaux', c: '#8A9199', pts: ew, dash: true}];
+  if (has('SIX:SPIX')) { const S = DS['SIX:SPIX'], m = new Map(); S.w.forEach((k, i) => m.set(k, S.c[i])); const base = m.get(k0) || null; if (base) { const sp = []; for (let t = 0; t <= H; t++) { const v = m.get(k0 + t); if (v) sp.push({d: day(t), y: v / base * 100}); } series.push({n: 'SPI', c: '#E07B00', pts: sp}); } }
+  if (typeof window.gipLineChart === 'function') window.gipLineChart(el, series, {fmt: v => nf(0).format(v), h: 330});
+}
+function csv(){
+  if (!LAST) return;
+  const rows = holdings(), c = LAST.cfg, f = x => x == null || !isFinite(x) ? '' : String(Math.round(x * 1e6) / 1e6).replace('.', ',');
+  const out = [['Symbole', 'Nom', 'Section', 'Monnaie', 'Poids', 'Rendement attendu', 'Volatilité', 'Dividende', 'Contribution au risque'].concat(c.volOn ? ['Cours CHF', 'Actions', 'Montant CHF'] : [])];
+  rows.forEach(r => out.push([r.a.s, r.a.n, r.a.g, r.ccy, f(r.w), f(r.muT), f(r.vol), f(r.dy), f(r.rc)].concat(c.volOn ? [f(r.px), r.sh, f(r.amt)] : [])));
+  out.push([]); out.push(['Objectif', objLabel(c)]); out.push(['Rendement attendu', f(LAST.B.ret)]); out.push(['Volatilité', f(LAST.B.vol)]); out.push(['Sharpe', f(LAST.B.sharpe)]);
+  const s = '﻿' + out.map(r => r.map(x => /[;"\n]/.test(String(x)) ? '"' + String(x).replace(/"/g, '""') + '"' : x).join(';')).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([s], {type: 'text/csv;charset=utf-8'})); a.download = 'portefeuille_construit.csv'; document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* ---------------------------------------------------------------- panneau de paramètres */
+function tierRows(kind){
+  const list = kind === 'max' ? CFG.maxTiers : CFG.minTiers;
+  return list.map((t, i) => '<div class="pc-tier">' + (kind === 'max' ? 'jusqu\'à' : 'les') + ' <input type="number" min="1" step="1" data-tk="' + kind + '" data-ti="' + i + '" data-tf="n" value="' + t.n + '"> titre(s) ' + (kind === 'max' ? 'à' : 'd\'au moins') + ' <input type="number" min="0.5" step="0.5" data-tk="' + kind + '" data-ti="' + i + '" data-tf="c" value="' + t.c + '"> %<button type="button" data-trm="' + kind + '" data-ti="' + i + '" title="Retirer">×</button></div>').join('');
+}
+function syncForm(){
+  $('pcHist').querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.h === CFG.hist));
+  $('pcRf').value = CFG.rf; $('pcShrink').value = String(CFG.shrink);
+  $('pcObjSharpe').checked = CFG.sharpe; $('pcObjMinVar').checked = CFG.minvar; $('pcObjDiv').checked = CFG.div;
+  $('pcDivSub').classList.toggle('off', !CFG.div); $('pcDivK').querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.k === CFG.divK));
+  $('pcNOn').checked = CFG.nOn; $('pcNSub').classList.toggle('off', !CFG.nOn); $('pcNMode').value = CFG.nMode; $('pcN').value = CFG.n;
+  $('pcMaxOn').checked = CFG.maxOn; $('pcMaxSub').classList.toggle('off', !CFG.maxOn); $('pcMaxDef').value = CFG.maxDef; $('pcMaxTiers').innerHTML = tierRows('max');
+  $('pcMinOn').checked = CFG.minOn; $('pcMinSub').classList.toggle('off', !CFG.minOn); $('pcMinDef').value = CFG.minDef; $('pcMinTiers').innerHTML = tierRows('min');
+  $('pcVolOn').checked = CFG.volOn; $('pcVolSub').classList.toggle('off', !CFG.volOn); $('pcVol').value = CFG.vol;
+  renderUnivSum();
+}
+function renderUnivSum(){
+  const U = universe(), groups = new Set(U.map(a => a.g));
+  $('pcUnivSum').innerHTML = '<b>' + U.length + '</b> titres retenus sur ' + allTitles().length + ' · ' + groups.size + ' sections<br><span class="pc-st">Liste du Market Dashboard (sans les indices)' + (UNIV.added.length ? ' + ' + UNIV.added.length + ' ajouté(s)' : '') + (UNIV.off.length ? ' · ' + UNIV.off.length + ' retiré(s)' : '') + '</span>';
+}
+function renderGroups(){
+  const off = new Set(UNIV.off), G = new Map();
+  allTitles().forEach(a => { if (!G.has(a.g)) G.set(a.g, []); G.get(a.g).push(a); });
+  $('pcGroups').innerHTML = Array.from(G).map(([g, list]) => {
+    const on = list.filter(a => !off.has(a.s)).length;
+    return '<div class="pc-grp"><label><input type="checkbox" data-grp="' + esc(g) + '"' + (on === list.length ? ' checked' : '') + '>' + esc(g) + '<small>' + on + ' / ' + list.length + '</small></label><div class="pc-items">'
+      + list.map(a => '<label class="' + (off.has(a.s) ? 'off' : '') + '"><input type="checkbox" data-s="' + esc(a.s) + '"' + (off.has(a.s) ? '' : ' checked') + '>' + esc(a.n) + '<small>' + esc(tick(a.s)) + '</small>' + (g === 'Ajoutés' ? '<button type="button" data-rmadd="' + esc(a.s) + '" title="Supprimer">×</button>' : '') + '</label>').join('') + '</div></div>';
+  }).join('');
+  $('pcGroups').querySelectorAll('input[data-grp]').forEach(c => { const g = c.dataset.grp, list = G.get(g), on = list.filter(a => !off.has(a.s)).length; c.indeterminate = on > 0 && on < list.length; });
+  renderUnivSum();
+}
+const setCfg = (k, v) => { CFG[k] = v; saveCfg(); syncForm(); };
+$('pcHist').addEventListener('click', e => { const b = e.target.closest('[data-h]'); if (b) setCfg('hist', +b.dataset.h); });
+$('pcRf').addEventListener('change', () => { const v = parseFloat($('pcRf').value); if (isFinite(v)) setCfg('rf', v); });
+$('pcShrink').addEventListener('change', () => setCfg('shrink', +$('pcShrink').value));
+$('pcObjSharpe').addEventListener('change', e => { CFG.sharpe = e.target.checked; if (CFG.sharpe) CFG.minvar = false; saveCfg(); syncForm(); });
+$('pcObjMinVar').addEventListener('change', e => { CFG.minvar = e.target.checked; if (CFG.minvar) CFG.sharpe = false; saveCfg(); syncForm(); });
+$('pcObjDiv').addEventListener('change', e => setCfg('div', e.target.checked));
+$('pcDivK').addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) setCfg('divK', +b.dataset.k); });
+$('pcNOn').addEventListener('change', e => setCfg('nOn', e.target.checked));
+$('pcNMode').addEventListener('change', e => setCfg('nMode', e.target.value));
+$('pcN').addEventListener('change', e => { const v = Math.round(+e.target.value); if (v >= 1) setCfg('n', v); });
+$('pcMaxOn').addEventListener('change', e => setCfg('maxOn', e.target.checked));
+$('pcMaxDef').addEventListener('change', e => { const v = +e.target.value; if (v > 0) setCfg('maxDef', v); });
+$('pcMinOn').addEventListener('change', e => setCfg('minOn', e.target.checked));
+$('pcMinDef').addEventListener('change', e => { const v = +e.target.value; if (v >= 0) setCfg('minDef', v); });
+$('pcVolOn').addEventListener('change', e => setCfg('volOn', e.target.checked));
+$('pcVol').addEventListener('change', e => { const v = +e.target.value; if (v > 0) setCfg('vol', v); });
+$('pcMaxAdd').addEventListener('click', () => { CFG.maxTiers.push({n: 1, c: Math.max(CFG.maxDef * 2, 10)}); saveCfg(); syncForm(); });
+$('pcMinAdd').addEventListener('click', () => { CFG.minTiers.push({n: 5, c: Math.max(CFG.minDef * 2, 3)}); saveCfg(); syncForm(); });
+$('screenPc').addEventListener('change', e => {
+  const t = e.target.closest('[data-tk]'); if (!t) return;
+  const list = t.dataset.tk === 'max' ? CFG.maxTiers : CFG.minTiers, it = list[+t.dataset.ti], v = +t.value;
+  if (it && v > 0) { it[t.dataset.tf] = t.dataset.tf === 'n' ? Math.round(v) : v; saveCfg(); }
+});
+$('screenPc').addEventListener('click', e => {
+  const r = e.target.closest('[data-trm]'); if (r) { (r.dataset.trm === 'max' ? CFG.maxTiers : CFG.minTiers).splice(+r.dataset.ti, 1); saveCfg(); syncForm(); return; }
+  const ra = e.target.closest('[data-rmadd]'); if (ra) { UNIV.added = UNIV.added.filter(a => a.s !== ra.dataset.rmadd); UNIV.off = UNIV.off.filter(s => s !== ra.dataset.rmadd); saveUniv(); renderGroups(); }
+});
+$('pcRun').addEventListener('click', run);
+$('pcCsv').addEventListener('click', csv);
+/* univers */
+$('pcUnivEdit').addEventListener('click', () => { $('pcUniv').hidden = false; renderGroups(); $('pcUniv').scrollIntoView({behavior: 'smooth', block: 'start'}); });
+$('pcUnivClose').addEventListener('click', () => { $('pcUniv').hidden = true; });
+$('pcAll').addEventListener('click', () => { UNIV.off = []; saveUniv(); renderGroups(); });
+$('pcNone').addEventListener('click', () => { UNIV.off = allTitles().map(a => a.s); saveUniv(); renderGroups(); });
+$('pcReset').addEventListener('click', () => { if (!confirm('Revenir à la liste du Market Dashboard (titres ajoutés supprimés) ?')) return; UNIV = {off: [], added: []}; saveUniv(); renderGroups(); });
+$('pcGroups').addEventListener('change', e => {
+  const off = new Set(UNIV.off);
+  const g = e.target.closest('[data-grp]');
+  if (g) { allTitles().filter(a => a.g === g.dataset.grp).forEach(a => { if (g.checked) off.delete(a.s); else off.add(a.s); }); }
+  const c = e.target.closest('input[data-s]');
+  if (c) { if (c.checked) off.delete(c.dataset.s); else off.add(c.dataset.s); }
+  UNIV.off = Array.from(off); saveUniv(); renderGroups();
+});
+let hitT = null, hitSeq = 0;
+$('pcAddQ').addEventListener('input', () => {
+  const q = $('pcAddQ').value.trim(), box = $('pcHits'), seq = ++hitSeq; clearTimeout(hitT);
+  if (q.length < 2) { box.hidden = true; return; }
+  hitT = setTimeout(async () => {
+    let res = [], err = '';
+    try { const r = await fetch('/api/tv/search/market/' + encodeURIComponent(q)), j = await r.json(); if (!r.ok || j.success === false) throw new Error(j.error_message || ('HTTP ' + r.status)); res = mktRankSearch(mktParseSearch(j), q).slice(0, 10); }
+    catch (e) { err = e.message; }
+    if (seq !== hitSeq) return;
+    box.hidden = false;
+    box.innerHTML = res.map(x => '<button type="button" class="pc-hit" data-s="' + esc(x.full) + '" data-n="' + esc(x.desc || x.symbol) + '"><b>' + esc(x.full) + '</b>' + esc(x.desc || '') + mktPrimBadge(x) + '</button>').join('') || '<span class="pc-hit">' + (err ? 'Recherche impossible : ' + esc(err) : 'Aucun résultat') + '</span>';
+  }, 350);
+});
+$('pcAddQ').addEventListener('blur', () => setTimeout(() => { $('pcHits').hidden = true; }, 150));
+$('pcHits').addEventListener('mousedown', e => {
+  const b = e.target.closest('[data-s]'); if (!b) return; e.preventDefault();
+  const s = b.dataset.s;
+  if (!allTitles().some(a => a.s === s)) UNIV.added.push({s, n: b.dataset.n || tick(s), g: 'Ajoutés'});
+  UNIV.off = UNIV.off.filter(x => x !== s);
+  saveUniv(); $('pcAddQ').value = ''; $('pcHits').hidden = true; renderGroups(); toast(tick(s) + ' ajouté à l\'univers.');
+});
+
+syncForm();
+})();
+
+
 (function NavModule(){
 "use strict";
-const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), ofs: document.getElementById('screenOfs'), mkt: document.getElementById('screenMkt'), dash: document.getElementById('screenDash'), lab: document.getElementById('screenLab'), quad: document.getElementById('screenQuad'), pf: document.getElementById('screenPf'), whiteboard: document.getElementById('screenWhiteboard')};
+const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), ofs: document.getElementById('screenOfs'), mkt: document.getElementById('screenMkt'), dash: document.getElementById('screenDash'), lab: document.getElementById('screenLab'), quad: document.getElementById('screenQuad'), pf: document.getElementById('screenPf'), pc: document.getElementById('screenPc'), whiteboard: document.getElementById('screenWhiteboard')};
 function showScreen(name){
   if (!screens[name]) return;
   Object.keys(screens).forEach(k => { if (screens[k]) screens[k].classList.toggle('on', k === name); });

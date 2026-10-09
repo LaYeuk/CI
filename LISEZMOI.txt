@@ -151,3 +151,18 @@ OFS : toutes les tables (13e version) :
   - Tableau croisé des données sous le graphique et CSV correspondant. Garde-fou : 60 000 valeurs au plus par requête STAT-TAB (filtrer l'axe ou comparer moins de séries sinon).
   - Les tables mensuelles « Année × Mois » sont toujours recombinées en vraie série mensuelle.
   - Seul Outils_GIP.html change (le _worker.js est identique).
+
+Nouveau : Portfolio Constructor (14e version) :
+  - Nouvel écran à côté du Portfolio Lab (accueil : section « Portefeuilles » ; menu : après Portfolio Lab). Construit un portefeuille optimisé dans un univers de titres.
+  - Univers : la liste du Market Dashboard (343 titres, sans la section INDEX) ; « Modifier l'univers » pour décocher des titres ou des sections, ou ajouter tout symbole via la recherche
+    (cotation primaire en tête). Choix mémorisé dans le navigateur ; « Rétablir » revient à la liste du Market Dashboard.
+  - Objectifs activables : Max Sharpe ratio, Min variance (l'un ou l'autre), Maximiser le dividende (seul, ou en inclinaison du Sharpe / de la min variance, importance faible / moyenne / forte).
+  - Contraintes activables : nombre de titres (au plus / exactement N) ; pondération max (par titre + exceptions « jusqu'à n titres à x % », ex. 5 % par titre et 1 titre jusqu'à 10 %) ;
+    pondération min (par titre retenu + exceptions « les n plus grandes positions d'au moins x % ») ; volume du portefeuille (montant en CHF -> nombre d'actions entières et liquidités résiduelles).
+  - Données : clôtures quotidiennes (instantané du jour, /api/tv-series eod=1, ~35 appels fournisseur le premier jour pour tout l'univers, puis mémoire D1 et navigateur), converties en hebdomadaire et en CHF
+    (FX_IDC:XXXCHF ; LSE en pence). Historique 1, 2 ou 3 ans. Dividendes : écran suisse /api/tv-fund + cotes groupées pour les titres étrangers (chargés seulement si l'objectif dividende est activé, une fois par jour).
+  - Résultats : rendement attendu, volatilité, Sharpe, dividende, répartition par section et par monnaie, tableau des positions (contribution au risque, actions et montants), frontière efficiente,
+    performance rétrospective en CHF contre l'univers à poids égaux et le SPI ; export CSV.
+  - Méthode : covariance réduite vers une corrélation moyenne, rendements attendus historiques (bruts, réduits de moitié vers la moyenne, ou identiques) + dividende ; optimisation par gradient projeté,
+    Max Sharpe par balayage de l'aversion au risque ; nombre de titres et paliers de pondération par étapes (heuristique). Contraintes incompatibles (ex. 15 titres × 5 % < 100 %) signalées et relâchées.
+  - Seul Outils_GIP.html change (le _worker.js est identique).
