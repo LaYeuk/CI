@@ -549,6 +549,47 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenLab .lb-toast.show{opacity:1;transform:none}
 #screenLab .lb-toast.err{background:#B5361C}
 
+/* ---- Market Lab : briques principales + brique Volatilité ---- */
+#screenLab .lb-bricks{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin:14px 0 0}
+#screenLab .lb-bricks button{display:flex;align-items:center;gap:14px;text-align:left;border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px 18px;cursor:pointer;font:inherit;color:var(--ink);transition:border-color .15s,box-shadow .15s}
+#screenLab .lb-bricks button:hover{border-color:#9DB4C8}
+#screenLab .lb-bricks button.on{border-color:#0086B3;box-shadow:0 0 0 2px rgba(0,134,179,.18)}
+#screenLab .lb-bricks button>i{flex:none;width:42px;height:42px;border-radius:10px;background:#E8F1F6;color:#0A6EA8;font:700 22px/42px Georgia,'Times New Roman',serif;text-align:center;font-style:normal}
+#screenLab .lb-bricks button.on>i{background:#0086B3;color:#fff}
+#screenLab .lb-bricks button b{display:block;font-size:15.5px;color:var(--navy)}
+#screenLab .lb-bricks button small{display:block;font-size:12px;color:var(--mut);margin-top:2px;line-height:1.35}
+#screenLab .lb-vmiss{margin:8px 0;padding:8px 12px;border-radius:8px;background:#FFF6E5;border:1px solid #F0DDB0;font-size:12.5px;color:#6B4E0B}
+#screenLab .lb-vtblwrap{overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+#screenLab .lb-vtbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+#screenLab .lb-vtbl th{position:sticky;top:0;background:#F6F5F1;text-align:right;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap;z-index:1}
+#screenLab .lb-vtbl td{padding:5px 10px;text-align:right;border-bottom:1px solid #F0EEE8;white-space:nowrap}
+#screenLab .lb-vtbl th.l,#screenLab .lb-vtbl td.l{text-align:left}
+#screenLab .lb-vtbl td.mut{color:var(--mut)}
+#screenLab .lb-vtbl tbody tr{cursor:pointer}
+#screenLab .lb-vtbl tbody tr:hover{background:#F4F8FB}
+#screenLab .lb-vnm{display:inline-flex;align-items:center;gap:8px}
+#screenLab .lb-vnm b{color:var(--navy);font-weight:600}
+#screenLab .lb-vnm small{color:var(--mut);font-size:11px}
+#screenLab .lb-vbar{position:relative;display:block;min-width:150px;height:20px}
+#screenLab .lb-vbar i{position:absolute;left:0;top:3px;bottom:3px;background:#CFE5F0;border-radius:3px}
+#screenLab .lb-vbar b{position:relative;line-height:20px;padding-left:6px;color:var(--navy)}
+#screenLab .lb-vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:14px}
+#screenLab .lb-vc{border:1px solid var(--line);border-radius:10px;background:#fff;padding:9px 11px 6px;min-width:0;transition:box-shadow .3s}
+#screenLab .lb-vc.flash{box-shadow:0 0 0 3px rgba(0,134,179,.45)}
+#screenLab .lb-vh{display:flex;align-items:center;gap:7px;min-width:0}
+#screenLab .lb-vh b{color:var(--navy);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#screenLab .lb-vh small{color:var(--mut);font-size:11px}
+#screenLab .lb-vh .lb-sendc{margin-left:auto}
+#screenLab .lb-vv{display:flex;align-items:baseline;gap:8px;margin-top:3px}
+#screenLab .lb-vv>b{font-size:20px;color:var(--navy);font-variant-numeric:tabular-nums}
+#screenLab .lb-vhv{font-size:11.5px;color:var(--mut)}
+#screenLab .lb-vhv b{color:var(--ink)}
+#screenLab .lb-vk{display:flex;gap:12px;flex-wrap:wrap;font-size:11.5px;color:var(--mut)}
+#screenLab .lb-vk b{color:var(--ink);font-variant-numeric:tabular-nums}
+#screenLab .lb-vsv svg{display:block;width:100%;height:auto}
+#screenLab .lb-vsv .hit{cursor:crosshair}
+@media (max-width:640px){#screenLab .lb-bricks{grid-template-columns:1fr}}
+
 /* ============ Market Dashboard ============ */
 #screenDash [hidden]{display:none!important}
 #screenDash .db-card{padding:16px 20px;margin-top:4px}
@@ -1585,16 +1626,22 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 </div>
 <div id="screenLab" class="screen">
 
-<header><h1>Market Lab</h1><span>Laboratoire d'analyse — matrices de corrélation (carrée ou croisée) et corrélation glissante d'un titre contre vos séries de référence.</span></header>
+<header><h1>Market Lab</h1><span>Laboratoire d'analyse — corrélation (matrices, corrélation glissante) et volatilité (volatilité glissante annualisée, niveau actuel à 3 mois).</span></header>
 <main>
   <div class="fx-err" id="lbSetup" hidden></div>
 
-  <div class="lb-tabs" id="lbTabs" role="tablist"><button type="button" data-t="mat" class="on" role="tab">Matrice de corrélation</button><button type="button" data-t="roll" role="tab">Corrélation glissante</button></div>
+  <div class="lb-bricks" id="lbBricks" role="tablist">
+    <button type="button" data-top="corr" class="on" role="tab"><i>ρ</i><span><b>Corrélation</b><small>Matrice carrée ou croisée · corrélation glissante contre 5 séries de référence</small></span></button>
+    <button type="button" data-top="vol" role="tab"><i>σ</i><span><b>Volatilité</b><small>Volatilité glissante annualisée · niveau actuel à 3 mois · un graphique par titre</small></span></button>
+  </div>
 
-<div id="lbPanMat">
-  <section class="fx-card lb-card">
+  <div id="lbCorrBar">
+  <div class="lb-tabs" id="lbTabs" role="tablist"><button type="button" data-t="mat" class="on" role="tab">Matrice de corrélation</button><button type="button" data-t="roll" role="tab">Corrélation glissante</button></div>
+  </div>
+
+  <section class="fx-card lb-card" id="lbSelWrap">
     <div class="lb-h"><h3>1 · Choisir les titres</h3><span class="lb-count" id="lbCount"></span></div>
-    <div class="fx-bar" style="margin-top:8px">
+    <div class="fx-bar" style="margin-top:8px" id="lbKindRow">
       <span class="lb-lbl">Type de matrice</span>
       <span class="fx-ranges" id="lbKind" style="margin:0"><button type="button" data-k="square" class="on" title="Chaque titre de la sélection contre tous les autres">Carrée</button><button type="button" data-k="cross" title="Deux listes distinctes : les titres de la liste A en lignes, ceux de la liste B en colonnes">Croisée A × B</button></span>
       <span class="fx-ranges lb-ltabs" id="lbListTabs" style="margin:0" hidden><button type="button" data-l="A" class="on">Liste A</button><button type="button" data-l="B">Liste B</button></span>
@@ -1608,6 +1655,8 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     <div class="lb-extra" id="lbExtra" hidden></div>
     <div class="lb-tree" id="lbTree"></div>
   </section>
+
+<div id="lbPanMat">
 
   <section class="fx-card lb-card">
     <div class="lb-h"><h3>2 · Paramètres</h3></div>
@@ -1676,6 +1725,38 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     <div class="fx-bar lb-sendbar"><span class="lb-lbl">Envoyer les 5 graphiques (images) vers :</span><button type="button" class="btn" data-send="chartpack" data-scope="roll">Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="roll">AM Dashboard</button><button type="button" class="btn" data-send="whiteboard" data-scope="roll">Whiteboard</button></div>
     <div class="lb-rgrid" id="lbRGrid"></div>
     <div class="fx-notes" style="margin-top:12px;font-size:12px">Chaque courbe est la corrélation de Pearson, recalculée à chaque date sur la fenêtre glissante précédente, entre les rendements du titre et ceux de la série de référence (échelle fixe −1 à +1 ; ligne pointillée = 0). Le curseur est synchronisé sur les cinq graphiques. Données indicatives.</div>
+  </section>
+</div>
+<div id="lbPanVol" hidden>
+  <section class="fx-card lb-card">
+    <div class="lb-h"><h3>2 · Paramètres</h3></div>
+    <div class="lb-params">
+      <div class="lb-p"><label>Historique affiché</label>
+        <span class="fx-ranges" id="lbVHist" style="margin:0"><button type="button" data-y="365">1 an</button><button type="button" data-y="1095">3 ans</button><button type="button" data-y="1826" class="on">5 ans</button><button type="button" data-y="2555">7 ans</button></span>
+      </div>
+      <div class="lb-p"><label>Fenêtre glissante</label>
+        <span class="fx-ranges" id="lbVWin" style="margin:0"><button type="button" data-w="21" title="21 séances de bourse">1 mois</button><button type="button" data-w="63" class="on" title="63 séances de bourse">3 mois</button><button type="button" data-w="126" title="126 séances de bourse">6 mois</button><button type="button" data-w="252" title="252 séances de bourse">1 an</button></span>
+      </div>
+      <div class="lb-p"><label>&nbsp;</label><button type="button" class="btn pri" id="lbVRun">Calculer la volatilité</button></div>
+    </div>
+    <div class="lb-est" id="lbVEst"></div>
+  </section>
+
+  <section class="fx-card lb-card" id="lbVRes" hidden>
+    <div class="lb-h"><h3>3 · Volatilité</h3><span class="lb-count" id="lbVInfo"></span></div>
+    <div class="fx-kpis" id="lbVKpis"></div>
+    <div class="fx-bar">
+      <label class="lb-lbl" for="lbVSort">Trier par</label>
+      <span class="fx-ranges" id="lbVSort" style="margin:0"><button type="button" data-o="sel" class="on" title="Ordre de la liste (par secteur)">Sélection</button><button type="button" data-o="desc" title="Volatilité actuelle décroissante">Vol. actuelle ↓</button><button type="button" data-o="asc" title="Volatilité actuelle croissante">Vol. actuelle ↑</button><button type="button" data-o="pct" title="Écart de la volatilité actuelle à sa moyenne historique (percentile le plus haut en premier)">Percentile hist. ↓</button></span>
+      <label class="lb-lbl" for="lbVScale" style="margin-left:6px">Échelle</label>
+      <span class="fx-ranges" id="lbVScale" style="margin:0"><button type="button" data-s="common" class="on" title="Même axe vertical pour tous les graphiques : les niveaux sont directement comparables">Commune</button><button type="button" data-s="own" title="Chaque graphique utilise son propre axe : les variations de chaque titre ressortent mieux">Propre à chaque titre</button></span>
+      <span style="margin-left:auto;display:flex;gap:6px"><button type="button" class="btn" id="lbVCsv">Télécharger CSV</button><button type="button" class="btn" id="lbVTblCsv">CSV du tableau</button></span>
+    </div>
+    <div class="fx-bar lb-sendbar"><span class="lb-lbl">Envoyer les graphiques (images) vers :</span><button type="button" class="btn" data-send="chartpack" data-scope="vol">Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="vol">AM Dashboard</button><button type="button" class="btn" data-send="whiteboard" data-scope="vol">Whiteboard</button><span class="lb-lbl" style="margin-left:8px">ou</span><button type="button" class="btn" data-send="chartpack" data-scope="volall" title="Une seule image regroupant tous les graphiques (24 au maximum)">Planche complète → Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="volall">→ AM Dashboard</button><button type="button" class="btn" data-send="whiteboard" data-scope="volall">→ Whiteboard</button></div>
+    <div class="lb-vmiss" id="lbVMiss" hidden></div>
+    <div class="lb-vtblwrap"><table class="lb-vtbl" id="lbVTbl"></table></div>
+    <div class="lb-vgrid" id="lbVGrid"></div>
+    <div class="fx-notes" style="margin-top:12px;font-size:12px" id="lbVNote"></div>
   </section>
 </div>
 </main>
@@ -7646,7 +7727,8 @@ async function tv(path, opts){
   } catch (e) { throw new Error("Relais Market Data injoignable — page ouverte hors du site Cloudflare, ou hors-ligne ?"); }
   try { j = await r.json(); } catch (e) {}
   if (!r.ok || !j || j.success === false) {
-    const em = j && (j.error_message || (j.error && (j.error.message || j.error.code)));
+    const em = (j && (j.error_message || (j.error && (typeof j.error === 'string' ? j.error : (j.error.message || j.error.code))) || (j.success === false && (j.message || j.msg || j.detail))))
+      || (r.ok ? (j ? 'le fournisseur répond « succès : faux » sans message (' + JSON.stringify(j).slice(0, 140) + ')' : 'réponse vide ou non lisible du fournisseur (HTTP ' + r.status + ')') : null);
     if (r.status === 404 && !em) throw new Error("Route /api/tv introuvable (404) : le Worker déployé n'est pas à jour — relancez « npx wrangler deploy » avec le _worker.js fourni.");
     const e = new Error(em || ('HTTP ' + r.status)); e.code = j && j.error_code; throw e;
   }
@@ -7816,7 +7898,29 @@ async function openSymbol(sym, name){
     cur.quote = qj ? (mktQuoteFields(qj.data) || (qj.data && qj.data.data) || null) : null;
     if (cur.quote && cur.quote.description && (!name && cur.name === sym)) cur.name = cur.quote.description;
     drawSym();
-  } catch (e) { $('mkSym').innerHTML = '<div class="fx-err">Impossible de charger ' + esc(sym) + ' — ' + esc(e.message) + '</div>'; }
+  } catch (e) {
+    $('mkSym').innerHTML = '<div class="fx-err">Impossible de charger ' + esc(sym) + ' — ' + esc(e.message) + '</div>'
+      + '<div class="fx-actions" style="margin-top:10px"><button type="button" class="btn" id="mkSymDiag">Diagnostiquer ce titre (réponses brutes du fournisseur, 3 appels)</button></div><div id="mkSymAlt"></div><pre id="mkSymDiagOut" hidden style="white-space:pre-wrap;word-break:break-all;font-size:11px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:8px;max-height:320px;overflow:auto"></pre>';
+    $('mkSymDiag').addEventListener('click', () => diagSymbol(sym));
+  }
+}
+/* Diagnostic d'un symbole : réponses brutes (cote, historique) + recherche des symboles proches proposés par le fournisseur */
+async function diagSymbol(sym){
+  const out = $('mkSymDiagOut'), btn = $('mkSymDiag'); out.hidden = false; out.textContent = 'diagnostic en cours…'; btn.disabled = true;
+  const raw = async (label, url) => {
+    try { const r = await fetch(url), t = await r.text(); return '### ' + label + ' (HTTP ' + r.status + ')\n' + t.slice(0, 700) + (t.length > 700 ? '…' : '') + '\n\n'; }
+    catch (e) { return '### ' + label + ' : ' + e.message + '\n\n'; }
+  };
+  const tk = sym.replace(/^[A-Z0-9_]+:/, '');
+  let txt = await raw('cote ' + sym, '/api/tv/quote/' + symPath(sym));
+  txt += await raw('historique ' + sym + ' (5 bougies)', '/api/tv/price/' + symPath(sym) + '?timeframe=D&range=5&type=Japanese');
+  let hits = [];
+  try { const r = await fetch('/api/tv/search/market/' + encodeURIComponent(tk)), t = await r.text(); txt += '### recherche « ' + tk + ' » (HTTP ' + r.status + ')\n' + t.slice(0, 900) + '\n'; try { hits = mktParseSearch(JSON.parse(t)).slice(0, 8); } catch (e) {} }
+  catch (e) { txt += '### recherche : ' + e.message + '\n'; }
+  out.textContent = txt; btn.disabled = false;
+  const alt = hits.filter(h => h.full !== sym);
+  $('mkSymAlt').innerHTML = alt.length ? '<div class="fx-notes" style="margin-top:10px;border-top:0;padding-top:0">Symboles proches proposés par le fournisseur : ' + alt.map(h => '<button type="button" class="fx-chip" data-alt="' + esc(h.full) + '" data-n="' + esc(h.desc || h.symbol) + '">' + esc(h.full) + (h.desc ? ' · ' + esc(h.desc) : '') + '</button>').join(' ') + '</div>' : '';
+  $('mkSymAlt').querySelectorAll('[data-alt]').forEach(b => b.addEventListener('click', () => openSymbol(b.dataset.alt, b.dataset.n)));
 }
 async function loadCandles(){
   const T = TFS[cur.tf], n = T.ranges[cur.ri][1];
@@ -8674,6 +8778,32 @@ function mktRollingCorr(tA, cA, tB, cB, windowDays, histDays, freq){
   return {pts, N, minObs};
 }
 
+/* Volatilité glissante annualisée (en %) : écart-type (échantillon, n − 1) des rendements logarithmiques quotidiens sur les `win` derniers rendements,
+   multiplié par √252. Résultats restreints aux `histDays` derniers jours calendaires. Une fenêtre qui couvre un trou de données (> 2,2 × win jours) est écartée.
+   Retourne {pts: [{d, v}], N (nombre de rendements)}. */
+function mktRollVol(t, c, win, histDays){
+  const rd = [], rr = [];
+  let pd = -1, pc = NaN;
+  for (let i = 0; i < t.length; i++) {
+    const x = c[i]; if (!(x > 0) || !isFinite(x)) continue;
+    if (pd >= 0 && pc > 0 && t[i] > pd) { rd.push(t[i]); rr.push(Math.log(x / pc)); }
+    pd = t[i]; pc = x;
+  }
+  const N = rr.length;
+  if (N < win || win < 2) return {pts: [], N};
+  const S1 = new Float64Array(N + 1), S2 = new Float64Array(N + 1);
+  for (let i = 0; i < N; i++) { S1[i + 1] = S1[i] + rr[i]; S2[i + 1] = S2[i] + rr[i] * rr[i]; }
+  const lo = rd[N - 1] - histDays, pts = [], k = Math.sqrt(252) * 100;
+  for (let i = win - 1; i < N; i++) {
+    if (rd[i] < lo) continue;
+    if (rd[i] - rd[i - win + 1] > win * 2.2 + 10) continue;
+    const s1 = S1[i + 1] - S1[i + 1 - win], s2 = S2[i + 1] - S2[i + 1 - win];
+    const v = (s2 - s1 * s1 / win) / (win - 1);
+    pts.push({d: rd[i], v: Math.sqrt(Math.max(0, v)) * k});
+  }
+  return {pts, N};
+}
+
 (function LabModule(){
 "use strict";
 
@@ -8745,13 +8875,25 @@ function lgDraw(ctx, sym, name, x, y, size){
 const plural = (n, w) => n + ' ' + w + (n > 1 ? 's' : '');
 
 /* ---------------------------------------------------------------- onglets de l'écran */
-let TAB = 'mat';
-function showTab(t){
-  TAB = t;
-  $('lbTabs').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
-  $('lbPanMat').hidden = t !== 'mat'; $('lbPanRoll').hidden = t !== 'roll';
+let TAB = 'mat', TOP = 'corr';
+const crossOn = () => LAB.cross && TOP === 'corr';
+function applyView(){
+  $('lbBricks').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.top === TOP));
+  $('lbTabs').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === TAB));
+  $('lbCorrBar').hidden = TOP !== 'corr';
+  const sel = TOP === 'vol' || TAB === 'mat';
+  $('lbSelWrap').hidden = !sel;
+  $('lbKindRow').hidden = TOP === 'vol';
+  $('lbPanMat').hidden = !(TOP === 'corr' && TAB === 'mat');
+  $('lbPanRoll').hidden = !(TOP === 'corr' && TAB === 'roll');
+  $('lbPanVol').hidden = TOP !== 'vol';
+  if (TOP === 'vol') LAB.active = 'A';
+  syncSel();
 }
+function showTab(t){ TAB = t; TOP = 'corr'; applyView(); }
+function showTop(t){ TOP = t; applyView(); if (TOP === 'vol') { try { volRedraw(); } catch (e) {} } else if (TAB === 'mat' && LAB.res && !LAB.cell) render(); else if (TAB === 'roll' && ROLL.res) drawRoll(); }
 $('lbTabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) showTab(b.dataset.t); });
+$('lbBricks').addEventListener('click', e => { const b = e.target.closest('[data-top]'); if (b && b.dataset.top !== TOP) showTop(b.dataset.top); });
 
 /* ---------------------------------------------------------------- choix des titres */
 function buildTree(){
@@ -8772,11 +8914,11 @@ function syncSel(){
   $('lbExtra').hidden = !extras.length;
   $('lbExtra').innerHTML = extras.length ? '<span class="lb-lbl">Autres titres :</span>' + extras.map(s => '<span class="lb-chip" data-s="' + esc(s) + '" title="' + esc(s) + '">' + lgHtml(s, nameOf(s), 'xs') + esc(nameOf(s)) + ' <b>✕</b></span>').join('') : '';
   const nA = LAB.lists.A.size, nB = LAB.lists.B.size, inSpi = S.size - extras.length;
-  $('lbCount').textContent = LAB.cross ? ('Liste A : ' + plural(nA, 'titre') + ' · Liste B : ' + plural(nB, 'titre')) : (plural(nA, 'titre') + ' sélectionné' + (nA > 1 ? 's' : '') + (Array.from(LAB.lists.A.keys()).some(s => !SPI_INFO[s]) ? ' (dont ' + Array.from(LAB.lists.A.keys()).filter(s => !SPI_INFO[s]).length + ' hors SPI)' : ''));
+  $('lbCount').textContent = crossOn() ? ('Liste A : ' + plural(nA, 'titre') + ' · Liste B : ' + plural(nB, 'titre')) : (plural(nA, 'titre') + ' sélectionné' + (nA > 1 ? 's' : '') + (Array.from(LAB.lists.A.keys()).some(s => !SPI_INFO[s]) ? ' (dont ' + Array.from(LAB.lists.A.keys()).filter(s => !SPI_INFO[s]).length + ' hors SPI)' : ''));
   $('lbAll').textContent = inSpi === SPI_COUNT ? 'SPI complet ✓' : 'Tout le SPI (' + SPI_COUNT + ')';
-  $('lbListTabs').hidden = !LAB.cross;
+  $('lbListTabs').hidden = !crossOn();
   $('lbListTabs').querySelectorAll('button').forEach(b => { b.classList.toggle('on', b.dataset.l === LAB.active); b.textContent = 'Liste ' + b.dataset.l + ' (' + (b.dataset.l === 'A' ? nA : nB) + ')'; });
-  updateEst(); saveSel();
+  updateEst(); volEst(); saveSel();
 }
 $('lbTree').addEventListener('change', e => {
   const c = e.target, S = SEL();
@@ -8826,7 +8968,6 @@ window.mktLabOpen = function(list){
   (list || []).forEach(x => LAB.lists.A.set(x.s, x.n || x.s));
   LAB.res = null; $('lbRes').hidden = true;
   showTab('mat');
-  syncSel();
 };
 
 /* ---------------------------------------------------------------- paramètres */
@@ -9038,7 +9179,7 @@ function renderPairs(){
 $('lbOrder').addEventListener('click', e => { const b = e.target.closest('[data-o]'); if (!b) return; LAB.order = b.dataset.o; $('lbOrder').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); render(); });
 $('lbCell').addEventListener('input', () => { LAB.cell = +$('lbCell').value; render(); });
 let rT = null;
-window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (!$('screenLab').classList.contains('on')) return; if (LAB.res && !LAB.cell && TAB === 'mat') render(); if (ROLL.res && TAB === 'roll') drawRoll(); }, 200); });
+window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (!$('screenLab').classList.contains('on')) return; if (TOP === 'vol') { volRedraw(); return; } if (LAB.res && !LAB.cell && TAB === 'mat') render(); if (ROLL.res && TAB === 'roll') drawRoll(); }, 200); });
 $('lbCsv').addEventListener('click', () => {
   const R = LAB.res; if (!R) return; const {ro, co} = currentOrder();
   const csv = ';' + co.map(j => R.cols[j]).join(';') + '\n' + ro.map(a => R.rows[a] + ';' + co.map(b => { const v = R.val(a, b); return v === v ? v.toFixed(4) : ''; }).join(';')).join('\n');
@@ -9371,11 +9512,277 @@ $('screenLab').addEventListener('click', e => {
     if (scope === 'mat') { const it = matrixItem(); if (it) items.push(it); }
     else if (scope === 'roll1') { const it = rollItem(+b.dataset.i); if (it) items.push(it); }
     else if (scope === 'roll') { (ROLL.res ? ROLL.res.charts : []).forEach((c, i) => { const it = rollItem(i); if (it) items.push(it); }); }
+    else if (scope === 'vol1') { const it = volItem(b.dataset.s); if (it) items.push(it); }
+    else if (scope === 'vol') { if (VOL.res) volOrdered().forEach(r => { const it = volItem(r.s); if (it) items.push(it); }); if (items.length > 40) { labToast('Trop de graphiques (' + items.length + ') : utilisez la planche complète, ou réduisez la sélection à 40 titres au maximum.', false); return; } }
+    else if (scope === 'volall') { const it = volSheetItem(); if (it) items.push(it); }
     if (!items.length) { labToast('Rien à envoyer : calculez d\'abord le résultat.', false); return; }
     items.forEach(it => labSend(dest, it));
-    labToast((items.length > 1 ? items.length + ' graphiques envoyés' : (scope === 'mat' ? 'Matrice envoyée' : 'Graphique envoyé')) + ' vers ' + DEST_LBL[dest] + '.');
+    labToast((items.length > 1 ? items.length + ' graphiques envoyés' : (scope === 'mat' ? 'Matrice envoyée' : scope === 'volall' ? 'Planche envoyée' : 'Graphique envoyé')) + ' vers ' + DEST_LBL[dest] + '.');
   } catch (err) { labToast('Envoi impossible : ' + err.message, false); }
 });
+
+/* ================================================================ brique « Volatilité »
+   Pour chaque titre de la sélection : volatilité glissante annualisée (écart-type des rendements logarithmiques quotidiens sur la fenêtre × √252),
+   niveau actuel (dernière valeur), moyenne / min / max / percentile sur l'historique affiché, et un petit graphique par titre.
+   (Code injecté dans le module du Market Lab : il partage ses outils — logos, envoi vers les boards, chargement des historiques.) */
+const VOL = {hist: 1826, win: 63, sort: 'sel', scale: 'common', res: null, running: false, cv: []};
+const VOL_COL = '#0086B3', VOL_MEAN = '#9AA0A6';
+const VOL_WIN = {21: '1 mois', 63: '3 mois', 126: '6 mois', 252: '1 an'};
+const volWinLbl = () => VOL_WIN[VOL.win] || (VOL.win + ' séances');
+const volHistLbl = d => d >= 365 ? (Math.round(d / 365.25) + (Math.round(d / 365.25) > 1 ? ' ans' : ' an')) : (d + ' j');
+const volSyms = () => Array.from(LAB.lists.A.keys());
+const volBars = () => Math.ceil(VOL.hist * 0.7) + VOL.win + 15;
+const pc1 = v => nf(1).format(v) + ' %';
+
+/* ---- axes « propres » : bornes et graduations arrondies */
+function niceTicks(lo, hi, n){
+  if (!(hi > lo)) { hi = lo + 1; }
+  const raw = (hi - lo) / Math.max(1, n), p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+  const a = Math.floor(lo / step + 1e-9) * step, b = Math.ceil(hi / step - 1e-9) * step, ticks = [];
+  for (let v = a; v <= b + step * 1e-6; v += step) ticks.push(Math.round(v * 1e6) / 1e6);
+  return {lo: a, hi: b, ticks};
+}
+function volRange(row){
+  if (VOL.scale === 'common') return VOL.res.common;
+  const sp = Math.max(1, row.max - row.min);
+  return niceTicks(Math.max(0, row.min - sp * 0.08), row.max + sp * 0.08, 3);
+}
+/* graduations de l'axe des dates : au plus ~5 années */
+function volXTicks(d0, d1){
+  const spanY = (d1 - d0) / 365.25, step = Math.max(1, Math.ceil(spanY / 5)), out = [];
+  const y0 = new Date(d0 * 864e5).getUTCFullYear();
+  for (let y = y0; y <= new Date(d1 * 864e5).getUTCFullYear() + 1; y++) {
+    if ((y - y0) % step) continue;
+    const dd = Math.round(Date.UTC(y, 0, 1) / 864e5);
+    if (dd >= d0 && dd <= d1) out.push([dd, String(y)]);
+  }
+  if (spanY < 1.6) { out.length = 0; xTicks(d0, d1).forEach(x => out.push(x)); }
+  return out;
+}
+function volDown(pts, max){
+  if (pts.length <= max) return pts;
+  const k = (pts.length - 1) / (max - 1), out = [];
+  for (let i = 0; i < max; i++) out.push(pts[Math.round(i * k)]);
+  return out;
+}
+
+/* ---- paramètres */
+$('lbVHist').addEventListener('click', e => { const b = e.target.closest('[data-y]'); if (!b) return; VOL.hist = +b.dataset.y; $('lbVHist').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); volEst(); });
+$('lbVWin').addEventListener('click', e => { const b = e.target.closest('[data-w]'); if (!b) return; VOL.win = +b.dataset.w; $('lbVWin').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); volEst(); });
+$('lbVSort').addEventListener('click', e => { const b = e.target.closest('[data-o]'); if (!b) return; VOL.sort = b.dataset.o; $('lbVSort').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); volRedraw(); });
+$('lbVScale').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (!b) return; VOL.scale = b.dataset.s; $('lbVScale').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); volRedraw(); });
+
+function volEst(){
+  const el = $('lbVEst'); if (!el) return;
+  const syms = volSyms(), n = syms.length;
+  $('lbVRun').disabled = !n || VOL.running;
+  if (TOP !== 'vol' || VOL.running) return;
+  if (!n) { el.textContent = 'Sélectionnez au moins un titre dans la liste ci-dessus (un secteur entier, tout le SPI, ou un titre hors SPI via la recherche).'; return; }
+  const bars = MKT_BAR_STEPS.find(x => x >= volBars()) || 2000, need = needLoad(syms, bars);
+  el.innerHTML = (volBars() > 2000 ? 'Le fournisseur plafonne l\'historique à environ 2 000 séances (≈ 7,9 ans) : avec une fenêtre de ' + volWinLbl() + ', le début de la période affichée sera raccourci. ' : '')
+    + (need ? 'Historiques à charger : jusqu\'à ' + need + ' titre' + (need > 1 ? 's' : '') + ' ≈ ' + Math.ceil(need / 10) + ' appel' + (need > 10 ? 's' : '') + ' à votre forfait Market Data (mis en cache et partagés entre collègues).' : 'Historiques déjà chargés : le calcul est immédiat.');
+}
+
+/* ---- calcul */
+async function volRun(){
+  if (VOL.running) return;
+  const syms = volSyms(); if (!syms.length) return;
+  const bars = MKT_BAR_STEPS.find(x => x >= volBars()) || 2000, need = needLoad(syms, bars);
+  if (need > 40 && !confirm('Charger l\'historique de ' + need + ' titres ≈ ' + Math.ceil(need / 10) + ' appels à votre forfait Market Data (mis en cache et partagés). Continuer ?')) return;
+  VOL.running = true; $('lbVRun').disabled = true;
+  const est = $('lbVEst');
+  try {
+    est.textContent = 'Chargement des historiques…';
+    await mktFetchSeries(syms, volBars(), (d, t) => { est.textContent = 'Chargement des historiques… ' + d + ' / ' + t; });
+    est.textContent = 'Calcul…';
+    await new Promise(r => setTimeout(r, 20));
+    const rows = [], missing = [];
+    syms.forEach(s => {
+      const S = MKT_SERIES[s];
+      if (!S || !S.t || S.t.length < 3) { missing.push({s, why: 'aucune donnée reçue'}); return; }
+      const R = mktRollVol(S.t, S.c, VOL.win, VOL.hist);
+      if (R.pts.length < 2) { missing.push({s, why: R.N < VOL.win ? 'historique trop court (' + R.N + ' rendements, il en faut ' + VOL.win + ')' : 'données trop lacunaires'}); return; }
+      const v = R.pts.map(p => p.v), last = v[v.length - 1];
+      let mean = 0, mn = Infinity, mx = -Infinity, below = 0;
+      v.forEach(x => { mean += x; if (x < mn) mn = x; if (x > mx) mx = x; if (x <= last) below++; });
+      mean /= v.length;
+      rows.push({s, n: nameOf(s), pts: R.pts, dpts: volDown(R.pts, 260), last, mean, min: mn, max: mx, pct: 100 * below / v.length, per: last * Math.sqrt(VOL.win / 252), N: R.N, d: R.pts[R.pts.length - 1].d});
+    });
+    if (!rows.length) throw new Error('Aucun titre avec un historique exploitable' + (mktFetchSeries.err ? ' (' + mktFetchSeries.err + ')' : '') + '.');
+    let d0 = Infinity, d1 = -Infinity, hi = 0;
+    rows.forEach(r => { d0 = Math.min(d0, r.pts[0].d); d1 = Math.max(d1, r.pts[r.pts.length - 1].d); hi = Math.max(hi, r.max); });
+    VOL.res = {rows, missing, win: VOL.win, hist: VOL.hist, d0, d1, common: niceTicks(0, hi, 3)};
+    VOL.sort = 'sel'; $('lbVSort').querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.o === 'sel'));
+    $('lbVRes').hidden = false;
+    volRedraw();
+    est.textContent = '';
+  } catch (e) { est.innerHTML = '<span style="color:#7A1A12">' + esc(e.message) + '</span>'; }
+  finally { VOL.running = false; volEst(); }
+}
+$('lbVRun').addEventListener('click', volRun);
+
+function volOrdered(){
+  const R = VOL.res; if (!R) return [];
+  const rows = R.rows.slice();
+  if (VOL.sort === 'sel') { const o = bySector(rows.map(r => r.s)); return o.map(i => rows[i]); }
+  if (VOL.sort === 'desc') return rows.sort((a, b) => b.last - a.last);
+  if (VOL.sort === 'asc') return rows.sort((a, b) => a.last - b.last);
+  return rows.sort((a, b) => b.pct - a.pct || b.last - a.last);
+}
+
+/* ---- rendu à l'écran */
+function volSvg(row, i){
+  const R = VOL.res, W = 320, H = 136, m = {t: 8, r: 8, b: 20, l: 34}, rg = volRange(row);
+  const X = d => m.l + ((d - R.d0) / ((R.d1 - R.d0) || 1)) * (W - m.l - m.r), Y = v => m.t + (1 - (v - rg.lo) / ((rg.hi - rg.lo) || 1)) * (H - m.t - m.b);
+  const grid = rg.ticks.map(v => '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" stroke="' + (v === 0 ? '#C9C7BF' : '#ECEAE4') + '"/><text x="' + (m.l - 5) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end" font-size="10" fill="#6B6F76">' + nf(rg.ticks[rg.ticks.length - 1] < 10 ? 1 : 0).format(v) + '</text>').join('');
+  const xs = volXTicks(R.d0, R.d1).map(x => '<text x="' + X(x[0]).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="10" fill="#6B6F76">' + x[1] + '</text>').join('');
+  let path = ''; row.dpts.forEach((p, k) => { path += (k ? 'L' : 'M') + X(p.d).toFixed(1) + ',' + Y(p.v).toFixed(1); });
+  const lp = row.dpts[row.dpts.length - 1], ym = Y(row.mean);
+  const mean = (row.mean >= rg.lo && row.mean <= rg.hi) ? '<line x1="' + X(row.dpts[0].d).toFixed(1) + '" x2="' + (W - m.r) + '" y1="' + ym.toFixed(1) + '" y2="' + ym.toFixed(1) + '" stroke="' + VOL_MEAN + '" stroke-dasharray="4 3"/>' : '';
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Volatilité glissante ' + esc(volWinLbl()) + ' — ' + esc(row.n) + '">' + grid + xs + mean
+    + '<path d="' + path + '" fill="none" stroke="' + VOL_COL + '" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>'
+    + '<circle cx="' + X(lp.d).toFixed(1) + '" cy="' + Y(lp.v).toFixed(1) + '" r="3.6" fill="#fff" stroke="' + VOL_COL + '" stroke-width="2"/>'
+    + '<line class="xh" y1="' + m.t + '" y2="' + (H - m.b) + '" stroke="#02182B" stroke-opacity=".35" stroke-dasharray="3 3" visibility="hidden"/>'
+    + '<circle class="dot" r="3.6" fill="' + VOL_COL + '" stroke="#fff" stroke-width="1.5" visibility="hidden"/>'
+    + '<rect class="hit" data-i="' + i + '" x="' + m.l + '" y="' + m.t + '" width="' + (W - m.l - m.r) + '" height="' + (H - m.t - m.b) + '" fill="transparent"/></svg>';
+}
+function volRedraw(){
+  const R = VOL.res; if (!R || $('lbPanVol').hidden) return;
+  const rows = volOrdered(), wl = volWinLbl();
+  $('lbVInfo').textContent = plural(R.rows.length, 'titre') + ' · fenêtre ' + wl + ' (' + R.win + ' séances) · historique ' + volHistLbl(R.hist) + ' · du ' + dFr(R.d0) + ' au ' + dFr(R.d1);
+  /* KPIs */
+  const last = R.rows.map(r => r.last).sort((a, b) => a - b), med = last.length % 2 ? last[(last.length - 1) / 2] : (last[last.length / 2 - 1] + last[last.length / 2]) / 2;
+  const hiR = R.rows.reduce((a, b) => b.last > a.last ? b : a), loR = R.rows.reduce((a, b) => b.last < a.last ? b : a), above = R.rows.filter(r => r.last > r.mean).length;
+  const kp = (k, v, s) => '<div class="fx-kpi"><div class="k">' + k + '</div><div class="v">' + v + '</div>' + (s ? '<div class="s">' + s + '</div>' : '') + '</div>';
+  $('lbVKpis').innerHTML = kp('Titres analysés', String(R.rows.length), R.missing.length ? R.missing.length + ' sans données' : '')
+    + kp('Vol. actuelle · médiane', pc1(med), 'annualisée, ' + wl)
+    + kp('Plus volatile', pc1(hiR.last), esc(hiR.n))
+    + kp('Moins volatile', pc1(loR.last), esc(loR.n))
+    + kp('Au-dessus de leur moyenne', above + ' / ' + R.rows.length, 'volatilité actuelle > moyenne hist.');
+  $('lbVMiss').hidden = !R.missing.length;
+  $('lbVMiss').innerHTML = R.missing.length ? '⚠ Sans résultat : ' + R.missing.map(x => '<b>' + esc(nameOf(x.s)) + '</b> (' + esc(x.s) + ') — ' + esc(x.why)).join(' · ') : '';
+  /* tableau */
+  const mx = Math.max.apply(null, rows.map(r => r.last));
+  $('lbVTbl').innerHTML = '<thead><tr><th>#</th><th class="l">Titre</th><th class="l">Vol. actuelle (annualisée)</th><th title="Volatilité annualisée ramenée à la durée de la fenêtre : × √(' + R.win + '/252)">Vol. sur ' + esc(wl) + ' (période)</th><th>Moyenne</th><th>Min</th><th>Max</th><th title="Part des jours de la période affichée où la volatilité était inférieure ou égale à sa valeur actuelle">Percentile hist.</th></tr></thead><tbody>'
+    + rows.map((r, k) => '<tr data-s="' + esc(r.s) + '"><td class="mut">' + (k + 1) + '</td><td class="l"><span class="lb-vnm">' + lgHtml(r.s, r.n, 'xs') + '<b>' + esc(r.n) + '</b><small>' + esc(shortOf(r.s)) + '</small></span></td>'
+      + '<td class="l"><span class="lb-vbar"><i style="width:' + (100 * r.last / mx).toFixed(1) + '%"></i><b>' + pc1(r.last) + '</b></span></td>'
+      + '<td>' + pc1(r.per) + '</td><td>' + pc1(r.mean) + '</td><td>' + pc1(r.min) + '</td><td>' + pc1(r.max) + '</td><td>' + nf(0).format(r.pct) + ' %</td></tr>').join('') + '</tbody>';
+  /* petits graphiques */
+  VOL.cv = [];
+  $('lbVGrid').innerHTML = rows.map((r, i) =>
+    '<div class="lb-vc" data-i="' + i + '"><div class="lb-vh">' + lgHtml(r.s, r.n, 'xs') + '<b>' + esc(r.n) + '</b><small>' + esc(shortOf(r.s)) + '</small><span class="lb-sendc" title="Envoyer ce graphique vers…"><button type="button" data-send="chartpack" data-scope="vol1" data-s="' + esc(r.s) + '" title="Envoyer vers le Chart Pack">CP</button><button type="button" data-send="dashboard" data-scope="vol1" data-s="' + esc(r.s) + '" title="Envoyer vers l\'AM Dashboard">AM</button><button type="button" data-send="whiteboard" data-scope="vol1" data-s="' + esc(r.s) + '" title="Envoyer vers le Whiteboard">WB</button></span></div>'
+    + '<div class="lb-vv"><b>' + pc1(r.last) + '</b><span class="lb-vhv" id="lbVhv' + i + '">vol. ' + esc(wl) + ' annualisée</span></div>'
+    + '<div class="lb-vk"><span>Moy. <b>' + nf(1).format(r.mean) + '</b></span><span>Min <b>' + nf(1).format(r.min) + '</b></span><span>Max <b>' + nf(1).format(r.max) + '</b></span><span>Perc. <b>' + nf(0).format(r.pct) + ' %</b></span></div>'
+    + '<div class="lb-vsv" id="lbVc' + i + '">' + volSvg(r, i) + '</div></div>').join('');
+  rows.forEach((r, i) => {
+    const el = $('lbVc' + i), svg = el.querySelector('svg');
+    VOL.cv[i] = {row: r, svg, xh: svg.querySelector('.xh'), dot: svg.querySelector('.dot'), hv: $('lbVhv' + i), rest: 'vol. ' + wl + ' annualisée'};
+  });
+  $('lbVNote').innerHTML = 'Volatilité = écart-type (n − 1) des <b>rendements logarithmiques quotidiens</b> sur la fenêtre glissante de <b>' + R.win + ' séances</b> (≈ ' + esc(wl) + '), annualisé par √252. « Vol. sur ' + esc(wl) + ' (période) » = volatilité annualisée × √(' + R.win + '/252) : la dispersion attendue sur la durée de la fenêtre. Le percentile situe la valeur actuelle dans l\'historique du titre (100 % = niveau le plus élevé de la période). Graphiques : ligne bleue = volatilité glissante, pointillé gris = moyenne de la période, point = valeur actuelle ; ' + (VOL.scale === 'common' ? 'axe vertical commun à tous les titres.' : 'axe vertical propre à chaque titre.') + ' Source : TradingView Data API (service tiers non officiel) — données indicatives.';
+}
+/* curseur synchronisé sur tous les petits graphiques */
+function volHover(d, from){
+  const R = VOL.res;
+  VOL.cv.forEach((c, i) => {
+    if (!c) return;
+    if (d == null) { c.xh.setAttribute('visibility', 'hidden'); c.dot.setAttribute('visibility', 'hidden'); c.hv.textContent = c.rest; return; }
+    const pts = c.row.pts; let a = 0, b = pts.length - 1;
+    while (b - a > 1) { const mid = (a + b) >> 1; if (pts[mid].d < d) a = mid; else b = mid; }
+    const p = Math.abs(pts[a].d - d) <= Math.abs(pts[b].d - d) ? pts[a] : pts[b];
+    if (Math.abs(p.d - d) > 8) { c.xh.setAttribute('visibility', 'hidden'); c.dot.setAttribute('visibility', 'hidden'); c.hv.textContent = c.rest; return; }
+    const vb = c.svg.viewBox.baseVal, W = vb.width, H = vb.height, m = {t: 8, b: 20, l: 34, r: 8}, rg = volRange(c.row);
+    const x = m.l + ((p.d - R.d0) / ((R.d1 - R.d0) || 1)) * (W - m.l - m.r), y = m.t + (1 - (p.v - rg.lo) / ((rg.hi - rg.lo) || 1)) * (H - m.t - m.b);
+    c.xh.setAttribute('x1', x); c.xh.setAttribute('x2', x); c.xh.setAttribute('visibility', 'visible');
+    c.dot.setAttribute('cx', x); c.dot.setAttribute('cy', y); c.dot.setAttribute('visibility', 'visible');
+    c.hv.innerHTML = dFr(p.d) + ' · <b>' + pc1(p.v) + '</b>';
+  });
+}
+$('lbVGrid').addEventListener('mousemove', e => {
+  const h = e.target.closest('.hit'); if (!h) return;
+  const R = VOL.res, r = h.ownerSVGElement.getBoundingClientRect(), vb = h.ownerSVGElement.viewBox.baseVal;
+  const mx = ((e.clientX - r.left) / r.width) * vb.width, m = {l: 34, r: 8};
+  volHover(R.d0 + ((mx - m.l) / (vb.width - m.l - m.r)) * (R.d1 - R.d0), +h.dataset.i);
+});
+$('lbVGrid').addEventListener('mouseleave', () => volHover(null));
+$('lbVTbl').addEventListener('click', e => { const tr = e.target.closest('tr[data-s]'); if (!tr) return; const i = volOrdered().findIndex(r => r.s === tr.dataset.s), c = $('lbVc' + i); if (c) { const card = c.closest('.lb-vc'); card.scrollIntoView({behavior: 'smooth', block: 'center'}); card.classList.add('flash'); setTimeout(() => card.classList.remove('flash'), 1400); } });
+
+/* ---- exports CSV */
+function volDl(csv, name){
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], {type: 'text/csv'}));
+  a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+$('lbVCsv').addEventListener('click', () => {
+  const R = VOL.res; if (!R) return; const rows = volOrdered();
+  const days = Array.from(new Set([].concat.apply([], rows.map(r => r.pts.map(p => p.d))))).sort((a, b) => a - b);
+  const maps = rows.map(r => { const m = new Map(); r.pts.forEach(p => m.set(p.d, p.v)); return m; });
+  volDl('date;' + rows.map(r => r.s).join(';') + '\n' + days.map(d => new Date(d * 864e5).toISOString().slice(0, 10) + ';' + maps.map(m => m.has(d) ? m.get(d).toFixed(3) : '').join(';')).join('\n'), 'volatilite_glissante_' + R.win + 'seances_' + rows.length + 'titres.csv');
+});
+$('lbVTblCsv').addEventListener('click', () => {
+  const R = VOL.res; if (!R) return; const rows = volOrdered();
+  volDl('symbole;titre;vol_actuelle_annualisee_pct;vol_periode_pct;moyenne_pct;min_pct;max_pct;percentile_hist_pct;date_derniere_valeur\n' + rows.map(r => [r.s, '"' + r.n.replace(/"/g, '""') + '"', r.last.toFixed(2), r.per.toFixed(2), r.mean.toFixed(2), r.min.toFixed(2), r.max.toFixed(2), r.pct.toFixed(0), new Date(r.d * 864e5).toISOString().slice(0, 10)].join(';')).join('\n'), 'volatilite_tableau_' + R.win + 'seances.csv');
+});
+
+/* ---- images pour les boards */
+const f1 = v => nf(1).format(v);
+/* dessine un graphique de volatilité dans la boîte (x, y, w, h) d'un canvas ; fs = échelle des polices */
+function volDrawChart(ctx, row, x, y, w, h, fs){
+  const R = VOL.res, rg = volRange(row), X0 = x + 38 * fs, X1 = x + w - 8 * fs, Y0 = y + 6 * fs, Y1 = y + h - 20 * fs;
+  const X = d => X0 + ((d - R.d0) / ((R.d1 - R.d0) || 1)) * (X1 - X0), Y = v => Y0 + (1 - (v - rg.lo) / ((rg.hi - rg.lo) || 1)) * (Y1 - Y0);
+  ctx.font = (10.5 * fs) + 'px system-ui, sans-serif'; ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
+  rg.ticks.forEach(v => { ctx.beginPath(); ctx.strokeStyle = v === 0 ? '#C9C7BF' : '#ECEAE4'; ctx.lineWidth = 1; ctx.moveTo(X0, Math.round(Y(v)) + .5); ctx.lineTo(X1, Math.round(Y(v)) + .5); ctx.stroke(); ctx.fillStyle = '#6B6F76'; ctx.fillText(nf(rg.ticks[rg.ticks.length - 1] < 10 ? 1 : 0).format(v), X0 - 5 * fs, Y(v) + 3.5 * fs); });
+  ctx.textAlign = 'center'; volXTicks(R.d0, R.d1).forEach(t => { ctx.fillStyle = '#6B6F76'; ctx.fillText(t[1], X(t[0]), Y1 + 14 * fs); });
+  if (row.mean >= rg.lo && row.mean <= rg.hi) { ctx.beginPath(); ctx.strokeStyle = VOL_MEAN; ctx.lineWidth = 1; ctx.setLineDash([4 * fs, 3 * fs]); ctx.moveTo(X(row.pts[0].d), Y(row.mean)); ctx.lineTo(X1, Y(row.mean)); ctx.stroke(); ctx.setLineDash([]); }
+  ctx.beginPath(); ctx.strokeStyle = VOL_COL; ctx.lineWidth = 1.8 * fs; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  row.dpts.forEach((p, k) => { if (k) ctx.lineTo(X(p.d), Y(p.v)); else ctx.moveTo(X(p.d), Y(p.v)); }); ctx.stroke();
+  const lp = row.dpts[row.dpts.length - 1]; ctx.beginPath(); ctx.arc(X(lp.d), Y(lp.v), 3.6 * fs, 0, 6.2832); ctx.fillStyle = '#fff'; ctx.fill(); ctx.lineWidth = 2 * fs; ctx.stroke();
+}
+function volTitle(){ return 'Volatilité glissante ' + volWinLbl() + ' (annualisée)'; }
+function volSub(){ const R = VOL.res; return 'Écart-type des rendements logarithmiques quotidiens × √252 · fenêtre ' + R.win + ' séances · du ' + dFr(R.d0) + ' au ' + dFr(R.d1) + (VOL.scale === 'common' ? ' · axe commun' : ''); }
+function volItem(sym){
+  const R = VOL.res, row = R && R.rows.find(r => r.s === sym); if (!row) return null;
+  const S = 1.5, Wl = 1200, Hl = 520, cv = document.createElement('canvas'); cv.width = Wl * S; cv.height = Hl * S;
+  const ctx = cv.getContext('2d'); ctx.setTransform(S, 0, 0, S, 0, 0);
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, Wl, Hl);
+  lgDraw(ctx, row.s, row.n, 20, 18, 34);
+  ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left'; ctx.fillStyle = '#02182B'; ctx.font = '700 22px system-ui, sans-serif';
+  const ttl = row.n + ' — ' + volTitle(); ctx.fillText(cvFit(ctx, ttl, Wl - 80), 64, 42);
+  ctx.fillStyle = '#6B6F76'; ctx.font = '13px system-ui, sans-serif'; ctx.fillText(cvFit(ctx, volSub(), Wl - 84), 64, 64);
+  ctx.fillStyle = '#02182B'; ctx.font = '600 13px system-ui, sans-serif';
+  ctx.fillText('Actuelle ' + f1(row.last) + ' %   ·   sur ' + volWinLbl() + ' (période) ' + f1(row.per) + ' %   ·   Moyenne ' + f1(row.mean) + ' %   ·   Min ' + f1(row.min) + ' %   ·   Max ' + f1(row.max) + ' %   ·   Percentile ' + nf(0).format(row.pct) + ' %', 64, 88);
+  volDrawChart(ctx, row, 20, 104, Wl - 40, Hl - 104 - 30, 1.15);
+  ctx.textAlign = 'left'; ctx.fillStyle = '#6B6F76'; ctx.font = '11px system-ui, sans-serif';
+  ctx.fillText('Pointillé gris = moyenne de la période · Source : TradingView — données indicatives.', 20, Hl - 12);
+  return {title: ttl, img: cv.toDataURL('image/png'), imgRatio: Wl / Hl, caption: volSub(), tableRows: null};
+}
+/* planche : plusieurs titres sur une seule image (24 au maximum, dans l'ordre d'affichage) */
+function volSheetItem(){
+  const R = VOL.res; if (!R) return null;
+  const all = volOrdered(), rows = all.slice(0, 24), n = rows.length;
+  const cols = n <= 2 ? n : n <= 6 ? 3 : 4, nr = Math.ceil(n / cols), cw = 340, ch = 200, head = 74, foot = 30, Wl = cols * cw + 20, Hl = head + nr * ch + foot, S = 1.5;
+  const cv = document.createElement('canvas'); cv.width = Math.round(Wl * S); cv.height = Math.round(Hl * S);
+  const ctx = cv.getContext('2d'); ctx.setTransform(S, 0, 0, S, 0, 0);
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, Wl, Hl);
+  ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left'; ctx.fillStyle = '#02182B'; ctx.font = '700 20px system-ui, sans-serif'; ctx.fillText(volTitle(), 14, 28);
+  ctx.fillStyle = '#6B6F76'; ctx.font = '12.5px system-ui, sans-serif'; ctx.fillText(cvFit(ctx, volSub(), Wl - 28), 14, 49);
+  const order = { sel: 'ordre de la sélection', desc: 'volatilité actuelle décroissante', asc: 'volatilité actuelle croissante', pct: 'percentile historique décroissant' }[VOL.sort];
+  ctx.fillText(n + (all.length > n ? ' premiers titres sur ' + all.length : ' titre' + (n > 1 ? 's' : '')) + ' · tri : ' + order, 14, 66);
+  rows.forEach((r, k) => {
+    const cx = 10 + (k % cols) * cw, cy = head + Math.floor(k / cols) * ch;
+    ctx.strokeStyle = '#E6E4DD'; ctx.lineWidth = 1; ctx.strokeRect(cx + 4.5, cy + 4.5, cw - 9, ch - 9);
+    lgDraw(ctx, r.s, r.n, cx + 12, cy + 12, 22);
+    ctx.textAlign = 'left'; ctx.fillStyle = '#02182B'; ctx.font = '700 13px system-ui, sans-serif'; ctx.fillText(cvFit(ctx, r.n, cw - 150), cx + 40, cy + 28);
+    ctx.textAlign = 'right'; ctx.font = '700 17px system-ui, sans-serif'; ctx.fillText(f1(r.last) + ' %', cx + cw - 14, cy + 29);
+    ctx.textAlign = 'left'; ctx.fillStyle = '#6B6F76'; ctx.font = '10.5px system-ui, sans-serif';
+    ctx.fillText('Moy. ' + f1(r.mean) + '  ·  Min ' + f1(r.min) + '  ·  Max ' + f1(r.max) + '  ·  Perc. ' + nf(0).format(r.pct) + ' %', cx + 14, cy + 48);
+    volDrawChart(ctx, r, cx + 8, cy + 54, cw - 16, ch - 62, 0.95);
+  });
+  ctx.textAlign = 'left'; ctx.fillStyle = '#6B6F76'; ctx.font = '11px system-ui, sans-serif';
+  ctx.fillText('Ligne bleue = volatilité glissante annualisée · pointillé gris = moyenne de la période · point = valeur actuelle · Source : TradingView — données indicatives.', 14, Hl - 11);
+  const o = shrinkPng(cv);
+  return {title: volTitle() + ' — ' + n + ' titre' + (n > 1 ? 's' : ''), img: o.url, imgRatio: o.cv.width / o.cv.height, caption: volSub(), tableRows: null};
+}
+
 
 /* ---------------------------------------------------------------- démarrage */
 let statusChecked = false;

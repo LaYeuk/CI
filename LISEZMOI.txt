@@ -90,3 +90,19 @@ Nouveau : Market Dashboard (7e version) :
   - Le rendement TVC:CH10 s'affiche en % avec variation en points de base. Les titres sans données chez le fournisseur sont listés en bas d'écran ; une brique dont la dernière clôture est plus ancienne que celle des autres affiche sa date.
   - Données : /api/tv-series (clôtures journalières), 349 titres ≈ 12 appels au relais, mémorisés 3 h et partagés entre collègues. La couverture de certaines bourses (Tokyo, Séoul, Taïwan, Hong Kong, Oslo, Athènes…) dépend du forfait : à contrôler à la première ouverture.
   - Seul Outils_GIP.html change (le _worker.js est identique).
+
+Ajustement Market Dashboard (8e version) : un seul appel au fournisseur par jour
+  - Le Market Dashboard charge ses clôtures en mode « instantané du jour » : le premier appel de la journée (jour de Zurich) interroge le fournisseur, tous les suivants relisent la mémoire D1 du Worker (partagée entre collègues) ; en plus, chaque navigateur garde l'instantané pour la journée, donc rouvrir l'écran ne génère même plus de requête vers le Worker. Le lendemain, le premier à ouvrir l'écran relance le chargement (349 titres ≈ 35 appels fournisseur).
+  - La séance en cours n'est jamais affichée (barre du jour retirée par le Worker) : on ne montre que des clôtures complètes, donc le tableau de bord présente la dernière clôture complète (en général celle de la veille).
+  - Les symboles inconnus du fournisseur sont mémorisés 6 h comme « sans données » : ils ne sont plus redemandés à chaque ouverture.
+  - Le bouton Actualiser relit depuis le relais : il ne déclenche aucun nouvel appel au fournisseur dans la même journée.
+  - Le fichier _worker.js a changé (paramètre eod, mémoire négative) : le redéployer (git push ou npx wrangler deploy), puis remplacer Outils_GIP.html.
+
+Nouveau : Market Lab, brique « Volatilité » (9e version) :
+  - Le Market Lab est maintenant structuré en deux briques en haut de l'écran : « Corrélation » (matrice de corrélation et corrélation glissante, inchangées) et « Volatilité ».
+  - Brique Volatilité : même sélection de titres que pour la corrélation (secteurs, tout le SPI, titres hors SPI via la recherche). Réglages : historique affiché 1 / 3 / 5 (défaut) / 7 ans ; fenêtre glissante 1 mois (21 séances) / 3 mois (63 séances, défaut) / 6 mois / 1 an.
+  - Calcul : volatilité glissante annualisée = écart-type des rendements logarithmiques quotidiens sur la fenêtre × racine de 252. Pour chaque titre : valeur actuelle (annualisée), volatilité sur 3 mois « période » (= annualisée × racine de 63/252), moyenne, min, max et percentile historique de la valeur actuelle.
+  - Affichage : bandeau de chiffres clés (médiane, plus / moins volatile, nombre de titres au-dessus de leur moyenne), tableau classé avec barre (clic sur une ligne = saut au graphique), puis un petit graphique par titre (ligne = volatilité glissante, pointillé = moyenne, point = valeur actuelle, curseur synchronisé sur tous les graphiques). Tri : sélection / vol. décroissante / croissante / percentile ; échelle verticale commune (défaut) ou propre à chaque titre.
+  - Exports : CSV de l'historique, CSV du tableau, envoi vers Chart Pack / AM Dashboard / Whiteboard (un graphique par titre via CP / AM / WB, tous les graphiques, ou une planche unique de 24 titres maximum).
+  - Diagnostic des chargements : le message d'erreur d'un titre indique désormais ce que le fournisseur a répondu, et un bouton « Diagnostiquer ce titre » (Market Data) affiche la réponse brute (utile pour SIX:ROG « HTTP 200 »). Merci de me renvoyer ce texte si le problème persiste.
+  - Seul Outils_GIP.html change (le _worker.js est identique à la version précédente).
