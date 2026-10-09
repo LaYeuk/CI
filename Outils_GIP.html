@@ -2040,7 +2040,7 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
       <div class="pf-bar"><span class="pf-st" id="pfVolSt"></span></div>
       <div class="pf-tblwrap"><table class="pf-tbl" id="pfVolTbl"></table></div>
       <div class="fx-notes" id="pfNavNotes" hidden></div>
-      <div class="pf-note">Comparaison sur la période du fichier NAV : chaque indice avec ses propres séances ; corrélation et bêta du portefeuille calculés sur les dates communes. Le SMI est un indice de prix (sans dividendes), le SPI un indice de performance (dividendes réinvestis), comme la NAV.<br>Volatilité = écart-type des rendements quotidiens × √252. Contribution au risque = part de la variance du portefeuille due au titre (poids × covariance avec le portefeuille), sur un an de cours quotidiens, poids actuels. Obligations approchées par l'indice ci-dessous, liquidités à volatilité nulle.</div>
+      <div class="pf-note">Comparaison sur la période du fichier NAV : chaque indice avec ses propres séances ; corrélation et bêta du portefeuille calculés sur les dates communes. La NAV comprend les dividendes : pour une comparaison de performance à armes égales, utilisez les versions total return (SMIC pour le SMI, SXGE pour le SPI, dividendes réinvestis) ; le SMI (SIX:SMI) est un indice de prix. Les volatilités diffèrent peu entre versions prix et total return.<br>Volatilité = écart-type des rendements quotidiens × √252. Contribution au risque = part de la variance du portefeuille due au titre (poids × covariance avec le portefeuille), sur un an de cours quotidiens, poids actuels. Obligations approchées par l'indice ci-dessous, liquidités à volatilité nulle.</div>
       <div class="pf-bar"><label class="pf-ck">Indice pour les obligations <input type="text" id="pfBondProxy" spellcheck="false"></label><button type="button" class="btn" id="pfBondApply">Appliquer</button></div>
     </section>
 
@@ -12110,19 +12110,21 @@ const QUADS = {
 const NEUT = '#8A9199';
 const PAL = ['#02182B', '#0086B3', '#00CFFF', '#E07B00', '#00993D', '#DDD8C4', '#8A9199', '#C0201B', '#6B4FA0', '#B8860B'];
 const REFS_DEF = [
-  {s: 'SIX:SPIX', n: 'SPI', on: true}, {s: 'SIX:SBR14T', n: 'Obligations CH', on: true}, {s: 'SIX:ZGLD', n: 'Or', on: true},
+  {s: 'SIX:SPIX', n: 'SPI', on: true}, {s: 'SIX:SXGE', n: 'SPI total return', on: false}, {s: 'SIX:SMIC', n: 'SMI total return', on: false}, {s: 'SIX:SBR14T', n: 'Obligations CH', on: true}, {s: 'SIX:ZGLD', n: 'Or', on: true},
   {s: 'SIX:BCCMS', n: 'Matières premières', on: false}, {s: 'SIX:SIMA', n: 'Immobilier CH', on: false}, {s: 'FX_IDC:USDCHF', n: 'USDCHF', on: false}
 ];
 
 /* ---------------------------------------------------------------- état */
 const PF = {meta: null, pos: null, nav: null, files: {det: null, nav: null}, tab: 'pos', mapBusy: false, cache: {}};
 const BENCH_DEF = [
-  {s: 'SIX:SMI', n: 'SMI', on: true}, {s: 'SIX:SPIX', n: 'SPI', on: true}, {s: 'TVC:SX5E', n: 'Euro Stoxx 50', on: false}, {s: 'SP:SPX', n: 'S&P 500', on: false},
+  {s: 'SIX:SMI', n: 'SMI', on: true}, {s: 'SIX:SMIC', n: 'SMI total return', on: false}, {s: 'SIX:SPIX', n: 'SPI', on: true}, {s: 'SIX:SXGE', n: 'SPI total return', on: false}, {s: 'TVC:SX5E', n: 'Euro Stoxx 50', on: false}, {s: 'SP:SPX', n: 'S&P 500', on: false},
   {s: 'SIX:SBR14T', n: 'Obligations CH', on: false}, {s: 'SIX:ZGLD', n: 'Or', on: false}
 ];
 const BENCH_COL = ['#E07B00', '#00993D', '#C0201B', '#6B4FA0', '#B8860B', '#0086B3', '#D6619A', '#4F7A28'];
 const CFG = {refs: REFS_DEF.map(r => Object.assign({}, r)), freq: 'd', bond: 'SIX:SBR14T', labels: true, bench: BENCH_DEF.map(r => Object.assign({}, r)), volWin: 63};
 try { const c = JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); if (c) { if (Array.isArray(c.refs) && c.refs.length) CFG.refs = c.refs; if (c.freq) CFG.freq = c.freq; if (c.bond) CFG.bond = c.bond; if (c.labels != null) CFG.labels = !!c.labels; if (Array.isArray(c.bench) && c.bench.length) CFG.bench = c.bench; if (c.volWin) CFG.volWin = c.volWin; } } catch (e) {}
+/* nouvelles entrées par défaut ajoutées aux choix déjà mémorisés (à leur place dans la liste) */
+[[CFG.bench, BENCH_DEF], [CFG.refs, REFS_DEF]].forEach(([cur, def]) => def.forEach((d, i) => { if (!cur.some(r => r.s === d.s)) cur.splice(Math.min(i, cur.length), 0, Object.assign({}, d)); }));
 const saveCfg = () => { try { localStorage.setItem(CFG_KEY, JSON.stringify(CFG)); } catch (e) {} };
 let MAP = {};
 try { MAP = JSON.parse(localStorage.getItem(MAP_KEY) || '{}') || {}; } catch (e) {}

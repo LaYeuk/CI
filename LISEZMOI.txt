@@ -200,3 +200,9 @@ Portfolio Lab — comparaison avec des indices (17e version) :
   - Graphiques : volatilité glissante (fenêtre 1 ou 3 mois au choix), performance base 100 et drawdown du portefeuille et des indices cochés.
   - Rappel : le SMI est un indice de prix (sans dividendes), le SPI un indice de performance, comme la NAV.
   - Seul Outils_GIP.html change.
+
+Portfolio Lab — indices total return (18e version) :
+  - Ajout de « SMI total return » (SIX:SMIC) et « SPI total return » (SIX:SXGE) dans les indices de comparaison de l'onglet Volatilité (performance, volatilité, drawdown, corrélation, bêta)
+    et dans les variables explicatives de l'onglet Régression. Non cochés par défaut ; les choix déjà mémorisés sont conservés et complétés automatiquement.
+  - La NAV comprend les dividendes : pour comparer les performances, utiliser les versions total return (SMIC, SXGE).
+  - Seul Outils_GIP.html change.
