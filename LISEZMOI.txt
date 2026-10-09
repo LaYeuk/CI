@@ -78,3 +78,8 @@ Mise à jour Market Lab (5e version) :
 Ajustement Market Lab (5e version, suite) :
   - Corrélation glissante : source par défaut = TradingView quotidien, avec SIX:SPIX (SPI), SIX:ZGLD (or), SIX:SBR14T (obligations), SIX:BCCMS (matières premières) et SIX:SIMA (immobilier). Fenêtre de 90 jours, historique 5 ans. Le mode « Excel · mensuel » reste disponible en second choix.
   - Logos des sociétés (comme dans Market Data) partout dans le Market Lab : liste de sélection, titres ajoutés, libellés de la matrice (lignes et colonnes), tableaux de paires, titre analysé et graphiques de corrélation glissante. Les symboles hors SPI affichent leurs initiales.
+
+Ajustement Market Lab (6e version) :
+  - Envoi vers les boards : sous la matrice (« Envoyer la matrice vers : ») et au-dessus des résultats de corrélation glissante (« Envoyer les 5 graphiques vers : »), boutons Chart Pack / AM Dashboard / Whiteboard. Chaque graphique de corrélation glissante peut aussi être envoyé seul (boutons CP / AM / WB dans son en-tête). Les graphiques partent en images (titre, période, valeurs actuelle / moyenne / min / max, source), comme ceux du Chart Creator : ils rejoignent la base partagée, et le Chart Pack les reprend comme figures (partie 2, donc dans le PDF).
+  - Corrélation glissante : la recherche accepte maintenant n'importe quel titre ou indice (nom, ticker ou symbole complet, ex. Apple, NASDAQ:AAPL, SIX:ROG) via la recherche Market Data ; les titres du SPI sont proposés instantanément.
+  - Seul Outils_GIP.html change (le _worker.js est identique).

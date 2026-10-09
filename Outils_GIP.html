@@ -536,6 +536,18 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenLab .lb-hit{display:flex;align-items:center}
 #screenLab .lb-chip .lg{margin-right:0}
 #screenLab .lb-nm .lg{margin-right:0}
+#screenLab .lb-rtwrap{position:relative;flex:1;min-width:300px;max-width:560px}
+#screenLab .lb-rtwrap input{width:100%;box-sizing:border-box;font:inherit;font-size:12.5px;padding:8px 11px;border:1px solid var(--line);border-radius:7px;max-width:none}
+#screenLab #lbRHits{position:absolute;top:100%;left:0;right:0;margin-top:3px;z-index:20;box-shadow:0 8px 24px rgba(2,24,43,.14);max-width:none}
+#screenLab .lb-srch{padding:6px 8px;font-size:12px}
+#screenLab .lb-sendbar{margin:2px 0 10px}
+#screenLab .lb-sendbar .btn{padding:4px 11px;font-size:12px}
+#screenLab .lb-sendc{margin-left:6px;display:inline-flex;gap:3px}
+#screenLab .lb-sendc button{border:1px solid var(--line);background:#fff;border-radius:5px;font-size:10px;font-weight:700;color:var(--mut);padding:1px 6px;cursor:pointer}
+#screenLab .lb-sendc button:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+#screenLab .lb-toast{position:fixed;right:22px;bottom:22px;z-index:200;background:var(--navy);color:#fff;font-size:13px;padding:10px 16px;border-radius:9px;box-shadow:0 8px 24px rgba(2,24,43,.3);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;max-width:420px}
+#screenLab .lb-toast.show{opacity:1;transform:none}
+#screenLab .lb-toast.err{background:#B5361C}
 
 #screenChartPack {--navy:#02182B;--blue:#0a6b8c;--cyan:#00CFFF;--beige:#DDD8C4;--pale:#ECEADF;--tint:#E8F6FA;--grey:#B6C0C6;--bg:#F5F6F5;--line:#DDE3E6;--txt:#12242F;--mut:#5B6B76}
 #screenChartPack * {box-sizing:border-box}
@@ -1523,6 +1535,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       <span class="lb-legend"><em>−1</em><i></i><em>+1</em></span>
       <span style="margin-left:auto;display:flex;gap:6px"><button type="button" class="btn" id="lbCsv">Télécharger CSV</button><button type="button" class="btn" id="lbPng">Image PNG</button></span>
     </div>
+    <div class="fx-bar lb-sendbar"><span class="lb-lbl">Envoyer la matrice (image) vers :</span><button type="button" class="btn" data-send="chartpack" data-scope="mat">Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="mat">AM Dashboard</button><button type="button" class="btn" data-send="whiteboard" data-scope="mat">Whiteboard</button></div>
     <div class="lb-wrap" id="lbWrap"><canvas id="lbCanvas"></canvas><div class="lb-hl" id="lbHl" hidden></div><div class="fx-tip" id="lbTip"></div></div>
     <div class="lb-miss" id="lbMiss" hidden></div>
     <div class="lb-pairs" id="lbPairs"></div>
@@ -1535,8 +1548,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     <div class="lb-h"><h3>1 · Titre à analyser</h3></div>
     <div class="fx-bar" style="margin-top:8px">
       <span id="lbRLogo" class="lb-rlogo"></span>
-      <input id="lbRTitle" type="search" list="lbRDl" autocomplete="off" placeholder="Nom ou ticker d'un titre du SPI (ex. Nestlé, NESN) ou symbole complet (ex. SIX:ROG)…" aria-label="Titre à analyser">
-      <datalist id="lbRDl"></datalist>
+      <div class="lb-rtwrap"><input id="lbRTitle" type="search" autocomplete="off" placeholder="Rechercher n'importe quel titre ou indice : nom, ticker ou symbole (ex. Nestlé, Apple, SIX:ROG, NASDAQ:AAPL)…" aria-label="Titre à analyser"><div class="lb-addres" id="lbRHits" hidden></div></div>
     </div>
     <div class="lb-refs">Séries de référence : <b>SPI Index</b> (SIX:SPIX) · <b>ZGLD SW Equity</b> (or) · <b>SBR14T Index</b> (obligations) · <b>BCCMS SW Equity</b> (matières premières) · <b>SIMA SW Equity</b> (immobilier) — tous issus de TradingView</div>
   </section>
@@ -1563,6 +1575,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
   <section class="fx-card lb-card" id="lbRRes" hidden>
     <div class="lb-h"><h3>3 · Corrélation glissante</h3><button type="button" class="btn" id="lbRCsv">Télécharger CSV</button></div>
     <div class="lb-rhead" id="lbRHead"></div>
+    <div class="fx-bar lb-sendbar"><span class="lb-lbl">Envoyer les 5 graphiques (images) vers :</span><button type="button" class="btn" data-send="chartpack" data-scope="roll">Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="roll">AM Dashboard</button><button type="button" class="btn" data-send="whiteboard" data-scope="roll">Whiteboard</button></div>
     <div class="lb-rgrid" id="lbRGrid"></div>
     <div class="fx-notes" style="margin-top:12px;font-size:12px">Chaque courbe est la corrélation de Pearson, recalculée à chaque date sur la fenêtre glissante précédente, entre les rendements du titre et ceux de la série de référence (échelle fixe −1 à +1 ; ligne pointillée = 0). Le curseur est synchronisé sur les cinq graphiques. Données indicatives.</div>
   </section>
@@ -8646,7 +8659,6 @@ function buildTree(){
   $('lbTree').innerHTML = MKT_SPI.map((g, i) =>
       '<details class="lb-sec" data-i="' + i + '"><summary><input type="checkbox" class="lb-ckall" data-i="' + i + '" aria-label="Tout le secteur ' + esc(g[0]) + '"><span class="sn">' + esc(g[0]) + '</span><span class="sc" id="lbSc' + i + '"></span></summary>'
     + '<div class="lb-names">' + g[1].map(m => '<label class="lb-nm" title="' + esc(m[1]) + ' (' + esc(m[0]) + ')"><input type="checkbox" class="lb-ck" data-s="SIX:' + esc(m[0]) + '">' + lgHtml('SIX:' + m[0], m[1], 'sm') + '<span>' + esc(m[1]) + '</span><small>' + esc(m[0]) + '</small></label>').join('') + '</div></details>').join('');
-  $('lbRDl').innerHTML = MKT_SPI.map(g => g[1].map(m => '<option value="' + esc(m[1] + ' (' + m[0] + ')') + '"></option>').join('')).join('');
 }
 function syncSel(){
   const S = SEL();
@@ -8985,7 +8997,9 @@ function parseTitle(txt){
   txt = String(txt || '').trim(); if (!txt) return null;
   const m = txt.match(/\(([A-Z0-9]+)\)\s*$/);
   if (m && SPI_INFO['SIX:' + m[1]]) return {s: 'SIX:' + m[1], n: SPI_INFO['SIX:' + m[1]].n};
-  if (/^[A-Za-z0-9_]+:[A-Za-z0-9_.\-&]+$/.test(txt)) return {s: txt.toUpperCase(), n: SPI_INFO[txt.toUpperCase()] ? SPI_INFO[txt.toUpperCase()].n : txt.toUpperCase()};
+  const m2 = txt.match(/^(.*?)\s*\(([A-Za-z0-9_]+:[A-Za-z0-9_.\-&!]+)\)\s*$/);
+  if (m2) return {s: m2[2].toUpperCase(), n: SPI_INFO[m2[2].toUpperCase()] ? SPI_INFO[m2[2].toUpperCase()].n : (m2[1] || m2[2])};
+  if (/^[A-Za-z0-9_]+:[A-Za-z0-9_.\-&!]+$/.test(txt)) return {s: txt.toUpperCase(), n: SPI_INFO[txt.toUpperCase()] ? SPI_INFO[txt.toUpperCase()].n : txt.toUpperCase()};
   const k = Object.keys(SPI_INFO).find(s => SPI_INFO[s].n.toLowerCase() === txt.toLowerCase() || SPI_INFO[s].tk.toLowerCase() === txt.toLowerCase());
   return k ? {s: k, n: SPI_INFO[k].n} : null;
 }
@@ -9010,6 +9024,37 @@ $('lbRSrc').addEventListener('click', e => { const b = e.target.closest('[data-s
 $('lbRHist').addEventListener('click', e => { const b = e.target.closest('[data-y]'); if (!b) return; ROLL.hist = +b.dataset.y; $('lbRHist').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); rollEst(); });
 $('lbRWinBtns').addEventListener('click', e => { const b = e.target.closest('[data-w]'); if (!b) return; ROLL.win = +b.dataset.w; buildWinBtns(); rollEst(); });
 $('lbRWin').addEventListener('change', () => { const v = Math.round(+$('lbRWin').value); ROLL.win = Math.max(+$('lbRWin').min, Math.min(+$('lbRWin').max, v || ROLL.win)); buildWinBtns(); rollEst(); });
+/* Recherche libre : titres du SPI (instantané) + tout symbole connu du fournisseur (relais de recherche Market Data) */
+let hitT = null, hitSeq = 0;
+const pickTitle = (sym, name) => { $('lbRTitle').value = name + ' (' + sym + ')'; $('lbRHits').hidden = true; onTitle(); };
+function titleHits(q){
+  const ql = q.toLowerCase(), out = [];
+  Object.keys(SPI_INFO).forEach(s => { const i = SPI_INFO[s]; if (i.n.toLowerCase().indexOf(ql) >= 0 || i.tk.toLowerCase().indexOf(ql) === 0) out.push({full: s, desc: i.n, type: 'SPI'}); });
+  return out.sort((a, b) => (a.desc.toLowerCase().indexOf(ql) === 0 ? 0 : 1) - (b.desc.toLowerCase().indexOf(ql) === 0 ? 0 : 1)).slice(0, 6);
+}
+const hitHtml = x => '<button type="button" class="lb-hit" data-s="' + esc(x.full) + '" data-n="' + esc(x.desc || x.symbol || x.full) + '">' + lgHtml(x.full, x.desc || x.symbol || x.full, 'xs') + '<b>' + esc(x.full) + '</b> ' + esc(x.desc || '') + ' <small>' + esc(x.type || '') + '</small></button>';
+function searchTitle(){
+  const q = $('lbRTitle').value.trim(), box = $('lbRHits'), seq = ++hitSeq;
+  clearTimeout(hitT);
+  if (q.length < 2 || /\)\s*$/.test(q)) { box.hidden = true; return; }
+  const local = titleHits(q);
+  box.hidden = false; box.innerHTML = local.map(hitHtml).join('') + '<span class="fx-mut lb-srch">Recherche des autres titres…</span>';
+  hitT = setTimeout(async () => {
+    let rem = [], err = '';
+    try {
+      const r = await fetch('/api/tv/search/market/' + encodeURIComponent(q)), j = await r.json();
+      if (!r.ok || j.success === false) throw new Error(j.error_message || (j.error && j.error.message) || ('HTTP ' + r.status));
+      rem = mktParseSearch(j).slice(0, 8).filter(x => !local.some(l => l.full === x.full));
+    } catch (e) { err = e.message; }
+    if (seq !== hitSeq) return;
+    box.innerHTML = local.map(hitHtml).join('') + rem.map(hitHtml).join('')
+      + (err ? '<span class="fx-mut lb-srch">Recherche étendue impossible (' + esc(err) + ') — saisissez le symbole complet, ex. NASDAQ:AAPL.</span>' : (!local.length && !rem.length ? '<span class="fx-mut lb-srch">Aucun résultat — essayez le symbole complet (ex. NASDAQ:AAPL).</span>' : ''));
+  }, 350);
+}
+$('lbRTitle').addEventListener('input', searchTitle);
+$('lbRHits').addEventListener('mousedown', e => { const b = e.target.closest('.lb-hit'); if (!b) return; e.preventDefault(); pickTitle(b.dataset.s, b.dataset.n); });
+$('lbRTitle').addEventListener('keydown', e => { if (e.key === 'Enter') { $('lbRHits').hidden = true; onTitle(); } else if (e.key === 'Escape') $('lbRHits').hidden = true; });
+$('lbRTitle').addEventListener('blur', () => setTimeout(() => { $('lbRHits').hidden = true; }, 150));
 const onTitle = () => { ROLL.title = parseTitle($('lbRTitle').value); $('lbRLogo').innerHTML = ROLL.title ? lgHtml(ROLL.title.s, ROLL.title.n, 'md') : ''; rollEst(); };
 $('lbRTitle').addEventListener('input', onTitle);
 $('lbRTitle').addEventListener('change', onTitle);
@@ -9070,6 +9115,7 @@ function drawRoll(){
   const R = ROLL.res; if (!R) return;
   const ok = R.charts.filter(c => !c.none);
   let d0 = Infinity, d1 = -Infinity; ok.forEach(c => { d0 = Math.min(d0, c.pts[0].d); d1 = Math.max(d1, c.pts[c.pts.length - 1].d); });
+  R.d0 = d0; R.d1 = d1;
   $('lbRRes').hidden = false;
   $('lbRHead').innerHTML = '<h2>' + lgHtml(R.title.s, R.title.n, 'md') + esc(R.title.n) + ' <small>' + esc(R.title.s) + '</small></h2><div class="fx-ids">Corrélation glissante des ' + (R.freq === 'm' ? 'rendements mensuels' : 'rendements quotidiens') + ' · fenêtre ' + R.win + (R.src === 'xls' ? ' mois' : ' jours') + ' · historique affiché ' + (R.hist >= 365 ? Math.round(R.hist / 365.25) + ' ans' : R.hist + ' j') + (ok.length ? ' · du ' + dFr(d0) + ' au ' + dFr(d1) : '') + '</div>';
   const W = Math.max(360, Math.floor(($('lbRGrid').clientWidth || 1000) / (($('lbRGrid').clientWidth || 1000) >= 1040 ? 2 : 1)) - 24), H = 190, m = {t: 8, r: 12, b: 24, l: 40};
@@ -9077,7 +9123,7 @@ function drawRoll(){
   ROLL.charts = [];
   $('lbRGrid').innerHTML = R.charts.map((c, i) => {
     if (c.none) return '<div class="lb-rc none"><div class="lb-rh"><i style="background:' + c.r.col + '"></i>' + lgHtml(R.title.s, R.title.n, 'xs') + '<b>' + esc(R.title.n) + ' vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small></div><p class="fx-mut">Indisponible — ' + esc(c.note) + '.</p></div>';
-    return '<div class="lb-rc" data-i="' + i + '"><div class="lb-rh"><i style="background:' + c.r.col + '"></i>' + lgHtml(R.title.s, R.title.n, 'xs') + '<b>vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small><span class="lb-hv" id="lbHv' + i + '"></span></div>'
+    return '<div class="lb-rc" data-i="' + i + '"><div class="lb-rh"><i style="background:' + c.r.col + '"></i>' + lgHtml(R.title.s, R.title.n, 'xs') + '<b>vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small><span class="lb-hv" id="lbHv' + i + '"></span><span class="lb-sendc" title="Envoyer ce graphique vers…"><button type="button" data-send="chartpack" data-scope="roll1" data-i="' + i + '" title="Envoyer vers le Chart Pack">CP</button><button type="button" data-send="dashboard" data-scope="roll1" data-i="' + i + '" title="Envoyer vers l\'AM Dashboard">AM</button><button type="button" data-send="whiteboard" data-scope="roll1" data-i="' + i + '" title="Envoyer vers le Whiteboard">WB</button></span></div>'
       + '<div class="lb-rk"><span>Actuelle <b class="' + (c.last >= 0 ? 'p' : 'n') + '">' + nf(2).format(c.last) + '</b></span><span>Moyenne <b>' + nf(2).format(c.mean) + '</b></span><span>Min <b>' + nf(2).format(c.min) + '</b></span><span>Max <b>' + nf(2).format(c.max) + '</b></span></div>'
       + '<div class="fx-chart" id="lbRc' + i + '"><div class="fx-tip" id="lbRt' + i + '"></div></div>'
       + (c.note ? '<p class="lb-rn">⚠ ' + esc(c.note) + '. ' + esc(c.src) + '</p>' : '<p class="lb-rn">' + esc(c.src) + '</p>') + '</div>';
@@ -9130,6 +9176,106 @@ $('lbRCsv').addEventListener('click', () => {
   const csv = 'date;' + ok.map(c => R.title.s + ' vs ' + c.r.n).join(';') + '\n' + days.map(d => new Date(d * 864e5).toISOString().slice(0, 10) + ';' + maps.map(m => m.has(d) ? m.get(d).toFixed(4) : '').join(';')).join('\n');
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv'}));
   a.download = 'correlation_glissante_' + R.title.s.replace(/[^A-Za-z0-9]+/g, '_') + '.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+
+/* ================================================================ envoi vers le Chart Pack / l'AM Dashboard / le Whiteboard
+   Les graphiques sont envoyés sous forme d'images (comme les graphiques du Chart Creator) : ils rejoignent les mêmes grilles,
+   la même base partagée, et les mêmes fonctions d'agrandissement, de déplacement et d'export PDF (Chart Pack). */
+const DEST_LBL = {chartpack: 'le Chart Pack CI (partie 2, à la suite des figures)', dashboard: "l'AM Dashboard", whiteboard: 'le Whiteboard'};
+let toastT = null;
+function labToast(msg, ok){
+  let el = $('lbToast');
+  if (!el) { el = document.createElement('div'); el.id = 'lbToast'; el.className = 'lb-toast'; $('screenLab').appendChild(el); }
+  el.textContent = msg; el.classList.toggle('err', ok === false); el.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 4200);
+}
+function labSend(dest, item){
+  if (dest === 'chartpack') { if (typeof sendFigToChartPack !== 'function') throw new Error('Chart Pack indisponible'); sendFigToChartPack(item); }
+  else {
+    addToDestination(dest, item);
+    if (dest === 'dashboard' && typeof onDashboardUpdate === 'function') onDashboardUpdate();
+    if (dest === 'whiteboard' && typeof onWhiteboardUpdate === 'function') onWhiteboardUpdate();
+  }
+}
+/* Dessin d'un texte avec coupe à la largeur donnée */
+function cvFit(ctx, t, maxW){ if (ctx.measureText(t).width <= maxW) return t; while (t.length > 3 && ctx.measureText(t + '…').width > maxW) t = t.slice(0, -1); return t + '…'; }
+/* PNG trop lourd pour une ligne D1 (≈ 2 Mo) ou le stockage local : on réduit jusqu'à tenir. */
+function shrinkPng(cv){
+  let c = cv, url = c.toDataURL('image/png');
+  for (let k = 0; k < 5 && url.length > 1500000; k++) {
+    const n = document.createElement('canvas'); n.width = Math.round(c.width * 0.75); n.height = Math.round(c.height * 0.75);
+    const x = n.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, n.width, n.height); x.imageSmoothingQuality = 'high'; x.drawImage(c, 0, 0, n.width, n.height);
+    c = n; url = c.toDataURL('image/png');
+  }
+  return {cv: c, url};
+}
+function matrixItem(){
+  const R = LAB.res, src = $('lbCanvas'); if (!R || !src.width) return null;
+  const k = src.width / (parseFloat(src.style.width) || src.width);   /* facteur d'échelle de l'écran */
+  const cw = src.width / k, Wl = Math.max(cw, 640), head = 62, foot = 28;
+  const cv = document.createElement('canvas'); cv.width = Math.round(Wl * k); cv.height = Math.round((src.height / k + head + foot) * k);
+  const ctx = cv.getContext('2d'); ctx.setTransform(k, 0, 0, k, 0, 0);
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, Wl, cv.height / k);
+  const ttl = 'Matrice de corrélation — ' + (R.cross ? 'A × B : ' + R.nR + ' × ' + R.nC + ' titres' : R.nR + ' titres');
+  const mode = R.mode === 'ret' ? 'rendements quotidiens' : 'niveaux de prix';
+  const per = (R.M.from != null && R.M.to != null) ? ' · du ' + dFr(R.M.from) + ' au ' + dFr(R.M.to) : '';
+  const sub = mode + ' · ' + R.days + ' jours' + per;
+  ctx.fillStyle = '#02182B'; ctx.font = '700 20px system-ui, sans-serif'; ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left'; ctx.fillText(ttl, 14, 28);
+  ctx.fillStyle = '#6B6F76'; ctx.font = '12.5px system-ui, sans-serif'; ctx.fillText(sub, 14, 49);
+  /* légende de couleur à droite */
+  const gx = Wl - 190, gy = 22, g = ctx.createLinearGradient(gx, 0, gx + 140, 0); g.addColorStop(0, 'rgb(214,97,38)'); g.addColorStop(0.5, 'rgb(247,246,242)'); g.addColorStop(1, 'rgb(10,110,168)');
+  ctx.fillStyle = g; ctx.fillRect(gx, gy, 140, 10); ctx.strokeStyle = 'rgba(2,24,43,.2)'; ctx.strokeRect(gx + .5, gy + .5, 139, 9);
+  ctx.fillStyle = '#6B6F76'; ctx.font = '11px system-ui, sans-serif'; ctx.textAlign = 'right'; ctx.fillText('−1', gx - 5, gy + 9); ctx.textAlign = 'left'; ctx.fillText('+1', gx + 146, gy + 9);
+  ctx.drawImage(src, 0, 0, src.width, src.height, 0, head, cw, src.height / k);
+  ctx.fillStyle = '#6B6F76'; ctx.font = '11px system-ui, sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('Pearson par paires, dates communes · Source : TradingView — données indicatives.', 14, head + src.height / k + 18);
+  const o = shrinkPng(cv);
+  return {title: ttl, img: o.url, imgRatio: o.cv.width / o.cv.height, caption: sub, tableRows: null};
+}
+function rollItem(i){
+  const R = ROLL.res, c = R && R.charts[i]; if (!c || c.none) return null;
+  const S = 1.5, Wl = 1200, Hl = 520, cv = document.createElement('canvas'); cv.width = Wl * S; cv.height = Hl * S;
+  const ctx = cv.getContext('2d'); ctx.setTransform(S, 0, 0, S, 0, 0);
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, Wl, Hl);
+  lgDraw(ctx, R.title.s, R.title.n, 20, 18, 34);
+  ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left'; ctx.fillStyle = '#02182B'; ctx.font = '700 22px system-ui, sans-serif';
+  const ttl = R.title.n + ' vs ' + c.r.n; ctx.fillText(cvFit(ctx, ttl, Wl - 80), 64, 42);
+  const win = R.win + (R.src === 'xls' ? ' mois' : ' jours'), frq = R.freq === 'm' ? 'rendements mensuels' : 'rendements quotidiens';
+  const sub = 'Corrélation glissante · ' + frq + ' · fenêtre ' + win + ' · du ' + dFr(c.pts[0].d) + ' au ' + dFr(c.pts[c.pts.length - 1].d);
+  ctx.fillStyle = '#6B6F76'; ctx.font = '13px system-ui, sans-serif'; ctx.fillText(sub, 64, 64);
+  const f2 = v => nf(2).format(v);
+  ctx.fillStyle = '#02182B'; ctx.font = '600 13px system-ui, sans-serif'; ctx.fillText('Actuelle ' + f2(c.last) + '   ·   Moyenne ' + f2(c.mean) + '   ·   Min ' + f2(c.min) + '   ·   Max ' + f2(c.max), 64, 88);
+  const m = {l: 58, r: 26, t: 108, b: 58}, X0 = m.l, X1 = Wl - m.r, Y0 = m.t, Y1 = Hl - m.b;
+  const d0 = R.d0, d1 = R.d1, X = d => X0 + ((d - d0) / ((d1 - d0) || 1)) * (X1 - X0), Y = v => Y0 + (1 - (v + 1) / 2) * (Y1 - Y0);
+  ctx.font = '11.5px system-ui, sans-serif'; ctx.textAlign = 'right';
+  [-1, -0.5, 0, 0.5, 1].forEach(v => {
+    ctx.beginPath(); ctx.strokeStyle = v === 0 ? '#9AA0A6' : '#E6E4DD'; ctx.lineWidth = 1; ctx.setLineDash(v === 0 ? [5, 4] : []);
+    ctx.moveTo(X0, Y(v) + .5); ctx.lineTo(X1, Y(v) + .5); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#6B6F76'; ctx.fillText(nf(1).format(v), X0 - 8, Y(v) + 4);
+  });
+  ctx.textAlign = 'center'; xTicks(d0, d1).forEach(x => { ctx.fillStyle = '#6B6F76'; ctx.fillText(x[1], X(x[0]), Y1 + 22); });
+  const gap = R.freq === 'm' ? 70 : 12;
+  ctx.beginPath(); ctx.strokeStyle = c.r.col; ctx.lineWidth = 2.2; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  c.pts.forEach((p, q) => { if (q && p.d - c.pts[q - 1].d <= gap) ctx.lineTo(X(p.d), Y(p.r)); else ctx.moveTo(X(p.d), Y(p.r)); });
+  ctx.stroke();
+  const lp = c.pts[c.pts.length - 1]; ctx.beginPath(); ctx.arc(X(lp.d), Y(lp.r), 4, 0, 6.2832); ctx.fillStyle = '#fff'; ctx.fill(); ctx.lineWidth = 2; ctx.stroke();
+  ctx.textAlign = 'left'; ctx.fillStyle = '#6B6F76'; ctx.font = '11px system-ui, sans-serif';
+  ctx.fillText(cvFit(ctx, 'Source : ' + c.src + (c.note ? ' — ' + c.note : '') + ' — données indicatives.', Wl - 40), 20, Hl - 14);
+  ctx.beginPath(); ctx.fillStyle = c.r.col; ctx.arc(Wl - 30, 30, 6, 0, 6.2832); ctx.fill();
+  return {title: ttl + ' — corrélation glissante ' + win, img: cv.toDataURL('image/png'), imgRatio: Wl / Hl, caption: sub, tableRows: null};
+}
+$('screenLab').addEventListener('click', e => {
+  const b = e.target.closest('[data-send]'); if (!b) return;
+  const dest = b.dataset.send, scope = b.dataset.scope;
+  try {
+    let items = [];
+    if (scope === 'mat') { const it = matrixItem(); if (it) items.push(it); }
+    else if (scope === 'roll1') { const it = rollItem(+b.dataset.i); if (it) items.push(it); }
+    else if (scope === 'roll') { (ROLL.res ? ROLL.res.charts : []).forEach((c, i) => { const it = rollItem(i); if (it) items.push(it); }); }
+    if (!items.length) { labToast('Rien à envoyer : calculez d\'abord le résultat.', false); return; }
+    items.forEach(it => labSend(dest, it));
+    labToast((items.length > 1 ? items.length + ' graphiques envoyés' : (scope === 'mat' ? 'Matrice envoyée' : 'Graphique envoyé')) + ' vers ' + DEST_LBL[dest] + '.');
+  } catch (err) { labToast('Envoi impossible : ' + err.message, false); }
 });
 
 /* ---------------------------------------------------------------- démarrage */
