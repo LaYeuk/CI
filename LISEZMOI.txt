@@ -166,3 +166,16 @@ Nouveau : Portfolio Constructor (14e version) :
   - Méthode : covariance réduite vers une corrélation moyenne, rendements attendus historiques (bruts, réduits de moitié vers la moyenne, ou identiques) + dividende ; optimisation par gradient projeté,
     Max Sharpe par balayage de l'aversion au risque ; nombre de titres et paliers de pondération par étapes (heuristique). Contraintes incompatibles (ex. 15 titres × 5 % < 100 %) signalées et relâchées.
   - Seul Outils_GIP.html change (le _worker.js est identique).
+
+Archive permanente des cours dans D1 (15e version) — le fichier _worker.js change : le redéployer (git push ou npx wrangler deploy).
+  - Chaque symbole consulté (Market Dashboard, Market Lab, Cadran, Portfolio Lab, Portfolio Constructor…) a désormais son historique complet archivé dans la base D1 (une ligne par symbole),
+    au lieu d'un cache retéléchargé en entier chaque jour.
+  - Seules les séances terminées sont archivées : jusqu'à la dernière séance complète (celle du jour à partir de 22 h 30 à Zurich, après la clôture américaine).
+    Conséquence : /api/tv-series ne renvoie plus la séance en cours (cours intrajournalier) — les fiches Market Data (bougies) ne sont pas concernées.
+  - Mise à jour incrémentale : seules les 30 dernières séances sont redemandées au fournisseur et ajoutées. Si elles ne concordent plus avec l'archive (split, ajustement),
+    tout l'historique est rechargé ; rechargement complet de sécurité une fois par semaine.
+  - L'historique plus ancien que ce que fournit le fournisseur (~2000 séances) est conservé et raccordé : l'archive s'allonge avec le temps.
+  - Le cron (toutes les 2 min) met à jour chaque soir, après 22 h 30, par lots de 20, les symboles consultés dans les 30 derniers jours : le matin, tout est déjà à jour et
+    personne n'attend le fournisseur. Coût : ~1 appel par 10 symboles et par jour ouvré (≈ 35 appels par soir pour l'univers du Market Dashboard).
+  - État de l'archive : /api/tv-hist-status -> {symbols, fresh, stale, bars, lcd}.
+  - Les anciennes lignes de cache « tvser:v1:… » ne sont plus utilisées (elles peuvent rester dans la base ; la première consultation de chaque symbole reconstruit l'archive).

@@ -785,16 +785,151 @@ async function tvPerf(request, env, ctx) {
   return tvJson({perf, source, error_message: st.err || undefined});
 }
 
-/* ---- Séries de clôtures journalières (graphique de comparaison, Market Lab) -----------------------------------
-   GET /api/tv-series?symbols=SIX:NESN,SIX:ROG,...&bars=N   (30 symboles max par appel)
+/* ---- Séries de clôtures journalières : ARCHIVE PERMANENTE dans D1 (Market Dashboard, Market Lab, Cadran, Portfolio Lab / Constructor) -----
+   GET /api/tv-series?symbols=SIX:NESN,SIX:ROG,...&bars=N[&eod=1]   (30 symboles max par appel)
    -> {series: {"SIX:NESN": {t: [jours depuis 1970], c: [clôtures]} | null}, error_message?}
-   Les historiques sont mis en cache dans D1 (3 h, partagés entre collègues) par symbole ; le nombre de bougies demandé est arrondi
-   à un palier (130 / 260 / 780 / 1300 / 2000) pour qu'une même ligne en cache serve plusieurs fenêtres. */
-const TV_SERIES_TTL = 3 * 3600 * 1000;
-const TV_NONE_TTL = 6 * 3600 * 1000;   /* symbole sans données chez le fournisseur : on ne le redemande pas avant 6 h (évite de refaire l'appel à chaque ouverture) */
-/* Jour calendaire à Zurich (nombre de jours depuis 1970) : mode « clôtures du jour » du Market Dashboard. */
-const zurichDay = ms => { const p = new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Zurich', year: 'numeric', month: '2-digit', day: '2-digit'}).format(ms).split('-').map(Number); return Math.round(Date.UTC(p[0], p[1] - 1, p[2]) / 864e5); };
+   Chaque symbole a une ligne « tvhist:v1:SYM » (tout l'historique connu, en JSON) et une petite ligne « tvhmeta:v1:SYM »
+   (état de fraîcheur, lue par le cron). Une ligne par symbole (et non une par jour) : charger 340 titres = 340 lignes lues.
+   Fonctionnement :
+     • seules les séances terminées sont archivées : jusqu'à la « dernière séance complète » (jour ouvré ; celle du jour
+       compte à partir de 22 h 30 à Zurich, après la clôture américaine) ;
+     • à jour = l'archive contient déjà cette dernière séance -> réponse directe depuis D1, aucun appel au fournisseur ;
+     • sinon, mise à jour incrémentale : on ne redemande que les 30 dernières séances et on les ajoute ;
+       si les séances communes ne concordent plus (split, ajustement), on recharge tout l'historique ;
+     • rechargement complet de sécurité une fois par semaine ; l'historique antérieur à ce que renvoie le fournisseur
+       (plafond ~2000 séances) est conservé et raccordé : l'archive s'allonge avec le temps ;
+     • le cron (toutes les 2 min) met l'archive à jour chaque soir après 22 h 30 pour les symboles consultés dans les
+       30 derniers jours : le matin, tout le monde lit directement D1.
+   GET /api/tv-hist-status -> {symbols, fresh, stale, bytes, lcd} (état de l'archive). */
+const TV_NONE_TTL = 6 * 3600 * 1000;   /* symbole sans données chez le fournisseur : on ne le redemande pas avant 6 h */
+const zurichParts = ms => { const p = {}; new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Zurich', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'}).formatToParts(ms).forEach(x => { p[x.type] = x.value; }); return p; };
+const zurichDay = ms => { const p = zurichParts(ms); return Math.round(Date.UTC(+p.year, +p.month - 1, +p.day) / 864e5); };
+const isWeekday = d => { const w = (d + 4) % 7; return w >= 1 && w <= 5; };   /* d : jours depuis 1970 (1.1.1970 = jeudi) */
+/* Dernière séance complète : aujourd'hui après 22 h 30 (jour ouvré), sinon le jour ouvré précédent. */
+function lastCompleteDay(ms){
+  const p = zurichParts(ms), today = Math.round(Date.UTC(+p.year, +p.month - 1, +p.day) / 864e5);
+  if (isWeekday(today) && (+p.hour * 60 + +p.minute) >= 22 * 60 + 30) return today;
+  let d = today - 1; while (!isWeekday(d)) d--; return d;
+}
 const TV_SERIES_STEPS = [130, 260, 780, 1300, 2000];
+const HIST_KEY = s => 'tvhist:v1:' + s, META_KEY = s => 'tvhmeta:v1:' + s, META_PREFIX = 'tvhmeta:v1:';
+const HIST_INC_BARS = 30, HIST_FULL_EVERY = 7, HIST_TOL = 0.003;
+
+/* bougies du fournisseur -> {t, c} limitées aux séances complètes */
+function candlesToTc(cs, lcd){
+  const t = [], c = [];
+  cs.forEach(b => { const d = Math.round(b.t / 864e5); if (d > lcd || !(b.c > 0)) return; if (t.length && t[t.length - 1] === d) { c[c.length - 1] = Math.round(b.c * 1e4) / 1e4; return; } t.push(d); c.push(Math.round(b.c * 1e4) / 1e4); });
+  return {t, c};
+}
+/* ajout incrémental ; null si les séances communes ne concordent pas (sauf les 2 dernières de l'archive, qui peuvent être révisées) */
+function mergeInc(old, fr){
+  if (!fr.t.length) return old;
+  const idx = new Map(); old.t.forEach((d, i) => idx.set(d, i));
+  const guard = old.t.length >= 2 ? old.t[old.t.length - 2] : -Infinity;
+  for (let j = 0; j < fr.t.length; j++) {
+    const i = idx.get(fr.t[j]);
+    if (i == null || fr.t[j] >= guard) continue;
+    if (Math.abs(fr.c[j] / old.c[i] - 1) > HIST_TOL) return null;
+  }
+  const cut = Math.min(fr.t[0], guard);
+  const t = [], c = [];
+  old.t.forEach((d, i) => { if (d < cut) { t.push(d); c.push(old.c[i]); } });
+  fr.t.forEach((d, j) => { if (d >= cut) { t.push(d); c.push(fr.c[j]); } });
+  return {t, c};
+}
+/* rechargement complet : l'historique plus ancien de l'archive est conservé et raccordé (facteur d'ajustement mesuré sur les séances communes) */
+function mergeFull(old, fr){
+  if (!old || !old.t || !old.t.length || !fr.t.length || old.t[0] >= fr.t[0]) return fr;
+  const om = new Map(); old.t.forEach((d, i) => om.set(d, old.c[i]));
+  const ratios = [];
+  for (let j = 0; j < fr.t.length && ratios.length < 10; j++) { const o = om.get(fr.t[j]); if (o > 0) ratios.push(fr.c[j] / o); }
+  if (!ratios.length) return fr;
+  ratios.sort((a, b) => a - b);
+  const f = ratios[ratios.length >> 1];
+  if (ratios.some(r => Math.abs(r / f - 1) > 0.01)) return fr;   /* raccord incohérent : on garde la version du fournisseur seule */
+  const t = [], c = [];
+  old.t.forEach((d, i) => { if (d < fr.t[0]) { t.push(d); c.push(Math.round(old.c[i] * f * 1e4) / 1e4); } });
+  return {t: t.concat(fr.t), c: c.concat(fr.c)};
+}
+const stepFor = n => TV_SERIES_STEPS.find(x => x >= n) || 2000;
+/* Met à jour l'archive des symboles demandés (want = nombre de séances souhaitées). Renvoie {hist: {sym: {t,c,deep}|null}, err, calls}. */
+async function histRefresh(env, ctx, syms, want, opts){
+  opts = opts || {};
+  const now = Date.now(), lcd = lastCompleteDay(now), today = zurichDay(now);
+  const rows = await cacheGetMany(env, syms.map(HIST_KEY));
+  const out = {}, cur = {}, inc = [], full = [];
+  syms.forEach(s => {
+    const r = rows.get(HIST_KEY(s)); let h = null;
+    if (r) { try { h = JSON.parse(r.data); } catch (e) {} }
+    if (h && h.none) { if (r.age < TV_NONE_TTL) { out[s] = null; return; } h = null; }
+    cur[s] = h;
+    if (h && h.t && h.t.length) {
+      const enough = h.deep || h.t.length >= want * 0.97;
+      if (!enough) full.push(s);
+      else if ((h.lcd || 0) >= lcd) { out[s] = h; if (!opts.cron && (h.seen || 0) < today - 3) { h.seen = today; h.touch = true; } }
+      else if (today - (h.full || 0) >= HIST_FULL_EVERY) full.push(s);
+      else inc.push(s);
+    } else full.push(s);
+  });
+  const st = {err: ''}, writes = [];
+  let calls = 0;
+  if ((inc.length || full.length) && await tvUsage(env) >= (parseInt(env.TV_MONTHLY_CAP, 10) || 30000)) {
+    st.err = 'Plafond mensuel atteint.';
+    inc.concat(full).forEach(s => { out[s] = cur[s] && cur[s].t ? cur[s] : null; });
+    return {hist: out, err: st.err, calls};
+  }
+  const save = (s, h) => {
+    h.lcd = lcd; h.seen = opts.cron ? (cur[s] && cur[s].seen) || today : today;
+    out[s] = h;
+    writes.push({k: HIST_KEY(s), data: JSON.stringify(h)}, {k: META_KEY(s), data: JSON.stringify({lcd: h.lcd, seen: h.seen, full: h.full || 0, n: h.t.length})});
+  };
+  /* 1) mises à jour incrémentales (30 dernières séances) */
+  for (let i = 0; i < inc.length; i += 10) {
+    if (calls) await new Promise(r => setTimeout(r, 450));
+    const group = inc.slice(i, i + 10);
+    const found = await tvFetchGroup(env, group, 'D', HIST_INC_BARS, st); calls++;
+    if (st.err === 'BAD_KEY') break;
+    group.forEach(s => {
+      const old = cur[s];
+      if (!found[s]) { out[s] = old; return; }   /* pas de réponse : on sert l'archive telle quelle */
+      const m = mergeInc(old, candlesToTc(found[s], lcd));
+      if (!m) { full.push(s); return; }   /* séances communes divergentes (split…) : rechargement complet */
+      save(s, Object.assign({}, old, m));
+    });
+  }
+  /* 2) rechargements complets */
+  if (st.err !== 'BAD_KEY') {
+    const fullBars = Math.max(stepFor(want), ...full.map(s => stepFor((cur[s] && cur[s].t && cur[s].t.length) || 0)));
+    const bars = Math.min(2000, fullBars);
+    for (let i = 0; i < full.length; i += 10) {
+      if (calls) await new Promise(r => setTimeout(r, 450));
+      const group = full.slice(i, i + 10);
+      let found = await tvFetchGroup(env, group, 'D', bars, st); calls++;
+      let miss = group.filter(s => !found[s]);
+      for (const smaller of [830, 260]) {   /* plafond de bougies du forfait ? palier plus petit */
+        if (!miss.length || smaller >= bars || st.err === 'BAD_KEY') continue;
+        const f2 = await tvFetchGroup(env, miss, 'D', smaller, st); calls++;
+        miss.forEach(s => { if (f2[s]) found[s] = f2[s]; });
+        miss = group.filter(s => !found[s]);
+      }
+      group.forEach(s => {
+        const cs = found[s];
+        if (!cs || !cs.length) {
+          if (cur[s] && cur[s].t) { out[s] = cur[s]; return; }
+          out[s] = null;
+          if (!st.err) writes.push({k: HIST_KEY(s), data: JSON.stringify({none: true})});
+          return;
+        }
+        const fr = candlesToTc(cs, lcd), merged = mergeFull(cur[s], fr);
+        const deep = merged.t.length > fr.t.length ? !!cur[s].deep : cs.length < bars * 0.9;   /* deep : tout l'historique disponible est archivé */
+        save(s, Object.assign(merged, {deep, full: today}));
+      });
+    }
+  }
+  syms.forEach(s => { if (!(s in out)) out[s] = cur[s] && cur[s].t ? cur[s] : null; if (out[s] && out[s].touch) { delete out[s].touch; writes.push({k: META_KEY(s), data: JSON.stringify({lcd: out[s].lcd, seen: out[s].seen, full: out[s].full || 0, n: out[s].t.length})}, {k: HIST_KEY(s), data: JSON.stringify(out[s])}); } });
+  if (writes.length) { const p = cachePutMany(env, writes); if (ctx && ctx.waitUntil) ctx.waitUntil(p); else await p; }
+  return {hist: out, err: st.err, calls};
+}
 async function tvSeries(request, env, ctx) {
   const url = new URL(request.url);
   const denied = tvGuard(request, url); if (denied) return denied;
@@ -802,63 +937,31 @@ async function tvSeries(request, env, ctx) {
   const syms = Array.from(new Set((url.searchParams.get('symbols') || '').split(',').map(x => x.trim()).filter(x => /^[A-Za-z0-9_.:\-&]+$/.test(x)))).slice(0, 30);
   if (!syms.length) return tvJson({error_message: 'Aucun symbole.'}, 400);
   const want = Math.max(20, Math.min(2000, parseInt(url.searchParams.get('bars'), 10) || 130));
-  const bars = TV_SERIES_STEPS.find(x => x >= want) || 2000;
-  /* eod=1 (Market Dashboard) : « instantané du jour ». La mémoire D1 reste valable toute la journée (jour de Zurich) au lieu de 3 h : le premier appel
-     de la journée est le seul à interroger le fournisseur, les suivants relisent D1. Les barres du jour en cours (potentiellement partielles) sont retirées de la réponse
-     (pas de la mémoire) : on ne présente que des clôtures complètes. */
-  const eod = url.searchParams.get('eod') === '1', today = zurichDay(Date.now());
-  const cap = parseInt(env.TV_MONTHLY_CAP, 10) || 30000;
-  const keys = syms.map(s => 'tvser:v1:' + s);
-  const cached = await cacheGetMany(env, keys);
-  const series = {}, todo = [], stale = {};
-  syms.forEach((s, i) => {
-    const h = cached.get(keys[i]);
-    if (h) {
-      try {
-        const v = JSON.parse(h.data);
-        if (v && v.none) { if (h.age < TV_NONE_TTL && v.bars >= bars) { series[s] = null; return; } }
-        else if (v && v.t && v.t.length) {
-          const fresh = eod ? zurichDay(Date.now() - h.age) === today : h.age < TV_SERIES_TTL;
-          if (fresh && (v.bars >= bars || v.full)) { series[s] = {t: v.t, c: v.c}; return; }
-          stale[s] = {t: v.t, c: v.c};
-        }
-      } catch (e) {}
-    }
-    todo.push(s);
-  });
-  if (todo.length && await tvUsage(env) >= cap) { todo.forEach(s => { series[s] = stale[s] || null; }); return tvJson({series, error_message: 'Plafond mensuel atteint.'}); }
-  const st = {err: ''}, rows = [];
-  for (let i = 0; i < todo.length; i += 10) {
-    if (i) await new Promise(r => setTimeout(r, 450)); /* 2 requêtes/s maximum (forfait Basic) */
-    const group = todo.slice(i, i + 10);
-    let found = await tvFetchGroup(env, group, 'D', bars, st);
-    /* plafond de bougies du forfait ? on retente avec un palier plus petit pour les symboles manquants */
-    let miss = group.filter(s => !found[s]);
-    for (const smaller of [830, 260]) {
-      if (!miss.length || smaller >= bars || st.err === 'BAD_KEY') continue;
-      const f2 = await tvFetchGroup(env, miss, 'D', smaller, st);
-      miss.forEach(s => { if (f2[s]) found[s] = f2[s]; });
-      miss = group.filter(s => !found[s]);
-    }
-    group.forEach(s => {
-      const cs = found[s]; if (!cs || !cs.length) return;
-      const t = [], c = [];
-      cs.forEach(b => { t.push(Math.round(b.t / 864e5)); c.push(Math.round(b.c * 1e4) / 1e4); });
-      series[s] = {t, c};
-      rows.push({k: 'tvser:v1:' + s, data: JSON.stringify({bars: bars, full: cs.length < bars * 0.9, t, c})});
-    });
-  }
-  if (st.err === 'BAD_KEY') return tvJson({error_code: 'BAD_KEY', error_message: 'Clé Market Data refusée par le fournisseur (vérifiez TV_API_KEY et votre forfait).'}, 502);
-  /* mémoire négative : un symbole que le fournisseur ne connaît pas n'est pas redemandé à chaque ouverture (seulement si aucune erreur d'API n'a été vue) */
-  if (!st.err) todo.forEach(s => { if (!series[s] && !stale[s]) rows.push({k: 'tvser:v1:' + s, data: JSON.stringify({none: true, bars: bars})}); });
-  todo.forEach(s => { if (!series[s]) series[s] = stale[s] || null; });
-  if (rows.length && ctx) ctx.waitUntil(cachePutMany(env, rows));
-  if (eod) Object.keys(series).forEach(s => {
-    const S = series[s]; if (!S || !S.t) return;
-    let n = S.t.length; while (n > 0 && S.t[n - 1] >= today) n--;
-    if (n < S.t.length) series[s] = n ? {t: S.t.slice(0, n), c: S.c.slice(0, n)} : null;
-  });
-  return tvJson({series, error_message: st.err || undefined});
+  const R = await histRefresh(env, ctx, syms, want);
+  if (R.err === 'BAD_KEY') return tvJson({error_code: 'BAD_KEY', error_message: 'Clé Market Data refusée par le fournisseur (vérifiez TV_API_KEY et votre forfait).'}, 502);
+  const series = {};
+  syms.forEach(s => { const h = R.hist[s]; series[s] = h && h.t && h.t.length ? {t: h.t.slice(-want), c: h.c.slice(-want)} : null; });
+  return tvJson({series, error_message: R.err || undefined});
+}
+/* Cron : met à jour, par lots de 20, les symboles consultés dans les 30 derniers jours dont l'archive n'a pas la dernière séance complète. */
+async function histWarm(env, ctx){
+  if (!env.TV_API_KEY || !env.DB) return {done: 0};
+  const lcd = lastCompleteDay(Date.now());
+  const metas = await cacheRange(env, META_PREFIX, true);
+  const todo = [];
+  metas.forEach(m => { let x = null; try { x = JSON.parse(m.data); } catch (e) {} if (x && (x.lcd || 0) < lcd && (x.seen || 0) >= lcd - 30) todo.push({s: m.id, seen: x.seen || 0}); });
+  if (!todo.length) return {done: 0, stale: 0};
+  todo.sort((a, b) => b.seen - a.seen);
+  const batch = todo.slice(0, 20).map(x => x.s);
+  const R = await histRefresh(env, ctx, batch, 20, {cron: true});
+  return {done: batch.length, stale: todo.length - batch.length, calls: R.calls, err: R.err || undefined};
+}
+async function histStatus(env){
+  const lcd = lastCompleteDay(Date.now());
+  const metas = await cacheRange(env, META_PREFIX, true);
+  let fresh = 0, bars = 0;
+  metas.forEach(m => { try { const x = JSON.parse(m.data); if ((x.lcd || 0) >= lcd) fresh++; bars += x.n || 0; } catch (e) {} });
+  return {symbols: metas.length, fresh, stale: metas.length - fresh, bars, lcd: new Date(lcd * 864e5).toISOString().slice(0, 10)};
 }
 
 /* ---- Fondamentaux (P/E, rendement du dividende) : écran « Screener » du fournisseur, marché suisse, une seule requête mise en cache 6 h.
@@ -935,6 +1038,8 @@ export default {
   async scheduled(event, env, ctx){
     const preferSnb = Math.floor((event.scheduledTime || Date.now()) / 120000) % 2 === 1;
     ctx.waitUntil(warmIndexBatch(env, ctx, preferSnb).catch(() => {}));
+    /* archive des cours : mise à jour du soir (après 22 h 30 à Zurich), par lots, des symboles consultés récemment */
+    ctx.waitUntil(histWarm(env, ctx).catch(() => {}));
   },
 
   async fetch(request, env, ctx){
@@ -967,6 +1072,7 @@ export default {
     }
     if (url.pathname === '/api/tv-perf') return tvPerf(request, env, ctx);
     if (url.pathname === '/api/tv-series') return tvSeries(request, env, ctx);
+    if (url.pathname === '/api/tv-hist-status') { try { return tvJson(await histStatus(env)); } catch (e) { return tvJson({error_message: e.message}, 500); } }
     if (url.pathname === '/api/tv-fund') return tvFund(request, env, ctx);
     if (url.pathname === '/api/tv' || url.pathname.startsWith('/api/tv/')) return tvProxy(request, env, ctx);
     if (url.pathname === '/api/db/chartpack') return handleChartpack(request, env);
