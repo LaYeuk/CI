@@ -951,7 +951,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenPf .pf-dn{color:#B42318}
 #screenPf .pf-pill{display:inline-block;padding:2px 9px;border-radius:999px;color:#fff;font-size:11px;font-weight:600}
 #screenPf .pf-barcell{display:flex;align-items:center;gap:6px;justify-content:flex-end}
-#screenPf .pf-barcell i{display:inline-block;height:8px;border-radius:4px;background:#0086B3;opacity:.75}
+#screenPf .pf-barcell i{display:inline-block;height:8px;border-radius:4px;background:#00CFFF}
 #screenPf .pf-two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:8px}
 @media (max-width:980px){#screenPf .pf-two{grid-template-columns:1fr}}
 #screenPf .pf-plot svg,#screenPf .pf-chart svg{display:block;width:100%;height:auto}
@@ -960,7 +960,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenPf .pf-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:6px 9px;border-radius:6px;white-space:nowrap;display:none;z-index:5;line-height:1.5}
 #screenPf .pf-tip i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
 #screenPf .pf-lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--mut);margin-bottom:4px}
-#screenPf .pf-lg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:5px;vertical-align:3px}
+#screenPf .pf-lg i{display:inline-block;width:18px;height:3px;margin-right:6px;vertical-align:3px}
 #screenPf .pf-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--mut);margin-top:8px}
 #screenPf .pf-legend i.dm{display:inline-block;width:10px;height:10px;background:#02182B;transform:rotate(45deg);margin-right:6px}
 #screenPf .pf-legend i.dm.o{background:#fff;border:2px solid #02182B;width:7px;height:7px}
@@ -1059,14 +1059,14 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenPc .pc-nm{display:flex;align-items:center;gap:8px;white-space:normal;max-width:300px}
 #screenPc .pc-nm small{display:block;color:var(--mut);font-size:10.5px}
 #screenPc .pc-wb{display:flex;align-items:center;gap:6px;justify-content:flex-end}
-#screenPc .pc-wb i{display:inline-block;height:8px;border-radius:4px;background:#0086B3}
+#screenPc .pc-wb i{display:inline-block;height:8px;border-radius:4px;background:#00CFFF}
 #screenPc .pc-two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 @media (max-width:1200px){#screenPc .pc-two{grid-template-columns:1fr}}
 #screenPc .pc-chart{position:relative}
 #screenPc .pc-chart svg{display:block;width:100%;height:auto}
 #screenPc .pc-note{font-size:11.5px;color:var(--mut);line-height:1.5;margin-top:8px}
 #screenPc .pf-lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--mut);margin-bottom:4px}
-#screenPc .pf-lg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:5px;vertical-align:3px}
+#screenPc .pf-lg i{display:inline-block;width:18px;height:3px;margin-right:6px;vertical-align:3px}
 #screenPc .pf-tip,#screenPc .pc-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:6px 9px;border-radius:6px;white-space:nowrap;display:none;z-index:5;line-height:1.5}
 #screenPc .pf-tip i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
 #screenPc .qd-toast{position:fixed;right:22px;bottom:22px;z-index:200;background:var(--navy);color:#fff;font-size:13px;padding:10px 16px;border-radius:9px;box-shadow:0 8px 24px rgba(2,24,43,.3);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;max-width:420px}
@@ -1929,7 +1929,8 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       <span>Historique</span>
       <div class="fx-ranges" id="qdWin"><button type="button" data-w="52">1 an</button><button type="button" data-w="104">2 ans</button><button type="button" data-w="156">3 ans</button></div>
       <label title="Ajoute USDCHF dans la régression : l'effet de change n'est plus attribué à la croissance ou à l'inflation"><input type="checkbox" id="qdFx"> Neutraliser USDCHF</label>
-      <label title="Rendements du titre moins ceux de l'indice de référence : retire l'effet « marché actions » du bêta croissance"><input type="checkbox" id="qdRel"> Relatif au SPI</label>
+      <span title="Rendements du titre moins ceux de l'indice choisi : retire l'effet « marché actions » du bêta croissance">Relatif à</span>
+      <div class="fx-ranges" id="qdRel"><button type="button" data-r="">Aucun</button><button type="button" data-r="SIX:SPIX">SPI</button><button type="button" data-r="SIX:SMI">SMI</button></div>
       <span class="sp"></span>
       <button type="button" class="btn" id="qdReload" title="Relit les historiques depuis le relais (mémoire du jour : aucun nouvel appel au fournisseur avant demain)">Actualiser</button>
     </div>
@@ -2153,12 +2154,15 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
             <div class="pc-note">Poids actuels appliqués au passé, rééquilibrés chaque semaine : illustration flatteuse par construction (les poids sont optimisés sur cette même période).</div></div>
         </section>
         <section class="fx-card pc-card">
-          <h3 class="pc-h">Cadran croissance / inflation</h3>
+          <div class="pc-bar"><b class="pc-h" style="margin:0">Cadran croissance / inflation</b><span class="sp"></span>
+            <label class="pc-in" title="Ajoute USDCHF dans la régression : l'effet de change n'est plus attribué à la croissance ou à l'inflation"><input type="checkbox" id="pcCadFx"> Neutraliser USDCHF</label>
+            <span class="pc-in" title="Rendements des titres moins ceux de l'indice choisi : retire l'effet « marché actions » du bêta croissance">Relatif à</span>
+            <div class="fx-ranges" id="pcCadRel" style="margin:0"><button type="button" data-r="">Aucun</button><button type="button" data-r="SIX:SPIX">SPI</button><button type="button" data-r="SIX:SMI">SMI</button></div></div>
           <div class="fx-kpis" id="pcCadKpis"></div>
           <div class="pc-two pc-cad">
             <div class="pc-chart" id="pcCad"></div>
             <div><h4 class="pc-h4">Exposition par cadran</h4><div id="pcQExp"></div>
-              <div class="pc-note">Mêmes facteurs, fenêtre et zone neutre que l'écran Cadran (rendements hebdomadaires en monnaie locale). Taille du point = poids ; ◆ = portefeuille (titres pondérés) ; cadre épais = régime macro actuel.</div></div>
+              <div class="pc-note">Mêmes facteurs, fenêtre et zone neutre que l'écran Cadran (rendements hebdomadaires en monnaie locale) ; options USDCHF et « relatif » propres à cet écran. Taille du point = poids ; ◆ = portefeuille (titres pondérés) ; cadre épais = régime macro actuel.</div></div>
           </div>
         </section>
         <section class="fx-card pc-card">
@@ -11884,7 +11888,8 @@ function renderChips(){
   $('qdChips').innerHTML = Array.from(Q.sel).map(([s, n]) => '<span class="qd-chip" title="' + esc(s) + '">' + lg(s, n, 'xs') + esc(n) + '<button type="button" data-rm="' + esc(s) + '" title="Retirer" aria-label="Retirer ' + esc(n) + '">×</button></span>').join('')
     || '<span class="fx-mut" style="font-size:12px">Aucun titre : utilisez la recherche ci-dessus.</span>';
   $('qdWin').querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.w === Q.cfg.weeks));
-  $('qdFx').checked = !!Q.cfg.fx; $('qdRel').checked = !!Q.cfg.rel;
+  $('qdFx').checked = !!Q.cfg.fx;
+  $('qdRel').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.r ? (Q.cfg.rel && Q.cfg.f.bench === b.dataset.r) : !Q.cfg.rel));
   const need = Array.from(Q.sel.keys()).concat(factorSyms()).filter(s => !WS[s] || WS[s].tmp).length;
   $('qdEst').textContent = need ? 'Historiques à charger : ' + need + ' série' + (need > 1 ? 's' : '') + ' (≈ ' + Math.ceil(need / 10) + ' appel' + (need > 10 ? 's' : '') + ' au fournisseur si personne ne les a encore chargées aujourd\'hui).' : 'Historiques du jour déjà chargés : aucun appel au fournisseur.';
 }
@@ -11992,7 +11997,7 @@ function toast(msg, ok){
 }
 function caption(){
   const opt = [Q.cfg.weeks / 52 + ' an' + (Q.cfg.weeks > 52 ? 's' : '') + ' de rendements hebdomadaires'];
-  if (Q.cfg.fx) opt.push('USDCHF neutralisé'); if (Q.cfg.rel) opt.push('relatif au SPI');
+  if (Q.cfg.fx) opt.push('USDCHF neutralisé'); if (Q.cfg.rel) opt.push('relatif à ' + (Q.cfg.f.bench === 'SIX:SMI' ? 'SMI' : Q.cfg.f.bench === 'SIX:SPIX' ? 'SPI' : Q.cfg.f.bench));
   const rk = regKey(Q.reg);
   return opt.join(' · ') + (Q.period ? ' · du ' + dFr(Q.period[0]) + ' au ' + dFr(Q.period[1]) : '') + (rk ? ' · régime actuel : ' + QUADS[rk].n : '');
 }
@@ -12046,7 +12051,7 @@ $('screenQuad').addEventListener('click', e => {
 });
 $('qdWin').addEventListener('click', e => { const b = e.target.closest('[data-w]'); if (!b) return; Q.cfg.weeks = +b.dataset.w; saveCfg(); run(); });
 $('qdFx').addEventListener('change', () => { Q.cfg.fx = $('qdFx').checked; saveCfg(); run(); });
-$('qdRel').addEventListener('change', () => { Q.cfg.rel = $('qdRel').checked; saveCfg(); run(); });
+$('qdRel').addEventListener('click', e => { const b = e.target.closest('[data-r]'); if (!b) return; Q.cfg.rel = !!b.dataset.r; if (b.dataset.r) Q.cfg.f.bench = b.dataset.r; saveCfg(); renderFactors(); run(); });
 $('qdReload').addEventListener('click', () => { Object.keys(WS).forEach(k => delete WS[k]); try { localStorage.removeItem(DAY_KEY); } catch (e) {} run(); });
 $('qdClear').addEventListener('click', () => { if (Q.sel.size && !confirm('Retirer tous les titres du cadran ?')) return; Q.sel.clear(); saveSel(); Q.res = []; render(); });
 $('qdImport').addEventListener('click', () => {
@@ -12108,7 +12113,8 @@ const QUADS = {
   '-1,-1': {n: 'Récession déflationniste', s: 'Risk-off', c: '#0086B3'}
 };
 const NEUT = '#8A9199';
-const PAL = ['#02182B', '#0086B3', '#00CFFF', '#E07B00', '#00993D', '#DDD8C4', '#8A9199', '#C0201B', '#6B4FA0', '#B8860B'];
+/* Charte GIP : Oxford blue #02182B, GIP blue #00CFFF, gray #747572, bone #DDD8C4, cream #EFF1C5, noir (+ teintes plus foncées pour la lisibilité des courbes) */
+const PAL = ['#02182B', '#00CFFF', '#747572', '#DDD8C4', '#0086B3', '#B5AD8C', '#000000', '#EFF1C5', '#4D6170', '#80E7FF', '#A5A6A3', '#5E5640'];
 const REFS_DEF = [
   {s: 'SIX:SPIX', n: 'SPI', on: true}, {s: 'SIX:SXGE', n: 'SPI total return', on: false}, {s: 'SIX:SMIC', n: 'SMI total return', on: false}, {s: 'SIX:SBR14T', n: 'Obligations CH', on: true}, {s: 'SIX:ZGLD', n: 'Or', on: true},
   {s: 'SIX:BCCMS', n: 'Matières premières', on: false}, {s: 'SIX:SIMA', n: 'Immobilier CH', on: false}, {s: 'FX_IDC:USDCHF', n: 'USDCHF', on: false}
@@ -12120,7 +12126,10 @@ const BENCH_DEF = [
   {s: 'SIX:SMI', n: 'SMI', on: true}, {s: 'SIX:SMIC', n: 'SMI total return', on: false}, {s: 'SIX:SPIX', n: 'SPI', on: true}, {s: 'SIX:SXGE', n: 'SPI total return', on: false}, {s: 'TVC:SX5E', n: 'Euro Stoxx 50', on: false}, {s: 'SP:SPX', n: 'S&P 500', on: false},
   {s: 'SIX:SBR14T', n: 'Obligations CH', on: false}, {s: 'SIX:ZGLD', n: 'Or', on: false}
 ];
-const BENCH_COL = ['#E07B00', '#00993D', '#C0201B', '#6B4FA0', '#B8860B', '#0086B3', '#D6619A', '#4F7A28'];
+/* indices de comparaison : couleurs de la charte + traits (plein / tirets / pointillés) pour les distinguer ; le portefeuille est toujours en Oxford blue épais */
+const BENCH_STY = [{c: '#00CFFF'}, {c: '#747572'}, {c: '#00CFFF', dash: '7 4'}, {c: '#747572', dash: '7 4'}, {c: '#B5AD8C'}, {c: '#000000', dash: '2 3'}, {c: '#0086B3', dash: '7 4'}, {c: '#B5AD8C', dash: '7 4'}];
+const BENCH_COL = BENCH_STY.map(x => x.c);
+const benchSty = i => BENCH_STY[i % BENCH_STY.length];
 const CFG = {refs: REFS_DEF.map(r => Object.assign({}, r)), freq: 'd', bond: 'SIX:SBR14T', labels: true, bench: BENCH_DEF.map(r => Object.assign({}, r)), volWin: 63};
 try { const c = JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); if (c) { if (Array.isArray(c.refs) && c.refs.length) CFG.refs = c.refs; if (c.freq) CFG.freq = c.freq; if (c.bond) CFG.bond = c.bond; if (c.labels != null) CFG.labels = !!c.labels; if (Array.isArray(c.bench) && c.bench.length) CFG.bench = c.bench; if (c.volWin) CFG.volWin = c.volWin; } } catch (e) {}
 /* nouvelles entrées par défaut ajoutées aux choix déjà mémorisés (à leur place dans la liste) */
@@ -12415,10 +12424,10 @@ function lineChart(el, series, o){
   series.forEach(s => {
     const path = s.pts.map((p, i) => (i ? 'L' : 'M') + X(p.d).toFixed(1) + ',' + Y(p.y).toFixed(1)).join('');
     if (s.area) h += '<path d="' + path + 'L' + X(s.pts[s.pts.length - 1].d).toFixed(1) + ',' + Y(Math.max(y0, Math.min(y1, 0))).toFixed(1) + 'L' + X(s.pts[0].d).toFixed(1) + ',' + Y(Math.max(y0, Math.min(y1, 0))).toFixed(1) + 'Z" fill="' + s.c + '" fill-opacity=".14"/>';
-    h += '<path d="' + path + '" fill="none" stroke="' + s.c + '" stroke-width="' + (s.w || 1.8) + '"' + (s.dash ? ' stroke-dasharray="5 4"' : '') + ' stroke-linejoin="round"/>';
+    h += '<path d="' + path + '" fill="none" stroke="' + s.c + '" stroke-width="' + (s.w || 1.8) + '"' + (s.dash ? ' stroke-dasharray="' + (typeof s.dash === 'string' ? s.dash : '5 4') + '"' : '') + ' stroke-linejoin="round"/>';
   });
   h += '<line class="hv" x1="0" x2="0" y1="' + T + '" y2="' + (H - B) + '" stroke="#02182B" stroke-width="1" opacity="0"/><rect class="ov" x="' + L + '" y="' + T + '" width="' + (W - L - Rm) + '" height="' + (H - T - B) + '" fill="transparent"/></svg>';
-  const lg = series.length > 1 ? '<div class="pf-lg">' + series.map(s => '<span><i style="background:' + s.c + '"></i>' + esc(s.n) + '</span>').join('') + '</div>' : '';
+  const lg = series.length > 1 ? '<div class="pf-lg">' + series.map(s => '<span><i style="height:0;background:none;border-top:' + Math.max(2, s.w || 2) + 'px ' + (s.dash ? 'dashed' : 'solid') + ' ' + s.c + ';width:18px"></i>' + esc(s.n) + '</span>').join('') + '</div>' : '';
   el.innerHTML = lg + h + '<div class="pf-tip"></div>';
   const svg = el.querySelector('svg'), tip = el.querySelector('.pf-tip'), hv = svg.querySelector('.hv');
   const near = (pts, d) => { let lo = 0, hi = pts.length - 1; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (pts[mid].d < d) lo = mid; else hi = mid; } return Math.abs(pts[lo].d - d) <= Math.abs(pts[hi].d - d) ? pts[lo] : pts[hi]; };
@@ -12443,11 +12452,11 @@ function scatterChart(el, xs, ys, a, b, o){
   let h = '<svg viewBox="0 0 ' + W + ' ' + H + '" font-family="Aspekta, Arial, sans-serif">';
   niceTicks(y0, y1, 5).forEach(v => { h += '<line x1="' + L + '" x2="' + (W - Rm) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" stroke="' + (v === 0 ? '#A9AEB4' : '#ECEBE6') + '"/><text x="' + (L - 6) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end" font-size="10.5" fill="#6B6F76">' + f(v) + '</text>'; });
   niceTicks(x0, x1, 5).forEach(v => { h += '<line y1="' + T + '" y2="' + (H - B) + '" x1="' + X(v).toFixed(1) + '" x2="' + X(v).toFixed(1) + '" stroke="' + (v === 0 ? '#A9AEB4' : '#F3F2EE') + '"/><text y="' + (H - B + 14) + '" x="' + X(v).toFixed(1) + '" text-anchor="middle" font-size="10.5" fill="#6B6F76">' + f(v) + '</text>'; });
-  xs.forEach((x, i) => { h += '<circle cx="' + X(x).toFixed(1) + '" cy="' + Y(ys[i]).toFixed(1) + '" r="3" fill="#0086B3" fill-opacity=".45"/>'; });
+  xs.forEach((x, i) => { h += '<circle cx="' + X(x).toFixed(1) + '" cy="' + Y(ys[i]).toFixed(1) + '" r="3" fill="#00CFFF" fill-opacity=".6"/>'; });
   const lx0 = x0, lx1 = x1;
-  h += '<line x1="' + X(lx0).toFixed(1) + '" y1="' + Y(a + b * lx0).toFixed(1) + '" x2="' + X(lx1).toFixed(1) + '" y2="' + Y(a + b * lx1).toFixed(1) + '" stroke="#C0201B" stroke-width="2"/>';
+  h += '<line x1="' + X(lx0).toFixed(1) + '" y1="' + Y(a + b * lx0).toFixed(1) + '" x2="' + X(lx1).toFixed(1) + '" y2="' + Y(a + b * lx1).toFixed(1) + '" stroke="#02182B" stroke-width="2.2"/>';
   h += '<text x="' + (W - Rm) + '" y="' + (H - 4) + '" text-anchor="end" font-size="11" fill="#1A1F27" font-weight="600">' + esc(o.xl) + ' →</text>';
-  h += '<text x="' + (L + 6) + '" y="' + (T + 12) + '" font-size="11.5" fill="#C0201B" font-weight="700">β simple = ' + nf(2).format(b) + ' · R² = ' + nf(2).format(o.r2) + '</text></svg>';
+  h += '<text x="' + (L + 6) + '" y="' + (T + 12) + '" font-size="11.5" fill="#02182B" font-weight="700">β simple = ' + nf(2).format(b) + ' · R² = ' + nf(2).format(o.r2) + '</text></svg>';
   el.innerHTML = h;
 }
 function cadranSvg(pts, reg, cfg){
@@ -12648,13 +12657,13 @@ function renderCad(){
 /* Indices de comparaison (onglet Volatilité) : séries quotidiennes sur la période du fichier NAV */
 function benchSeries(N){
   return CFG.bench.filter(b => b.on).map((b, k) => {
-    const col = BENCH_COL[CFG.bench.indexOf(b) % BENCH_COL.length];
-    if (!has(b.s)) return {b, col, none: true};
+    const sty = benchSty(CFG.bench.indexOf(b)), col = sty.c, dash = sty.dash;
+    if (!has(b.s)) return {b, col, dash, none: true};
     const S = DS[b.s], d0 = N.first.d, d1 = N.last.d;
     let j0 = -1; for (let i = 0; i < S.t.length; i++) { if (S.t[i] <= d0) j0 = i; else break; }
     if (j0 < 0) j0 = 0;
     const pts = []; for (let i = j0; i < S.t.length && S.t[i] <= d1; i++) if (S.c[i] > 0) pts.push({d: S.t[i], v: S.c[i]});
-    if (pts.length < 10) return {b, col, none: true};
+    if (pts.length < 10) return {b, col, dash, none: true};
     const base = pts[0].v, idx = pts.map(p => ({d: Math.max(p.d, d0), I: p.v / base * 100}));
     const R = pts.slice(1).map((p, i) => p.v / pts[i].v - 1);
     let peak = -Infinity, mdd = 0; const dd = idx.map(p => { peak = Math.max(peak, p.I); const x = p.I / peak - 1; mdd = Math.min(mdd, x); return x; });
@@ -12666,11 +12675,11 @@ function benchSeries(N){
     const yp = com.slice(1).map((p, i) => p.I / com[i].I - 1), xb = com.slice(1).map((p, i) => m.get(p.d) / m.get(com[i].d) - 1);
     let beta = null, cor = null;
     if (yp.length > 20) { cor = corr(yp, xb); const mx = mean(xb), my = mean(yp); let sxy = 0, sxx = 0; xb.forEach((x, i) => { sxy += (x - mx) * (yp[i] - my); sxx += (x - mx) * (x - mx); }); beta = sxx > 0 ? sxy / sxx : null; }
-    return {b, col, idx, dd, mdd, perf: idx[idx.length - 1].I / 100 - 1, vol: sdev(R) * Math.sqrt(252), vol3m: tail(63), vol1m: tail(21), roll: roll(CFG.volWin), beta, cor, n: yp.length};
+    return {b, col, dash, idx, dd, mdd, perf: idx[idx.length - 1].I / 100 - 1, vol: sdev(R) * Math.sqrt(252), vol3m: tail(63), vol1m: tail(21), roll: roll(CFG.volWin), beta, cor, n: yp.length};
   });
 }
 function renderBenchRefs(){
-  $('pfBenchRefs').innerHTML = CFG.bench.map((r, i) => '<span class="pf-refchip' + (r.on ? ' on' : '') + '" data-bi="' + i + '" title="' + esc(r.s) + (r.custom ? ' — clic droit pour retirer' : '') + '"' + (r.on ? ' style="border-color:' + BENCH_COL[i % BENCH_COL.length] + '"' : '') + '>' + (r.on ? '<i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:' + BENCH_COL[i % BENCH_COL.length] + '"></i>' : '') + esc(r.n) + ' <b>' + esc(r.s.replace(/^[A-Z0-9_]+:/, '')) + '</b></span>').join('');
+  $('pfBenchRefs').innerHTML = CFG.bench.map((r, i) => '<span class="pf-refchip' + (r.on ? ' on' : '') + '" data-bi="' + i + '" title="' + esc(r.s) + (r.custom ? ' — clic droit pour retirer' : '') + '"' + (r.on ? ' style="border-color:' + benchSty(i).c + '"' : '') + '>' + (r.on ? '<i style="display:inline-block;width:16px;height:0;border-top:3px ' + (benchSty(i).dash ? 'dashed' : 'solid') + ' ' + benchSty(i).c + ';vertical-align:3px"></i>' : '') + esc(r.n) + ' <b>' + esc(r.s.replace(/^[A-Z0-9_]+:/, '')) + '</b></span>').join('');
   $('pfVolWin').querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.w === CFG.volWin));
 }
 function renderNavVol(B){
@@ -12679,20 +12688,20 @@ function renderNavVol(B){
   if (!N) { $('pfVolChart').innerHTML = '<div class="pf-st">Déposez le fichier d\'évolution de la valeur (NAV) pour la volatilité du portefeuille.</div>'; $('pfDdChart').innerHTML = ''; $('pfNavNotes').hidden = true; $('pfBenchTbl').hidden = true; return; }
   const ok = (B || []).filter(x => !x.none), wLbl = CFG.volWin === 21 ? '1 mois (21 j)' : '3 mois (63 j)';
   const navRoll = CFG.volWin === 21 ? N.roll21 : N.roll63;
-  const volSeries = ok.length ? [{n: 'Portefeuille', c: '#02182B', pts: navRoll, w: 2.4}].concat(ok.map(x => ({n: x.b.n, c: x.col, pts: x.roll})))
-    : [{n: 'Fenêtre 1 mois (21 j)', c: '#00CFFF', pts: N.roll21}, {n: 'Fenêtre 3 mois (63 j)', c: '#02182B', pts: N.roll63, w: 2.2}];
+  const volSeries = ok.length ? [{n: 'Portefeuille', c: '#02182B', pts: navRoll, w: 2.8}].concat(ok.map(x => ({n: x.b.n, c: x.col, dash: x.dash, pts: x.roll})))
+    : [{n: 'Fenêtre 1 mois (21 j)', c: '#00CFFF', pts: N.roll21}, {n: 'Fenêtre 3 mois (63 j)', c: '#02182B', pts: N.roll63, w: 2.6}];
   lineChart($('pfVolChart'), volSeries, {fmt: v => nf(1).format(v * 100) + ' %', zero: true});
   const box = $('pfDdChart'); box.innerHTML = '<div id="pfDd1"></div><div id="pfDd2"></div>';
-  lineChart($('pfDd1'), [{n: 'Portefeuille (base 100)', c: '#02182B', pts: N.idx.map(p => ({d: p.d, y: p.I})), w: 2.4}].concat(ok.map(x => ({n: x.b.n, c: x.col, pts: x.idx.map(p => ({d: p.d, y: p.I}))}))), {fmt: v => nf(1).format(v), h: 220});
-  lineChart($('pfDd2'), [{n: 'Drawdown portefeuille', c: '#C0201B', area: true, pts: N.idx.map((p, i) => ({d: p.d, y: N.dd[i]}))}].concat(ok.map(x => ({n: x.b.n, c: x.col, pts: x.idx.map((p, i) => ({d: p.d, y: x.dd[i]}))}))), {fmt: v => nf(1).format(v * 100) + ' %', zero: true, h: 150});
+  lineChart($('pfDd1'), [{n: 'Portefeuille (base 100)', c: '#02182B', pts: N.idx.map(p => ({d: p.d, y: p.I})), w: 2.8}].concat(ok.map(x => ({n: x.b.n, c: x.col, dash: x.dash, pts: x.idx.map(p => ({d: p.d, y: p.I}))}))), {fmt: v => nf(1).format(v), h: 220});
+  lineChart($('pfDd2'), [{n: 'Drawdown portefeuille', c: '#02182B', area: true, w: 2.4, pts: N.idx.map((p, i) => ({d: p.d, y: N.dd[i]}))}].concat(ok.map(x => ({n: x.b.n, c: x.col, dash: x.dash, pts: x.idx.map((p, i) => ({d: p.d, y: x.dd[i]}))}))), {fmt: v => nf(1).format(v * 100) + ' %', zero: true, h: 150});
   const T = $('pfBenchTbl');
   if (B && B.length) {
     const tail = CFG.volWin === 21 ? 'vol1m' : 'vol3m';
     T.hidden = false;
     T.innerHTML = '<thead><tr><th class="l">Comparaison du ' + dFr(N.first.d) + ' au ' + dFr(N.last.d) + '</th><th>Performance</th><th>Vol. réalisée</th><th>Vol. 3 mois</th><th>Vol. 1 mois</th><th>Perte maximale</th><th title="Corrélation des rendements quotidiens du portefeuille avec l\'indice">Corrélation</th><th title="Sensibilité du portefeuille à l\'indice">Bêta du portefeuille</th></tr></thead><tbody>'
       + '<tr><td class="l"><b>Portefeuille (NAV)</b></td><td>' + spct(N.perf) + '</td><td><b>' + pct(N.vol) + '</b></td><td>' + pct(N.vol3m) + '</td><td>' + pct(N.vol1m) + '</td><td>' + pct(N.mdd) + '</td><td></td><td></td></tr>'
-      + B.map(x => x.none ? '<tr><td class="l"><span style="color:' + x.col + '">■</span> ' + esc(x.b.n) + ' <span class="pf-sym">' + esc(x.b.s) + '</span></td><td colspan="7" class="l pf-dn">aucune donnée reçue pour ce symbole</td></tr>'
-        : '<tr><td class="l"><span style="color:' + x.col + '">■</span> ' + esc(x.b.n) + ' <span class="pf-sym">' + esc(x.b.s) + '</span></td><td>' + spct(x.perf) + '</td><td>' + pct(x.vol) + '</td><td>' + pct(x.vol3m) + '</td><td>' + pct(x.vol1m) + '</td><td>' + pct(x.mdd) + '</td><td>' + (x.cor == null ? '–' : nf(2).format(x.cor)) + '</td><td>' + (x.beta == null ? '–' : nf(2).format(x.beta)) + '</td></tr>').join('') + '</tbody>';
+      + B.map(x => x.none ? '<tr><td class="l"><span style="display:inline-block;width:16px;height:0;border-top:3px ' + (x.dash ? 'dashed' : 'solid') + ' ' + x.col + ';vertical-align:3px;margin-right:4px"></span> ' + esc(x.b.n) + ' <span class="pf-sym">' + esc(x.b.s) + '</span></td><td colspan="7" class="l pf-dn">aucune donnée reçue pour ce symbole</td></tr>'
+        : '<tr><td class="l"><span style="display:inline-block;width:16px;height:0;border-top:3px ' + (x.dash ? 'dashed' : 'solid') + ' ' + x.col + ';vertical-align:3px;margin-right:4px"></span> ' + esc(x.b.n) + ' <span class="pf-sym">' + esc(x.b.s) + '</span></td><td>' + spct(x.perf) + '</td><td>' + pct(x.vol) + '</td><td>' + pct(x.vol3m) + '</td><td>' + pct(x.vol1m) + '</td><td>' + pct(x.mdd) + '</td><td>' + (x.cor == null ? '–' : nf(2).format(x.cor)) + '</td><td>' + (x.beta == null ? '–' : nf(2).format(x.beta)) + '</td></tr>').join('') + '</tbody>';
   } else T.hidden = true;
   $('pfNavNotes').hidden = !N.dropped.length;
   $('pfNavNotes').textContent = N.dropped.length ? 'Points écartés du fichier NAV (' + N.dropped.length + ') : ' + N.dropped.map(x => dFr(x.d) + ' — ' + x.why).join(' ; ') + '. Les rendements sont calculés sur les valeurs restantes, apports et retraits neutralisés.' : '';
@@ -12745,7 +12754,7 @@ async function runRisk(){
   const rcMax = Math.max.apply(null, rows.map(r => Math.abs(r.rc || 0)).concat([0.01])), vMax = Math.max.apply(null, rows.map(r => r.v1 || r.v3 || 0).concat([0.01]));
   const bar = (v, m, c) => '<span class="pf-barcell">' + (v == null ? '–' : pct(v)) + '<i style="width:' + (v == null ? 0 : Math.max(1, Math.abs(v) / m * 90)).toFixed(0) + 'px' + (c ? ';background:' + c : '') + '"></i></span>';
   $('pfVolTbl').innerHTML = '<thead><tr><th class="l">Titre</th><th>Poids</th><th>Vol. 3 mois</th><th>Vol. 1 an</th><th title="Part de la variance du portefeuille">Contribution au risque</th></tr></thead><tbody>'
-    + rows.map(r => '<tr class="pf-r"><td class="l"><div class="pf-nm">' + (r.cash ? '' : lgHtml(r.proxy ? null : r.s, r.n)) + '<span>' + esc(r.n) + (r.s ? '<small>' + esc(r.s) + '</small>' : '') + '</span></div></td><td>' + pct(r.w) + '</td><td>' + (r.v3 == null ? '–' : pct(r.v3)) + '</td><td>' + bar(r.v1, vMax, '#8A9199') + '</td><td>' + bar(r.rc, rcMax) + '</td></tr>').join('')
+    + rows.map(r => '<tr class="pf-r"><td class="l"><div class="pf-nm">' + (r.cash ? '' : lgHtml(r.proxy ? null : r.s, r.n)) + '<span>' + esc(r.n) + (r.s ? '<small>' + esc(r.s) + '</small>' : '') + '</span></div></td><td>' + pct(r.w) + '</td><td>' + (r.v3 == null ? '–' : pct(r.v3)) + '</td><td>' + bar(r.v1, vMax, '#747572') + '</td><td>' + bar(r.rc, rcMax) + '</td></tr>').join('')
     + (uncovered.length ? '<tr><td class="l pf-st" colspan="5">Sans cours (exclus) : ' + uncovered.map(p => esc(p.name)).join(', ') + '</td></tr>' : '') + '</tbody>';
   st.textContent = 'Un an de cours quotidiens (' + n + ' séances, du ' + dFr(cal[0]) + ' au ' + dFr(cal[cal.length - 1]) + ') · couverture ' + pct(1 - uncW) + ' de la valeur';
   setVolKpis(N, PF.cache.risk);
@@ -12798,7 +12807,7 @@ async function runReg(){
   scatterChart($('pfScat'), X[0], y, s1.b[0], s1.b[1], {xl: ok[0].n + ' (' + ok[0].s + ')', r2: s1.r2});
   let a = 100, b = 100; const pa = [{d: dates[0], y: 100}], pb = [{d: dates[0], y: 100}];
   y.forEach((v, t) => { a *= 1 + v; b *= 1 + X.reduce((s, c, j) => s + res.b[j + 1] * c[t], 0); pa.push({d: dates[t + 1], y: a}); pb.push({d: dates[t + 1], y: b}); });
-  lineChart($('pfRep'), [{n: 'Portefeuille (NAV)', c: '#02182B', pts: pa, w: 2.2}, {n: 'Répliqué par les facteurs', c: '#E07B00', pts: pb, dash: true}], {fmt: v => nf(1).format(v), h: 300});
+  lineChart($('pfRep'), [{n: 'Portefeuille (NAV)', c: '#02182B', pts: pa, w: 2.8}, {n: 'Répliqué par les facteurs', c: '#00CFFF', pts: pb, w: 2.2, dash: '7 4'}], {fmt: v => nf(1).format(v), h: 300});
 }
 
 /* ---------------------------------------------------------------- onglets */
@@ -12900,8 +12909,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const zDay = () => new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Zurich'}).format(new Date());
 const tick = s => String(s).replace(/^[A-Z0-9_]+:/, '');
 const CFG_KEY = 'gip_pc_cfg_v1', UNIV_KEY = 'gip_pc_univ_v1', CACHE_KEY = 'gip_pc_cache_v1', DIV_KEY = 'gip_pc_div_v1';
-const PAL = ['#02182B', '#0086B3', '#00CFFF', '#E07B00', '#00993D', '#DDD8C4', '#8A9199', '#C0201B', '#6B4FA0', '#B8860B', '#D6619A', '#4F7A28'];
-const DEF = {preset: 'full', mcOn: false, mcMin: 2, mcMax: 0, qOn: false, qSel: [true, true, true, true], qMin: 5, hist: 156, rf: 0.5, shrink: 0.5, sharpe: true, minvar: false, div: false, divK: 1, nOn: false, nMode: 'max', n: 25,
+/* Charte GIP (+ teintes plus foncées pour la lisibilité) */
+const PAL = ['#02182B', '#00CFFF', '#747572', '#DDD8C4', '#0086B3', '#B5AD8C', '#000000', '#EFF1C5', '#4D6170', '#80E7FF', '#A5A6A3', '#5E5640'];
+const DEF = {cadFx: true, cadRel: '', preset: 'full', mcOn: false, mcMin: 2, mcMax: 0, qOn: false, qSel: [true, true, true, true], qMin: 5, hist: 156, rf: 0.5, shrink: 0.5, sharpe: true, minvar: false, div: false, divK: 1, nOn: false, nMode: 'max', n: 25,
   maxOn: true, maxDef: 5, maxTiers: [{n: 1, c: 10}], minOn: false, minDef: 1, minTiers: [], volOn: false, vol: 1000000};
 let CFG = Object.assign({}, DEF);
 try { const c = JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); if (c) CFG = Object.assign({}, DEF, c); } catch (e) {}
@@ -13027,7 +13037,10 @@ const QUADS = {'1,-1': {n: 'Croissance désinflationniste', s: 'Goldilocks', c: 
 const NEUT = '#8A9199';
 function cadCfg(){
   const d = {weeks: 104, fx: true, rel: false, neutral: 0.10, mom: 13, f: {gNum: 'OANDA:XCUUSD', gDen: 'OANDA:XAUUSD', iNum: 'AMEX:TIP', iDen: 'NASDAQ:IEF', fx: 'FX_IDC:USDCHF', bench: 'SIX:SPIX'}};
-  try { return typeof window.gipCadranCfg === 'function' ? window.gipCadranCfg() : d; } catch (e) { return d; }
+  let c = d; try { if (typeof window.gipCadranCfg === 'function') c = window.gipCadranCfg(); } catch (e) {}
+  /* options propres au Portfolio Constructor : USDCHF neutralisé, rendements relatifs au SPI ou au SMI */
+  c.fx = !!CFG.cadFx; c.rel = !!CFG.cadRel; if (CFG.cadRel) c.f.bench = CFG.cadRel;
+  return c;
 }
 const cadFactors = c => [c.f.gNum, c.f.gDen, c.f.iNum, c.f.iDen].concat(c.fx ? [c.f.fx] : []).concat(c.rel ? [c.f.bench] : []);
 function alignW(list, n){
@@ -13453,10 +13466,25 @@ function render(){
   const qPill = r => { const q = LAST.Q && LAST.Q[r.i]; if (!q) return '–'; return '<span class="pc-pill" style="background:' + q.c + '" title="β croissance ' + nf(2).format(q.zG) + ' · β inflation ' + nf(2).format(q.zI) + '">' + esc(q.k ? QUADS[q.k].s : 'neutre') + '</span>'; };
   $('pcTbl').innerHTML = '<thead><tr><th class="l">Titre</th><th>Poids</th><th>Rendement attendu</th><th>Volatilité</th><th>Dividende</th>' + (hasMc ? '<th>Cap. (Mrd CHF)</th>' : '') + '<th class="l">Cadran</th><th title="Part du risque (variance) du portefeuille">Contribution au risque</th>'
     + (cfg.volOn ? '<th>Cours (CHF)</th><th>Actions</th><th>Montant (CHF)</th>' : '') + '</tr></thead><tbody>'
-    + rows.map(r => '<tr><td class="l"><div class="pc-nm">' + lg(r.a) + '<span>' + esc(r.a.n) + '<small>' + esc(r.a.s) + ' · ' + esc(r.a.g) + '</small></span></div></td><td>' + bar(r.w, wMax) + '</td><td>' + pct(r.muT) + '</td><td>' + pct(r.vol) + '</td><td>' + (r.dy == null ? '–' : pct(r.dy)) + '</td>' + (hasMc ? '<td>' + (INFO_MC[r.a.s] == null ? '–' : nf(1).format(INFO_MC[r.a.s] / 1e9)) + '</td>' : '') + '<td class="l">' + qPill(r) + '</td><td>' + bar(r.rc || 0, rcMax, '#8A9199') + '</td>'
+    + rows.map(r => '<tr><td class="l"><div class="pc-nm">' + lg(r.a) + '<span>' + esc(r.a.n) + '<small>' + esc(r.a.s) + ' · ' + esc(r.a.g) + '</small></span></div></td><td>' + bar(r.w, wMax) + '</td><td>' + pct(r.muT) + '</td><td>' + pct(r.vol) + '</td><td>' + (r.dy == null ? '–' : pct(r.dy)) + '</td>' + (hasMc ? '<td>' + (INFO_MC[r.a.s] == null ? '–' : nf(1).format(INFO_MC[r.a.s] / 1e9)) + '</td>' : '') + '<td class="l">' + qPill(r) + '</td><td>' + bar(r.rc || 0, rcMax, '#747572') + '</td>'
       + (cfg.volOn ? '<td>' + nf(2).format(r.px) + '</td><td>' + nf(0).format(r.sh) + '</td><td>' + chf(r.amt) + '</td>' : '') + '</tr>').join('')
     + '<tr class="tot"><td class="l">Total</td><td>100 %</td><td>' + pct(B.ret) + '</td><td>' + pct(B.vol) + '</td><td>' + (divKnown ? pct(divW) : '–') + '</td>' + (hasMc ? '<td></td>' : '') + '<td></td><td>100 %</td>' + (cfg.volOn ? '<td></td><td></td><td>' + chf(inv) + '</td>' : '') + '</tr></tbody>';
   drawFrontier(); drawBacktest(); drawCadran();
+}
+/* changement des options du cadran après construction : recalcul des bêtas (sans ré-optimiser) */
+async function recomputeCad(){
+  if (!LAST) return;
+  const cc = cadCfg();
+  try { await loadSeries(cadFactors(cc), null, LAST.cfg.hist >= 260 ? 1300 : 780); } catch (e) { toast(e.message, false); return; }
+  const facOk = cadFactors(cc).every(has);
+  LAST.cc = cc; LAST.facOk = facOk; LAST.reg = facOk ? cadRegime(cc) : null;
+  LAST.Q = LAST.P.assets.map(x => { if (!facOk) return null; const b = cadBeta(DS[x.a.s], cc); return b ? Object.assign(b, quadOf(b.zG, b.zI, cc.neutral)) : null; });
+  render();
+  if (LAST.cfg.qOn) toast('Options du cadran modifiées : relancez « Construire » pour appliquer la contrainte des cadrans avec ces options.');
+}
+function syncCadOpts(){
+  $('pcCadFx').checked = !!CFG.cadFx;
+  $('pcCadRel').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.r === (CFG.cadRel || '')));
 }
 function qExposure(){
   const {B, Q} = LAST, ex = {neutral: 0}; QK.forEach(k => { ex[k] = 0; });
@@ -13482,7 +13510,8 @@ function drawCadran(){
   const nRep = QK.filter(k => ex[k] > 1e-4).length;
   $('pcCadKpis').innerHTML = kpi('Régime macro actuel', rk ? esc(QUADS[rk].n) : '–', 'momentum ' + cc.mom + ' sem.', rk ? QUADS[rk].c : null)
     + kpi('Portefeuille', port ? esc(port.n) : '–', port ? 'β croiss. ' + nf(2).format(port.zG) + ' · β infl. ' + nf(2).format(port.zI) : '', port ? port.c : null)
-    + kpi('Cadrans représentés', nRep + ' / 4', ex.neutral > 1e-4 ? pct(ex.neutral) + ' en zone neutre' : '');
+    + kpi('Cadrans représentés', nRep + ' / 4', ex.neutral > 1e-4 ? pct(ex.neutral) + ' en zone neutre' : '')
+    + kpi('Options', (cc.rel ? 'Relatif ' + (cc.f.bench === 'SIX:SMI' ? 'SMI' : cc.f.bench === 'SIX:SPIX' ? 'SPI' : cc.f.bench) : 'Absolu'), cc.fx ? 'USDCHF neutralisé' : 'sans facteur devise');
   const qMin = cfg.qOn ? cfg.qMin / 100 : 0, mx = Math.max.apply(null, QK.map(k => ex[k]).concat([ex.neutral, 0.01]));
   $('pcQExp').innerHTML = QK.concat(['neutral']).map((k, ix) => {
     const q = k === 'neutral' ? {n: 'Neutre / un seul axe', c: NEUT} : QUADS[k], v = ex[k], req = k !== 'neutral' && cfg.qOn && cfg.qSel[ix];
@@ -13503,12 +13532,12 @@ function drawFrontier(){
   ticks(r0, r1, 6).forEach(v => { h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" stroke="' + (Math.abs(v) < 1e-9 ? '#A9AEB4' : '#ECEBE6') + '"/><text x="' + (L - 6) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end" font-size="10.5" fill="#6B6F76">' + nf(0).format(v * 100) + ' %</text>'; });
   ticks(0, vMax, 6).forEach(v => { h += '<line y1="' + T + '" y2="' + (H - Bm) + '" x1="' + X(v).toFixed(1) + '" x2="' + X(v).toFixed(1) + '" stroke="#F3F2EE"/><text y="' + (H - Bm + 14) + '" x="' + X(v).toFixed(1) + '" text-anchor="middle" font-size="10.5" fill="#6B6F76">' + nf(0).format(v * 100) + ' %</text>'; });
   h += '<text x="' + (W - R) + '" y="' + (H - 6) + '" text-anchor="end" font-size="11" fill="#1A1F27" font-weight="600">Volatilité annualisée →</text><text transform="translate(12 ' + T + ') rotate(-90)" text-anchor="end" font-size="11" fill="#1A1F27" font-weight="600">Rendement attendu →</text>';
-  all.forEach(p => { h += '<circle cx="' + X(p.vol).toFixed(1) + '" cy="' + Y(p.ret).toFixed(1) + '" r="' + (p.w > 0 ? 4 : 2.5) + '" fill="' + (p.w > 0 ? '#0086B3' : '#A9AEB4') + '" fill-opacity="' + (p.w > 0 ? 0.85 : 0.45) + '"><title>' + esc(p.n + ' (' + p.s + ')\nRendement ' + pct(p.ret) + ' · volatilité ' + pct(p.vol) + (p.w > 0 ? '\nPoids ' + pct(p.w) : '')) + '</title></circle>'; });
-  if (fr.length > 1) h += '<path d="' + fr.map((p, i) => (i ? 'L' : 'M') + X(Math.min(p.vol, vMax)).toFixed(1) + ',' + Y(p.ret).toFixed(1)).join('') + '" fill="none" stroke="#E07B00" stroke-width="2.2"/>';
+  all.forEach(p => { h += '<circle cx="' + X(p.vol).toFixed(1) + '" cy="' + Y(p.ret).toFixed(1) + '" r="' + (p.w > 0 ? 4 : 2.5) + '" fill="' + (p.w > 0 ? '#00CFFF' : '#C9C3AE') + '" fill-opacity="' + (p.w > 0 ? 0.95 : 0.7) + '"' + (p.w > 0 ? ' stroke="#02182B" stroke-width="1"' : '') + '><title>' + esc(p.n + ' (' + p.s + ')\nRendement ' + pct(p.ret) + ' · volatilité ' + pct(p.vol) + (p.w > 0 ? '\nPoids ' + pct(p.w) : '')) + '</title></circle>'; });
+  if (fr.length > 1) h += '<path d="' + fr.map((p, i) => (i ? 'L' : 'M') + X(Math.min(p.vol, vMax)).toFixed(1) + ',' + Y(p.ret).toFixed(1)).join('') + '" fill="none" stroke="#02182B" stroke-width="2.4"/>';
   const x = X(B.vol), y = Y(B.ret);
-  h += '<path d="M' + x + ',' + (y - 9) + 'L' + (x + 9) + ',' + y + 'L' + x + ',' + (y + 9) + 'L' + (x - 9) + ',' + y + 'Z" fill="#02182B" stroke="#fff" stroke-width="2"><title>Portefeuille : rendement ' + pct(B.ret) + ' · volatilité ' + pct(B.vol) + ' · Sharpe ' + nf(2).format(B.sharpe) + '</title></path>';
+  h += '<path d="M' + x + ',' + (y - 9) + 'L' + (x + 9) + ',' + y + 'L' + x + ',' + (y + 9) + 'L' + (x - 9) + ',' + y + 'Z" fill="#00CFFF" stroke="#02182B" stroke-width="2.5"><title>Portefeuille : rendement ' + pct(B.ret) + ' · volatilité ' + pct(B.vol) + ' · Sharpe ' + nf(2).format(B.sharpe) + '</title></path>';
   h += '<text x="' + (x + 12) + '" y="' + (y + 4) + '" font-size="12" font-weight="800" fill="#02182B">Portefeuille</text>';
-  h += '<g font-size="11" fill="#6B6F76"><circle cx="' + (L + 10) + '" cy="' + (T + 8) + '" r="3" fill="#A9AEB4"/><text x="' + (L + 18) + '" y="' + (T + 12) + '">titres de l\'univers</text><circle cx="' + (L + 130) + '" cy="' + (T + 8) + '" r="4" fill="#0086B3"/><text x="' + (L + 138) + '" y="' + (T + 12) + '">titres retenus</text><line x1="' + (L + 230) + '" x2="' + (L + 250) + '" y1="' + (T + 8) + '" y2="' + (T + 8) + '" stroke="#E07B00" stroke-width="2.2"/><text x="' + (L + 256) + '" y="' + (T + 12) + '">frontière (titres retenus, mêmes bornes)</text></g>';
+  h += '<g font-size="11" fill="#6B6F76"><circle cx="' + (L + 10) + '" cy="' + (T + 8) + '" r="3" fill="#C9C3AE"/><text x="' + (L + 18) + '" y="' + (T + 12) + '">titres de l\'univers</text><circle cx="' + (L + 130) + '" cy="' + (T + 8) + '" r="4" fill="#00CFFF" stroke="#02182B" stroke-width="1"/><text x="' + (L + 138) + '" y="' + (T + 12) + '">titres retenus</text><line x1="' + (L + 230) + '" x2="' + (L + 250) + '" y1="' + (T + 8) + '" y2="' + (T + 8) + '" stroke="#02182B" stroke-width="2.4"/><text x="' + (L + 256) + '" y="' + (T + 12) + '">frontière (titres retenus, mêmes bornes)</text></g>';
   el.innerHTML = h + '</svg>';
 }
 function drawBacktest(){
@@ -13520,8 +13549,8 @@ function drawBacktest(){
     let rp = 0, re = 0; for (let i = 0; i < n; i++) { const r = P.assets[i].R[t]; rp += B.w[i] * r; re += r / n; }
     a *= 1 + rp; b *= 1 + re; port.push({d: day(t + 1), y: a}); ew.push({d: day(t + 1), y: b});
   }
-  const series = [{n: 'Portefeuille construit', c: '#02182B', pts: port, w: 2.4}, {n: 'Univers à poids égaux', c: '#8A9199', pts: ew, dash: true}];
-  if (has('SIX:SPIX')) { const S = DS['SIX:SPIX'], m = new Map(); S.w.forEach((k, i) => m.set(k, S.c[i])); const base = m.get(k0) || null; if (base) { const sp = []; for (let t = 0; t <= H; t++) { const v = m.get(k0 + t); if (v) sp.push({d: day(t), y: v / base * 100}); } series.push({n: 'SPI', c: '#E07B00', pts: sp}); } }
+  const series = [{n: 'Portefeuille construit', c: '#02182B', pts: port, w: 2.8}, {n: 'Univers à poids égaux', c: '#747572', pts: ew, w: 2, dash: '7 4'}];
+  if (has('SIX:SPIX')) { const S = DS['SIX:SPIX'], m = new Map(); S.w.forEach((k, i) => m.set(k, S.c[i])); const base = m.get(k0) || null; if (base) { const sp = []; for (let t = 0; t <= H; t++) { const v = m.get(k0 + t); if (v) sp.push({d: day(t), y: v / base * 100}); } series.push({n: 'SPI', c: '#00CFFF', pts: sp, w: 2.2}); } }
   if (typeof window.gipLineChart === 'function') window.gipLineChart(el, series, {fmt: v => nf(0).format(v), h: 330});
 }
 function csv(){
@@ -13552,7 +13581,7 @@ function syncForm(){
   $('pcMaxOn').checked = CFG.maxOn; $('pcMaxSub').classList.toggle('off', !CFG.maxOn); $('pcMaxDef').value = CFG.maxDef; $('pcMaxTiers').innerHTML = tierRows('max');
   $('pcMinOn').checked = CFG.minOn; $('pcMinSub').classList.toggle('off', !CFG.minOn); $('pcMinDef').value = CFG.minDef; $('pcMinTiers').innerHTML = tierRows('min');
   $('pcVolOn').checked = CFG.volOn; $('pcVolSub').classList.toggle('off', !CFG.volOn); $('pcVol').value = CFG.vol;
-  renderUnivSum();
+  renderUnivSum(); syncCadOpts();
 }
 function renderUnivSum(){
   const U = universe(), groups = new Set(U.map(a => a.g));
@@ -13605,6 +13634,8 @@ $('screenPc').addEventListener('click', e => {
   const ra = e.target.closest('[data-rmadd]'); if (ra) { UNIV.added = UNIV.added.filter(a => a.s !== ra.dataset.rmadd); UNIV.off = UNIV.off.filter(s => s !== ra.dataset.rmadd); saveUniv(); renderGroups(); }
 });
 $('pcRun').addEventListener('click', run);
+$('pcCadFx').addEventListener('change', e => { CFG.cadFx = e.target.checked; saveCfg(); syncCadOpts(); recomputeCad(); });
+$('pcCadRel').addEventListener('click', e => { const b = e.target.closest('[data-r]'); if (!b) return; CFG.cadRel = b.dataset.r; saveCfg(); syncCadOpts(); recomputeCad(); });
 $('pcCsv').addEventListener('click', csv);
 /* univers */
 $('pcUnivEdit').addEventListener('click', () => { $('pcUniv').hidden = false; renderGroups(); $('pcUniv').scrollIntoView({behavior: 'smooth', block: 'start'}); });

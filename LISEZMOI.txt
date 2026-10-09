@@ -206,3 +206,15 @@ Portfolio Lab — indices total return (18e version) :
     et dans les variables explicatives de l'onglet Régression. Non cochés par défaut ; les choix déjà mémorisés sont conservés et complétés automatiquement.
   - La NAV comprend les dividendes : pour comparer les performances, utiliser les versions total return (SMIC, SXGE).
   - Seul Outils_GIP.html change.
+
+Options du cadran (19e version) :
+  - Portfolio Constructor : la carte « Cadran » a ses propres options, comme l'écran Cadran : « Neutraliser USDCHF » et « Relatif à : Aucun / SPI / SMI ».
+    Changer une option recalcule aussitôt les bêtas et le cadran (sans ré-optimiser) ; pour appliquer la contrainte « Cadrans représentés » avec ces options, relancer « Construire ».
+  - Écran Cadran : l'option « Relatif au SPI » devient « Relatif à : Aucun / SPI / SMI » (SIX:SPIX ou SIX:SMI).
+  - Seul Outils_GIP.html change.
+
+Charte graphique GIP (20e version) — Portfolio Lab et Portfolio Constructor :
+  - Couleurs de la charte (Oxford blue #02182B, GIP blue #00CFFF, gray #747572, bone #DDD8C4, cream #EFF1C5, noir) pour les courbes, barres, répartitions et nuages de points.
+  - Le portefeuille est toujours en Oxford blue, trait épais ; chaque indice comparé a sa couleur ET son type de trait (plein, tirets, pointillés), repris dans la légende, les pastilles et le tableau.
+  - Les couleurs des quatre cadrans (vert, orange, rouge, bleu) ne changent pas : ce sont les mêmes que dans l'écran Cadran.
+  - Seul Outils_GIP.html change.
