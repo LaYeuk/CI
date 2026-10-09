@@ -192,3 +192,11 @@ Portfolio Constructor (16e version) :
     Capitalisations : écran suisse (/api/tv-fund) et cotes groupées pour les titres étrangers, une fois par jour.
   - Le dividende n'est ajouté au rendement attendu que si l'objectif « Maximiser le dividende » est activé.
   - Seul Outils_GIP.html change.
+
+Portfolio Lab — comparaison avec des indices (17e version) :
+  - Onglet Volatilité : « Comparer avec » — indices à cocher : SMI (SIX:SMI) et SPI (SIX:SPIX) cochés par défaut, Euro Stoxx 50, S&P 500, Obligations CH (SBR14T), Or (ZGLD) ;
+    tout autre symbole via « + indice » (Entrée ; clic droit sur une pastille ajoutée pour la retirer). Choix mémorisé dans le navigateur.
+  - Tableau de comparaison sur la période du fichier NAV : performance, volatilité réalisée / 3 mois / 1 mois, perte maximale, corrélation et bêta du portefeuille par rapport à chaque indice.
+  - Graphiques : volatilité glissante (fenêtre 1 ou 3 mois au choix), performance base 100 et drawdown du portefeuille et des indices cochés.
+  - Rappel : le SMI est un indice de prix (sans dividendes), le SPI un indice de performance, comme la NAV.
+  - Seul Outils_GIP.html change.

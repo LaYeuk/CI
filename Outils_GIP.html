@@ -932,7 +932,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenPf .pf-bar .lbl{font-size:12px;color:var(--mut)}
 #screenPf .pf-st{font-size:12px;color:var(--mut)}
 #screenPf .pf-ck{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--mut)}
-#screenPf .pf-ck input[type=text],#screenPf #pfRegAdd{font:inherit;font-size:12.5px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;width:170px;color:var(--ink)}
+#screenPf .pf-ck input[type=text],#screenPf #pfRegAdd,#screenPf #pfBenchAdd{font:inherit;font-size:12.5px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;width:170px;color:var(--ink)}
 #screenPf .pf-tblwrap{overflow:auto}
 #screenPf .pf-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
 #screenPf .pf-tbl th,#screenPf .pf-tbl td{padding:6px 7px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -2025,15 +2025,22 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
 
     <section class="fx-card pf-card pf-pane" data-p="vol" hidden>
       <div class="fx-kpis" id="pfVolKpis"></div>
-      <h3 class="pf-h">Volatilité glissante annualisée du portefeuille (NAV)</h3>
+      <div class="pf-bar pf-regopt">
+        <span class="lbl">Comparer avec</span><span id="pfBenchRefs"></span>
+        <input type="text" id="pfBenchAdd" placeholder="+ indice (ex. SP:SPX)" spellcheck="false">
+        <span class="sp"></span>
+        <span class="lbl">Fenêtre</span><div class="fx-ranges" id="pfVolWin"><button type="button" data-w="21">1 mois</button><button type="button" data-w="63">3 mois</button></div>
+      </div>
+      <div class="pf-tblwrap"><table class="pf-tbl" id="pfBenchTbl" hidden></table></div>
+      <h3 class="pf-h">Volatilité glissante annualisée</h3>
       <div class="pf-chart" id="pfVolChart"></div>
-      <h3 class="pf-h">Performance et drawdown (NAV, base 100)</h3>
+      <h3 class="pf-h">Performance et drawdown (base 100)</h3>
       <div class="pf-chart" id="pfDdChart"></div>
       <h3 class="pf-h">Volatilité et contribution au risque par titre</h3>
       <div class="pf-bar"><span class="pf-st" id="pfVolSt"></span></div>
       <div class="pf-tblwrap"><table class="pf-tbl" id="pfVolTbl"></table></div>
       <div class="fx-notes" id="pfNavNotes" hidden></div>
-      <div class="pf-note">Volatilité = écart-type des rendements quotidiens × √252. Contribution au risque = part de la variance du portefeuille due au titre (poids × covariance avec le portefeuille), sur un an de cours quotidiens, poids actuels. Obligations approchées par l'indice ci-dessous, liquidités à volatilité nulle.</div>
+      <div class="pf-note">Comparaison sur la période du fichier NAV : chaque indice avec ses propres séances ; corrélation et bêta du portefeuille calculés sur les dates communes. Le SMI est un indice de prix (sans dividendes), le SPI un indice de performance (dividendes réinvestis), comme la NAV.<br>Volatilité = écart-type des rendements quotidiens × √252. Contribution au risque = part de la variance du portefeuille due au titre (poids × covariance avec le portefeuille), sur un an de cours quotidiens, poids actuels. Obligations approchées par l'indice ci-dessous, liquidités à volatilité nulle.</div>
       <div class="pf-bar"><label class="pf-ck">Indice pour les obligations <input type="text" id="pfBondProxy" spellcheck="false"></label><button type="button" class="btn" id="pfBondApply">Appliquer</button></div>
     </section>
 
@@ -12109,8 +12116,13 @@ const REFS_DEF = [
 
 /* ---------------------------------------------------------------- état */
 const PF = {meta: null, pos: null, nav: null, files: {det: null, nav: null}, tab: 'pos', mapBusy: false, cache: {}};
-const CFG = {refs: REFS_DEF.map(r => Object.assign({}, r)), freq: 'd', bond: 'SIX:SBR14T', labels: true};
-try { const c = JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); if (c) { if (Array.isArray(c.refs) && c.refs.length) CFG.refs = c.refs; if (c.freq) CFG.freq = c.freq; if (c.bond) CFG.bond = c.bond; if (c.labels != null) CFG.labels = !!c.labels; } } catch (e) {}
+const BENCH_DEF = [
+  {s: 'SIX:SMI', n: 'SMI', on: true}, {s: 'SIX:SPIX', n: 'SPI', on: true}, {s: 'TVC:SX5E', n: 'Euro Stoxx 50', on: false}, {s: 'SP:SPX', n: 'S&P 500', on: false},
+  {s: 'SIX:SBR14T', n: 'Obligations CH', on: false}, {s: 'SIX:ZGLD', n: 'Or', on: false}
+];
+const BENCH_COL = ['#E07B00', '#00993D', '#C0201B', '#6B4FA0', '#B8860B', '#0086B3', '#D6619A', '#4F7A28'];
+const CFG = {refs: REFS_DEF.map(r => Object.assign({}, r)), freq: 'd', bond: 'SIX:SBR14T', labels: true, bench: BENCH_DEF.map(r => Object.assign({}, r)), volWin: 63};
+try { const c = JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); if (c) { if (Array.isArray(c.refs) && c.refs.length) CFG.refs = c.refs; if (c.freq) CFG.freq = c.freq; if (c.bond) CFG.bond = c.bond; if (c.labels != null) CFG.labels = !!c.labels; if (Array.isArray(c.bench) && c.bench.length) CFG.bench = c.bench; if (c.volWin) CFG.volWin = c.volWin; } } catch (e) {}
 const saveCfg = () => { try { localStorage.setItem(CFG_KEY, JSON.stringify(CFG)); } catch (e) {} };
 let MAP = {};
 try { MAP = JSON.parse(localStorage.getItem(MAP_KEY) || '{}') || {}; } catch (e) {}
@@ -12631,18 +12643,68 @@ function renderCad(){
 }
 
 /* ---------------------------------------------------------------- onglet Volatilité */
-function renderNavVol(){
+/* Indices de comparaison (onglet Volatilité) : séries quotidiennes sur la période du fichier NAV */
+function benchSeries(N){
+  return CFG.bench.filter(b => b.on).map((b, k) => {
+    const col = BENCH_COL[CFG.bench.indexOf(b) % BENCH_COL.length];
+    if (!has(b.s)) return {b, col, none: true};
+    const S = DS[b.s], d0 = N.first.d, d1 = N.last.d;
+    let j0 = -1; for (let i = 0; i < S.t.length; i++) { if (S.t[i] <= d0) j0 = i; else break; }
+    if (j0 < 0) j0 = 0;
+    const pts = []; for (let i = j0; i < S.t.length && S.t[i] <= d1; i++) if (S.c[i] > 0) pts.push({d: S.t[i], v: S.c[i]});
+    if (pts.length < 10) return {b, col, none: true};
+    const base = pts[0].v, idx = pts.map(p => ({d: Math.max(p.d, d0), I: p.v / base * 100}));
+    const R = pts.slice(1).map((p, i) => p.v / pts[i].v - 1);
+    let peak = -Infinity, mdd = 0; const dd = idx.map(p => { peak = Math.max(peak, p.I); const x = p.I / peak - 1; mdd = Math.min(mdd, x); return x; });
+    const roll = w => pts.map((p, i) => i >= w ? {d: p.d, y: sdev(R.slice(i - w, i)) * Math.sqrt(252)} : null).filter(Boolean);
+    const tail = n => R.length >= n ? sdev(R.slice(-n)) * Math.sqrt(252) : null;
+    /* corrélation et bêta du portefeuille sur les dates communes */
+    const m = new Map(); pts.forEach(p => m.set(p.d, p.v));
+    const com = N.idx.filter(p => m.has(p.d));
+    const yp = com.slice(1).map((p, i) => p.I / com[i].I - 1), xb = com.slice(1).map((p, i) => m.get(p.d) / m.get(com[i].d) - 1);
+    let beta = null, cor = null;
+    if (yp.length > 20) { cor = corr(yp, xb); const mx = mean(xb), my = mean(yp); let sxy = 0, sxx = 0; xb.forEach((x, i) => { sxy += (x - mx) * (yp[i] - my); sxx += (x - mx) * (x - mx); }); beta = sxx > 0 ? sxy / sxx : null; }
+    return {b, col, idx, dd, mdd, perf: idx[idx.length - 1].I / 100 - 1, vol: sdev(R) * Math.sqrt(252), vol3m: tail(63), vol1m: tail(21), roll: roll(CFG.volWin), beta, cor, n: yp.length};
+  });
+}
+function renderBenchRefs(){
+  $('pfBenchRefs').innerHTML = CFG.bench.map((r, i) => '<span class="pf-refchip' + (r.on ? ' on' : '') + '" data-bi="' + i + '" title="' + esc(r.s) + (r.custom ? ' — clic droit pour retirer' : '') + '"' + (r.on ? ' style="border-color:' + BENCH_COL[i % BENCH_COL.length] + '"' : '') + '>' + (r.on ? '<i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:' + BENCH_COL[i % BENCH_COL.length] + '"></i>' : '') + esc(r.n) + ' <b>' + esc(r.s.replace(/^[A-Z0-9_]+:/, '')) + '</b></span>').join('');
+  $('pfVolWin').querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.w === CFG.volWin));
+}
+function renderNavVol(B){
   const N = navStats();
-  if (!N) { $('pfVolChart').innerHTML = '<div class="pf-st">Déposez le fichier d\'évolution de la valeur (NAV) pour la volatilité du portefeuille.</div>'; $('pfDdChart').innerHTML = ''; $('pfNavNotes').hidden = true; return; }
-  lineChart($('pfVolChart'), [{n: 'Fenêtre 1 mois (21 j)', c: '#00CFFF', pts: N.roll21}, {n: 'Fenêtre 3 mois (63 j)', c: '#02182B', pts: N.roll63, w: 2.2}], {fmt: v => nf(1).format(v * 100) + ' %', zero: true});
+  renderBenchRefs();
+  if (!N) { $('pfVolChart').innerHTML = '<div class="pf-st">Déposez le fichier d\'évolution de la valeur (NAV) pour la volatilité du portefeuille.</div>'; $('pfDdChart').innerHTML = ''; $('pfNavNotes').hidden = true; $('pfBenchTbl').hidden = true; return; }
+  const ok = (B || []).filter(x => !x.none), wLbl = CFG.volWin === 21 ? '1 mois (21 j)' : '3 mois (63 j)';
+  const navRoll = CFG.volWin === 21 ? N.roll21 : N.roll63;
+  const volSeries = ok.length ? [{n: 'Portefeuille', c: '#02182B', pts: navRoll, w: 2.4}].concat(ok.map(x => ({n: x.b.n, c: x.col, pts: x.roll})))
+    : [{n: 'Fenêtre 1 mois (21 j)', c: '#00CFFF', pts: N.roll21}, {n: 'Fenêtre 3 mois (63 j)', c: '#02182B', pts: N.roll63, w: 2.2}];
+  lineChart($('pfVolChart'), volSeries, {fmt: v => nf(1).format(v * 100) + ' %', zero: true});
   const box = $('pfDdChart'); box.innerHTML = '<div id="pfDd1"></div><div id="pfDd2"></div>';
-  lineChart($('pfDd1'), [{n: 'Portefeuille (base 100)', c: '#02182B', pts: N.idx.map(p => ({d: p.d, y: p.I}))}], {fmt: v => nf(1).format(v), h: 200});
-  lineChart($('pfDd2'), [{n: 'Drawdown', c: '#C0201B', area: true, pts: N.idx.map((p, i) => ({d: p.d, y: N.dd[i]}))}], {fmt: v => nf(1).format(v * 100) + ' %', zero: true, h: 130});
+  lineChart($('pfDd1'), [{n: 'Portefeuille (base 100)', c: '#02182B', pts: N.idx.map(p => ({d: p.d, y: p.I})), w: 2.4}].concat(ok.map(x => ({n: x.b.n, c: x.col, pts: x.idx.map(p => ({d: p.d, y: p.I}))}))), {fmt: v => nf(1).format(v), h: 220});
+  lineChart($('pfDd2'), [{n: 'Drawdown portefeuille', c: '#C0201B', area: true, pts: N.idx.map((p, i) => ({d: p.d, y: N.dd[i]}))}].concat(ok.map(x => ({n: x.b.n, c: x.col, pts: x.idx.map((p, i) => ({d: p.d, y: x.dd[i]}))}))), {fmt: v => nf(1).format(v * 100) + ' %', zero: true, h: 150});
+  const T = $('pfBenchTbl');
+  if (B && B.length) {
+    const tail = CFG.volWin === 21 ? 'vol1m' : 'vol3m';
+    T.hidden = false;
+    T.innerHTML = '<thead><tr><th class="l">Comparaison du ' + dFr(N.first.d) + ' au ' + dFr(N.last.d) + '</th><th>Performance</th><th>Vol. réalisée</th><th>Vol. 3 mois</th><th>Vol. 1 mois</th><th>Perte maximale</th><th title="Corrélation des rendements quotidiens du portefeuille avec l\'indice">Corrélation</th><th title="Sensibilité du portefeuille à l\'indice">Bêta du portefeuille</th></tr></thead><tbody>'
+      + '<tr><td class="l"><b>Portefeuille (NAV)</b></td><td>' + spct(N.perf) + '</td><td><b>' + pct(N.vol) + '</b></td><td>' + pct(N.vol3m) + '</td><td>' + pct(N.vol1m) + '</td><td>' + pct(N.mdd) + '</td><td></td><td></td></tr>'
+      + B.map(x => x.none ? '<tr><td class="l"><span style="color:' + x.col + '">■</span> ' + esc(x.b.n) + ' <span class="pf-sym">' + esc(x.b.s) + '</span></td><td colspan="7" class="l pf-dn">aucune donnée reçue pour ce symbole</td></tr>'
+        : '<tr><td class="l"><span style="color:' + x.col + '">■</span> ' + esc(x.b.n) + ' <span class="pf-sym">' + esc(x.b.s) + '</span></td><td>' + spct(x.perf) + '</td><td>' + pct(x.vol) + '</td><td>' + pct(x.vol3m) + '</td><td>' + pct(x.vol1m) + '</td><td>' + pct(x.mdd) + '</td><td>' + (x.cor == null ? '–' : nf(2).format(x.cor)) + '</td><td>' + (x.beta == null ? '–' : nf(2).format(x.beta)) + '</td></tr>').join('') + '</tbody>';
+  } else T.hidden = true;
   $('pfNavNotes').hidden = !N.dropped.length;
   $('pfNavNotes').textContent = N.dropped.length ? 'Points écartés du fichier NAV (' + N.dropped.length + ') : ' + N.dropped.map(x => dFr(x.d) + ' — ' + x.why).join(' ; ') + '. Les rendements sont calculés sur les valeurs restantes, apports et retraits neutralisés.' : '';
 }
+async function runBench(){
+  const N = navStats(); renderNavVol(null);
+  if (!N) return;
+  const on = CFG.bench.filter(b => b.on);
+  if (!on.length) return;
+  try { await loadSeries(on.map(b => b.s)); } catch (e) { toast(e.message, false); return; }
+  renderNavVol(benchSeries(N));
+}
 async function runRisk(){
-  renderNavVol();
+  runBench();
   const N = navStats(), st = $('pfVolSt');
   $('pfBondProxy').value = CFG.bond;
   if (!PF.pos) { st.textContent = 'Déposez le détail des positions pour la volatilité par titre.'; $('pfVolTbl').innerHTML = ''; setVolKpis(N, null); return; }
@@ -12743,7 +12805,7 @@ function showTab(t){
   $('pfTabs').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
   $('screenPf').querySelectorAll('.pf-pane').forEach(p => { p.hidden = p.dataset.p !== t; });
   if (t === 'cad') { $('pfCadLbl').checked = CFG.labels; if (PF.cache.cad) renderCad(); else runCad(); }
-  else if (t === 'vol') { if (PF.cache.risk) { renderNavVol(); runRisk(); } else runRisk(); }
+  else if (t === 'vol') { runRisk(); }
   else if (t === 'reg') runReg();
 }
 
@@ -12781,6 +12843,17 @@ $('pfCsv').addEventListener('click', () => {
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8'})); a.download = 'portefeuille_' + ((PF.meta && PF.meta.code) || 'positions') + '.csv'; document.body.appendChild(a); a.click(); a.remove();
 });
 $('pfCadLbl').addEventListener('change', () => { CFG.labels = $('pfCadLbl').checked; saveCfg(); renderCad(); });
+$('pfBenchRefs').addEventListener('click', e => { const c = e.target.closest('[data-bi]'); if (!c) return; const r = CFG.bench[+c.dataset.bi]; r.on = !r.on; saveCfg(); runBench(); });
+$('pfBenchRefs').addEventListener('contextmenu', e => { const c = e.target.closest('[data-bi]'); if (!c) return; const r = CFG.bench[+c.dataset.bi]; if (!r.custom) return; e.preventDefault(); CFG.bench.splice(+c.dataset.bi, 1); saveCfg(); runBench(); });
+$('pfBenchAdd').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const s = $('pfBenchAdd').value.trim().toUpperCase(); if (!s) return;
+  if (s.indexOf(':') < 1) { toast('Saisissez le symbole complet, ex. SP:SPX ou TVC:SX5E.', false); return; }
+  const ex = CFG.bench.find(r => r.s === s);
+  if (ex) ex.on = true; else CFG.bench.push({s, n: s.replace(/^[A-Z0-9_]+:/, ''), on: true, custom: true});
+  $('pfBenchAdd').value = ''; saveCfg(); runBench();
+});
+$('pfVolWin').addEventListener('click', e => { const b = e.target.closest('[data-w]'); if (!b) return; CFG.volWin = +b.dataset.w; saveCfg(); runBench(); });
 $('pfBondApply').addEventListener('click', () => { const v = $('pfBondProxy').value.trim().toUpperCase(); if (!v) return; CFG.bond = v; saveCfg(); PF.cache.risk = null; runRisk(); });
 $('pfRegRefs').addEventListener('click', e => { const c = e.target.closest('[data-ri]'); if (!c) return; const r = CFG.refs[+c.dataset.ri]; r.on = !r.on; saveCfg(); runReg(); });
 $('pfRegRefs').addEventListener('contextmenu', e => { const c = e.target.closest('[data-ri]'); if (!c) return; const r = CFG.refs[+c.dataset.ri]; if (!r.custom) return; e.preventDefault(); CFG.refs.splice(+c.dataset.ri, 1); saveCfg(); runReg(); });
