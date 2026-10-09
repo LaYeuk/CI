@@ -146,111 +146,111 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenSandbox .extDim label{font-size:10.5px;color:var(--mut)}
 /* ---- Écrans par source : FRED, BNS, OFS (barre de recherche, accueil, listes, fiches) ---- */
 /* ---- FRED (recherche façon fred.stlouisfed.org) ---- */
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) header span{opacity:.75;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) button{font:inherit;cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-hero{padding:18px 20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-sbox{position:relative}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-go:hover{background:#0a3252}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac.open{display:block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac-item:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac-item.active,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac-item:hover{background:#EFFCFF}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac-item .fx-id{min-width:96px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac-item .t{flex:1}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac-item .m,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-sec{margin-top:20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-sec-h small{color:var(--mut);font-size:11.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tile:hover{border-color:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tile .u{font-size:11px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-delta.down{color:var(--down)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tile svg{display:block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
-@media(max-width:1000px){:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-cols{grid-template-columns:1fr}}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-list{list-style:none;margin:0;padding:3px 0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-list li:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-list .clk{cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-list .clk:hover{background:#F7F6F2}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-crumbs a:hover{text-decoration:underline}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-res:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-res:hover{background:#F7F6F2}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-res .fx-id{margin-right:8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .btn:hover:not(:disabled){background:#EEF7FA}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .btn.pri:hover:not(:disabled){background:#0a3252}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .btn:disabled{opacity:.4;cursor:not-allowed}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-panel{padding:16px 20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-kpi .s{font-size:11px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-chart{position:relative}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-chart svg{display:block;width:100%}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-mut{color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) header span{opacity:.75;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) button{font:inherit;cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-hero{padding:18px 20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-sbox{position:relative}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-go:hover{background:#0a3252}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac.open{display:block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac-item:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac-item.active,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac-item:hover{background:#EFFCFF}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac-item .fx-id{min-width:96px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac-item .t{flex:1}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac-item .m,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-sec{margin-top:20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-sec-h small{color:var(--mut);font-size:11.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tile:hover{border-color:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tile .u{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-delta.down{color:var(--down)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tile svg{display:block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
+@media(max-width:1000px){:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-cols{grid-template-columns:1fr}}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-list{list-style:none;margin:0;padding:3px 0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-list li:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-list .clk{cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-list .clk:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-crumbs a:hover{text-decoration:underline}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-res:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-res:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-res .fx-id{margin-right:8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .btn:hover:not(:disabled){background:#EEF7FA}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .btn.pri:hover:not(:disabled){background:#0a3252}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .btn:disabled{opacity:.4;cursor:not-allowed}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-panel{padding:16px 20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-kpi .s{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-chart{position:relative}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-chart svg{display:block;width:100%}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-mut{color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
 @keyframes fxsk{to{background-position:-200% 0}}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-litem a{cursor:pointer;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-litem .per{color:var(--mut);font-size:11px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) details.fx-set summary{cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-toast.show{display:flex}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab) [hidden]{display:none!important}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-litem a{cursor:pointer;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-litem .per{color:var(--mut);font-size:11px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) details.fx-set summary{cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-toast.show{display:flex}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash) [hidden]{display:none!important}
 
 /* ---- BNS (recherche façon data.snb.ch/fr/search) — réutilise les styles fx- de l'écran FRED ---- */
 :is(#screenSnb,#screenOfs) .fx-idx{margin-top:10px;font-size:11.5px;color:var(--mut);display:flex;align-items:center;gap:10px;min-height:16px}
@@ -386,9 +386,9 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenMkt .mk-row[hidden]{display:none}
 #screenMkt .mk-row .n{display:flex;align-items:center;gap:9px;min-width:0;color:var(--navy);font-weight:600}
 #screenMkt .mk-row .nt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#screenMkt .lg,#screenLab .lg{position:relative;flex:none;width:24px;height:24px;border-radius:50%;background:hsl(var(--h) 40% 90%);color:hsl(var(--h) 45% 30%);display:inline-flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(2,24,43,.08)}
-#screenMkt .lg i,#screenLab .lg i{font-style:normal;letter-spacing:-.02em}
-#screenMkt .lg img,#screenLab .lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;box-sizing:border-box}
+#screenMkt .lg,#screenLab .lg,#screenDash .lg{position:relative;flex:none;width:24px;height:24px;border-radius:50%;background:hsl(var(--h) 40% 90%);color:hsl(var(--h) 45% 30%);display:inline-flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(2,24,43,.08)}
+#screenMkt .lg i,#screenLab .lg i,#screenDash .lg i{font-style:normal;letter-spacing:-.02em}
+#screenMkt .lg img,#screenLab .lg img,#screenDash .lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;box-sizing:border-box}
 #screenMkt .mk-row .ck,#screenMkt .mk-head .h-ck{display:flex;align-items:center;justify-content:center}
 #screenMkt .mk-head .h-ck{cursor:default}
 #screenMkt .mk-row input[type=checkbox],#screenMkt .mk-head input[type=checkbox]{width:15px;height:15px;margin:0;accent-color:var(--navy);cursor:pointer}
@@ -548,6 +548,71 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenLab .lb-toast{position:fixed;right:22px;bottom:22px;z-index:200;background:var(--navy);color:#fff;font-size:13px;padding:10px 16px;border-radius:9px;box-shadow:0 8px 24px rgba(2,24,43,.3);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;max-width:420px}
 #screenLab .lb-toast.show{opacity:1;transform:none}
 #screenLab .lb-toast.err{background:#B5361C}
+
+/* ============ Market Dashboard ============ */
+#screenDash [hidden]{display:none!important}
+#screenDash .db-card{padding:16px 20px;margin-top:4px}
+#screenDash .db-top{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+#screenDash .db-status{font-size:13px;color:var(--mut)}
+#screenDash .db-status b{color:var(--navy)}
+#screenDash .db-status .miss{color:#B5501C;font-weight:600}
+#screenDash .db-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#screenDash .db-tools input{font:inherit;font-size:12.5px;padding:7px 11px;border:1px solid var(--line);border-radius:7px;min-width:240px}
+#screenDash .fx-kpi .v.pos{color:#0B6B43}
+#screenDash .fx-kpi .v.neg{color:#A82F17}
+#screenDash .fx-kpi .v small{font-size:12px;color:var(--mut);font-weight:600;margin-left:3px}
+#screenDash .fx-kpi .s{max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#screenDash .db-breadth{display:flex;height:8px;border-radius:5px;overflow:hidden;margin:12px 0 4px;background:#ECEAE4;gap:2px}
+#screenDash .db-breadth i{display:block;min-width:0}
+#screenDash .db-breadth .u{background:#18a05f}
+#screenDash .db-breadth .f{background:#B9B7AE}
+#screenDash .db-breadth .d{background:#d04830}
+#screenDash .db-strip-h{font-size:11px;color:var(--mut);margin:12px 0 6px;text-transform:uppercase;letter-spacing:.05em}
+#screenDash .db-strip{display:flex;flex-wrap:wrap;gap:3px 9px}
+#screenDash .db-sg{display:inline-flex;flex-wrap:wrap;gap:2px}
+#screenDash .db-sg i{display:block;width:9px;height:9px;border-radius:2px;background:#E3E1DA;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(2,24,43,.08)}
+#screenDash .db-sg i:hover{outline:2px solid var(--navy);outline-offset:1px}
+#screenDash .db-sg i.na{background:repeating-linear-gradient(45deg,#E3E1DA 0 2px,#F6F5F1 2px 4px)}
+#screenDash .db-legend{display:flex;align-items:center;gap:7px;margin-top:12px;font-size:11px;color:var(--mut)}
+#screenDash .db-legend i{display:inline-block;width:70px;height:9px;border-radius:5px;background:linear-gradient(90deg,rgb(208,72,48),rgb(246,245,241));box-shadow:inset 0 0 0 1px rgba(2,24,43,.1)}
+#screenDash .db-legend i.p{background:linear-gradient(90deg,rgb(246,245,241),rgb(24,150,96))}
+#screenDash .db-legend em{font-style:normal;margin-left:10px}
+#screenDash details.db-sec{margin-top:16px}
+#screenDash details.db-sec>summary{display:flex;align-items:center;gap:12px;cursor:pointer;list-style:none;padding:4px 2px 8px;border-bottom:1px solid var(--line);margin-bottom:10px}
+#screenDash details.db-sec>summary::-webkit-details-marker{display:none}
+#screenDash details.db-sec>summary::before{content:'▾';color:var(--mut);font-size:11px;width:12px}
+#screenDash details.db-sec:not([open])>summary::before{content:'▸'}
+#screenDash .db-sn{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy)}
+#screenDash .db-cnt{font-size:12px;color:var(--mut)}
+#screenDash .db-avg{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;font-variant-numeric:tabular-nums}
+#screenDash .db-avg:empty,#screenDash .db-brd:empty{display:none}
+#screenDash .db-brd{font-size:11.5px;display:inline-flex;gap:8px;margin-left:auto}
+#screenDash .db-brd .u{color:#0B6B43}
+#screenDash .db-brd .d{color:#A82F17}
+#screenDash .db-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:8px}
+#screenDash .db-b{position:relative;border:1px solid rgba(2,24,43,.09);border-radius:9px;padding:8px 10px 6px;min-height:104px;cursor:pointer;background:#F6F5F1;display:flex;flex-direction:column;gap:2px;transition:transform .12s,box-shadow .12s;min-width:0}
+#screenDash .db-b:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(2,24,43,.14);z-index:2}
+#screenDash .db-b:focus-visible{outline:2px solid var(--ink2);outline-offset:1px}
+#screenDash .db-b.flash{animation:dbflash 1.6s ease}
+@keyframes dbflash{0%,60%{box-shadow:0 0 0 3px var(--cyan)}100%{box-shadow:none}}
+#screenDash .db-b.loading{opacity:.6}
+#screenDash .db-b.none{background:repeating-linear-gradient(45deg,#F1F0EC 0 6px,#F7F6F3 6px 12px)!important;color:var(--mut)}
+#screenDash .db-b.stale .db-d{color:#8A6D1D}
+#screenDash .db-t{display:flex;align-items:center;gap:7px;min-width:0}
+#screenDash .db-n{font-size:12.5px;font-weight:700;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+#screenDash .db-tk{font-size:10.5px;color:var(--mut);margin-left:29px;margin-top:-3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#screenDash .db-m{display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-top:4px}
+#screenDash .db-p{font-size:14px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+#screenDash .db-c{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+#screenDash .db-spw{position:relative;height:26px;margin-top:auto}
+#screenDash .db-sp{display:block;width:100%;height:26px}
+#screenDash .db-dot{position:absolute;width:7px;height:7px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+#screenDash .db-d{font-size:10.5px;margin-top:2px;color:var(--mut)}
+#screenDash .db-notes{max-height:none;white-space:normal}
+#screenDash .db-notes code{background:#F1F0EC;padding:0 4px;border-radius:3px;font-size:11px}
+@media (max-width:640px){#screenDash .db-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
+#screenDash .lg img,#screenLab .lg img{opacity:0;transition:opacity .15s}
+#screenDash .lg img.ok,#screenLab .lg img.ok{opacity:1}
 
 #screenChartPack {--navy:#02182B;--blue:#0a6b8c;--cyan:#00CFFF;--beige:#DDD8C4;--pale:#ECEADF;--tint:#E8F6FA;--grey:#B6C0C6;--bg:#F5F6F5;--line:#DDE3E6;--txt:#12242F;--mut:#5B6B76}
 #screenChartPack * {box-sizing:border-box}
@@ -747,6 +812,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       <button type="button" class="navbtn" data-screen="fred">FRED</button>
       <button type="button" class="navbtn" data-screen="ofs">OFS</button>
       <button type="button" class="navbtn" data-screen="mkt">Market Data</button>
+      <button type="button" class="navbtn" data-screen="dash">Market Dashboard</button>
       <button type="button" class="navbtn" data-screen="lab">Market Lab</button>
     </div>
     <div class="navbtns">
@@ -800,6 +866,12 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
         <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4v16M6 8h0M6 7h0" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><rect x="4" y="8" width="4" height="7" rx="1" fill="#00CFFF"/><path d="M13 3v18" stroke="white" stroke-width="2" stroke-linecap="round"/><rect x="11" y="6" width="4" height="9" rx="1" fill="white"/><path d="M20 6v14" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><rect x="18" y="10" width="4" height="6" rx="1" fill="#00CFFF"/></svg></div>
         <h2>Market Data</h2>
         <p>Cotes et historiques de marché (actions, indices, changes, matières premières, crypto) : watchlist partagée et envoi au Chart Creator.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="dash">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="5" height="5" rx="1" fill="#18A05F"/><rect x="9.5" y="3" width="5" height="5" rx="1" fill="#DDD8C4"/><rect x="16" y="3" width="5" height="5" rx="1" fill="#D04830"/><rect x="3" y="9.5" width="5" height="5" rx="1" fill="#DDD8C4"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" fill="#18A05F" fill-opacity=".6"/><rect x="16" y="9.5" width="5" height="5" rx="1" fill="#18A05F"/><rect x="3" y="16" width="5" height="5" rx="1" fill="#D04830" fill-opacity=".6"/><rect x="9.5" y="16" width="5" height="5" rx="1" fill="#00CFFF"/><rect x="16" y="16" width="5" height="5" rx="1" fill="#DDD8C4"/></svg></div>
+        <h2>Market Dashboard</h2>
+        <p>Dernières clôtures de 349 titres (peers suisses et internationaux) en briques colorées : variation du jour, mini-courbe, synthèse par section.</p>
         <span class="go2">Ouvrir →</span>
       </button>
       <button type="button" class="tile" data-open="lab">
@@ -1484,6 +1556,32 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 <div class="mk-selbar" id="mkSelBar" hidden><span class="n" id="mkSelN"></span><button type="button" class="btn pri" id="mkSelCmp">Comparer sur un graphique</button><button type="button" class="btn" id="mkSelLab">Corrélation (Market Lab) →</button><button type="button" class="btn" id="mkSelClear">Effacer</button></div>
 <div class="fx-toast" id="mkToast"><span id="mkToastMsg"></span><button type="button" id="mkToastBtn">Ouvrir le Chart Creator →</button></div>
 
+</div>
+<div id="screenDash" class="screen">
+
+<header><h1>Market Dashboard</h1><span>Dernières clôtures (EOD) de la liste « Peers Swiss EQ » : une brique par titre, regroupées par section dans l'ordre de la liste.</span></header>
+<main>
+  <div class="fx-err" id="dbSetup" hidden></div>
+
+  <section class="fx-card db-card">
+    <div class="db-top">
+      <div class="db-status" id="dbStatus">Chargement…</div>
+      <div class="db-tools">
+        <input id="dbFilter" type="search" autocomplete="off" placeholder="Filtrer : nom, ticker, section…" aria-label="Filtrer les briques">
+        <button type="button" class="btn" id="dbFold" title="Replier ou déplier toutes les sections">Tout replier</button>
+        <button type="button" class="btn" id="dbRefresh" title="Recharge les clôtures (le relais garde les cours en mémoire environ 3 heures)">Actualiser</button>
+      </div>
+    </div>
+    <div class="fx-kpis db-kpis" id="dbKpis"></div>
+    <div class="db-breadth" id="dbBreadth" aria-hidden="true"></div>
+    <div class="db-strip-h">Vue d'ensemble : un carré par titre, dans l'ordre de la liste (survol : détail, clic : aller à la brique)</div>
+    <div class="db-strip" id="dbStrip"></div>
+    <div class="db-legend"><span>≤ −3 %</span><i></i><span>0</span><i class="p"></i><span>≥ +3 %</span><em>Variation du dernier jour de bourse · mini-courbe = environ 3 mois de clôtures</em></div>
+  </section>
+
+  <div id="dbSecs"></div>
+  <div class="fx-notes db-notes" id="dbNotes"></div>
+</main>
 </div>
 <div id="screenLab" class="screen">
 
@@ -7706,6 +7804,7 @@ $('mkResults').addEventListener('click', e => {
 
 /* ---------------------------------------------------------------- fiche symbole */
 $('mkBack').addEventListener('click', () => show(cur && cur.back || 'mkHome'));
+window.mktOpenSymbol = function(sym, name){ return openSymbol(sym, name); };
 async function openSymbol(sym, name){
   const back = !$('mkListView').hidden ? 'mkListView' : 'mkHome';
   show('mkSymView');
@@ -8616,7 +8715,7 @@ function lgInit(name){
 }
 function lgHtml(sym, name, cls){
   const d = lgDom(sym);
-  return '<span class="lg ' + (cls || '') + '" style="--h:' + lgHue(lgTick(sym)) + '"><i>' + esc(lgInit(name)) + '</i>' + (d ? '<img loading="lazy" alt="" referrerpolicy="no-referrer" src="https://www.google.com/s2/favicons?domain=' + d + '&sz=64">' : '') + '</span>';
+  return '<span class="lg ' + (cls || '') + '" style="--h:' + lgHue(lgTick(sym)) + '"><i>' + esc(lgInit(name)) + '</i>' + (d ? '<img loading="lazy" alt="" referrerpolicy="no-referrer" onload="this.classList.add(\'ok\')" src="https://www.google.com/s2/favicons?domain=' + d + '&sz=64">' : '') + '</span>';
 }
 /* logo indisponible : on garde les initiales */
 document.addEventListener('error', e => { if (e.target && e.target.tagName === 'IMG' && e.target.parentNode && e.target.parentNode.classList && e.target.parentNode.classList.contains('lg')) e.target.remove(); }, true);
@@ -9291,6 +9390,220 @@ function checkStatus(){
 /* rien n'est appelé avant la première ouverture de l'écran */
 new MutationObserver(() => { if ($('screenLab').classList.contains('on')) checkStatus(); }).observe($('screenLab'), {attributes: true, attributeFilter: ['class']});
 buildTree(); loadSel(); syncSel(); setDays(90); setSrc('tv'); showTab('mat');
+})();
+
+/* Market Dashboard : liste « Peers Swiss EQ » (ordre de la liste d'origine). [symbole, nom, domaine du logo] */
+const DASH_GROUPS = [["NESTLE CONSUMER BASE",[["NASDAQ:KHC","Kraft Heinz","kraftheinzcompany.com"],["SIX:LISN","Lindt & Sprüngli (nominatif)","lindt-spruengli.com"],["SIX:LISP","Lindt & Sprüngli (BP)","lindt-spruengli.com"],["NASDAQ:MNST","Monster Beverage","monsterbevcorp.com"],["NASDAQ:PEP","PepsiCo","pepsico.com"],["NYSE:GIS","General Mills","generalmills.com"],["NASDAQ:MDLZ","Mondelez","mondelezinternational.com"],["SIX:NESN","Nestlé","nestle.com"],["SIX:EMMN","Emmi","emmi.com"],["LSE:DGE","Diageo","diageo.com"],["EURONEXT:HEIA","Heineken","theheinekencompany.com"],["SIX:ARYN","Aryzta","aryzta.com"],["OSL:MOWI","Mowi","mowi.com"],["EURONEXT:RCO","Rémy Cointreau","remy-cointreau.com"],["EURONEXT:ABI","AB InBev","ab-inbev.com"],["EURONEXT:RI","Pernod Ricard","pernod-ricard.com"],["EURONEXT:BN","Danone","danone.com"],["SIX:BELL","Bell Food Group","bellfoodgroup.com"],["LSE:RKT","Reckitt","reckitt.com"]]],["COSMÉTIQUE",[["NYSE:COTY","Coty","coty.com"],["NYSE:PG","Procter & Gamble","pg.com"],["EURONEXT:OR","L'Oréal","loreal.com"],["LSE:ULVR","Unilever","unilever.com"],["SIX:GALD","Galderma","galderma.com"],["TSE:4911","Shiseido","shiseido.com"]]],["PHARMA",[["NYSE:LLY","Eli Lilly","lilly.com"],["NASDAQ:AMGN","Amgen","amgen.com"],["NYSE:MRK","Merck & Co","merck.com"],["SIX:GALE","Galenica","galenica.com"],["SIX:RO","Roche (porteur)","roche.com"],["SIX:ROG","Roche (BJ)","roche.com"],["SIX:NOVN","Novartis","novartis.com"],["SIX:SDZ","Sandoz","sandoz.com"],["NYSE:BMY","Bristol Myers Squibb","bms.com"],["OMXCOP:NOVO_B","Novo Nordisk","novonordisk.com"]]],["SONOVA",[["ASX:COH","Cochlear","cochlear.com"],["OMXCOP:GN","GN Store Nord","gn.com"],["SIX:SOON","Sonova","sonova.com"],["OMXCOP:DEMANT","Demant","demant.com"]]],["STRAUMANN",[["SIX:CLTN","Coltene","coltene.com"],["NASDAQ:XRAY","Dentsply Sirona","dentsplysirona.com"],["SIX:STMN","Straumann","straumann.com"],["NYSE:ZBH","Zimmer Biomet","zimmerbiomet.com"],["NASDAQ:ALGN","Align Technology","aligntech.com"]]],["BIOTECH",[["NYSE:OGN","Organon","organon.com"],["NASDAQ:ILMN","Illumina","illumina.com"],["SIX:BION","BB Biotech","bbbiotech.com"],["SIX:BSLN","Basilea Pharmaceutica","basilea.com"],["SIX:COPN","Cosmo Pharmaceuticals","cosmo-pharma.com"],["SIX:IDIA","Idorsia","idorsia.com"]]],["ALCON",[["NYSE:BLCO","Bausch + Lomb","bausch.com"],["TSE:7741","HOYA","hoya.com"],["XETR:AFX","Carl Zeiss Meditec","zeiss.com"],["SIX:ALC","Alcon","alcon.com"]]],["MEDTECK",[["SIX:KURN","Kuros Biosciences","kurosbio.com"],["SIX:SKAN","SKAN Group","skan.com"],["SIX:MOVE","Medacta","medacta.com"],["SIX:YPSN","Ypsomed","ypsomed.com"]]],["DOTTIKON",[["SIX:DESN","Dottikon ES","dottikon.com"],["KRX:285130","SK Chemicals","skchemicals.com"],["SIX:CPHN","CPH Chemie + Papier","cph.ch"]]],["BACHEM / LONZA",[["KRX:207940","Samsung Biologics","samsungbiologics.com"],["SIX:PPGN","PolyPeptide","polypeptide.com"],["NYSE:TMO","Thermo Fisher","thermofisher.com"],["NYSE:A","Agilent","agilent.com"],["SIX:LONN","Lonza","lonza.com"],["SIX:BANB","Bachem","bachem.com"],["SIX:SFZN","Siegfried","siegfried.ch"]]],["GIVAUDAN",[["TSE:4914","Takasago International","takasago.com"],["NYSE:IFF","IFF","iff.com"],["SIX:GIVN","Givaudan","givaudan.com"],["XETR:SY1","Symrise","symrise.com"],["EURONEXT:DSFIR","dsm-firmenich","dsm-firmenich.com"]]],["POLYMERE EMS",[["SIX:EMSN","EMS-Chemie","ems-group.com"],["XETR:1COV","Covestro","covestro.com"],["XETR:EVK","Evonik","evonik.com"],["EURONEXT:AKE","Arkema","arkema.com"],["XETR:BAS","BASF","basf.com"],["XETR:LXS","Lanxess","lanxess.com"]]],["SIKA ET HOLCIM",[["NYSE:MMM","3M","3m.com"],["SIX:HOLN","Holcim","holcim.com"],["NYSE:CRH","CRH","crh.com"],["XETR:HEN","Henkel","henkel.com"],["NYSE:VMC","Vulcan Materials","vulcanmaterials.com"],["NYSE:MLM","Martin Marietta","martinmarietta.com"],["MIL:BZU","Buzzi","buzzi.com"],["XETR:HEN3","Henkel (priv.)","henkel.com"],["SIX:AMRZ","Amrize","amrize.com"],["MIL:CEM","Cementir","cementirholding.com"],["XETR:HEI","Heidelberg Materials","heidelbergmaterials.com"],["EURONEXT:VCT","Vicat","vicat.com"],["NYSE:CX","Cemex","cemex.com"],["EURONEXT:SGO","Saint-Gobain","saint-gobain.com"],["SIX:SIKA","Sika","sika.com"]]],["FORBO SOL (SIKA ET HENKEL COLLE)",[["NYSE:MHK","Mohawk Industries","mohawkind.com"],["EURONEXT:TKTT","Tarkett","tarkett.com"],["SIX:FORN","Forbo","forbo.com"]]],["BELIMO ABB",[["TSE:6503","Mitsubishi Electric","mitsubishielectric.com"],["NASDAQ:HON","Honeywell","honeywell.com"],["NYSE:JCI","Johnson Controls","johnsoncontrols.com"],["SIX:DOKA","dormakaba","dormakaba.com"],["LSE:ROR","Rotork","rotork.com"],["SIX:LAND","Landis+Gyr","landisgyr.com"],["XETR:SND","Schneider Electric","se.com"],["SIX:ABBN","ABB","abb.com"],["NYSE:ROK","Rockwell Automation","rockwellautomation.com"],["XETR:SIE","Siemens","siemens.com"],["NYSE:EMR","Emerson","emerson.com"],["EURONEXT:NEX","Nexans","nexans.com"],["SIX:BEAN","Belimo","belimo.com"],["SIX:GF","Georg Fischer","georgfischer.com"]]],["CONNECTEUR, CABLE, FIBRE",[["NYSE:BDC","Belden","belden.com"],["NYSE:APH","Amphenol","amphenol.com"],["NYSE:TEL","TE Connectivity","te.com"],["SIX:HUBN","Huber+Suhner","hubersuhner.com"],["NYSE:GLW","Corning","corning.com"]]],["SULZER POMPES INDUSTRIELLES",[["TSE:6361","Ebara","ebara.com"],["XETR:KSB","KSB","ksb.com"],["SIX:SUN","Sulzer","sulzer.com"],["NYSE:FLS","Flowserve","flowserve.com"]]],["SYSTÈME AUTOMATISATION",[["XETR:KGX","Kion","kiongroup.com"],["TSE:6981","Murata","murata.com"],["TSE:6383","Daifuku","daifuku.com"],["SIX:INRN","Interroll","interroll.com"],["SIX:KARN","Kardex","kardex.com"]]],["COMPRESSOR",[["SIX:ACLN","Accelleron","accelleron-industries.com"],["SIX:BCHN","Burckhardt Compression","burckhardtcompression.com"]]],["SCHINDLER",[["OMXHEX:KNEBV","Kone","kone.com"],["SIX:SCHN","Schindler (nominatif)","schindler.com"],["SIX:SCHP","Schindler (BP)","schindler.com"],["NYSE:OTIS","Otis","otis.com"],["TSE:6406","Fujitec","fujitec.com"]]],["CONSTRUCTION",[["MIL:DANR","Danieli","danieli.com"],["XETR:BNR","Brenntag","brenntag.com"],["BME:TRE","Técnicas Reunidas","tecnicasreunidas.es"],["LSE:KLR","Keller","keller.co.uk"],["SIX:IMPN","Implenia","implenia.com"]]],["CAR",[["XETR:VOW3","Volkswagen (priv.)","volkswagen-group.com"],["EURONEXT:TRI","Trigano","trigano.fr"],["OMXSTO:VOLCAR_B","Volvo Car","volvocars.com"],["XETR:P911","Porsche AG","porsche.com"],["XETR:MBG","Mercedes-Benz","mercedes-benz.com"],["XETR:BMW","BMW","bmwgroup.com"],["MIL:BRE","Brembo","brembo.com"],["MIL:STLAM","Stellantis","stellantis.com"]]],["TRANSPORT KNIN",[["NASDAQ:CHRW","C.H. Robinson","chrobinson.com"],["TSE:9147","Nippon Express","nipponexpress-holdings.com"],["TWSE:2603","Evergreen Marine","evergreen-marine.com"],["OMXCOP:DSV","DSV","dsv.com"],["OMXCOP:MAERSK_B","A.P. Møller-Mærsk","maersk.com"],["SIX:KNIN","Kühne + Nagel","kuehne-nagel.com"],["XETR:DHL","DHL Group","dhl.com"],["NYSE:FDX","FedEx","fedex.com"],["NYSE:EXPD","Expeditors","expeditors.com"]]],["AIRPORT",[["LSIN:0RYA","Ryanair","ryanair.com"],["NYSE:CAAP","Corporación América Airports","corporacionamericaairports.com"],["HKEX:1880",null,null],["EURONEXT:MMB","Lagardère","lagardere.com"],["EURONEXT:ADP","Aéroports de Paris","parisaeroport.fr"],["SIX:FHZN","Flughafen Zürich","flughafen-zuerich.ch"],["BME:AENA","Aena","aena.es"],["XETR:FRA","Fraport","fraport.com"],["SIX:AVOL","Avolta","avoltaworld.com"],["LSE:EZJ","easyJet","easyjet.com"],["XETR:LHA","Lufthansa","lufthansa.com"],["LSE:RR.","Rolls-Royce","rolls-royce.com"],["LSE:SSPG","SSP Group","sspgroup.com"]]],["RAIL",[["TSE:6501","Hitachi","hitachi.com"],["SIX:SRAIL","Stadler Rail","stadlerrail.com"],["HKEX:1766","CRRC","crrcgc.cc"],["EURONEXT:ALO","Alstom","alstom.com"]]],["ADECCO",[["NYSE:MAN","ManpowerGroup","manpowergroup.com"],["NYSE:RHI","Robert Half","roberthalf.com"],["SIX:ADEN","Adecco","adecco.com"],["EURONEXT:RAND","Randstad","randstad.com"],["NASDAQ:KELYA","Kelly Services","kellyservices.com"],["EURONEXT:SDG","Synergie","synergie.com"]]],["LUXE",[["NYSE:PVH","PVH","pvh.com"],["SIX:UHR","Swatch Group (porteur)","swatchgroup.com"],["SIX:UHRN","Swatch Group (nominatif)","swatchgroup.com"],["EURONEXT:MC","LVMH","lvmh.com"],["SIX:CFR","Richemont","richemont.com"],["NYSE:RACE","Ferrari","ferrari.com"],["EURONEXT:RMS","Hermès","hermes.com"],["MIL:MONC","Moncler","monclergroup.com"],["EURONEXT:EL","EssilorLuxottica","essilorluxottica.com"],["EURONEXT:KER","Kering","kering.com"],["BME:PUIG","Puig","puig.com"]]],["SGS",[["SIX:SGSN","SGS","sgs.com"],["EURONEXT:BVI","Bureau Veritas","bureauveritas.com"]]],["LOGITECH GAMING",[["NYSE:SONY","Sony","sony.com"],["SIX:LOGN","Logitech","logitech.com"],["NASDAQ:CRSR","Corsair","corsair.com"]]],["SEMIS",[["NASDAQ:INTC","Intel","intel.com"],["NASDAQ:MU","Micron","micron.com"],["TSE:8035","Tokyo Electron","tel.com"],["NASDAQ:MRVL","Marvell","marvell.com"],["NASDAQ:LRCX","Lam Research","lamresearch.com"],["NASDAQ:TXN","Texas Instruments","ti.com"],["NASDAQ:GFS","GlobalFoundries","gf.com"],["SIX:VACN","VAT Group","vatgroup.com"],["SIX:COTN","Comet","comet.tech"],["NASDAQ:AMD","AMD","amd.com"],["NASDAQ:NXPI","NXP","nxp.com"],["NASDAQ:SWKS","Skyworks","skyworksinc.com"],["NASDAQ:QCOM","Qualcomm","qualcomm.com"],["NASDAQ:ADI","Analog Devices","analog.com"],["NASDAQ:KLAC","KLA","kla.com"],["SIX:IFCN","Inficon","inficon.com"],["SIX:UBXN","u-blox","u-blox.com"],["HKEX:981","SMIC","smics.com"],["NASDAQ:MKSI","MKS","mks.com"],["NASDAQ:AVGO","Broadcom","broadcom.com"],["XETR:PFV","Pfeiffer Vacuum","pfeiffer-vacuum.com"],["EURONEXT:ASML","ASML","asml.com"],["NASDAQ:AMAT","Applied Materials","appliedmaterials.com"],["KRX:000660","SK Hynix","skhynix.com"],["NASDAQ:ARM","Arm","arm.com"],["TWSE:2330","TSMC","tsmc.com"],["EURONEXT:STMPA","STMicroelectronics","st.com"],["TWSE:2454","MediaTek","mediatek.com"],["XETR:IFX","Infineon","infineon.com"],["SIX:AMS","ams-OSRAM","ams-osram.com"],["NASDAQ:TER","Teradyne","teradyne.com"],["NASDAQ:NVDA","NVIDIA","nvidia.com"]]],["SMALLCAP SWISS",[["SIX:CALN","Calida","calida.com"],["SIX:FTON","Feintool","feintool.com"],["SIX:LMN","lastminute.com","lastminutegroup.com"],["SIX:BKW","BKW","bkw.ch"],["SIX:SPSN","Swiss Prime Site","sps.swiss"],["SIX:SFSN","SFS Group","sfs.com"],["SIX:SWTQ","Schweiter Technologies","schweiter.com"],["SIX:JFN","Jungfraubahn","jungfrau.ch"],["SIX:SIGN","SIG Group","sig.biz"],["SIX:DKSH","DKSH","dksh.com"],["SIX:CLN","Clariant","clariant.com"],["SIX:AUTN","Autoneum","autoneum.com"],["SIX:BUCN","Bucher Industries","bucherindustries.com"],["SIX:ZEHN","Zehnder Group","zehndergroup.com"],["SIX:OERL","OC Oerlikon","oerlikon.com"]]],["WC",[["NYSE:MAS","Masco","masco.com"],["XETR:VIB3","Villeroy & Boch (priv.)","villeroy-boch.com"],["SIX:GEBN","Geberit","geberit.com"],["TSE:5938","LIXIL","lixil.com"]]],["TELCO",[["SIX:SCMN","Swisscom","swisscom.ch"],["LSE:VOD","Vodafone","vodafone.com"],["SIX:SUNN","Sunrise Communications","sunrise.ch"],["XETR:DTE","Deutsche Telekom","telekom.com"]]],["BANQUES/ASS",[["SIX:VONN","Vontobel","vontobel.com"],["SIX:SQN","Swissquote","swissquote.com"],["SIX:LEON","Leonteq","leonteq.com"],["SIX:UBSG","UBS Group","ubs.com"],["SIX:BAER","Julius Bär","juliusbaer.com"]]],["CANTO",[["SIX:VATN","Valiant","valiant.ch"],["SIX:BCVN","Banque Cantonale Vaudoise","bcv.ch"],["SIX:SGKN","St.Galler Kantonalbank","sgkb.ch"],["SIX:VZN","VZ Holding","vzch.com"],["SIX:ZUGER","Zuger Kantonalbank","zugerkb.ch"],["SIX:CMBN","Cembra Money Bank","cembra.ch"]]],["ASSURANCES",[["SIX:SREN","Swiss Re","swissre.com"],["NYSE:UNH","UnitedHealth","unitedhealthgroup.com"],["SIX:HELN","Helvetia Baloise","helvetia.com"],["XETR:MUV2","Munich Re","munichre.com"],["EURONEXT:SCR","SCOR","scor.com"],["SIX:BALN","Baloise","baloise.com"],["SIX:EFGN","EFG International","efginternational.com"],["EURONEXT:ASRNL","ASR Nederland","asrnl.com"],["NYSE:BAC","Bank of America","bankofamerica.com"],["SIX:VAHN","Vaudoise Assurances","vaudoise.ch"],["SIX:ZURN","Zurich Insurance","zurich.com"],["XETR:AXA","AXA","axa.com"],["XETR:ALV","Allianz","allianz.com"],["MIL:UCG","UniCredit","unicreditgroup.eu"],["SIX:SLHN","Swiss Life","swisslife.com"],["NYSE:MS","Morgan Stanley","morganstanley.com"],["EURONEXT:AGS","ageas","ageas.com"],["NYSE:C","Citigroup","citigroup.com"],["BME:SAN","Banco Santander","santander.com"],["NYSE:JPM","JPMorgan Chase","jpmorganchase.com"]]],["BASIC RESSOURCES",[["NYSE:ALB","Albemarle","albemarle.com"],["NYSE:FRO","Frontline","frontline.bm"],["NYSE:STNG","Scorpio Tankers","scorpiotankers.com"],["NYSE:MOS","Mosaic","mosaicco.com"],["TSX:CNR","Canadian National Railway","cn.ca"],["NYSE:FCX","Freeport-McMoRan","fcx.com"],["NYSE:UNP","Union Pacific","up.com"]]],["ENERGY",[["NYSE:NE","Noble Corp","noblecorp.com"],["MIL:ENI","Eni","eni.com"],["LSE:BP.","BP","bp.com"],["NYSE:EQT","EQT","eqt.com"],["NYSE:VAL","Valaris","valaris.com"],["NYSE:PBF","PBF Energy","pbfenergy.com"],["LSE:SHEL","Shell","shell.com"],["NYSE:VLO","Valero","valero.com"],["EURONEXT:TTE","TotalEnergies","totalenergies.com"],["NYSE:BORR","Borr Drilling","borrdrilling.com"],["NYSE:SDRL","Seadrill","seadrill.com"],["NYSE:RRC","Range Resources","rangeresources.com"],["OSL:VAR","Vår Energi","varenergi.no"],["NYSE:CRK","Comstock Resources","comstockresources.com"],["NYSE:MPC","Marathon Petroleum","marathonpetroleum.com"],["NYSE:CVX","Chevron","chevron.com"],["NYSE:OXY","Occidental","oxy.com"],["NYSE:CTRA","Coterra","coterra.com"],["EURONEXT:SBMO","SBM Offshore","sbmoffshore.com"],["OSL:SUBC","Subsea 7","subsea7.com"],["ATHEX:MOH","Motor Oil Hellas","moh.gr"],["TSX:CNQ","Canadian Natural Resources","cnrl.com"],["NYSE:SLB","SLB","slb.com"],["MIL:MAIRE","Maire","groupmaire.com"],["NYSE:OIS","Oil States","oilstatesintl.com"],["ASX:VUL","Vulcan Energy","v-er.eu"]]],["COMO",[["NYSE:BG","Bunge","bunge.com"],["NYSE:ADM","ADM","adm.com"],["SIX:BARN","Barry Callebaut","barry-callebaut.com"]]],["DEFENSE STOCK",[["LSE:BA.","BAE Systems","baesystems.com"],["XETR:RHM","Rheinmetall","rheinmetall.com"],["EURONEXT:HO","Thales","thalesgroup.com"],["MIL:AVIO","Avio","avio.com"],["VIE:RENK","Renk","renk.com"],["EURONEXT:ETL","Eutelsat","eutelsat.com"]]],["PE",[["NYSE:BX","Blackstone","blackstone.com"],["SIX:PGHN","Partners Group","partnersgroup.com"],["NYSE:KKR","KKR","kkr.com"],["NYSE:APO","Apollo","apollo.com"],["NYSE:OWL","Blue Owl","blueowl.com"]]],["RE",[["SIX:MOBN","Mobimo","mobimo.ch"],["SIX:HIAG","HIAG Immobilien","hiag.com"]]],["EM",[["NYSE:YPF","YPF","ypf.com"],["NYSE:BABA","Alibaba","alibabagroup.com"],["CBOE:ECH","iShares MSCI Chile","ishares.com"],["AMEX:EIDO","iShares MSCI Indonesia","ishares.com"],["AMEX:KWEB","KraneShares CSI China Internet","kraneshares.com"],["AMEX:KSA","iShares MSCI Saudi Arabia","ishares.com"],["AMEX:EWW","iShares MSCI Mexico","ishares.com"],["AMEX:EWZ","iShares MSCI Brazil","ishares.com"]]],["HIGGONS",[["BME:ACX","Acerinox","acerinox.com"],["MIL:TEN","Tenaris","tenaris.com"],["EURONEXT:VK","Vallourec","vallourec.com"],["MIL:DLG","De'Longhi","delonghigroup.com"],["BME:IDR","Indra","indracompany.com"],["MIL:WBD","Webuild","webuildgroup.com"],["OMXCOP:ISS","ISS","issworld.com"]]],["INDEX",[["TVC:CH10","Suisse 10 ans (rendement)",null],["SIX:SM15Y",null,null],["SIX:SMICHA",null,null],["SIX:SPIX","SPI (indice de prix)",null],["SIX:SMI","SMI",null],["SIX:ZGLD","ZKB Gold ETF","zkb.ch"]]]];
+
+(function DashModule(){
+"use strict";
+/* ============================================================================================
+   Écran « Market Dashboard » : une brique par titre de la liste « Peers Swiss EQ » (DASH_GROUPS, ordre de la liste d'origine),
+   avec cours de clôture, variation du dernier jour de bourse et mini-courbe (~3 mois). Historiques via /api/tv-series (clôtures journalières).
+   ============================================================================================ */
+const nf = (d, mn) => new Intl.NumberFormat('fr-CH', {maximumFractionDigits: d, minimumFractionDigits: mn == null ? d : mn});
+const GROUPS = DASH_GROUPS;
+const SYMS = [].concat.apply([], GROUPS.map(g => g[1].map(x => x[0])));
+const NOAVG = {'INDEX': true};
+const YIELDS = {'TVC:CH10': true};
+const INFO = {};
+GROUPS.forEach((g, gi) => g[1].forEach(x => { INFO[x[0]] = {s: x[0], ex: x[0].split(':')[0], tk: x[0].split(':').slice(1).join(':'), n: x[1] || null, dom: x[2] || null, g: gi}; }));
+const NAMES_KEY = 'gip_dash_names_v1';
+try { const o = JSON.parse(localStorage.getItem(NAMES_KEY) || '{}'); Object.keys(o).forEach(s => { if (INFO[s] && !INFO[s].n) INFO[s].n = o[s]; }); } catch (e) {}
+const nameOf = s => INFO[s].n || INFO[s].tk;
+const SPARK_N = 65;
+const dFr = d => new Date(d * 864e5).toLocaleDateString('fr-CH', {day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC'});
+const dShort = d => new Date(d * 864e5).toLocaleDateString('fr-CH', {day: '2-digit', month: '2-digit', timeZone: 'UTC'});
+
+/* ---- Logos (pastille d'initiales + favicon du site officiel, comme dans Market Data) ---- */
+function initials(name){
+  const w = String(name).replace(/\(.*?\)/g, ' ').split(/[\s\-+&.|,\/]+/).filter(x => x.length > 1 && !/^(de|du|la|le|des|group|holding|ag|sa|se|corp|inc|ishares|msci)$/i.test(x));
+  if (!w.length) return String(name).slice(0, 2).toUpperCase();
+  return (w.length > 1 ? w[0][0] + w[1][0] : w[0].slice(0, 2)).toUpperCase();
+}
+function logo(i){
+  let h = 0; for (let k = 0; k < i.s.length; k++) h = (h * 31 + i.s.charCodeAt(k)) % 360;
+  return '<span class="lg sm" style="--h:' + h + '"><i>' + esc(initials(nameOf(i.s))) + '</i>' + (i.dom ? '<img loading="lazy" alt="" referrerpolicy="no-referrer" onload="this.classList.add(\'ok\')" src="https://www.google.com/s2/favicons?domain=' + i.dom + '&sz=64">' : '') + '</span>';
+}
+document.addEventListener('error', e => { const t = e.target; if (t && t.tagName === 'IMG' && t.parentNode && t.parentNode.classList && t.parentNode.classList.contains('lg')) t.remove(); }, true);
+
+/* ---- Mesures d'un titre à partir de ses clôtures ---- */
+function metric(s){
+  const S = MKT_SERIES[s];
+  if (!S || S.none || !S.t || S.t.length < 2) return null;
+  const n = S.t.length, last = S.c[n - 1], prev = S.c[n - 2];
+  if (!(last > 0) && !YIELDS[s]) return null;
+  const isY = !!YIELDS[s];
+  const chg = isY ? (last - prev) * 100 : (prev > 0 ? (last / prev - 1) * 100 : NaN);   /* % ou points de base (rendement) */
+  if (!isFinite(chg)) return null;
+  const from = Math.max(0, n - SPARK_N);
+  return {last, prev, chg, pct: isY ? 0 : chg, isY, d: S.t[n - 1], dp: S.t[n - 2], spark: S.c.slice(from), m3: S.c[from] > 0 ? (last / S.c[from] - 1) * 100 : null, n};
+}
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+/* échelle divergente vert / rouge saturée à ±3 % ; neutre au centre */
+function heat(pct){
+  const t = clamp(pct / 3, -1, 1), a = Math.abs(t), up = t >= 0;
+  const base = [246, 245, 241], col = up ? [24, 150, 96] : [208, 72, 48], k = a < 0.015 ? 0 : 0.12 + 0.55 * a;
+  const c = base.map((b, i) => Math.round(b + (col[i] - b) * k));
+  return 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
+}
+const inkOf = (m) => m.isY ? '#02182B' : (m.chg > 0.005 ? '#0B6B43' : (m.chg < -0.005 ? '#A82F17' : '#4B5058'));
+const arrow = (m) => m.chg > 0.005 ? '▲' : (m.chg < -0.005 ? '▼' : '■');
+const pctTxt = (m) => m.isY ? ((m.chg >= 0 ? '+' : '−') + nf(1).format(Math.abs(m.chg)) + ' pb') : ((m.chg >= 0 ? '+' : '−') + nf(2).format(Math.abs(m.chg)) + ' %');
+const priceTxt = (m) => m.isY ? nf(2).format(m.last) + ' %' : nf(m.last >= 1000 ? 0 : (m.last >= 10 ? 2 : 3), m.last >= 1000 ? 0 : 2).format(m.last);
+
+function sparkSvg(m){
+  const v = m.spark; if (v.length < 3) return '';
+  let lo = Infinity, hi = -Infinity; v.forEach(x => { if (x < lo) lo = x; if (x > hi) hi = x; });
+  const W = 120, H = 26, px = 2, py = 3, rg = (hi - lo) || 1;
+  const X = i => px + (i / (v.length - 1)) * (W - 2 * px), Y = x => py + (1 - (x - lo) / rg) * (H - 2 * py);
+  const pts = v.map((x, i) => X(i).toFixed(1) + ',' + Y(x).toFixed(1));
+  const ex = X(v.length - 1), ey = Y(v[v.length - 1]);
+  return '<svg class="db-sp" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true"><polyline points="' + pts.join(' ') + '" fill="none" stroke="#5B6670" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>'
+    + '<i class="db-dot" style="background:' + (m.isY ? '#02182B' : (m.chg >= 0 ? '#18a05f' : '#d04830')) + ';left:' + (ex / W * 100).toFixed(1) + '%;top:' + (ey / H * 100).toFixed(1) + '%"></i>';
+}
+let REF = 0;   /* date de clôture de référence (la plus récente parmi les titres chargés) */
+function brickInner(s){
+  const i = INFO[s], m = metric(s), S = MKT_SERIES[s];
+  const head = '<div class="db-t">' + logo(i) + '<span class="db-n" title="' + esc(nameOf(s)) + '">' + esc(nameOf(s)) + '</span></div><div class="db-tk">' + esc(i.ex) + ' · ' + esc(i.tk) + '</div>';
+  if (!m) {
+    const pending = !S;
+    return {cls: pending ? 'loading' : 'none', bg: '', html: head + '<div class="db-m"><span class="db-p">' + (pending ? '…' : 'n.d.') + '</span></div>' + (pending ? '' : '<div class="db-d">Pas de données reçues</div>')};
+  }
+  const stale = REF && m.d < REF;
+  return {cls: stale ? 'stale' : '', bg: m.isY ? '#EEF1F4' : heat(m.pct),
+    html: head + '<div class="db-m"><span class="db-p">' + priceTxt(m) + '</span><span class="db-c" style="color:' + inkOf(m) + '">' + arrow(m) + ' ' + pctTxt(m) + '</span></div>'
+      + '<div class="db-spw">' + sparkSvg(m) + '</div>' + (stale ? '<div class="db-d">Clôture du ' + dShort(m.d) + '</div>' : '')};
+}
+function tipOf(s){
+  const m = metric(s), i = INFO[s];
+  if (!m) return nameOf(s) + ' (' + s + ') : pas de données';
+  return nameOf(s) + ' (' + s + ')\nClôture du ' + dFr(m.d) + ' : ' + priceTxt(m) + '\nVeille (' + dFr(m.dp) + ') : ' + (m.isY ? nf(2).format(m.prev) + ' %' : nf(m.prev >= 10 ? 2 : 3).format(m.prev)) + '\nVariation : ' + pctTxt(m)
+    + (m.m3 != null && !m.isY ? '\nSur ~3 mois : ' + ((m.m3 >= 0 ? '+' : '−') + nf(1).format(Math.abs(m.m3)) + ' %') : '');
+}
+
+/* ---- Construction de la page ---- */
+function build(){
+  $('dbSecs').innerHTML = GROUPS.map((g, gi) =>
+    '<details class="db-sec" open data-g="' + gi + '" id="dbG' + gi + '"><summary><span class="db-sn">' + esc(g[0]) + '</span><span class="db-cnt">' + g[1].length + ' titre' + (g[1].length > 1 ? 's' : '') + '</span><span class="db-avg" id="dbA' + gi + '"></span><span class="db-brd" id="dbB' + gi + '"></span></summary>'
+    + '<div class="db-grid">' + g[1].map(x => '<div class="db-b loading" role="button" tabindex="0" data-s="' + esc(x[0]) + '" id="dbS' + esc(x[0]).replace(/[^A-Za-z0-9_]/g, '_') + '" data-q="' + esc((nameOf(x[0]) + ' ' + x[0] + ' ' + g[0]).toLowerCase()) + '"></div>').join('') + '</div></details>').join('');
+  $('dbStrip').innerHTML = GROUPS.map((g, gi) => '<span class="db-sg">' + g[1].map(x => '<i data-s="' + esc(x[0]) + '"></i>').join('') + '</span>').join('');
+  SYMS.forEach(paint);
+  summary();
+}
+const idOf = s => 'dbS' + s.replace(/[^A-Za-z0-9_]/g, '_');
+function paint(s){
+  const el = $(idOf(s)); if (!el) return;
+  const b = brickInner(s);
+  el.className = 'db-b ' + b.cls; el.style.background = b.bg; el.innerHTML = b.html; el.title = tipOf(s);
+  el.dataset.q = (nameOf(s) + ' ' + s + ' ' + GROUPS[INFO[s].g][0]).toLowerCase();
+  const sq = $('dbStrip').querySelector('i[data-s="' + s.replace(/"/g, '') + '"]');
+  if (sq) { const m = metric(s); sq.style.background = m ? (m.isY ? '#9AA6B2' : heat(m.pct)) : '#E3E1DA'; sq.className = m ? '' : 'na'; sq.title = tipOf(s); }
+}
+function summary(){
+  const rows = [];
+  GROUPS.forEach((g, gi) => g[1].forEach(x => { const m = metric(x[0]); if (m && !m.isY && !NOAVG[g[0]]) rows.push({s: x[0], gi, m}); }));
+  const loaded = SYMS.filter(s => metric(s)).length;
+  const dates = SYMS.map(s => metric(s)).filter(Boolean).map(m => m.d);
+  REF = dates.length ? Math.max.apply(null, dates) : 0;
+  const up = rows.filter(r => r.m.chg > 0.005).length, dn = rows.filter(r => r.m.chg < -0.005).length, fl = rows.length - up - dn;
+  const avg = rows.length ? rows.reduce((a, r) => a + r.m.chg, 0) / rows.length : null;
+  const sorted = rows.slice().sort((a, b) => b.m.chg - a.m.chg), best = sorted[0], worst = sorted[sorted.length - 1];
+  /* sections */
+  const secs = GROUPS.map((g, gi) => {
+    const ms = g[1].map(x => ({s: x[0], m: metric(x[0])})).filter(r => r.m && !r.m.isY);
+    const a = (ms.length && !NOAVG[g[0]]) ? ms.reduce((t, r) => t + r.m.chg, 0) / ms.length : null;
+    return {gi, a, up: ms.filter(r => r.m.chg > 0.005).length, dn: ms.filter(r => r.m.chg < -0.005).length, n: ms.length};
+  });
+  secs.forEach(sc => {
+    const a = $('dbA' + sc.gi), b = $('dbB' + sc.gi);
+    if (sc.a == null) { a.textContent = ''; a.removeAttribute('style'); b.textContent = ''; return; }
+    a.textContent = (sc.a >= 0 ? '+' : '−') + nf(2).format(Math.abs(sc.a)) + ' %'; a.style.background = heat(sc.a * 1.6); a.style.color = sc.a > 0.005 ? '#0B6B43' : (sc.a < -0.005 ? '#A82F17' : '#4B5058');
+    a.title = 'Variation moyenne (titres pondérés à égalité) de la section';
+    b.innerHTML = '<span class="u">▲ ' + sc.up + '</span><span class="d">▼ ' + sc.dn + '</span>';
+  });
+  const ranked = secs.filter(s => s.a != null && s.n >= 2).sort((x, y) => y.a - x.a);
+  const sgn = v => (v >= 0 ? '+' : '−') + nf(2).format(Math.abs(v)) + ' %';
+  const kp = (l, v, sub, cls) => '<div class="fx-kpi"><div class="k">' + l + '</div><div class="v ' + (cls || '') + '">' + v + '</div>' + (sub ? '<div class="s">' + sub + '</div>' : '') + '</div>';
+  $('dbKpis').innerHTML = rows.length ? (
+      kp('Variation moyenne', avg == null ? '–' : sgn(avg), rows.length + ' titres (hors indices)', avg > 0.005 ? 'pos' : (avg < -0.005 ? 'neg' : ''))
+    + kp('En hausse', up + ' <small>' + nf(0).format(up / rows.length * 100) + ' %</small>', '', 'pos')
+    + kp('En baisse', dn + ' <small>' + nf(0).format(dn / rows.length * 100) + ' %</small>', fl ? fl + ' inchangés' : '', 'neg')
+    + kp('Meilleur titre', best ? sgn(best.m.chg) : '–', best ? esc(nameOf(best.s)) : '', 'pos')
+    + kp('Moins bon titre', worst ? sgn(worst.m.chg) : '–', worst ? esc(nameOf(worst.s)) : '', 'neg')
+    + (ranked.length ? kp('Meilleure section', sgn(ranked[0].a), esc(GROUPS[ranked[0].gi][0]), 'pos') + kp('Moins bonne section', sgn(ranked[ranked.length - 1].a), esc(GROUPS[ranked[ranked.length - 1].gi][0]), 'neg') : '')
+    ) : '';
+  $('dbBreadth').innerHTML = rows.length ? '<i class="u" style="flex:' + up + '"></i><i class="f" style="flex:' + fl + '"></i><i class="d" style="flex:' + dn + '"></i>' : '';
+  const miss = SYMS.filter(s => MKT_SERIES[s] && MKT_SERIES[s].none);
+  $('dbStatus').innerHTML = '<b>' + (REF ? 'Clôtures au ' + dFr(REF) : 'Chargement…') + '</b> · ' + loaded + ' / ' + SYMS.length + ' titres chargés' + (miss.length ? ' · <span class="miss">' + miss.length + ' sans données</span>' : '');
+  $('dbNotes').innerHTML = (miss.length ? '<b>Sans données chez le fournisseur (' + miss.length + ') :</b> ' + miss.map(s => esc(nameOf(s)) + ' <code>' + esc(s) + '</code>').join(' · ') + '. Vérifier le symbole ou la couverture du forfait.<br>' : '')
+    + 'Variation = dernière clôture contre la clôture précédente (rendement du Suisse 10 ans en points de base). Les briques grisées d\'une date n\'ont pas coté lors du dernier jour de bourse de référence (jour férié, suspension…). Moyennes de section : pondération égale. Cours en devise de cotation de chaque titre. Source : TradingView Data API (service tiers non officiel) — données indicatives, relayées avec ~3 h de mémoire.';
+}
+
+/* ---- Chargement ---- */
+let loading = false, started = false;
+async function load(force){
+  if (loading) return; loading = true; $('dbRefresh').disabled = true;
+  if (force) SYMS.forEach(s => { delete MKT_SERIES[s]; });
+  try {
+    for (let i = 0; i < SYMS.length; i += 30) {
+      const chunk = SYMS.slice(i, i + 30);
+      $('dbStatus').innerHTML = '<b>Chargement…</b> ' + Math.min(i + 30, SYMS.length) + ' / ' + SYMS.length + ' titres';
+      await mktFetchSeries(chunk, 130);
+      summary(); SYMS.forEach(paint);
+    }
+    summary(); SYMS.forEach(paint);
+    await fillNames();
+  } catch (e) {
+    $('dbSetup').hidden = false; $('dbSetup').textContent = (e && e.message) || 'Chargement impossible.';
+  }
+  loading = false; $('dbRefresh').disabled = false;
+}
+/* Noms inconnus : une recherche chacun (résultat gardé localement) */
+async function fillNames(){
+  const todo = SYMS.filter(s => !INFO[s].n); if (!todo.length) return;
+  let store = {}; try { store = JSON.parse(localStorage.getItem(NAMES_KEY) || '{}'); } catch (e) {}
+  for (const s of todo) {
+    try {
+      const r = await fetch('/api/tv/search/market/' + encodeURIComponent(INFO[s].tk)), j = await r.json();
+      const hit = mktParseSearch(j).find(x => x.full === s);
+      if (hit && hit.desc) { INFO[s].n = hit.desc; store[s] = hit.desc; paint(s); }
+    } catch (e) {}
+    await new Promise(res => setTimeout(res, 550));
+  }
+  try { localStorage.setItem(NAMES_KEY, JSON.stringify(store)); } catch (e) {}
+}
+
+/* ---- Interactions ---- */
+function openBrick(s){
+  if (typeof window.mktOpenSymbol === 'function') { window.mktOpenSymbol(s, nameOf(s)); const nb = document.querySelector('.navbtn[data-screen="mkt"]'); if (nb) nb.click(); }
+}
+$('dbSecs').addEventListener('click', e => { const b = e.target.closest('.db-b'); if (b) openBrick(b.dataset.s); });
+$('dbSecs').addEventListener('keydown', e => { if (e.key === 'Enter') { const b = e.target.closest('.db-b'); if (b) openBrick(b.dataset.s); } });
+$('dbStrip').addEventListener('click', e => {
+  const i = e.target.closest('i[data-s]'); if (!i) return;
+  const el = $(idOf(i.dataset.s)); if (!el) return;
+  const d = el.closest('details'); if (d) d.open = true; el.hidden = false;
+  el.scrollIntoView({block: 'center', behavior: 'smooth'}); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600);
+});
+let allOpen = true;
+$('dbFold').addEventListener('click', () => { allOpen = !allOpen; $('dbSecs').querySelectorAll('details').forEach(d => { d.open = allOpen; }); $('dbFold').textContent = allOpen ? 'Tout replier' : 'Tout déplier'; });
+$('dbRefresh').addEventListener('click', () => load(true));
+let fT = null;
+$('dbFilter').addEventListener('input', () => {
+  clearTimeout(fT);
+  fT = setTimeout(() => {
+    const q = $('dbFilter').value.trim().toLowerCase();
+    $('dbSecs').querySelectorAll('details').forEach(d => {
+      let n = 0;
+      d.querySelectorAll('.db-b').forEach(b => { const ok = !q || b.dataset.q.indexOf(q) >= 0; b.hidden = !ok; if (ok) n++; });
+      d.hidden = !n; if (q && n) d.open = true;
+    });
+  }, 150);
+});
+
+build();
+new MutationObserver(() => { if ($('screenDash').classList.contains('on') && !started) { started = true; fetch('/api/tv/status').then(r => r.ok ? r.json() : null).then(s => { if (s && !s.configured) { $('dbSetup').hidden = false; $('dbSetup').innerHTML = "<b>Clé API non configurée.</b> Voir l'onglet Market Data pour la marche à suivre."; } }).catch(() => {}); load(false); } }).observe($('screenDash'), {attributes: true, attributeFilter: ['class']});
 })();
 
 
@@ -10091,7 +10404,7 @@ setInterval(() => { if (!document.querySelector('.wbcat.dragging, .destcard.drag
 
 (function NavModule(){
 "use strict";
-const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), ofs: document.getElementById('screenOfs'), mkt: document.getElementById('screenMkt'), lab: document.getElementById('screenLab'), whiteboard: document.getElementById('screenWhiteboard')};
+const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), ofs: document.getElementById('screenOfs'), mkt: document.getElementById('screenMkt'), dash: document.getElementById('screenDash'), lab: document.getElementById('screenLab'), whiteboard: document.getElementById('screenWhiteboard')};
 function showScreen(name){
   if (!screens[name]) return;
   Object.keys(screens).forEach(k => { if (screens[k]) screens[k].classList.toggle('on', k === name); });
