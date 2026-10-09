@@ -142,3 +142,12 @@ Nouveau : Portfolio Lab (12e version) :
     Le fichier de test en contient 15 (fins de mois à double valeur, jours à zéro).
   - API interne (à venir) : window.gipPortfolioSet({meta, pos, nav}) alimente l'écran sans fichier (même modèle que la lecture des classeurs).
   - Seul Outils_GIP.html change (le _worker.js est identique).
+
+OFS : toutes les tables (13e version) :
+  - Les tables à plusieurs dimensions (classes d'âge, sexe, canton, branche…) et les tables sans dimension temporelle s'affichent désormais.
+  - Deux choix en tête de la fiche : « Axe / lignes du tableau » (le temps, ou n'importe quelle autre dimension, ex. classe d'âge) et « Comparer selon » (une dimension dont on coche
+    jusqu'à 15 valeurs, ex. Homme / Femme, ou plusieurs années). Les autres dimensions restent fixées par une liste déroulante (l'année la plus récente par défaut).
+  - Axe temporel : courbes (une par valeur comparée) ; « Ajouter au Chart Creator » envoie toutes les séries affichées. Autre axe : barres horizontales ou lignes (profil par âge, par exemple), filtre des valeurs en abscisse.
+  - Tableau croisé des données sous le graphique et CSV correspondant. Garde-fou : 60 000 valeurs au plus par requête STAT-TAB (filtrer l'axe ou comparer moins de séries sinon).
+  - Les tables mensuelles « Année × Mois » sont toujours recombinées en vraie série mensuelle.
+  - Seul Outils_GIP.html change (le _worker.js est identique).

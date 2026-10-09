@@ -975,6 +975,25 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenPf .lg i{font-style:normal;letter-spacing:-.02em}
 #screenPf .lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;box-sizing:border-box;opacity:0;transition:opacity .15s}
 #screenPf .lg img.ok{opacity:1}
+/* ---- OFS : tables à plusieurs dimensions ---- */
+#screenOfs .ox-roles{background:#F3FBFE;border-color:#BFE6F2}
+#screenOfs .ox-roles .fx-subp{align-self:end;font-size:12.5px;color:var(--ink);display:flex;gap:6px;align-items:center;padding-bottom:6px}
+#screenOfs .ox-ser{grid-column:1/-1}
+#screenOfs .ox-chk{display:flex;flex-wrap:wrap;gap:4px 14px;max-height:150px;overflow:auto;padding:6px 8px;background:#fff;border:1px solid var(--line);border-radius:6px}
+#screenOfs .ox-chk label{display:inline-flex;gap:5px;align-items:center;font-size:12.5px;color:var(--ink);text-transform:none;letter-spacing:0;margin:0;cursor:pointer}
+#screenOfs .ox-chk input{width:auto;margin:0}
+#screenOfs .ox-chkbar{display:flex;gap:6px;margin-top:6px}
+#screenOfs .ox-chkbar .btn{padding:3px 10px;font-size:11.5px}
+#screenOfs .ox-lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--mut);margin:6px 0 2px}
+#screenOfs .ox-lg i{display:inline-block;width:12px;height:4px;border-radius:2px;margin-right:6px;vertical-align:3px}
+#screenOfs .ox-data{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+#screenOfs .ox-data summary{cursor:pointer;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);font-weight:700}
+#screenOfs .ox-tblwrap{max-height:420px;overflow:auto;margin-top:8px;border:1px solid var(--line);border-radius:8px}
+#screenOfs .ox-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+#screenOfs .ox-tbl th,#screenOfs .ox-tbl td{padding:5px 9px;border-bottom:1px solid #F1F0EC;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#screenOfs .ox-tbl th{position:sticky;top:0;background:#FAFAF8;font-size:11px;color:var(--mut);font-weight:700;white-space:normal;min-width:70px;vertical-align:bottom}
+#screenOfs .ox-tbl .l{text-align:left}
+#screenOfs .ox-tbl tbody tr:hover td{background:#F7FBFC}
 </style>
 </head>
 <body>
@@ -6077,7 +6096,7 @@ function loadList(){
 $('oxResults').addEventListener('click', e => { const r = e.target.closest('[data-id]'); if (r) openTable(r.dataset.id); });
 
 /* ---------------------------------------------------------------- fiche table : dimensions + graphique */
-let tbl = null; // {id, entry, lang, meta, timeVar, subVar, subOn, sel:{code:value}, series:{t,values,f}|null, range}
+let tbl = null; // {id, entry, lang, meta, timeVar, sub, subOn, sel:{code:value}, axis, ser, serSel:[], axisFilter, range, kind, series:résultat|null}
 const pxPath = (lang, id) => '/' + lang + '/' + encodeURIComponent(id) + '/' + encodeURIComponent(id) + '.px';
 
 /* Dimension « Mois » ou « Trimestre » séparée de l'année (fréquent à l'OFS) -> {v, kind, vals:[{value, n}]} */
@@ -6094,6 +6113,27 @@ function findSubVar(vars){
   return null;
 }
 
+/* ---- Tables à plusieurs dimensions (classes d'âge, sexe, canton…) ----
+   Toute table peut être affichée : on choisit la dimension en abscisse / en lignes (le temps, ou n'importe quelle
+   autre dimension) et, en option, une dimension à comparer (plusieurs séries). Les autres dimensions sont fixées.
+   Axe temporel -> courbes (envoi possible au Chart Creator) ; autre axe -> barres ou lignes ; tableau croisé + CSV. */
+const TIME = '__time';
+const MAX_CELLS = 60000, MAX_SER = 15;
+const OX_PAL = ['#0086B3', '#02182B', '#E07B00', '#00993D', '#C0201B', '#00CFFF', '#8A9199', '#6B4FA0', '#B8860B', '#D6619A', '#4F7A28', '#1F5F8B', '#A0522D', '#7A7A2E', '#5B5B9F'];
+const allVars = () => tbl.meta.variables || [];
+const varBy = code => allVars().find(v => v.code === code);
+const vText = (v, val) => (v.valueTexts || [])[(v.values || []).indexOf(val)] || val;
+const subActive = () => !!(tbl.subOn && tbl.sub && tbl.axis === TIME);
+const isSubVar = v => subActive() && v.code === tbl.sub.v.code;
+const axisV = () => tbl.axis === TIME ? tbl.timeVar : varBy(tbl.axis);
+function defaultSerSel(v){ const vals = v.values || []; return v.time ? vals.slice(-3) : vals.slice(0, Math.min(5, vals.length)); }
+function axisValues(){
+  const v = axisV(); if (!v) return [];
+  if (tbl.axis === TIME) return v.values;
+  const kw = norm(tbl.axisFilter);
+  return kw ? v.values.filter(val => norm(vText(v, val)).indexOf(kw) >= 0) : v.values;
+}
+
 async function openTable(id){
   oxShow('oxTableView');
   const box = $('oxTable');
@@ -6107,44 +6147,109 @@ async function openTable(id){
   }
   const vars = meta.variables || [];
   const timeVar = vars.find(v => v.time);
-  const sub = findSubVar(vars);
+  const sub = timeVar ? findSubVar(vars) : null;
   const sel = {};
-  vars.forEach(v => { if (!v.time) sel[v.code] = (v.values || [])[0]; });
-  tbl = {id: id, entry: entry, lang: lang, meta: meta, timeVar: timeVar, sub: sub, subOn: !!sub, sel: sel, series: null, range: 'max'};
+  vars.forEach(v => { const vals = v.values || []; sel[v.code] = v.time ? vals[vals.length - 1] : vals[0]; });
+  const multi = vars.filter(v => !v.time && (v.values || []).length > 1 && !(sub && v.code === sub.v.code));
+  let axis, ser = '';
+  if (timeVar) axis = TIME;
+  else {
+    const big = multi.slice().sort((a, b) => b.values.length - a.values.length)[0];
+    axis = big ? big.code : (vars[0] && vars[0].code);
+    const small = multi.find(v => v.code !== axis && v.values.length <= 6);
+    if (small) ser = small.code;
+  }
+  tbl = {id: id, entry: entry, lang: lang, meta: meta, timeVar: timeVar, sub: sub, subOn: !!sub, sel: sel, axis: axis, ser: ser, serSel: [], axisFilter: '', series: null, range: 'max', kind: 'auto'};
+  if (ser) tbl.serSel = defaultSerSel(varBy(ser));
   drawTable();
   loadSeries();
 }
 
+function roleOptions(){
+  const vars = allVars();
+  const axisOpts = (tbl.timeVar ? [{v: TIME, t: 'Temps — ' + (tbl.timeVar.text || tbl.timeVar.code) + (tbl.sub && tbl.subOn ? (tbl.sub.kind === 'M' ? ' (mensuel)' : ' (trimestriel)') : '')}] : [])
+    .concat(vars.filter(v => !v.time && (v.values || []).length > 1).map(v => ({v: v.code, t: (v.text || v.code) + ' (' + v.values.length + ')'})));
+  const serOpts = [{v: '', t: 'Aucune — une seule série'}].concat(vars.filter(v => (v.values || []).length > 1 && v.code !== tbl.axis && !(v.time && tbl.axis === TIME) && !isSubVar(v))
+    .map(v => ({v: v.code, t: (v.text || v.code) + ' (' + v.values.length + ')'})));
+  return {axisOpts, serOpts};
+}
 function drawTable(){
   const e = tbl.entry, fr = FR[tbl.id] || {};
-  const vars = tbl.meta.variables || [];
+  const vars = allVars();
   const statTab = 'https://www.pxweb.bfs.admin.ch/pxweb/' + tbl.lang + '/' + encodeURIComponent(tbl.id) + '/' + encodeURIComponent(tbl.id) + '/' + encodeURIComponent(tbl.id) + '.px';
-  const dimsHtml = vars.filter(v => !v.time && !(tbl.subOn && tbl.sub && v.code === tbl.sub.v.code)).map(v => {
-    const vals = v.values || [], txt = v.valueTexts || [];
-    if (vals.length <= 1) return '<div class="fx-dim"><label>' + esc(v.text || v.code) + '</label><div class="one">' + esc(txt[0] || vals[0] || '') + '</div></div>';
-    return '<div class="fx-dim"><label>' + esc(v.text || v.code) + ' <span style="text-transform:none">(' + vals.length + ')</span></label>'
+  const {axisOpts, serOpts} = roleOptions();
+  const opt = (list, cur) => list.map(o => '<option value="' + esc(o.v) + '"' + (o.v === cur ? ' selected' : '') + '>' + esc(o.t) + '</option>').join('');
+  const roles = '<div class="fx-dims ox-roles">'
+    + '<div class="fx-dim"><label>Axe / lignes du tableau</label><select id="oxAxis">' + opt(axisOpts, tbl.axis) + '</select></div>'
+    + '<div class="fx-dim"><label>Comparer selon (plusieurs séries)</label><select id="oxSer">' + opt(serOpts, tbl.ser) + '</select></div>'
+    + (tbl.sub && tbl.axis === TIME ? '<label class="fx-subp"><input type="checkbox" id="oxSubOn"' + (tbl.subOn ? ' checked' : '') + '> Série ' + (tbl.sub.kind === 'M' ? 'mensuelle (année × mois)' : 'trimestrielle (année × trimestre)') + '</label>' : '')
+    + '</div>';
+  const dimsHtml = vars.filter(v => !isSubVar(v)).map(v => {
+    const vals = v.values || [], label = esc(v.text || v.code);
+    if (v.code === (tbl.axis === TIME ? (tbl.timeVar && tbl.timeVar.code) : tbl.axis)) {
+      if (tbl.axis === TIME) return '';
+      return '<div class="fx-dim ox-axis"><label>' + label + ' <span style="text-transform:none">— en abscisse, ' + axisValues().length + ' / ' + vals.length + ' valeurs</span></label>'
+        + '<input type="search" id="oxAxisF" placeholder="Filtrer les valeurs affichées…" value="' + esc(tbl.axisFilter) + '"></div>';
+    }
+    if (v.code === tbl.ser) {
+      const on = new Set(tbl.serSel);
+      return '<div class="fx-dim ox-ser"><label>' + label + ' <span style="text-transform:none">— séries comparées : ' + on.size + ' / ' + vals.length + ' (max. ' + MAX_SER + ')</span></label>'
+        + (vals.length > 12 ? '<input type="search" data-serf="1" placeholder="Filtrer…">' : '')
+        + '<div class="ox-chk">' + vals.map(val => '<label data-t="' + esc(norm(vText(v, val))) + '"><input type="checkbox" data-ser="' + esc(val) + '"' + (on.has(val) ? ' checked' : '') + '> ' + esc(vText(v, val)) + '</label>').join('') + '</div>'
+        + '<div class="ox-chkbar"><button type="button" class="btn" data-serall="first">' + (v.time ? '3 dernières' : '5 premières') + '</button><button type="button" class="btn" data-serall="none">Aucune</button></div></div>';
+    }
+    if (vals.length <= 1) return '<div class="fx-dim"><label>' + label + '</label><div class="one">' + esc((v.valueTexts || [])[0] || vals[0] || '') + '</div></div>';
+    return '<div class="fx-dim"><label>' + label + ' <span style="text-transform:none">(' + vals.length + ')</span></label>'
       + (vals.length > 25 ? '<input type="search" data-filter="' + esc(v.code) + '" placeholder="Filtrer…">' : '')
-      + '<select data-code="' + esc(v.code) + '">' + vals.map((val, i) => '<option value="' + esc(val) + '"' + (tbl.sel[v.code] === val ? ' selected' : '') + '>' + esc(txt[i] || val) + '</option>').join('') + '</select></div>';
+      + '<select data-code="' + esc(v.code) + '">' + (v.time ? vals.slice().reverse() : vals).map(val => '<option value="' + esc(val) + '"' + (tbl.sel[v.code] === val ? ' selected' : '') + '>' + esc(vText(v, val)) + '</option>').join('') + '</select></div>';
   }).join('');
   $('oxTable').innerHTML =
       '<h2>' + esc(fr.title || tbl.meta.title || e.de) + '</h2>'
     + '<div class="fx-ids">' + [esc(tbl.id), esc(themeName(e.th)), esc(PER_FR[e.per] || ''), tbl.timeVar ? esc(tbl.timeVar.values[0] + ' → ' + tbl.timeVar.values[tbl.timeVar.values.length - 1]) : '', e.pub ? 'publié le ' + esc(fmtDay(e.pub)) : '', tbl.lang === 'de' ? 'libellés en allemand uniquement' : ''].filter(Boolean).join(' · ')
     + ' · <a href="' + statTab + '" target="_blank" rel="noopener" style="color:var(--ink2)">STAT-TAB ↗</a></div>'
     + (e.abs ? '<div class="fx-abs">' + esc(e.abs) + '</div>' : '')
-    + (tbl.timeVar ? '<div class="fx-dims" id="oxDims">'
-        + (tbl.sub ? '<label class="fx-subp"><input type="checkbox" id="oxSubOn"' + (tbl.subOn ? ' checked' : '') + '> Série ' + (tbl.sub.kind === 'M' ? 'mensuelle (année × mois)' : 'trimestrielle (année × trimestre)') + '</label>' : '')
-        + (dimsHtml || '<div class="fx-mut" style="font-size:12.5px">Aucune dimension à choisir : la table contient une seule série.</div>')
-        + '</div>'
-      : '<div class="fx-err" style="margin-top:12px">Cette table n\'a pas de dimension temporelle : elle ne peut pas être tracée comme une série.</div>')
+    + roles
+    + '<div class="fx-dims" id="oxDims">' + (dimsHtml || '<div class="fx-mut" style="font-size:12.5px">Aucune autre dimension à choisir.</div>') + '</div>'
     + '<div class="fx-sel" id="oxSel" style="margin-top:14px"></div>';
-  const dims = $('oxDims');
-  if (!dims) return;
-  dims.addEventListener('change', ev => {
+  const root = $('oxTable');
+  root.querySelector('.ox-roles').addEventListener('change', ev => {
     if (ev.target.id === 'oxSubOn') { tbl.subOn = ev.target.checked; drawTable(); loadSeries(); return; }
+    if (ev.target.id === 'oxAxis') {
+      tbl.axis = ev.target.value; tbl.axisFilter = '';
+      if (tbl.ser === tbl.axis || (tbl.axis === TIME && varBy(tbl.ser) && varBy(tbl.ser).time) || (subActive() && tbl.ser === tbl.sub.v.code)) { tbl.ser = ''; tbl.serSel = []; }
+    }
+    if (ev.target.id === 'oxSer') { tbl.ser = ev.target.value; tbl.serSel = tbl.ser ? defaultSerSel(varBy(tbl.ser)) : []; }
+    drawTable(); loadSeries();
+  });
+  const dims = $('oxDims');
+  dims.addEventListener('change', ev => {
     const s = ev.target.closest('select[data-code]');
-    if (s) { tbl.sel[s.dataset.code] = s.value; loadSeries(); }
+    if (s) { tbl.sel[s.dataset.code] = s.value; loadSeries(); return; }
+    const c = ev.target.closest('input[data-ser]');
+    if (c) {
+      const set = new Set(tbl.serSel);
+      if (c.checked) { if (set.size >= MAX_SER) { c.checked = false; oxToast('Au plus ' + MAX_SER + ' séries comparées.'); return; } set.add(c.dataset.ser); } else set.delete(c.dataset.ser);
+      const v = varBy(tbl.ser); tbl.serSel = v.values.filter(x => set.has(x));
+      const lab = dims.querySelector('.ox-ser > label span'); if (lab) lab.textContent = '— séries comparées : ' + tbl.serSel.length + ' / ' + v.values.length + ' (max. ' + MAX_SER + ')';
+      clearTimeout(drawTable.t); drawTable.t = setTimeout(loadSeries, 350);
+    }
+  });
+  dims.addEventListener('click', ev => {
+    const b = ev.target.closest('[data-serall]'); if (!b) return;
+    const v = varBy(tbl.ser); tbl.serSel = b.dataset.serall === 'none' ? [] : defaultSerSel(v);
+    drawTable(); loadSeries();
   });
   dims.addEventListener('input', ev => {
+    if (ev.target.id === 'oxAxisF') {
+      tbl.axisFilter = ev.target.value;
+      const lab = dims.querySelector('.ox-axis > label span'); if (lab) lab.textContent = '— en abscisse, ' + axisValues().length + ' / ' + axisV().values.length + ' valeurs';
+      clearTimeout(drawTable.f); drawTable.f = setTimeout(loadSeries, 450); return;
+    }
+    if (ev.target.dataset.serf) {
+      const kw = norm(ev.target.value);
+      dims.querySelectorAll('.ox-chk label').forEach(l => { l.hidden = !!kw && l.dataset.t.indexOf(kw) < 0; });
+      return;
+    }
     const f = ev.target.closest('input[data-filter]'); if (!f) return;
     const v = vars.find(x => x.code === f.dataset.filter), s = dims.querySelector('select[data-code="' + CSS.escape(f.dataset.filter) + '"]');
     const kw = norm(f.value);
@@ -6167,7 +6272,6 @@ function jsonStatGetter(js){
     return m;
   });
   const values = js.value || [];
-  const isObj = !Array.isArray(values);
   return function(sel){
     let off = 0;
     for (let i = 0; i < ids.length; i++) {
@@ -6175,23 +6279,31 @@ function jsonStatGetter(js){
       if (p == null) return NaN;
       off += p * strides[i];
     }
-    const v = isObj ? values[off] : values[off];
+    const v = values[off];
     return typeof v === 'number' ? v : NaN;
   };
 }
 
 let loadSeq = 0;
 async function loadSeries(){
-  if (!tbl.timeVar) return;
   const seq = ++loadSeq, box = $('oxSel');
-  box.innerHTML = '<div class="fx-skel" style="height:280px"></div>';
-  const vars = tbl.meta.variables || [];
-  const subOn = tbl.subOn && tbl.sub;
+  const vars = allVars(), aV = axisV();
+  if (!aV) { box.innerHTML = '<div class="fx-err">Cette table n\'a qu\'une seule valeur par dimension.</div>'; return; }
+  const sV = tbl.ser ? varBy(tbl.ser) : null;
+  if (sV && !tbl.serSel.length) { box.innerHTML = '<div class="fx-err">Cochez au moins une valeur à comparer (' + esc(sV.text || sV.code) + ').</div>'; tbl.series = null; return; }
+  const aVals = axisValues();
+  if (!aVals.length) { box.innerHTML = '<div class="fx-err">Aucune valeur ne correspond au filtre.</div>'; tbl.series = null; return; }
   const query = vars.map(v => {
-    if (v.time) return {code: v.code, selection: {filter: 'item', values: v.values}};
-    if (subOn && v.code === tbl.sub.v.code) return {code: v.code, selection: {filter: 'item', values: tbl.sub.vals.map(x => x.value)}};
-    return {code: v.code, selection: {filter: 'item', values: [tbl.sel[v.code]]}};
+    let vals;
+    if (v.code === aV.code) vals = aVals;
+    else if (sV && v.code === sV.code) vals = tbl.serSel;
+    else if (isSubVar(v)) vals = tbl.sub.vals.map(x => x.value);
+    else vals = [tbl.sel[v.code]];
+    return {code: v.code, selection: {filter: 'item', values: vals}};
   });
+  const cells = query.reduce((n, q) => n * q.selection.values.length, 1);
+  if (cells > MAX_CELLS) { box.innerHTML = '<div class="fx-err">Sélection trop grande (' + nf(0).format(cells) + ' valeurs) : filtrez l\'axe ou comparez moins de séries.</div>'; tbl.series = null; return; }
+  box.innerHTML = '<div class="fx-skel" style="height:280px"></div>';
   let js;
   try {
     js = await relayFetchJson(BFS_PXWEB_RELAY, BFS_PXWEB_DIRECT, pxPath(tbl.lang, tbl.id), {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({query: query, response: {format: 'json-stat2'}})});
@@ -6201,62 +6313,102 @@ async function loadSeries(){
   }
   if (seq !== loadSeq) return;
   const get = jsonStatGetter(js);
-  const pts = [];
-  let f = 'Y';
-  tbl.timeVar.values.forEach(tv => {
-    const base = bfsPeriodToMs(tv);
-    if (isNaN(base)) return;
-    if (/[Mm]\d{2}$/.test(tv)) f = 'M'; else if (/[QqKkTt]\d$/.test(tv)) f = 'Q';
-    if (subOn) {
-      const y = new Date(base).getUTCFullYear();
-      tbl.sub.vals.forEach(sv => {
-        const v = get({[tbl.timeVar.code]: tv, [tbl.sub.v.code]: sv.value});
-        if (isFinite(v)) pts.push({ms: Date.UTC(y, tbl.sub.kind === 'M' ? sv.n - 1 : (sv.n - 1) * 3, 1), v: v});
+  const serVals = sV ? tbl.serSel : [null];
+  const fixed = vars.filter(v => (v.values || []).length > 1 && v.code !== aV.code && !(sV && v.code === sV.code) && !isSubVar(v)).map(v => vText(v, tbl.sel[v.code]));
+  const series = serVals.map(sv => ({label: sV ? vText(sV, sv) : (fixed.join(' — ') || 'Série'), sv}));
+  if (tbl.axis === TIME) {
+    let f = 'Y';
+    const sub = subActive();
+    series.forEach(s => {
+      const pts = [];
+      tbl.timeVar.values.forEach(tv => {
+        const base = bfsPeriodToMs(tv);
+        if (isNaN(base)) return;
+        if (/[Mm]\d{2}$/.test(tv)) f = 'M'; else if (/[QqKkTt]\d$/.test(tv)) f = 'Q';
+        const key = {[tbl.timeVar.code]: tv}; if (sV) key[sV.code] = s.sv;
+        if (sub) {
+          const y = new Date(base).getUTCFullYear();
+          tbl.sub.vals.forEach(x => { const v = get(Object.assign({[tbl.sub.v.code]: x.value}, key)); if (isFinite(v)) pts.push({ms: Date.UTC(y, tbl.sub.kind === 'M' ? x.n - 1 : (x.n - 1) * 3, 1), v: v}); });
+        } else { const v = get(key); if (isFinite(v)) pts.push({ms: base, v: v}); }
       });
-    } else {
-      const v = get({[tbl.timeVar.code]: tv});
-      if (isFinite(v)) pts.push({ms: base, v: v});
-    }
-  });
-  if (subOn) f = tbl.sub.kind;
-  pts.sort((a, b) => a.ms - b.ms);
-  /* libellé de la sélection : valeurs choisies des dimensions à plusieurs valeurs */
-  const parts = vars.filter(v => !v.time && (v.values || []).length > 1 && !(subOn && v.code === tbl.sub.v.code))
-    .map(v => (v.valueTexts || [])[v.values.indexOf(tbl.sel[v.code])] || tbl.sel[v.code]);
-  tbl.series = {pts: pts, f: f, label: parts.join(' — ')};
+      pts.sort((a, b) => a.ms - b.ms);
+      s.pts = pts;
+    });
+    if (sub) f = tbl.sub.kind;
+    tbl.series = {time: true, f: f, series: series.filter(s => s.pts.length), label: fixed.join(' — '), axisLabel: tbl.timeVar.text || 'Temps', serName: sV ? (sV.text || sV.code) : ''};
+    /* compatibilité : la première série reste accessible comme avant (pts) */
+    tbl.series.pts = tbl.series.series.length ? tbl.series.series[0].pts : [];
+  } else {
+    const cats = aVals.map(val => ({val, label: vText(aV, val)}));
+    series.forEach(s => { s.vals = cats.map(c => { const key = {[aV.code]: c.val}; if (sV) key[sV.code] = s.sv; return get(key); }); });
+    tbl.series = {time: false, cats: cats, series: series, label: fixed.join(' — '), axisLabel: aV.text || aV.code, serName: sV ? (sV.text || sV.code) : '', pts: []};
+  }
   drawSelected();
 }
 
 function drawSelected(){
-  const s = tbl.series, box = $('oxSel');
-  if (!s.pts.length) { box.innerHTML = '<div class="fx-err">Aucune donnée pour cette combinaison de dimensions (valeurs manquantes ou confidentielles).</div>'; return; }
-  const pts = s.pts, last = pts[pts.length - 1], first = pts[0], dec = decimalsFor(pts.slice(-50).map(p => p.v));
-  let yoy = null;
-  const lim = new Date(last.ms); lim.setUTCFullYear(lim.getUTCFullYear() - 1);
-  for (let i = pts.length - 1; i >= 0; i--) if (pts[i].ms <= +lim) { yoy = (last.v / pts[i].v - 1) * 100; break; }
-  const inSb = isLoaded(tbl.id, seriesTitle());
-  box.innerHTML = '<h3>' + esc(s.label || 'Série') + '</h3>'
-    + '<div class="fx-kpis">'
-    +   '<div class="fx-kpi"><div class="k">Dernière valeur</div><div class="v">' + nf(dec).format(last.v) + '</div><div class="s">' + esc(fmtMs(last.ms, s.f)) + '</div></div>'
-    +   (yoy != null && isFinite(yoy) ? '<div class="fx-kpi"><div class="k">Sur 1 an</div><div class="v fx-delta ' + (yoy > 0 ? 'up' : yoy < 0 ? 'down' : '') + '">' + (yoy >= 0 ? '+' : '−') + nf(1).format(Math.abs(yoy)) + ' %</div></div>' : '')
-    +   '<div class="fx-kpi"><div class="k">Historique</div><div class="v" style="font-size:15px;margin-top:3px">' + esc(fmtMs(first.ms, s.f)) + ' → ' + esc(fmtMs(last.ms, s.f)) + '</div><div class="s">' + nf(0).format(pts.length) + ' observations · ' + esc(PER_FR[s.f] || '') + '</div></div>'
-    + '</div>'
-    + '<div class="fx-ranges" id="oxRanges">' + [['1', '1A'], ['5', '5A'], ['10', '10A'], ['20', '20A'], ['max', 'Max']].map(r => '<button type="button" data-r="' + r[0] + '" class="' + (tbl.range === r[0] ? 'on' : '') + '">' + r[1] + '</button>').join('') + '</div>'
+  const R = tbl.series, box = $('oxSel');
+  if (!R) return;
+  const hasData = R.time ? R.series.some(s => s.pts.length) : R.series.some(s => s.vals.some(isFinite));
+  if (!hasData) { box.innerHTML = '<div class="fx-err">Aucune donnée pour cette combinaison de dimensions (valeurs manquantes ou confidentielles).</div>'; return; }
+  let kpis = '';
+  if (R.time && R.series.length === 1) {
+    const pts = R.series[0].pts, last = pts[pts.length - 1], first = pts[0], dec = decimalsFor(pts.slice(-50).map(p => p.v));
+    let yoy = null;
+    const lim = new Date(last.ms); lim.setUTCFullYear(lim.getUTCFullYear() - 1);
+    for (let i = pts.length - 1; i >= 0; i--) if (pts[i].ms <= +lim) { yoy = (last.v / pts[i].v - 1) * 100; break; }
+    kpis = '<div class="fx-kpis">'
+      + '<div class="fx-kpi"><div class="k">Dernière valeur</div><div class="v">' + nf(dec).format(last.v) + '</div><div class="s">' + esc(fmtMs(last.ms, R.f)) + '</div></div>'
+      + (yoy != null && isFinite(yoy) ? '<div class="fx-kpi"><div class="k">Sur 1 an</div><div class="v fx-delta ' + (yoy > 0 ? 'up' : yoy < 0 ? 'down' : '') + '">' + (yoy >= 0 ? '+' : '−') + nf(1).format(Math.abs(yoy)) + ' %</div></div>' : '')
+      + '<div class="fx-kpi"><div class="k">Historique</div><div class="v" style="font-size:15px;margin-top:3px">' + esc(fmtMs(first.ms, R.f)) + ' → ' + esc(fmtMs(last.ms, R.f)) + '</div><div class="s">' + nf(0).format(pts.length) + ' observations · ' + esc(PER_FR[R.f] || '') + '</div></div>'
+      + '</div>';
+  } else {
+    kpis = '<div class="fx-kpis"><div class="fx-kpi"><div class="k">' + esc(R.axisLabel) + '</div><div class="v" style="font-size:15px;margin-top:3px">' + (R.time ? esc(PER_FR[R.f] || '') : nf(0).format(R.cats.length) + ' valeurs') + '</div></div>'
+      + (R.serName ? '<div class="fx-kpi"><div class="k">' + esc(R.serName) + '</div><div class="v" style="font-size:15px;margin-top:3px">' + R.series.length + ' série' + (R.series.length > 1 ? 's' : '') + '</div></div>' : '') + '</div>';
+  }
+  const allIn = R.time && R.series.length && R.series.every(s => isLoaded(tbl.id, seriesTitle(s)));
+  const kindBtns = R.time ? '' : '<div class="fx-ranges ox-kind" id="oxKind">' + [['bar', 'Barres'], ['line', 'Lignes']].map(k => '<button type="button" data-k="' + k[0] + '" class="' + (chartKind() === k[0] ? 'on' : '') + '">' + k[1] + '</button>').join('') + '</div>';
+  box.innerHTML = '<h3>' + esc([R.label || (R.time ? '' : R.axisLabel), R.serName ? 'par ' + R.serName.toLowerCase() : ''].filter(Boolean).join(' — ') || 'Série') + '</h3>'
+    + kpis
+    + (R.time ? '<div class="fx-ranges" id="oxRanges">' + [['1', '1A'], ['5', '5A'], ['10', '10A'], ['20', '20A'], ['max', 'Max']].map(r => '<button type="button" data-r="' + r[0] + '" class="' + (tbl.range === r[0] ? 'on' : '') + '">' + r[1] + '</button>').join('') + '</div>' : kindBtns)
+    + '<div class="ox-lg" id="oxLg"></div>'
     + '<div class="fx-chart" id="oxChart"><div class="fx-tip" id="oxTip"></div></div>'
     + '<div class="fx-actions">'
-    +   '<button type="button" class="btn pri" id="oxAdd">' + (inSb ? '↻ Mettre à jour dans le Chart Creator' : '+ Ajouter au Chart Creator') + '</button>'
-    +   (inSb ? '<span class="fx-in">déjà dans le catalogue du Chart Creator</span>' : '')
+    +   (R.time ? '<button type="button" class="btn pri" id="oxAdd">' + (allIn ? '↻ Mettre à jour dans le Chart Creator' : '+ Ajouter au Chart Creator' + (R.series.length > 1 ? ' (' + R.series.length + ' séries)' : '')) + '</button>' + (allIn ? '<span class="fx-in">déjà dans le catalogue du Chart Creator</span>' : '')
+              : '<span class="fx-mut" style="font-size:12px">Le Chart Creator reçoit des séries temporelles : choisissez le temps en axe pour l\'y envoyer.</span>')
     +   '<button type="button" class="btn" id="oxCsv">Télécharger CSV</button>'
-    + '</div>';
-  $('oxRanges').addEventListener('click', ev => {
+    + '</div>'
+    + '<details class="ox-data"' + (R.time ? '' : ' open') + '><summary>Tableau des données</summary><div class="ox-tblwrap">' + pivotHtml() + '</div></details>';
+  if (R.time) $('oxRanges').addEventListener('click', ev => {
     const b = ev.target.closest('[data-r]'); if (!b) return;
     tbl.range = b.dataset.r;
     $('oxRanges').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
     drawChart();
   });
-  $('oxAdd').addEventListener('click', addToChartCreator);
+  else $('oxKind').addEventListener('click', ev => { const b = ev.target.closest('[data-k]'); if (!b) return; tbl.kind = b.dataset.k; $('oxKind').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); drawChart(); });
+  if (R.time) $('oxAdd').addEventListener('click', addToChartCreator);
   $('oxCsv').addEventListener('click', downloadCsv);
   drawChart();
+}
+const chartKind = () => tbl.kind === 'line' || tbl.kind === 'bar' ? tbl.kind : 'bar';
+const serColor = i => OX_PAL[i % OX_PAL.length];
+
+/* Tableau croisé : lignes = axe, colonnes = séries */
+function pivotRows(){
+  const R = tbl.series;
+  if (R.time) {
+    const ms = Array.from(new Set([].concat.apply([], R.series.map(s => s.pts.map(p => p.ms))))).sort((a, b) => b - a);
+    const maps = R.series.map(s => { const m = new Map(); s.pts.forEach(p => m.set(p.ms, p.v)); return m; });
+    return {head: R.series.map(s => s.label), rows: ms.map(t => ({label: fmtMs(t, R.f), iso: new Date(t).toISOString().slice(0, 10), vals: maps.map(m => m.has(t) ? m.get(t) : NaN)}))};
+  }
+  return {head: R.series.map(s => s.label), rows: R.cats.map((c, i) => ({label: c.label, iso: c.label, vals: R.series.map(s => s.vals[i])}))};
+}
+function pivotHtml(){
+  const P = pivotRows(), all = [].concat.apply([], P.rows.map(r => r.vals)).filter(isFinite), dec = decimalsFor(all.slice(0, 500));
+  const rows = P.rows.slice(0, 2000);
+  return '<table class="ox-tbl"><thead><tr><th class="l">' + esc(tbl.series.axisLabel) + '</th>' + P.head.map(h => '<th>' + esc(h) + '</th>').join('') + '</tr></thead><tbody>'
+    + rows.map(r => '<tr><td class="l">' + esc(r.label) + '</td>' + r.vals.map(v => '<td>' + (isFinite(v) ? nf(dec).format(v) : '…') + '</td>').join('') + '</tr>').join('')
+    + '</tbody></table>' + (P.rows.length > rows.length ? '<div class="fx-mut" style="font-size:12px;padding:6px">' + (P.rows.length - rows.length) + ' lignes de plus dans le CSV.</div>' : '');
 }
 
 function niceTicks(lo, hi, n){
@@ -6268,22 +6420,32 @@ function niceTicks(lo, hi, n){
   for (let v = Math.floor(lo / step) * step; v <= hi + step * 0.001; v += step) t.push(+v.toFixed(10));
   return t;
 }
+function drawLegend(){
+  const R = tbl.series, el = $('oxLg'); if (!el) return;
+  el.innerHTML = R.series.length > 1 ? R.series.map((s, i) => '<span><i style="background:' + serColor(i) + '"></i>' + esc(s.label) + '</span>').join('') : '';
+}
 function drawChart(){
   const el = $('oxChart'), tip = $('oxTip');
   if (!el) return;
   Array.from(el.querySelectorAll('svg,p')).forEach(n => n.remove());
-  const s = tbl.series;
-  let P = s.pts;
-  if (tbl.range !== 'max' && P.length) {
-    const end = new Date(P[P.length - 1].ms); end.setUTCFullYear(end.getUTCFullYear() - (+tbl.range));
-    P = P.filter(p => p.ms >= +end);
+  tip.style.display = 'none';
+  drawLegend();
+  const R = tbl.series;
+  if (!R.time) return chartKind() === 'bar' ? drawBars(el, tip) : drawCatLines(el, tip);
+  let S = R.series.map((s, i) => ({label: s.label, c: serColor(i), P: s.pts}));
+  if (tbl.range !== 'max') {
+    const lastMs = Math.max.apply(null, S.filter(s => s.P.length).map(s => s.P[s.P.length - 1].ms));
+    const end = new Date(lastMs); end.setUTCFullYear(end.getUTCFullYear() - (+tbl.range));
+    S = S.map(s => Object.assign({}, s, {P: s.P.filter(p => p.ms >= +end)}));
   }
-  if (P.length < 2) { el.insertAdjacentHTML('afterbegin', '<p class="fx-mut">Pas assez de données sur cette période.</p>'); return; }
+  S = S.filter(s => s.P.length);
+  const xsAll = Array.from(new Set([].concat.apply([], S.map(s => s.P.map(p => p.ms))))).sort((a, b) => a - b);
+  if (xsAll.length < 2) { el.insertAdjacentHTML('afterbegin', '<p class="fx-mut">Pas assez de données sur cette période.</p>'); return; }
   const W = Math.max(320, el.clientWidth || 800), H = 300, m = {t: 12, r: 16, b: 28, l: 70};
-  const xs = P.map(p => p.ms), vs = P.map(p => p.v);
+  const vs = [].concat.apply([], S.map(s => s.P.map(p => p.v)));
   let lo = Math.min.apply(null, vs), hi = Math.max.apply(null, vs);
   const yt = niceTicks(lo, hi); lo = Math.min(lo, yt[0]); hi = Math.max(hi, yt[yt.length - 1]);
-  const x0 = xs[0], x1 = xs[xs.length - 1];
+  const x0 = xsAll[0], x1 = xsAll[xsAll.length - 1];
   const X = t => m.l + ((t - x0) / ((x1 - x0) || 1)) * (W - m.l - m.r);
   const Y = v => m.t + (1 - (v - lo) / ((hi - lo) || 1)) * (H - m.t - m.b);
   const ydec = decimalsFor(yt);
@@ -6297,47 +6459,115 @@ function drawChart(){
     const stepY = [1, 2, 5, 10, 20, 25, 50].find(k => yrs / k <= 8) || 50;
     for (let y = Math.ceil(new Date(x0).getUTCFullYear() / stepY) * stepY; Date.UTC(y, 0, 1) <= x1; y += stepY) if (Date.UTC(y, 0, 1) >= x0) xt.push([Date.UTC(y, 0, 1), String(y)]);
   }
-  const path = P.map((p, i) => (i ? 'L' : 'M') + X(xs[i]).toFixed(1) + ',' + Y(p.v).toFixed(1)).join('');
   const zero = (lo < 0 && hi > 0) ? '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(0) + '" y2="' + Y(0) + '" stroke="#9A9B98"/>' : '';
-  const dots = P.length <= 40 ? P.map((p, i) => '<circle cx="' + X(xs[i]).toFixed(1) + '" cy="' + Y(p.v).toFixed(1) + '" r="2.5" fill="#0086B3"/>').join('') : '';
-  el.insertAdjacentHTML('afterbegin', '<svg viewBox="0 0 ' + W + ' ' + H + '" height="' + H + '" role="img" aria-label="' + esc(s.label) + '">'
+  const lines = S.map(s => '<path d="' + s.P.map((p, i) => (i ? 'L' : 'M') + X(p.ms).toFixed(1) + ',' + Y(p.v).toFixed(1)).join('') + '" fill="none" stroke="' + s.c + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
+    + (s.P.length <= 40 ? s.P.map(p => '<circle cx="' + X(p.ms).toFixed(1) + '" cy="' + Y(p.v).toFixed(1) + '" r="2.5" fill="' + s.c + '"/>').join('') : '')).join('');
+  el.insertAdjacentHTML('afterbegin', '<svg viewBox="0 0 ' + W + ' ' + H + '" height="' + H + '" role="img" aria-label="' + esc(R.label || 'Série') + '">'
     + yt.map(v => '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="#ECEAE4"/><text x="' + (m.l - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end" font-size="11" fill="#6B6F76">' + nf(ydec).format(v) + '</text>').join('')
     + zero
     + xt.map(x => '<text x="' + X(x[0]) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="#6B6F76">' + x[1] + '</text>').join('')
-    + '<path d="' + path + '" fill="none" stroke="#0086B3" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>' + dots
+    + lines
     + '<line class="xh" y1="' + m.t + '" y2="' + (H - m.b) + '" stroke="#02182B" stroke-opacity=".35" stroke-dasharray="3 3" visibility="hidden"/>'
-    + '<circle class="dot" r="4.5" fill="#0086B3" stroke="#fff" stroke-width="2" visibility="hidden"/>'
     + '<rect class="hit" x="' + m.l + '" y="' + m.t + '" width="' + (W - m.l - m.r) + '" height="' + (H - m.t - m.b) + '" fill="transparent"/>'
     + '</svg>');
-  const svg = el.querySelector('svg'), xh = svg.querySelector('.xh'), dot = svg.querySelector('.dot'), hit = svg.querySelector('.hit');
-  const vdec = decimalsFor(vs.slice(-50));
+  const svg = el.querySelector('svg'), xh = svg.querySelector('.xh'), hit = svg.querySelector('.hit');
+  const vdec = decimalsFor(vs.slice(-200));
+  const maps = S.map(s => { const mm = new Map(); s.P.forEach(p => mm.set(p.ms, p.v)); return mm; });
   hit.addEventListener('mousemove', ev => {
     const r = svg.getBoundingClientRect(), mx = ((ev.clientX - r.left) / r.width) * W;
     const t = x0 + ((mx - m.l) / (W - m.l - m.r)) * (x1 - x0);
-    let a = 0, b = xs.length - 1;
-    while (b - a > 1) { const mid = (a + b) >> 1; if (xs[mid] < t) a = mid; else b = mid; }
-    const i = Math.abs(xs[a] - t) < Math.abs(xs[b] - t) ? a : b;
-    const px = X(xs[i]), py = Y(P[i].v);
+    let a = 0, b = xsAll.length - 1;
+    while (b - a > 1) { const mid = (a + b) >> 1; if (xsAll[mid] < t) a = mid; else b = mid; }
+    const ms = Math.abs(xsAll[a] - t) < Math.abs(xsAll[b] - t) ? xsAll[a] : xsAll[b];
+    const px = X(ms);
     xh.setAttribute('x1', px); xh.setAttribute('x2', px); xh.setAttribute('visibility', 'visible');
-    dot.setAttribute('cx', px); dot.setAttribute('cy', py); dot.setAttribute('visibility', 'visible');
+    const vals = S.map((s, i) => ({s, v: maps[i].get(ms)})).filter(o => o.v != null);
+    const yTop = vals.length ? Math.min.apply(null, vals.map(o => Y(o.v))) : m.t + 20;
     tip.style.display = 'block';
-    tip.style.left = (px / W) * r.width + 'px'; tip.style.top = (py / H) * r.height + 'px';
-    tip.innerHTML = esc(fmtMs(P[i].ms, s.f)) + '<br><b>' + nf(vdec).format(P[i].v) + '</b>';
+    tip.style.left = (px / W) * r.width + 'px'; tip.style.top = (yTop / H) * r.height + 'px';
+    tip.innerHTML = esc(fmtMs(ms, R.f)) + vals.map(o => '<br>' + (S.length > 1 ? '<span style="color:' + o.s.c + '">■</span> ' + esc(o.s.label) + ' : ' : '') + '<b>' + nf(vdec).format(o.v) + '</b>').join('');
   });
-  hit.addEventListener('mouseleave', () => { xh.setAttribute('visibility', 'hidden'); dot.setAttribute('visibility', 'hidden'); tip.style.display = 'none'; });
+  hit.addEventListener('mouseleave', () => { xh.setAttribute('visibility', 'hidden'); tip.style.display = 'none'; });
+}
+/* Axe non temporel : barres horizontales groupées (une ligne par valeur de l'axe) */
+function drawBars(el, tip){
+  const R = tbl.series, k = R.series.length, n = R.cats.length;
+  const W = Math.max(320, el.clientWidth || 800), bh = k > 1 ? Math.max(5, Math.min(12, 22 / k)) : 16, gap = 7, rowH = bh * k + gap;
+  const labW = Math.min(260, Math.max(90, Math.round(W * 0.28))), m = {t: 8, r: 64, b: 24, l: labW + 10}, H = m.t + m.b + n * rowH;
+  const vs = [].concat.apply([], R.series.map(s => s.vals)).filter(isFinite);
+  let lo = Math.min(0, Math.min.apply(null, vs)), hi = Math.max(0, Math.max.apply(null, vs));
+  const xt = niceTicks(lo, hi); lo = Math.min(lo, xt[0]); hi = Math.max(hi, xt[xt.length - 1]);
+  const X = v => m.l + (v - lo) / ((hi - lo) || 1) * (W - m.l - m.r), dec = decimalsFor(vs), xdec = decimalsFor(xt);
+  const cut = (s, px) => { const max = Math.floor(px / 6.3); return s.length > max ? s.slice(0, max - 1) + '…' : s; };
+  let h = '<svg viewBox="0 0 ' + W + ' ' + H + '" height="' + H + '" role="img" aria-label="' + esc(R.axisLabel) + '">'
+    + xt.map(v => '<line x1="' + X(v) + '" x2="' + X(v) + '" y1="' + m.t + '" y2="' + (H - m.b) + '" stroke="' + (v === 0 ? '#9A9B98' : '#ECEAE4') + '"/><text x="' + X(v) + '" y="' + (H - 7) + '" text-anchor="middle" font-size="11" fill="#6B6F76">' + nf(xdec).format(v) + '</text>').join('');
+  R.cats.forEach((c, i) => {
+    const y = m.t + i * rowH;
+    h += '<text x="' + (m.l - 8) + '" y="' + (y + rowH / 2 + 1).toFixed(1) + '" text-anchor="end" font-size="11.5" fill="#1A1F27"><title>' + esc(c.label) + '</title>' + esc(cut(c.label, labW)) + '</text>';
+    R.series.forEach((s, j) => {
+      const v = s.vals[i]; if (!isFinite(v)) return;
+      const x0 = X(Math.min(0, v)), x1 = X(Math.max(0, v)), yy = y + gap / 2 + j * bh;
+      h += '<rect class="bar" data-i="' + i + '" data-j="' + j + '" x="' + x0.toFixed(1) + '" y="' + yy.toFixed(1) + '" width="' + Math.max(1, x1 - x0).toFixed(1) + '" height="' + (bh - 1).toFixed(1) + '" fill="' + serColor(j) + '" rx="2"/>';
+      if (k === 1 && n <= 60) h += '<text x="' + (x1 + 4).toFixed(1) + '" y="' + (yy + bh / 2 + 3.5).toFixed(1) + '" font-size="10.5" fill="#6B6F76">' + nf(dec).format(v) + '</text>';
+    });
+  });
+  el.insertAdjacentHTML('afterbegin', h + '</svg>');
+  const svg = el.querySelector('svg');
+  svg.addEventListener('mousemove', ev => {
+    const b = ev.target.closest('.bar'); if (!b) { tip.style.display = 'none'; return; }
+    const i = +b.dataset.i, j = +b.dataset.j, r = svg.getBoundingClientRect(), bb = b.getBBox();
+    tip.style.display = 'block'; tip.style.left = ((bb.x + bb.width) / W) * r.width + 'px'; tip.style.top = (bb.y / H) * r.height + 'px';
+    tip.innerHTML = esc(R.cats[i].label) + (k > 1 ? '<br>' + esc(R.series[j].label) : '') + '<br><b>' + nf(dec).format(R.series[j].vals[i]) + '</b>';
+  });
+  svg.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+}
+/* Axe non temporel : lignes (profil, ex. par classe d'âge) */
+function drawCatLines(el, tip){
+  const R = tbl.series, n = R.cats.length;
+  const W = Math.max(320, el.clientWidth || 800), rot = n > 10, H = 300 + (rot ? 60 : 0), m = {t: 12, r: 16, b: rot ? 88 : 28, l: 70};
+  const vs = [].concat.apply([], R.series.map(s => s.vals)).filter(isFinite);
+  let lo = Math.min.apply(null, vs), hi = Math.max.apply(null, vs);
+  const yt = niceTicks(lo, hi); lo = Math.min(lo, yt[0]); hi = Math.max(hi, yt[yt.length - 1]);
+  const X = i => m.l + (n > 1 ? i / (n - 1) : 0.5) * (W - m.l - m.r), Y = v => m.t + (1 - (v - lo) / ((hi - lo) || 1)) * (H - m.t - m.b);
+  const ydec = decimalsFor(yt), dec = decimalsFor(vs), every = Math.max(1, Math.ceil(n / (rot ? 40 : 12)));
+  let h = '<svg viewBox="0 0 ' + W + ' ' + H + '" height="' + H + '">'
+    + yt.map(v => '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="#ECEAE4"/><text x="' + (m.l - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end" font-size="11" fill="#6B6F76">' + nf(ydec).format(v) + '</text>').join('')
+    + R.cats.map((c, i) => i % every ? '' : (rot ? '<text transform="translate(' + X(i).toFixed(1) + ' ' + (H - m.b + 12) + ') rotate(-40)" text-anchor="end" font-size="10.5" fill="#6B6F76">' + esc(c.label.length > 22 ? c.label.slice(0, 21) + '…' : c.label) + '</text>'
+      : '<text x="' + X(i).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="#6B6F76">' + esc(c.label.length > 14 ? c.label.slice(0, 13) + '…' : c.label) + '</text>')).join('');
+  R.series.forEach((s, j) => {
+    let d = '', pen = false;
+    s.vals.forEach((v, i) => { if (!isFinite(v)) { pen = false; return; } d += (pen ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1); pen = true; });
+    h += '<path d="' + d + '" fill="none" stroke="' + serColor(j) + '" stroke-width="2" stroke-linejoin="round"/>';
+    if (n <= 40) s.vals.forEach((v, i) => { if (isFinite(v)) h += '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(v).toFixed(1) + '" r="2.5" fill="' + serColor(j) + '"/>'; });
+  });
+  h += '<line class="xh" y1="' + m.t + '" y2="' + (H - m.b) + '" stroke="#02182B" stroke-opacity=".35" stroke-dasharray="3 3" visibility="hidden"/><rect class="hit" x="' + m.l + '" y="' + m.t + '" width="' + (W - m.l - m.r) + '" height="' + (H - m.t - m.b) + '" fill="transparent"/></svg>';
+  el.insertAdjacentHTML('afterbegin', h);
+  const svg = el.querySelector('svg'), xh = svg.querySelector('.xh');
+  svg.querySelector('.hit').addEventListener('mousemove', ev => {
+    const r = svg.getBoundingClientRect(), mx = ((ev.clientX - r.left) / r.width) * W;
+    const i = Math.max(0, Math.min(n - 1, Math.round((mx - m.l) / ((W - m.l - m.r) || 1) * (n - 1))));
+    xh.setAttribute('x1', X(i)); xh.setAttribute('x2', X(i)); xh.setAttribute('visibility', 'visible');
+    tip.style.display = 'block'; tip.style.left = (X(i) / W) * r.width + 'px'; tip.style.top = (m.t + 30) / H * r.height + 'px';
+    tip.innerHTML = esc(R.cats[i].label) + R.series.map((s, j) => isFinite(s.vals[i]) ? '<br>' + (R.series.length > 1 ? '<span style="color:' + serColor(j) + '">■</span> ' + esc(s.label) + ' : ' : '') + '<b>' + nf(dec).format(s.vals[i]) + '</b>' : '').join('');
+  });
+  svg.querySelector('.hit').addEventListener('mouseleave', () => { xh.setAttribute('visibility', 'hidden'); tip.style.display = 'none'; });
 }
 let rT = null;
 window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (tbl && tbl.series && !$('oxTableView').hidden && $('screenOfs').classList.contains('on')) drawChart(); }, 150); });
 
-function seriesTitle(){
-  const fr = FR[tbl.id] || {};
-  return (fr.title || tbl.meta.title || tbl.entry.de) + (tbl.series && tbl.series.label ? ' — ' + tbl.series.label : '') + (tbl.subOn && tbl.sub ? (tbl.sub.kind === 'M' ? ' (mensuel)' : ' (trimestriel)') : '');
+function seriesTitle(s){
+  const fr = FR[tbl.id] || {}, R = tbl.series || {};
+  s = s || (R.series && R.series[0]) || {};
+  const parts = [R.label, R.serName ? s.label : ''].filter(Boolean).join(' — ');
+  return (fr.title || tbl.meta.title || tbl.entry.de) + (parts ? ' — ' + parts : '') + (subActive() ? (tbl.sub.kind === 'M' ? ' (mensuel)' : ' (trimestriel)') : '');
 }
 function downloadCsv(){
-  const s = tbl.series;
-  const csv = 'date;' + tbl.id + '\n' + s.pts.map(p => new Date(p.ms).toISOString().slice(0, 10) + ';' + p.v).join('\n');
+  const P = pivotRows(), R = tbl.series;
+  const q = x => /[;"\n]/.test(String(x)) ? '"' + String(x).replace(/"/g, '""') + '"' : x;
+  const rows = R.time ? P.rows.slice().reverse() : P.rows;
+  const csv = '﻿' + [q(R.time ? 'date' : R.axisLabel)].concat(P.head.map(q)).join(';') + '\n' + rows.map(r => [q(r.iso)].concat(r.vals.map(v => isFinite(v) ? String(v) : '')).join(';')).join('\n');
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv'}));
+  a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8'}));
   a.download = tbl.id + '.csv';
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
@@ -6346,11 +6576,17 @@ function downloadCsv(){
 /* ---------------------------------------------------------------- catalogue du Chart Creator (BFS_CATALOG) */
 const isLoaded = (dbid, title) => BFS_LOADED.some(x => x.dbid === dbid && x.title === title);
 function addToChartCreator(){
-  const title = seriesTitle();
-  const existing = BFS_LOADED.find(x => x.dbid === tbl.id && x.title === title);
-  if (existing) bfsRemoveLoaded(existing.key, true);
-  bfsAddLoaded({title: title, dbid: tbl.id, lang: tbl.lang, t: tbl.series.pts.map(p => p.ms), values: tbl.series.pts.map(p => p.v)});
-  oxToast((existing ? 'Série mise à jour' : 'Série ajoutée') + ' — ' + tbl.series.pts.length + ' points disponibles dans le Chart Creator', true, (tbl.series.label || title).slice(0, 40));
+  const R = tbl.series; if (!R || !R.time) return;
+  let n = 0, upd = 0;
+  R.series.forEach(s => {
+    if (!s.pts.length) return;
+    const title = seriesTitle(s);
+    const existing = BFS_LOADED.find(x => x.dbid === tbl.id && x.title === title);
+    if (existing) { bfsRemoveLoaded(existing.key, true); upd++; }
+    bfsAddLoaded({title: title, dbid: tbl.id, lang: tbl.lang, t: s.pts.map(p => p.ms), values: s.pts.map(p => p.v)});
+    n++;
+  });
+  oxToast((n > 1 ? n + ' séries ' : 'Série ') + (upd ? 'mise(s) à jour' : 'ajoutée' + (n > 1 ? 's' : '')) + ' — disponibles dans le Chart Creator', true, (R.label || (FR[tbl.id] || {}).title || '').slice(0, 40));
   drawSelected();
 }
 
