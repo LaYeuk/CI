@@ -27,6 +27,9 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 .topnav .navbtn{border:1px solid rgba(255,255,255,.22);background:transparent;color:#CBD5DA;padding:6px 14px;border-radius:20px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;transition:.15s}
 .topnav .navbtn:hover{border-color:#fff;color:#fff}
 .topnav .navbtn.on{background:var(--cyan);border-color:var(--cyan);color:var(--navy)}
+.topnav .navsep{width:1px;align-self:stretch;margin:3px 4px;background:rgba(255,255,255,.22)}
+#screenHome .tilegrid.g5{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+@media (max-width:1000px){#screenHome .tilegrid.g5{grid-template-columns:repeat(auto-fill,minmax(235px,1fr))}}
 
 #screenHome header{background:var(--navy);color:#fff;padding:22px 28px;display:flex;align-items:center;gap:16px}
 #screenHome header img{height:34px}
@@ -91,7 +94,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenHome .note{margin-top:30px;font-size:11.5px;color:var(--mut);line-height:1.6;background:#FFFFFF;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
 #screenHome .note b{color:var(--ink)}
 
-/* ---- Composants partagés : grille d'items envoyés vers une destination (Whiteboard / AM Dashboard / Chart Pack) ---- */
+/* ---- Composants partagés : grille d'items envoyés vers une destination (Whiteboard / Risk Map / Chart Pack) ---- */
 .destgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:10px}
 .destcard{border:1px solid var(--line);border-radius:8px;padding:9px 10px 10px;background:#fff}
 .destcard img{width:100%;height:auto;display:block;border-radius:5px;border:1px solid var(--line)}
@@ -338,7 +341,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 .modal-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--mut);margin-top:10px}
 .modal-legend .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:middle}
 
-/* ---- Modales Agrandir/Éditer partagées (Whiteboard + AM Dashboard), hors des écrans pour rester visibles de partout ---- */
+/* ---- Modales Agrandir/Éditer partagées (Whiteboard + Risk Map), hors des écrans pour rester visibles de partout ---- */
 .modal-overlay .hint{color:var(--mut);font-size:12px;line-height:1.5;margin-bottom:6px}
 .modal-overlay input[type=text]{padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
 .modal-overlay .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 14px;font:inherit;font-size:12.5px;cursor:pointer}
@@ -348,7 +351,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 .modal-overlay .btn.danger:hover{background:#FBEAE9}
 .modal-overlay .flag{font-size:11px;border:1px solid #B6C0C6;border-radius:10px;padding:4px 11px;cursor:pointer;color:var(--mut);background:#fff;user-select:none;display:inline-block}
 .modal-overlay .flag.on{background:#E8F6FA;border-color:#0a6b8c;color:var(--navy)}
-/* ---- AM Dashboard : graphiques ajoutés plus grands par défaut, comme dans le Whiteboard ---- */
+/* ---- Risk Map : graphiques ajoutés plus grands par défaut, comme dans le Whiteboard ---- */
 #screenAM .destgrid{grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:16px}
 #screenAM .destttl{font-size:13px}
 
@@ -838,7 +841,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenAM {background:#fff}
 #screenAM .card {break-inside:avoid;border:1px solid #ccc}
 }
-/* ---- Écran « Quadrant » (croissance / inflation) ---- */
+/* ---- Écran « Cadran » (croissance / inflation) ---- */
 #screenQuad .qd-card{padding:16px 20px;margin-bottom:16px}
 #screenQuad .qd-top{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
 #screenQuad .qd-search{flex:1;min-width:280px}
@@ -905,19 +908,22 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
   <div class="navgroups">
     <div class="navbtns">
       <button type="button" class="navbtn on" data-screen="home">Accueil</button>
+      <span class="navsep" aria-hidden="true"></span>
+      <button type="button" class="navbtn" data-screen="am">Risk Map</button>
+      <button type="button" class="navbtn" data-screen="dash">Market Dashboard</button>
+      <button type="button" class="navbtn" data-screen="lab">Market Lab</button>
+      <button type="button" class="navbtn" data-screen="quad">Cadran</button>
+    </div>
+    <div class="navbtns">
       <button type="button" class="navbtn" data-screen="sandbox">Chart Creator</button>
       <button type="button" class="navbtn" data-screen="snb">BNS</button>
       <button type="button" class="navbtn" data-screen="fred">FRED</button>
       <button type="button" class="navbtn" data-screen="ofs">OFS</button>
       <button type="button" class="navbtn" data-screen="mkt">Market Data</button>
-      <button type="button" class="navbtn" data-screen="dash">Market Dashboard</button>
-      <button type="button" class="navbtn" data-screen="lab">Market Lab</button>
-      <button type="button" class="navbtn" data-screen="quad">Quadrant</button>
-    </div>
-    <div class="navbtns">
+      <span class="navsep" aria-hidden="true"></span>
       <button type="button" class="navbtn" data-screen="chartpack">Chart Pack</button>
-      <button type="button" class="navbtn" data-screen="am">AM Dashboard</button>
       <button type="button" class="navbtn" data-screen="whiteboard">Whiteboard</button>
+      <span class="navsep" aria-hidden="true"></span>
       <button type="button" class="navbtn" id="gipTeamKeyBtn" title="Clé d'équipe et état de la base partagée" style="padding:6px 10px"><span id="gipDbDot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#8A9199;margin-right:6px;vertical-align:middle"></span>🔑</button>
     </div>
   </div>
@@ -933,10 +939,38 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
     </div>
   </header>
   <main>
-    <div class="intro">Choisissez un outil. Les classeurs Excel de référence (Chart Pack et AM Dashboard) sont chargés automatiquement depuis le site.</div>
+    <div class="intro">Choisissez un outil. Les classeurs Excel de référence (Chart Pack et Risk Map) sont chargés automatiquement depuis le site.</div>
+
+    <h3 class="hsec">Marchés</h3>
+    <div class="tilegrid">
+      <button type="button" class="tile" data-open="am">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3L20 6.5V11.5C20 16.2 16.9 20.4 12 21.5C7.1 20.4 4 16.2 4 11.5V6.5L12 3Z" stroke="#00CFFF" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11.2 14.2L15.5 9.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2>Risk Map</h2>
+        <p>Tableaux et graphiques de la feuille « Copy Risk Map », plus vos graphiques déposés depuis le Chart Creator.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="dash">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="5" height="5" rx="1" fill="#18A05F"/><rect x="9.5" y="3" width="5" height="5" rx="1" fill="#DDD8C4"/><rect x="16" y="3" width="5" height="5" rx="1" fill="#D04830"/><rect x="3" y="9.5" width="5" height="5" rx="1" fill="#DDD8C4"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" fill="#18A05F" fill-opacity=".6"/><rect x="16" y="9.5" width="5" height="5" rx="1" fill="#18A05F"/><rect x="3" y="16" width="5" height="5" rx="1" fill="#D04830" fill-opacity=".6"/><rect x="9.5" y="16" width="5" height="5" rx="1" fill="#00CFFF"/><rect x="16" y="16" width="5" height="5" rx="1" fill="#DDD8C4"/></svg></div>
+        <h2>Market Dashboard</h2>
+        <p>Dernières clôtures de 349 titres (peers suisses et internationaux) en briques colorées : variation du jour, mini-courbe, synthèse par section.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="lab">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.2" fill="#00CFFF"/><rect x="14" y="3" width="7" height="7" rx="1.2" fill="#DDD8C4"/><rect x="3" y="14" width="7" height="7" rx="1.2" fill="#DDD8C4"/><rect x="14" y="14" width="7" height="7" rx="1.2" fill="#00CFFF" fill-opacity=".55"/><path d="M10 6.5H14M6.5 10V14M17.5 10V14M10 17.5H14" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+        <h2>Market Lab</h2>
+        <p>Corrélations entre titres du SPI (ou de votre choix) sur l'historique de votre choix : matrice, paires extrêmes, export.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="quad">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3V21M3 12H21" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="16.5" cy="7.5" r="2" fill="#00CFFF"/><circle cx="7" cy="8.5" r="1.6" fill="#DDD8C4"/><circle cx="17" cy="16" r="1.6" fill="#00CFFF" fill-opacity=".6"/><circle cx="8" cy="16.5" r="2" fill="#DDD8C4"/></svg></div>
+        <h2>Cadran</h2>
+        <p>Matrice croissance / inflation : chaque titre choisi est placé dans son cadran selon sa sensibilité au cuivre/or et aux TIPS ; régime macro actuel mis en évidence.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+    </div>
 
     <h3 class="hsec">Créer un graphique</h3>
-    <div class="tilegrid six">
+    <div class="tilegrid g5">
       <button type="button" class="tile" data-open="sandbox">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 17L8.5 11.5L12.5 14.5L20 6" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 6H20V10.5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20.5H21" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg></div>
         <h2>Chart Creator</h2>
@@ -967,38 +1001,14 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
         <p>Cotes et historiques de marché (actions, indices, changes, matières premières, crypto) : watchlist partagée et envoi au Chart Creator.</p>
         <span class="go2">Ouvrir →</span>
       </button>
-      <button type="button" class="tile" data-open="dash">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="5" height="5" rx="1" fill="#18A05F"/><rect x="9.5" y="3" width="5" height="5" rx="1" fill="#DDD8C4"/><rect x="16" y="3" width="5" height="5" rx="1" fill="#D04830"/><rect x="3" y="9.5" width="5" height="5" rx="1" fill="#DDD8C4"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" fill="#18A05F" fill-opacity=".6"/><rect x="16" y="9.5" width="5" height="5" rx="1" fill="#18A05F"/><rect x="3" y="16" width="5" height="5" rx="1" fill="#D04830" fill-opacity=".6"/><rect x="9.5" y="16" width="5" height="5" rx="1" fill="#00CFFF"/><rect x="16" y="16" width="5" height="5" rx="1" fill="#DDD8C4"/></svg></div>
-        <h2>Market Dashboard</h2>
-        <p>Dernières clôtures de 349 titres (peers suisses et internationaux) en briques colorées : variation du jour, mini-courbe, synthèse par section.</p>
-        <span class="go2">Ouvrir →</span>
-      </button>
-      <button type="button" class="tile" data-open="lab">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.2" fill="#00CFFF"/><rect x="14" y="3" width="7" height="7" rx="1.2" fill="#DDD8C4"/><rect x="3" y="14" width="7" height="7" rx="1.2" fill="#DDD8C4"/><rect x="14" y="14" width="7" height="7" rx="1.2" fill="#00CFFF" fill-opacity=".55"/><path d="M10 6.5H14M6.5 10V14M17.5 10V14M10 17.5H14" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-        <h2>Market Lab</h2>
-        <p>Corrélations entre titres du SPI (ou de votre choix) sur l'historique de votre choix : matrice, paires extrêmes, export.</p>
-        <span class="go2">Ouvrir →</span>
-      </button>
-      <button type="button" class="tile" data-open="quad">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3V21M3 12H21" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="16.5" cy="7.5" r="2" fill="#00CFFF"/><circle cx="7" cy="8.5" r="1.6" fill="#DDD8C4"/><circle cx="17" cy="16" r="1.6" fill="#00CFFF" fill-opacity=".6"/><circle cx="8" cy="16.5" r="2" fill="#DDD8C4"/></svg></div>
-        <h2>Quadrant</h2>
-        <p>Matrice croissance / inflation : chaque titre choisi est placé dans son cadrant selon sa sensibilité au cuivre/or et aux TIPS ; régime macro actuel mis en évidence.</p>
-        <span class="go2">Ouvrir →</span>
-      </button>
     </div>
 
-    <h3 class="hsec">Diffuser et suivre</h3>
+    <h3 class="hsec">CI</h3>
     <div class="tilegrid">
       <button type="button" class="tile" data-open="chartpack">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V10" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><path d="M10 19V5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><path d="M16 19V13" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><path d="M20 19V8" stroke="#DDD8C4" stroke-width="2" stroke-linecap="round"/><path d="M3 20.5H21" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg></div>
         <h2>Chart Pack – CI</h2>
         <p>Assemblez les figures, ordonnez-les et générez le PDF du comité d'investissement.</p>
-        <span class="go2">Ouvrir →</span>
-      </button>
-      <button type="button" class="tile" data-open="am">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3L20 6.5V11.5C20 16.2 16.9 20.4 12 21.5C7.1 20.4 4 16.2 4 11.5V6.5L12 3Z" stroke="#00CFFF" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11.2 14.2L15.5 9.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h2>AM Dashboard <span class="sub2">(Risk Map)</span></h2>
-        <p>Tableaux et graphiques de la feuille « Copy Risk Map », plus vos graphiques déposés depuis le Chart Creator.</p>
         <span class="go2">Ouvrir →</span>
       </button>
       <button type="button" class="tile" data-open="whiteboard">
@@ -1011,7 +1021,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 
     <div class="datastrip">
       <div><b>Chart Pack</b><div class="stat" id="homeCpStatus">Aucun fichier chargé.</div></div>
-      <div><b>AM Dashboard</b><div class="stat" id="rmwStatus">Aucun classeur chargé.</div></div>
+      <div><b>Risk Map</b><div class="stat" id="rmwStatus">Aucun classeur chargé.</div></div>
     </div>
 
     <details class="manual">
@@ -1028,12 +1038,12 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 
 <div id="screenChartPack" class="screen">
 
-<header><h1>Chart Pack &ndash; Comité d'investissement</h1><span>Ordonnez les figures envoyées depuis le Chart Creator (ou l'AM Dashboard) et générez le PDF. Tout se passe dans votre navigateur.</span></header>
+<header><h1>Chart Pack &ndash; Comité d'investissement</h1><span>Ordonnez les figures envoyées depuis le Chart Creator (ou la Risk Map) et générez le PDF. Tout se passe dans votre navigateur.</span></header>
 <main>
   <!-- 1. SERIES -->
   <section class="panel">
-    <h2><span class="step">1</span>Graphiques de l'AM Dashboard <span style="font-size:11px;font-weight:600;color:var(--mut);background:#ECEADF;border-radius:5px;padding:2px 6px;margin-left:6px">facultatif</span></h2>
-    <div class="hint" style="margin-bottom:8px">Les graphiques créés dans le <b>Chart Creator</b> arrivent directement dans la liste « Document » (bouton « → Chart Pack CI »). Ici, vous pouvez en plus reprendre des graphiques de l'AM Dashboard.</div>
+    <h2><span class="step">1</span>Graphiques de la Risk Map <span style="font-size:11px;font-weight:600;color:var(--mut);background:#ECEADF;border-radius:5px;padding:2px 6px;margin-left:6px">facultatif</span></h2>
+    <div class="hint" style="margin-bottom:8px">Les graphiques créés dans le <b>Chart Creator</b> arrivent directement dans la liste « Document » (bouton « → Chart Pack CI »). Ici, vous pouvez en plus reprendre des graphiques de la Risk Map.</div>
     <div id="cpLegacyCreate" hidden>
     <div class="tabbar" id="srcTabs">
       <button type="button" class="on" data-tab="series">Séries Excel</button>
@@ -1292,7 +1302,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       <div class="full"><label>Titre du graphique</label><input type="text" id="sbTitle" placeholder="ex. Cuivre / Or — signal cycle"></div>
     </div>
     <div id="sbAxisPick" style="display:none;margin-bottom:8px"><div class="hint">Cliquez une série pour la basculer sur un second axe Y :</div><div id="sbAxisChips" style="margin-top:4px"></div></div>
-    <div id="sbTypeWrap" style="display:none;margin-bottom:8px"><div class="hint">Type de graphique par série (comme dans l'AM Dashboard) :</div><div id="sbTypeRow" style="margin-top:4px;display:flex;flex-wrap:wrap;gap:8px"></div></div>
+    <div id="sbTypeWrap" style="display:none;margin-bottom:8px"><div class="hint">Type de graphique par série (comme dans la Risk Map) :</div><div id="sbTypeRow" style="margin-top:4px;display:flex;flex-wrap:wrap;gap:8px"></div></div>
     <div class="row" style="margin-top:0">
       <span class="flag" id="sbOptTbl" data-k="table">Tableau (6 dernières obs.)</span>
       <span class="flag" id="sbOptRsi" data-k="rsi">RSI (14)</span>
@@ -1326,7 +1336,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       <div class="hint" style="margin-bottom:8px">Ou l'envoyer vers :</div>
       <div class="row" style="margin-top:0">
         <button class="btn pri" id="sbSendChartpack" disabled type="button">→ Chart Pack CI</button>
-        <button class="btn pri" id="sbSendDashboard" disabled type="button">→ AM Dashboard</button>
+        <button class="btn pri" id="sbSendDashboard" disabled type="button">→ Risk Map</button>
         <button class="btn pri" id="sbSendWhiteboard" disabled type="button">→ Whiteboard</button>
       </div>
       <div class="msg" id="sbMsg"></div>
@@ -1690,7 +1700,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 </div>
 <div id="screenQuad" class="screen">
 
-<header><h1>Quadrant</h1><span>Croissance / inflation : chaque titre choisi est placé dans le cadrant où il réagit, d'après sa sensibilité aux facteurs de marché.</span></header>
+<header><h1>Cadran</h1><span>Croissance / inflation : chaque titre choisi est placé dans le cadran où il réagit, d'après sa sensibilité aux facteurs de marché.</span></header>
 <main>
   <div class="fx-err" id="qdSetup" hidden></div>
 
@@ -1724,15 +1734,15 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       </div>
       <div>
         <table class="qd-tbl">
-          <thead><tr><th>Titre</th><th title="Bêta standardisé au facteur croissance (cuivre / or)">β crois.</th><th title="Bêta standardisé au facteur inflation (TIPS / IEF)">β infl.</th><th title="Bêta standardisé à USDCHF">β CHF</th><th title="Part de la variance du titre expliquée par les facteurs">R²</th><th>Cadrant</th><th></th></tr></thead>
+          <thead><tr><th>Titre</th><th title="Bêta standardisé au facteur croissance (cuivre / or)">β crois.</th><th title="Bêta standardisé au facteur inflation (TIPS / IEF)">β infl.</th><th title="Bêta standardisé à USDCHF">β CHF</th><th title="Part de la variance du titre expliquée par les facteurs">R²</th><th>Cadran</th><th></th></tr></thead>
           <tbody id="qdBody"></tbody>
         </table>
       </div>
     </div>
     <div class="qd-send">
-      <span class="lbl">Envoyer le quadrant (image) vers :</span>
+      <span class="lbl">Envoyer le cadran (image) vers :</span>
       <button type="button" class="btn" data-qsend="chartpack">Chart Pack</button>
-      <button type="button" class="btn" data-qsend="dashboard">AM Dashboard</button>
+      <button type="button" class="btn" data-qsend="dashboard">Risk Map</button>
       <button type="button" class="btn" data-qsend="whiteboard">Whiteboard</button>
       <span class="sp" style="flex:1"></span>
       <button type="button" class="btn" id="qdPng">PNG</button>
@@ -1815,7 +1825,7 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
       <span class="lb-legend"><em>−1</em><i></i><em>+1</em></span>
       <span style="margin-left:auto;display:flex;gap:6px"><button type="button" class="btn" id="lbCsv">Télécharger CSV</button><button type="button" class="btn" id="lbPng">Image PNG</button></span>
     </div>
-    <div class="fx-bar lb-sendbar"><span class="lb-lbl">Envoyer la matrice (image) vers :</span><button type="button" class="btn" data-send="chartpack" data-scope="mat">Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="mat">AM Dashboard</button><button type="button" class="btn" data-send="whiteboard" data-scope="mat">Whiteboard</button></div>
+    <div class="fx-bar lb-sendbar"><span class="lb-lbl">Envoyer la matrice (image) vers :</span><button type="button" class="btn" data-send="chartpack" data-scope="mat">Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="mat">Risk Map</button><button type="button" class="btn" data-send="whiteboard" data-scope="mat">Whiteboard</button></div>
     <div class="lb-wrap" id="lbWrap"><canvas id="lbCanvas"></canvas><div class="lb-hl" id="lbHl" hidden></div><div class="fx-tip" id="lbTip"></div></div>
     <div class="lb-miss" id="lbMiss" hidden></div>
     <div class="lb-pairs" id="lbPairs"></div>
@@ -1855,7 +1865,7 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
   <section class="fx-card lb-card" id="lbRRes" hidden>
     <div class="lb-h"><h3>3 · Corrélation glissante</h3><button type="button" class="btn" id="lbRCsv">Télécharger CSV</button></div>
     <div class="lb-rhead" id="lbRHead"></div>
-    <div class="fx-bar lb-sendbar"><span class="lb-lbl">Envoyer les 5 graphiques (images) vers :</span><button type="button" class="btn" data-send="chartpack" data-scope="roll">Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="roll">AM Dashboard</button><button type="button" class="btn" data-send="whiteboard" data-scope="roll">Whiteboard</button></div>
+    <div class="fx-bar lb-sendbar"><span class="lb-lbl">Envoyer les 5 graphiques (images) vers :</span><button type="button" class="btn" data-send="chartpack" data-scope="roll">Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="roll">Risk Map</button><button type="button" class="btn" data-send="whiteboard" data-scope="roll">Whiteboard</button></div>
     <div class="lb-rgrid" id="lbRGrid"></div>
     <div class="fx-notes" style="margin-top:12px;font-size:12px">Chaque courbe est la corrélation de Pearson, recalculée à chaque date sur la fenêtre glissante précédente, entre les rendements du titre et ceux de la série de référence (échelle fixe −1 à +1 ; ligne pointillée = 0). Le curseur est synchronisé sur les cinq graphiques. Données indicatives.</div>
   </section>
@@ -1885,7 +1895,7 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
       <span class="fx-ranges" id="lbVScale" style="margin:0"><button type="button" data-s="common" class="on" title="Même axe vertical pour tous les graphiques : les niveaux sont directement comparables">Commune</button><button type="button" data-s="own" title="Chaque graphique utilise son propre axe : les variations de chaque titre ressortent mieux">Propre à chaque titre</button></span>
       <span style="margin-left:auto;display:flex;gap:6px"><button type="button" class="btn" id="lbVCsv">Télécharger CSV</button><button type="button" class="btn" id="lbVTblCsv">CSV du tableau</button></span>
     </div>
-    <div class="fx-bar lb-sendbar"><span class="lb-lbl">Envoyer les graphiques (images) vers :</span><button type="button" class="btn" data-send="chartpack" data-scope="vol">Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="vol">AM Dashboard</button><button type="button" class="btn" data-send="whiteboard" data-scope="vol">Whiteboard</button><span class="lb-lbl" style="margin-left:8px">ou</span><button type="button" class="btn" data-send="chartpack" data-scope="volall" title="Une seule image regroupant tous les graphiques (24 au maximum)">Planche complète → Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="volall">→ AM Dashboard</button><button type="button" class="btn" data-send="whiteboard" data-scope="volall">→ Whiteboard</button></div>
+    <div class="fx-bar lb-sendbar"><span class="lb-lbl">Envoyer les graphiques (images) vers :</span><button type="button" class="btn" data-send="chartpack" data-scope="vol">Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="vol">Risk Map</button><button type="button" class="btn" data-send="whiteboard" data-scope="vol">Whiteboard</button><span class="lb-lbl" style="margin-left:8px">ou</span><button type="button" class="btn" data-send="chartpack" data-scope="volall" title="Une seule image regroupant tous les graphiques (24 au maximum)">Planche complète → Chart Pack</button><button type="button" class="btn" data-send="dashboard" data-scope="volall">→ Risk Map</button><button type="button" class="btn" data-send="whiteboard" data-scope="volall">→ Whiteboard</button></div>
     <div class="lb-vmiss" id="lbVMiss" hidden></div>
     <div class="lb-vtblwrap"><table class="lb-vtbl" id="lbVTbl"></table></div>
     <div class="lb-vgrid" id="lbVGrid"></div>
@@ -1905,7 +1915,7 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
   </div>
 </header>
 <main>
-  <div class="hint">Laboratoire d'idées : les graphiques créés dans le <b>Chart Creator</b> et envoyés ici peuvent ensuite être supprimés, transférés vers l'AM Dashboard, ou vers le Chart Pack CI. Créez des catégories et glissez-déposez les graphiques dedans pour les organiser.</div>
+  <div class="hint">Laboratoire d'idées : les graphiques créés dans le <b>Chart Creator</b> et envoyés ici peuvent ensuite être supprimés, transférés vers la Risk Map, ou vers le Chart Pack CI. Créez des catégories et glissez-déposez les graphiques dedans pour les organiser.</div>
   <div id="wbToolbar" style="margin-bottom:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
     <input type="text" id="wbNewCatName" placeholder="Nom de la nouvelle catégorie…" style="max-width:280px">
     <button class="btn pri" id="wbAddCat" type="button">+ Catégorie</button>
@@ -2813,7 +2823,7 @@ function drawChartCanvas(canvas, chart, opts){
   });
 }
 
-/* Point d'accroche : quand l'AM Dashboard finit de charger le classeur Risk Map, il notifie le Chart Pack pour peupler son onglet "Graphiques Risk Map". */
+/* Point d'accroche : quand la Risk Map finit de charger le classeur Risk Map, il notifie le Chart Pack pour peupler son onglet "Graphiques Risk Map". */
 let RISKMAP_LOAD_HOOK = null;
 /* ============================ Moteur Chart Creator : indicateurs, transformations, catalogue unifié, bibliothèque persistante ============================ */
 
@@ -3193,7 +3203,7 @@ function buildSeriesIndex(catalog) {
   return idx;
 }
 
-/* ============================ Destinations : Whiteboard, AM Dashboard (graphiques ajoutés) ============================
+/* ============================ Destinations : Whiteboard, Risk Map (graphiques ajoutés) ============================
    Le Chart Pack CI n'est pas une destination "grille" séparée : un graphique envoyé vers le Chart Pack CI est inséré
    directement comme figure à la suite du document (partie 2), via le crochet sendFigToChartPack ci-dessous — il
    profite ainsi du réordonnancement et du renommage déjà disponibles pour toutes les figures du Chart Pack. */
@@ -3401,7 +3411,7 @@ function gipSiteDateLabel(entry) {
 /* Catalogue unifié de séries (alimenté par le classeur de séries chargé dans le Chart Pack) + accroche Chart Creator */
 let CATALOG = {};
 let onCatalogUpdate = null;
-let onDashboardUpdate = null;  /* l'AM Dashboard rafraîchit ses "graphiques ajoutés" quand le Chart Creator y envoie un graphique */
+let onDashboardUpdate = null;  /* la Risk Map rafraîchit ses "graphiques ajoutés" quand le Chart Creator y envoie un graphique */
 let onWhiteboardUpdate = null; /* le Whiteboard rafraîchit sa grille quand le Chart Creator y envoie un graphique */
 let sendFigToChartPack = null; /* le Chart Pack insère le graphique reçu comme figure à la suite du document (partie 2) */
 let openDestZoom = null;       /* ouvre la fenêtre Agrandir/Éditer (définie par whiteboard_module.js) pour un item de n'importe quelle destination : openDestZoom(dest, item) */
@@ -9532,7 +9542,7 @@ function drawRoll(){
   ROLL.charts = [];
   $('lbRGrid').innerHTML = R.charts.map((c, i) => {
     if (c.none) return '<div class="lb-rc none"><div class="lb-rh"><i style="background:' + c.r.col + '"></i>' + lgHtml(R.title.s, R.title.n, 'xs') + '<b>' + esc(R.title.n) + ' vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small></div><p class="fx-mut">Indisponible — ' + esc(c.note) + '.</p></div>';
-    return '<div class="lb-rc" data-i="' + i + '"><div class="lb-rh"><i style="background:' + c.r.col + '"></i>' + lgHtml(R.title.s, R.title.n, 'xs') + '<b>vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small><span class="lb-hv" id="lbHv' + i + '"></span><span class="lb-sendc" title="Envoyer ce graphique vers…"><button type="button" data-send="chartpack" data-scope="roll1" data-i="' + i + '" title="Envoyer vers le Chart Pack">CP</button><button type="button" data-send="dashboard" data-scope="roll1" data-i="' + i + '" title="Envoyer vers l\'AM Dashboard">AM</button><button type="button" data-send="whiteboard" data-scope="roll1" data-i="' + i + '" title="Envoyer vers le Whiteboard">WB</button></span></div>'
+    return '<div class="lb-rc" data-i="' + i + '"><div class="lb-rh"><i style="background:' + c.r.col + '"></i>' + lgHtml(R.title.s, R.title.n, 'xs') + '<b>vs ' + esc(c.r.n) + '</b><small>' + esc(c.r.d) + '</small><span class="lb-hv" id="lbHv' + i + '"></span><span class="lb-sendc" title="Envoyer ce graphique vers…"><button type="button" data-send="chartpack" data-scope="roll1" data-i="' + i + '" title="Envoyer vers le Chart Pack">CP</button><button type="button" data-send="dashboard" data-scope="roll1" data-i="' + i + '" title="Envoyer vers la Risk Map">RM</button><button type="button" data-send="whiteboard" data-scope="roll1" data-i="' + i + '" title="Envoyer vers le Whiteboard">WB</button></span></div>'
       + '<div class="lb-rk"><span>Actuelle <b class="' + (c.last >= 0 ? 'p' : 'n') + '">' + nf(2).format(c.last) + '</b></span><span>Moyenne <b>' + nf(2).format(c.mean) + '</b></span><span>Min <b>' + nf(2).format(c.min) + '</b></span><span>Max <b>' + nf(2).format(c.max) + '</b></span></div>'
       + '<div class="fx-chart" id="lbRc' + i + '"><div class="fx-tip" id="lbRt' + i + '"></div></div>'
       + (c.note ? '<p class="lb-rn">⚠ ' + esc(c.note) + '. ' + esc(c.src) + '</p>' : '<p class="lb-rn">' + esc(c.src) + '</p>') + '</div>';
@@ -9587,10 +9597,10 @@ $('lbRCsv').addEventListener('click', () => {
   a.download = 'correlation_glissante_' + R.title.s.replace(/[^A-Za-z0-9]+/g, '_') + '.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 });
 
-/* ================================================================ envoi vers le Chart Pack / l'AM Dashboard / le Whiteboard
+/* ================================================================ envoi vers le Chart Pack / la Risk Map / le Whiteboard
    Les graphiques sont envoyés sous forme d'images (comme les graphiques du Chart Creator) : ils rejoignent les mêmes grilles,
    la même base partagée, et les mêmes fonctions d'agrandissement, de déplacement et d'export PDF (Chart Pack). */
-const DEST_LBL = {chartpack: 'le Chart Pack CI (partie 2, à la suite des figures)', dashboard: "l'AM Dashboard", whiteboard: 'le Whiteboard'};
+const DEST_LBL = {chartpack: 'le Chart Pack CI (partie 2, à la suite des figures)', dashboard: "la Risk Map", whiteboard: 'le Whiteboard'};
 let toastT = null;
 function labToast(msg, ok){
   let el = $('lbToast');
@@ -9840,7 +9850,7 @@ function volRedraw(){
   /* petits graphiques */
   VOL.cv = [];
   $('lbVGrid').innerHTML = rows.map((r, i) =>
-    '<div class="lb-vc" data-i="' + i + '"><div class="lb-vh">' + lgHtml(r.s, r.n, 'xs') + '<b>' + esc(r.n) + '</b><small>' + esc(shortOf(r.s)) + '</small><span class="lb-sendc" title="Envoyer ce graphique vers…"><button type="button" data-send="chartpack" data-scope="vol1" data-s="' + esc(r.s) + '" title="Envoyer vers le Chart Pack">CP</button><button type="button" data-send="dashboard" data-scope="vol1" data-s="' + esc(r.s) + '" title="Envoyer vers l\'AM Dashboard">AM</button><button type="button" data-send="whiteboard" data-scope="vol1" data-s="' + esc(r.s) + '" title="Envoyer vers le Whiteboard">WB</button></span></div>'
+    '<div class="lb-vc" data-i="' + i + '"><div class="lb-vh">' + lgHtml(r.s, r.n, 'xs') + '<b>' + esc(r.n) + '</b><small>' + esc(shortOf(r.s)) + '</small><span class="lb-sendc" title="Envoyer ce graphique vers…"><button type="button" data-send="chartpack" data-scope="vol1" data-s="' + esc(r.s) + '" title="Envoyer vers le Chart Pack">CP</button><button type="button" data-send="dashboard" data-scope="vol1" data-s="' + esc(r.s) + '" title="Envoyer vers la Risk Map">RM</button><button type="button" data-send="whiteboard" data-scope="vol1" data-s="' + esc(r.s) + '" title="Envoyer vers le Whiteboard">WB</button></span></div>'
     + '<div class="lb-vv"><b>' + pc1(r.last) + '</b><span class="lb-vhv" id="lbVhv' + i + '">vol. ' + esc(wl) + ' annualisée</span></div>'
     + '<div class="lb-vk"><span>Moy. <b>' + nf(1).format(r.mean) + '</b></span><span>Min <b>' + nf(1).format(r.min) + '</b></span><span>Max <b>' + nf(1).format(r.max) + '</b></span><span>Perc. <b>' + nf(0).format(r.pct) + ' %</b></span></div>'
     + '<div class="lb-vsv" id="lbVc' + i + '">' + volSvg(r, i) + '</div></div>').join('');
@@ -10234,7 +10244,7 @@ let sbSel = [];         // séries choisies pour le graphique courant : {key,lab
 let sbAxis2 = new Set();
 let sbMA = new Set();
 let sbOpts = {table:false, rsi:false, macd:false};
-let sbTypeOverride = {}; // type de graphique par série (ligne/barres/aire), comme dans l'AM Dashboard — clé = série.key
+let sbTypeOverride = {}; // type de graphique par série (ligne/barres/aire), comme dans la Risk Map — clé = série.key
 let sbRange = null;      // zoom sur la période affichée : {min,max} en ms, ou null = période complète (auto)
 let sbEditingRef = null; // {dest,id} quand on modifie un graphique déjà envoyé (Whiteboard "Éditer"), sinon null
 
@@ -10307,7 +10317,7 @@ function renderAxisPick(){
   }));
 }
 
-/* ---- Type de graphique par série (ligne / barres / aire) — même propriété que le modal de l'AM Dashboard ---- */
+/* ---- Type de graphique par série (ligne / barres / aire) — même propriété que le modal de la Risk Map ---- */
 function renderTypePick(){
   const wrap = $('sbTypeWrap');
   if (!sbSel.length) { wrap.style.display = 'none'; return; }
@@ -10326,7 +10336,7 @@ function renderTypePick(){
   }));
 }
 
-/* ---- Zoom sur la période affichée (Du / Au) — même propriété que le modal de l'AM Dashboard ---- */
+/* ---- Zoom sur la période affichée (Du / Au) — même propriété que le modal de la Risk Map ---- */
 const sbToInputDate = ms => new Date(ms).toISOString().slice(0, 10);
 function sbFullRange(){ return seriesFullRange(currentChart()); }
 function renderRangeControls(){
@@ -10502,7 +10512,7 @@ function renderEditBanner(missing){
   const bar = $('sbEditBar');
   if (!sbEditingRef) { bar.style.display = 'none'; return; }
   bar.style.display = 'flex';
-  const destLabel = {whiteboard: 'le Whiteboard', dashboard: 'l\'AM Dashboard'}[sbEditingRef.dest] || sbEditingRef.dest;
+  const destLabel = {whiteboard: 'le Whiteboard', dashboard: 'la Risk Map'}[sbEditingRef.dest] || sbEditingRef.dest;
   let txt = `Modification du graphique envoyé vers ${destLabel}.`;
   if (missing && missing.length) txt += ` Attention : ${missing.length} série(s) introuvable(s) dans le classeur ont été retirées du graphique.`;
   $('sbEditBarText').textContent = txt;
@@ -10581,7 +10591,7 @@ function sendTo(dest){
     if (dest === 'dashboard' && typeof onDashboardUpdate === 'function') onDashboardUpdate();
     if (dest === 'whiteboard' && typeof onWhiteboardUpdate === 'function') onWhiteboardUpdate();
   }
-  const labels = {chartpack: 'le Chart Pack CI (partie 2, à la suite des figures)', dashboard: 'l\'AM Dashboard', whiteboard: 'le Whiteboard'};
+  const labels = {chartpack: 'le Chart Pack CI (partie 2, à la suite des figures)', dashboard: 'la Risk Map', whiteboard: 'le Whiteboard'};
   $('sbMsg').textContent = `Graphique envoyé vers ${labels[dest]}.`;
 }
 $('sbSendChartpack').addEventListener('click', () => sendTo('chartpack'));
@@ -10637,7 +10647,7 @@ function cardHtml(it){
       <div class="destactions">
         ${it.config ? `<button data-a="edit" data-id="${it.id}" class="btn" type="button">Éditer</button>` : ''}
         <button data-a="zoom" data-id="${it.id}" class="btn" type="button">Agrandir</button>
-        <button data-a="dash" data-id="${it.id}" class="btn" type="button">&rarr; AM Dashboard</button>
+        <button data-a="dash" data-id="${it.id}" class="btn" type="button">&rarr; Risk Map</button>
         <button data-a="cp" data-id="${it.id}" class="btn" type="button">&rarr; Chart Pack CI</button>
         <button data-a="del" data-id="${it.id}" class="danger" type="button">Supprimer</button>
       </div>
@@ -10656,7 +10666,7 @@ function closeLightbox(){ $('wbLightbox').classList.remove('open'); $('wbLightbo
 $('wbLightboxClose').addEventListener('click', closeLightbox);
 $('wbLightbox').addEventListener('click', e => { if (e.target === $('wbLightbox')) closeLightbox(); });
 
-/* ---- Agrandir / éditer en place — mêmes propriétés que le modal de l'AM Dashboard :
+/* ---- Agrandir / éditer en place — mêmes propriétés que le modal de la Risk Map :
    type de graphique par série, zoom sur la période (Du/Au), Réinitialiser, Télécharger PNG,
    plus un bouton Enregistrer qui met à jour le graphique stocké dans le Whiteboard. ---- */
 let wbModalDest = 'whiteboard';
@@ -11020,11 +11030,11 @@ setInterval(() => { if (!document.querySelector('.wbcat.dragging, .destcard.drag
 (function QuadModule(){
 "use strict";
 /* ============================================================================================
-   Écran « Quadrant » — place chaque titre choisi dans la matrice croissance / inflation (4 cadrants).
+   Écran « Cadran » — place chaque titre choisi dans la matrice croissance / inflation (4 cadrans).
    Méthode : régression des rendements HEBDOMADAIRES du titre sur un facteur croissance (ratio cuivre / or) et un facteur
    inflation (ratio TIPS / IEF ≈ point mort d'inflation), + USDCHF en option ; option « relatif au SPI ».
    Bêtas standardisés (en écarts-types) = coordonnées X (croissance) / Y (inflation).
-   Régime macro actuel = signe du momentum (13 semaines par défaut) des deux ratios : le cadrant correspondant est encadré.
+   Régime macro actuel = signe du momentum (13 semaines par défaut) des deux ratios : le cadran correspondant est encadré.
    Données : /api/tv-series en mode eod=1 (instantané du jour mémorisé dans D1 et partagé) + copie locale pour la journée :
    un seul appel au fournisseur par symbole et par jour, rouvrir l'écran ne génère aucune requête.
    ============================================================================================ */
@@ -11244,7 +11254,7 @@ function plotSvg(){
     h += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="7" fill="' + p.q.c + '" fill-opacity="' + (weak ? 0.4 : 1) + '" stroke="#FFFFFF" stroke-width="2"/>';
     h += '<text x="' + p.lx.toFixed(1) + '" y="' + p.ly.toFixed(1) + '" fill="#1A1F27" font-size="11.5" font-weight="600"' + (weak ? ' opacity=".6"' : '') + '>' + esc(p.lab + (p.clip ? ' ›' : '')) + '</text></g>';
   });
-  if (!ok.length) h += '<text x="' + C + '" y="' + (C - 30) + '" text-anchor="middle" fill="#6B6F76" font-size="13">' + (Q.running ? 'Calcul…' : 'Ajoutez des titres pour les placer dans les cadrants') + '</text>';
+  if (!ok.length) h += '<text x="' + C + '" y="' + (C - 30) + '" text-anchor="middle" fill="#6B6F76" font-size="13">' + (Q.running ? 'Calcul…' : 'Ajoutez des titres pour les placer dans les cadrans') + '</text>';
   return h + '</svg>';
 }
 
@@ -11373,7 +11383,7 @@ async function pngItem(){
   cv.width = W * k; cv.height = (W + head + foot) * k;
   const ctx = cv.getContext('2d'); ctx.setTransform(k, 0, 0, k, 0, 0);
   ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, W + head + foot);
-  const ttl = 'Quadrant croissance / inflation — ' + ok.length + ' titre' + (ok.length > 1 ? 's' : '');
+  const ttl = 'Cadran croissance / inflation — ' + ok.length + ' titre' + (ok.length > 1 ? 's' : '');
   ctx.fillStyle = '#02182B'; ctx.font = '700 19px Aspekta, system-ui, sans-serif'; ctx.fillText(ttl, 14, 27);
   ctx.fillStyle = '#6B6F76'; ctx.font = '11.5px Aspekta, system-ui, sans-serif'; ctx.fillText(caption(), 14, 47);
   ctx.drawImage(img, 0, head, W, W);
@@ -11388,11 +11398,11 @@ function sendTo(dest, item){
     if (dest === 'whiteboard' && typeof onWhiteboardUpdate === 'function') onWhiteboardUpdate();
   }
 }
-const DEST = {chartpack: 'le Chart Pack CI', dashboard: "l'AM Dashboard", whiteboard: 'le Whiteboard'};
+const DEST = {chartpack: 'le Chart Pack CI', dashboard: "la Risk Map", whiteboard: 'le Whiteboard'};
 function download(name, href){ const a = document.createElement('a'); a.href = href; a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
 function csv(){
   const sep = ';', f = x => x == null || !isFinite(x) ? '' : String(Math.round(x * 1e4) / 1e4).replace('.', ',');
-  const rows = [['Symbole', 'Nom', 'Beta croissance (std)', 'Beta inflation (std)', 'Beta USDCHF (std)', 'R2', 'Cadrant', 'Semaines', 'Remarque']];
+  const rows = [['Symbole', 'Nom', 'Beta croissance (std)', 'Beta inflation (std)', 'Beta USDCHF (std)', 'R2', 'Cadran', 'Semaines', 'Remarque']];
   (Q.res || []).forEach(r => rows.push(r.err ? [r.s, nameOf(r.s), '', '', '', '', '', '', r.err] : [r.s, nameOf(r.s), f(r.zG), f(r.zI), f(r.zF), f(r.r2), quadOf(r.zG, r.zI).n, r.n, '']));
   rows.push([]); rows.push(['Paramètres', caption()]);
   return '﻿' + rows.map(r => r.map(x => /[;"\n]/.test(String(x)) ? '"' + String(x).replace(/"/g, '""') + '"' : x).join(sep)).join('\r\n');
@@ -11409,7 +11419,7 @@ $('screenQuad').addEventListener('click', e => {
   const sd = e.target.closest('[data-qsend]');
   if (sd) {
     const dest = sd.dataset.qsend;
-    pngItem().then(it => { if (!it) { toast('Rien à envoyer : ajoutez d\'abord des titres.', false); return; } sendTo(dest, it); toast('Quadrant envoyé vers ' + DEST[dest] + '.'); })
+    pngItem().then(it => { if (!it) { toast('Rien à envoyer : ajoutez d\'abord des titres.', false); return; } sendTo(dest, it); toast('Cadran envoyé vers ' + DEST[dest] + '.'); })
       .catch(err => toast('Envoi impossible : ' + err.message, false));
   }
 });
@@ -11417,7 +11427,7 @@ $('qdWin').addEventListener('click', e => { const b = e.target.closest('[data-w]
 $('qdFx').addEventListener('change', () => { Q.cfg.fx = $('qdFx').checked; saveCfg(); run(); });
 $('qdRel').addEventListener('change', () => { Q.cfg.rel = $('qdRel').checked; saveCfg(); run(); });
 $('qdReload').addEventListener('click', () => { Object.keys(WS).forEach(k => delete WS[k]); try { localStorage.removeItem(DAY_KEY); } catch (e) {} run(); });
-$('qdClear').addEventListener('click', () => { if (Q.sel.size && !confirm('Retirer tous les titres du quadrant ?')) return; Q.sel.clear(); saveSel(); Q.res = []; render(); });
+$('qdClear').addEventListener('click', () => { if (Q.sel.size && !confirm('Retirer tous les titres du cadran ?')) return; Q.sel.clear(); saveSel(); Q.res = []; render(); });
 $('qdImport').addEventListener('click', () => {
   let n = 0;
   try { const o = JSON.parse(localStorage.getItem('gip_lab_sel_v2') || 'null') || {}; (o.A || []).forEach(x => { if (Array.isArray(x) && x[0] && !Q.sel.has(x[0])) { Q.sel.set(x[0], String(x[1] || x[0])); n++; } }); } catch (e) {}
@@ -11432,8 +11442,8 @@ $('qdApply').addEventListener('click', () => {
   saveCfg(); renderFactors(); run();
 });
 $('qdReset').addEventListener('click', () => { const w = Q.cfg.weeks, fx = Q.cfg.fx, rel = Q.cfg.rel; Q.cfg = Object.assign(DEF_CFG(), {weeks: w, fx, rel}); saveCfg(); renderFactors(); run(); });
-$('qdPng').addEventListener('click', () => pngItem().then(it => { if (!it) { toast('Rien à exporter.', false); return; } download('quadrant_croissance_inflation.png', it.img); }).catch(err => toast(err.message, false)));
-$('qdCsv').addEventListener('click', () => { if (!Q.res || !Q.res.length) { toast('Rien à exporter.', false); return; } download('quadrant_croissance_inflation.csv', URL.createObjectURL(new Blob([csv()], {type: 'text/csv;charset=utf-8'}))); });
+$('qdPng').addEventListener('click', () => pngItem().then(it => { if (!it) { toast('Rien à exporter.', false); return; } download('cadran_croissance_inflation.png', it.img); }).catch(err => toast(err.message, false)));
+$('qdCsv').addEventListener('click', () => { if (!Q.res || !Q.res.length) { toast('Rien à exporter.', false); return; } download('cadran_croissance_inflation.csv', URL.createObjectURL(new Blob([csv()], {type: 'text/csv;charset=utf-8'}))); });
 /* survol d'une ligne du tableau -> mise en évidence du point */
 $('qdBody').addEventListener('mouseover', e => { const tr = e.target.closest('tr[data-s]'); $('qdPlot').querySelectorAll('g.pt').forEach(g => g.classList.toggle('hl', !!tr && g.dataset.s === tr.dataset.s)); });
 $('qdBody').addEventListener('mouseleave', () => $('qdPlot').querySelectorAll('g.pt.hl').forEach(g => g.classList.remove('hl')));

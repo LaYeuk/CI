@@ -107,13 +107,19 @@ Nouveau : Market Lab, brique « Volatilité » (9e version) :
   - Diagnostic des chargements : le message d'erreur d'un titre indique désormais ce que le fournisseur a répondu, et un bouton « Diagnostiquer ce titre » (Market Data) affiche la réponse brute (utile pour SIX:ROG « HTTP 200 »). Merci de me renvoyer ce texte si le problème persiste.
   - Seul Outils_GIP.html change (le _worker.js est identique à la version précédente).
 
-Nouveau : Quadrant croissance / inflation (10e version) :
-  - Nouvel écran « Quadrant » (menu et accueil, après Market Lab) : matrice à 4 cadrants (croissance désinflationniste, boom inflationniste, stagflation, récession déflationniste). Chaque titre choisi est placé dans son cadrant.
+Nouveau : Cadran croissance / inflation (10e version) :
+  - Nouvel écran « Cadran » (menu et accueil, après Market Lab) : matrice à 4 cadrans (croissance désinflationniste, boom inflationniste, stagflation, récession déflationniste). Chaque titre choisi est placé dans son cadrant.
   - Méthode : rendements hebdomadaires ; régression du titre sur le facteur croissance (ratio cuivre / or), le facteur inflation (ratio TIPS / IEF ≈ point mort d'inflation) et, en option, USDCHF. Bêtas standardisés = coordonnées X / Y. Option « Relatif au SPI » (retire l'effet marché actions). Historique 1 / 2 (défaut) / 3 ans. Zone neutre ±0,10.
   - Régime macro actuel : signe du momentum sur 13 semaines des deux ratios ; le cadrant correspondant est encadré.
   - Ajout de titres : recherche (SPI instantané + recherche Market Data, tout symbole TradingView) ou « Importer la sélection du Market Lab » (liste A). Sélection mémorisée dans le navigateur. Logos comme dans Market Data.
   - Exports : envoi de l'image vers Chart Pack / AM Dashboard / Whiteboard, PNG, CSV.
   - Facteurs modifiables (« Facteurs et réglages ») : par défaut OANDA:XCUUSD (cuivre), OANDA:XAUUSD (or), AMEX:TIP, NASDAQ:IEF, FX_IDC:USDCHF, SIX:SPIX. Les futures continus (COMEX:HG1!) ne sont pas acceptés par le Worker (caractère « ! »). Si un facteur ne renvoie rien, une note l'indique sous le graphique : corriger le symbole.
   - Données : /api/tv-series en mode « instantané du jour » (eod=1) + copie dans le navigateur : un seul appel fournisseur par symbole et par jour ; rouvrir l'écran ne génère aucune requête.
-  - Recherche de titres (Quadrant, Market Data, Market Lab : ajout de titres et corrélation glissante) : la cotation primaire passe en tête des suggestions (badge « primaire ») : drapeau du fournisseur s'il existe, sinon bourse du pays du titre (CH -> SIX, US -> NASDAQ/NYSE, DE -> XETR…) ; OTC, bourses régionales allemandes, gettex, Tradegate, BX Swiss relégués. Recherche insensible aux accents (« nestle » trouve Nestlé). Quadrant : Entrée = ajoute la première suggestion. Classement commun : fonction mktRankSearch (à côté de mktParseSearch).
+  - Recherche de titres (Cadran, Market Data, Market Lab : ajout de titres et corrélation glissante) : la cotation primaire passe en tête des suggestions (badge « primaire ») : drapeau du fournisseur s'il existe, sinon bourse du pays du titre (CH -> SIX, US -> NASDAQ/NYSE, DE -> XETR…) ; OTC, bourses régionales allemandes, gettex, Tradegate, BX Swiss relégués. Recherche insensible aux accents (« nestle » trouve Nestlé). Cadran : Entrée = ajoute la première suggestion. Classement commun : fonction mktRankSearch (à côté de mktParseSearch).
+  - Seul Outils_GIP.html change (le _worker.js est identique).
+
+Réorganisation (11e version) :
+  - Accueil en trois sections : « Marchés » (Risk Map, Market Dashboard, Market Lab, Cadran), « Créer un graphique » (Chart Creator, BNS, FRED, OFS, Market Data), « CI » (Chart Pack, Whiteboard). Le menu suit le même ordre.
+  - Renommages partout dans l'interface : « AM Dashboard » -> « Risk Map » (boutons d'envoi, menus, messages ; les boutons courts « AM » deviennent « RM ») et « Quadrant » -> « Cadran ».
+  - Les identifiants internes ne changent pas : les graphiques déjà déposés sur la Risk Map (base partagée) restent en place.
   - Seul Outils_GIP.html change (le _worker.js est identique).
