@@ -123,3 +123,22 @@ Réorganisation (11e version) :
   - Renommages partout dans l'interface : « AM Dashboard » -> « Risk Map » (boutons d'envoi, menus, messages ; les boutons courts « AM » deviennent « RM ») et « Quadrant » -> « Cadran ».
   - Les identifiants internes ne changent pas : les graphiques déjà déposés sur la Risk Map (base partagée) restent en place.
   - Seul Outils_GIP.html change (le _worker.js est identique).
+
+Nouveau : Portfolio Lab (12e version) :
+  - Nouvel écran « Portfolio Lab » (accueil : section « Portefeuilles » ; menu : après Cadran). Phase de test : on dépose les deux classeurs Excel du portefeuille
+    (détail des positions, ex. details.xlsx, et évolution de la valeur, ex. NAV.xlsx), ensemble ou l'un après l'autre ; le type de fichier est reconnu à ses colonnes.
+  - Confidentialité : les données du portefeuille restent dans le navigateur (onglet ouvert, sessionStorage) ; rien n'est envoyé au relais ni à la base D1.
+    Seuls les symboles TradingView des titres sont demandés au fournisseur de cours.
+  - En-tête : portefeuille, dépositaire, gestionnaire, profil ; valeur, performance, performance depuis le 1er janvier, volatilité, perte maximale ; répartition par catégorie et par monnaie.
+  - Titres : positions par catégorie, poids, +/- latente ; symbole TradingView associé automatiquement (nom du titre pour le SPI sans appel au fournisseur, sinon recherche par ISIN puis par nom,
+    cotation primaire) ; ✎ pour corriger (mémorisé dans le navigateur) ; export CSV.
+  - Cadran : chaque titre placé selon ses bêtas croissance / inflation (mêmes facteurs et réglages que l'écran Cadran), taille du point = poids ; deux points « portefeuille » :
+    NAV réelle et portefeuille actuel (titres cotés pondérés). Régime macro actuel encadré.
+  - Volatilité : volatilité glissante 1 et 3 mois de la NAV, performance et drawdown, volatilité ex ante (un an de cours, poids actuels ; obligations approchées par un indice, SIX:SBR14T par défaut,
+    liquidités à volatilité nulle) et contribution de chaque titre au risque.
+  - Régression : rendements du portefeuille (quotidiens ou hebdomadaires) sur des facteurs au choix (SPI, obligations CH, or, matières premières, immobilier CH, USDCHF, ou tout symbole) :
+    β, t de Student, R², alpha annualisé, risque spécifique, nuage de points, performance réelle contre répliquée.
+  - Fichier NAV : les valeurs nulles et les pics isolés (valeur doublée un jour puis retour, chute d'un jour puis retour) sont écartés automatiquement et listés sous l'onglet Volatilité.
+    Le fichier de test en contient 15 (fins de mois à double valeur, jours à zéro).
+  - API interne (à venir) : window.gipPortfolioSet({meta, pos, nav}) alimente l'écran sans fichier (même modèle que la lecture des classeurs).
+  - Seul Outils_GIP.html change (le _worker.js est identique).

@@ -149,111 +149,111 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenSandbox .extDim label{font-size:10.5px;color:var(--mut)}
 /* ---- Écrans par source : FRED, BNS, OFS (barre de recherche, accueil, listes, fiches) ---- */
 /* ---- FRED (recherche façon fred.stlouisfed.org) ---- */
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) header span{opacity:.75;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) button{font:inherit;cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-hero{padding:18px 20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-sbox{position:relative}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-go:hover{background:#0a3252}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac.open{display:block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac-item:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac-item.active,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac-item:hover{background:#EFFCFF}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac-item .fx-id{min-width:96px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac-item .t{flex:1}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac-item .m,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-sec{margin-top:20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-sec-h small{color:var(--mut);font-size:11.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tile:hover{border-color:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tile .u{font-size:11px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-delta.down{color:var(--down)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tile svg{display:block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
-@media(max-width:1000px){:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-cols{grid-template-columns:1fr}}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-list{list-style:none;margin:0;padding:3px 0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-list li:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-list .clk{cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-list .clk:hover{background:#F7F6F2}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-crumbs a:hover{text-decoration:underline}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-res:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-res:hover{background:#F7F6F2}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-res .fx-id{margin-right:8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .btn:hover:not(:disabled){background:#EEF7FA}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .btn.pri:hover:not(:disabled){background:#0a3252}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .btn:disabled{opacity:.4;cursor:not-allowed}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-panel{padding:16px 20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-kpi .s{font-size:11px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-chart{position:relative}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-chart svg{display:block;width:100%}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-mut{color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) header span{opacity:.75;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) button{font:inherit;cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-hero{padding:18px 20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sbox{position:relative}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-go:hover{background:#0a3252}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac.open{display:block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item.active,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item:hover{background:#EFFCFF}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item .fx-id{min-width:96px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item .t{flex:1}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-item .m,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sec{margin-top:20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-sec-h small{color:var(--mut);font-size:11.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile:hover{border-color:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile .u{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-delta.down{color:var(--down)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tile svg{display:block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
+@media(max-width:1000px){:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-cols{grid-template-columns:1fr}}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list{list-style:none;margin:0;padding:3px 0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list li:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list .clk{cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list .clk:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-crumbs a:hover{text-decoration:underline}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res .fx-id{margin-right:8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .btn:hover:not(:disabled){background:#EEF7FA}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .btn.pri:hover:not(:disabled){background:#0a3252}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .btn:disabled{opacity:.4;cursor:not-allowed}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-panel{padding:16px 20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-kpi .s{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-chart{position:relative}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-chart svg{display:block;width:100%}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-mut{color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
 @keyframes fxsk{to{background-position:-200% 0}}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-litem a{cursor:pointer;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-litem .per{color:var(--mut);font-size:11px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) details.fx-set summary{cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-toast.show{display:flex}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad) [hidden]{display:none!important}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-litem a{cursor:pointer;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-litem .per{color:var(--mut);font-size:11px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) details.fx-set summary{cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-toast.show{display:flex}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf) [hidden]{display:none!important}
 
 /* ---- BNS (recherche façon data.snb.ch/fr/search) — réutilise les styles fx- de l'écran FRED ---- */
 :is(#screenSnb,#screenOfs) .fx-idx{margin-top:10px;font-size:11.5px;color:var(--mut);display:flex;align-items:center;gap:10px;min-height:16px}
@@ -898,6 +898,83 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenQuad .lg.xs{width:16px;height:16px;font-size:7px}
 
 .mk-prim{font-style:normal;font-size:10px;font-weight:700;color:#00993D;border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:0 6px;margin-left:6px;white-space:nowrap;vertical-align:1px}
+/* ---- Écran « Portfolio Lab » ---- */
+#screenPf .pf-card{padding:16px 20px;margin-bottom:16px}
+#screenPf .pf-drop{border:2px dashed #A9AEB4;border-radius:10px;padding:18px;text-align:center;cursor:pointer;background:#fff;display:flex;flex-direction:column;gap:4px;transition:.15s}
+#screenPf .pf-drop b{color:var(--navy);font-size:14px}
+#screenPf .pf-drop span{color:var(--mut);font-size:12.5px}
+#screenPf .pf-drop.over,#screenPf .pf-drop:hover{border-color:#0086B3;background:#F3FBFE}
+#screenPf .pf-files{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+#screenPf .pf-file{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12.5px;background:#fff}
+#screenPf .pf-file b{color:var(--navy)}
+#screenPf .pf-file.ok{border-color:#BFDCCB;background:#F3FAF6}
+#screenPf .pf-file.miss{color:var(--mut)}
+#screenPf .pf-file button{border:0;background:none;color:var(--mut);font-size:14px;padding:0 2px}
+#screenPf .pf-note{font-size:11.5px;color:var(--mut);line-height:1.5;margin-top:10px}
+#screenPf .pf-head{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:12.5px;color:var(--mut)}
+#screenPf .pf-head b{color:var(--ink);font-weight:600}
+#screenPf .pf-head .pf-code{font-size:17px;color:var(--navy);font-weight:700;width:100%}
+#screenPf .pf-alloc{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+@media (max-width:860px){#screenPf .pf-alloc{grid-template-columns:1fr}}
+#screenPf .pf-alloc h4{margin:0 0 6px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+#screenPf .pf-stack{display:flex;height:14px;border-radius:7px;overflow:hidden;background:#EEE}
+#screenPf .pf-stack i{display:block;height:100%}
+#screenPf .pf-keys{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font-size:12px}
+#screenPf .pf-keys span{display:inline-flex;align-items:center;gap:5px}
+#screenPf .pf-keys i{width:9px;height:9px;border-radius:2px;display:inline-block}
+#screenPf .pf-keys b{font-variant-numeric:tabular-nums}
+#screenPf .pf-tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:4px 0 14px}
+#screenPf .pf-tabs button{border:0;background:none;padding:9px 18px;font:inherit;font-size:13.5px;font-weight:600;color:var(--mut);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+#screenPf .pf-tabs button:hover{color:var(--navy)}
+#screenPf .pf-tabs button.on{color:var(--navy);border-bottom-color:#0086B3}
+#screenPf .pf-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+#screenPf .pf-bar .sp{flex:1}
+#screenPf .pf-bar .lbl{font-size:12px;color:var(--mut)}
+#screenPf .pf-st{font-size:12px;color:var(--mut)}
+#screenPf .pf-ck{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--mut)}
+#screenPf .pf-ck input[type=text],#screenPf #pfRegAdd{font:inherit;font-size:12.5px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;width:170px;color:var(--ink)}
+#screenPf .pf-tblwrap{overflow:auto}
+#screenPf .pf-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+#screenPf .pf-tbl th,#screenPf .pf-tbl td{padding:6px 7px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#screenPf .pf-tbl th{font-size:11px;color:var(--mut);font-weight:700;position:sticky;top:0;background:#fff}
+#screenPf .pf-tbl th.l,#screenPf .pf-tbl td.l{text-align:left}
+#screenPf .pf-tbl tr.grp td{background:#F6F7F4;font-weight:700;color:var(--navy);font-size:12px}
+#screenPf .pf-tbl tr.tot td{font-weight:700;border-top:2px solid var(--line)}
+#screenPf .pf-tbl tr.pf-r:hover td{background:#F7FBFC}
+#screenPf .pf-nm{display:flex;align-items:center;gap:8px;max-width:330px;white-space:normal}
+#screenPf .pf-nm small{display:block;color:var(--mut);font-size:10.5px}
+#screenPf .pf-sym{font:600 11.5px ui-monospace,Consolas,monospace;color:#0086B3}
+#screenPf .pf-src{font-size:10px;color:var(--mut);margin-left:4px}
+#screenPf .pf-ed{border:0;background:none;color:var(--mut);cursor:pointer;font-size:12px;padding:0 3px}
+#screenPf .pf-ed:hover{color:var(--navy)}
+#screenPf .pf-up{color:#1F7A4D}
+#screenPf .pf-dn{color:#B42318}
+#screenPf .pf-pill{display:inline-block;padding:2px 9px;border-radius:999px;color:#fff;font-size:11px;font-weight:600}
+#screenPf .pf-barcell{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+#screenPf .pf-barcell i{display:inline-block;height:8px;border-radius:4px;background:#0086B3;opacity:.75}
+#screenPf .pf-two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:8px}
+@media (max-width:980px){#screenPf .pf-two{grid-template-columns:1fr}}
+#screenPf .pf-plot svg,#screenPf .pf-chart svg{display:block;width:100%;height:auto}
+#screenPf .pf-chart{position:relative}
+#screenPf .pf-h{margin:18px 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+#screenPf .pf-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:6px 9px;border-radius:6px;white-space:nowrap;display:none;z-index:5;line-height:1.5}
+#screenPf .pf-tip i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+#screenPf .pf-lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--mut);margin-bottom:4px}
+#screenPf .pf-lg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:5px;vertical-align:3px}
+#screenPf .pf-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--mut);margin-top:8px}
+#screenPf .pf-legend i.dm{display:inline-block;width:10px;height:10px;background:#02182B;transform:rotate(45deg);margin-right:6px}
+#screenPf .pf-legend i.dm.o{background:#fff;border:2px solid #02182B;width:7px;height:7px}
+#screenPf .pf-refchip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;margin:0 4px 4px 0;cursor:pointer;background:#fff;color:var(--mut)}
+#screenPf .pf-refchip.on{border-color:#0086B3;color:var(--navy);background:#EFFCFF;font-weight:600}
+#screenPf .pf-refchip b{font:600 10.5px ui-monospace,Consolas,monospace;color:#0086B3}
+#screenPf .pf-regopt .fx-ranges{margin:0}
+#screenPf .qd-toast{position:fixed;right:22px;bottom:22px;z-index:200;background:var(--navy);color:#fff;font-size:13px;padding:10px 16px;border-radius:9px;box-shadow:0 8px 24px rgba(2,24,43,.3);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;max-width:420px}
+#screenPf .qd-toast.show{opacity:1;transform:none}
+#screenPf .qd-toast.err{background:#B5361C}
+#screenPf .lg{position:relative;flex:none;width:22px;height:22px;border-radius:50%;background:hsl(var(--h) 40% 90%);color:hsl(var(--h) 45% 30%);display:inline-flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(2,24,43,.08)}
+#screenPf .lg i{font-style:normal;letter-spacing:-.02em}
+#screenPf .lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;box-sizing:border-box;opacity:0;transition:opacity .15s}
+#screenPf .lg img.ok{opacity:1}
 </style>
 </head>
 <body>
@@ -913,6 +990,8 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       <button type="button" class="navbtn" data-screen="dash">Market Dashboard</button>
       <button type="button" class="navbtn" data-screen="lab">Market Lab</button>
       <button type="button" class="navbtn" data-screen="quad">Cadran</button>
+      <span class="navsep" aria-hidden="true"></span>
+      <button type="button" class="navbtn" data-screen="pf">Portfolio Lab</button>
     </div>
     <div class="navbtns">
       <button type="button" class="navbtn" data-screen="sandbox">Chart Creator</button>
@@ -965,6 +1044,16 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
         <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3V21M3 12H21" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="16.5" cy="7.5" r="2" fill="#00CFFF"/><circle cx="7" cy="8.5" r="1.6" fill="#DDD8C4"/><circle cx="17" cy="16" r="1.6" fill="#00CFFF" fill-opacity=".6"/><circle cx="8" cy="16.5" r="2" fill="#DDD8C4"/></svg></div>
         <h2>Cadran</h2>
         <p>Matrice croissance / inflation : chaque titre choisi est placé dans son cadran selon sa sensibilité au cuivre/or et aux TIPS ; régime macro actuel mis en évidence.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+    </div>
+
+    <h3 class="hsec">Portefeuilles</h3>
+    <div class="tilegrid">
+      <button type="button" class="tile" data-open="pf">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="6.5" width="17" height="13" rx="2" stroke="#00CFFF" stroke-width="1.8"/><path d="M9 6.5V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v1.5" stroke="#00CFFF" stroke-width="1.8"/><path d="M7 15.5L10 12.5L12.5 14.5L17 10" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2>Portfolio Lab</h2>
+        <p>Déposez un portefeuille (positions et évolution de la valeur) : titres, cadran croissance / inflation, volatilité et régression de la performance.</p>
         <span class="go2">Ouvrir →</span>
       </button>
     </div>
@@ -1766,6 +1855,84 @@ Lecture : un titre en haut à droite profite d'un boom inflationniste, en bas à
 Données : TradingView Data API (service tiers non officiel) via le relais, instantané du jour partagé : un seul appel au fournisseur par symbole et par jour.</div>
 </main>
 <div class="qd-toast" id="qdToast"></div>
+</div>
+<div id="screenPf" class="screen">
+
+<header><h1>Portfolio Lab</h1><span>Analyse d'un portefeuille : titres, cadran croissance / inflation, volatilité et régression de la performance.</span></header>
+<main>
+  <section class="fx-card pf-card" id="pfImport">
+    <div class="pf-drop" id="pfDrop" tabindex="0" role="button" aria-label="Déposer les fichiers du portefeuille">
+      <b>Déposez ici les deux fichiers Excel du portefeuille</b>
+      <span>le détail des positions (ex. <i>details.xlsx</i>) et l'évolution de la valeur (ex. <i>NAV.xlsx</i>) — ensemble ou l'un après l'autre, ou cliquez pour les choisir</span>
+      <input type="file" id="pfFile" accept=".xlsx,.xlsm,.xls" multiple hidden>
+    </div>
+    <div class="pf-files" id="pfFiles"></div>
+    <div class="pf-note">Les données du portefeuille restent dans ce navigateur (onglet ouvert) : elles ne sont envoyées ni au relais ni à la base partagée. Seuls les symboles TradingView des titres sont demandés au fournisseur de cours. Phase de test : l'API interne remplacera ce dépôt de fichiers.</div>
+  </section>
+
+  <div id="pfBody" hidden>
+    <section class="fx-card pf-card">
+      <div class="pf-head" id="pfHead"></div>
+      <div class="fx-kpis" id="pfKpis"></div>
+      <div class="pf-alloc" id="pfAlloc"></div>
+    </section>
+
+    <div class="pf-tabs" id="pfTabs" role="tablist">
+      <button type="button" data-t="pos" class="on" role="tab">Titres</button>
+      <button type="button" data-t="cad" role="tab">Cadran</button>
+      <button type="button" data-t="vol" role="tab">Volatilité</button>
+      <button type="button" data-t="reg" role="tab">Régression</button>
+    </div>
+
+    <section class="fx-card pf-card pf-pane" data-p="pos">
+      <div class="pf-bar"><span class="pf-st" id="pfMapSt"></span><span class="sp"></span><button type="button" class="btn" id="pfRemap" title="Recherche à nouveau les symboles non associés">Associer les symboles</button><button type="button" class="btn" id="pfCsv">CSV</button></div>
+      <div class="pf-tblwrap"><table class="pf-tbl" id="pfPos"></table></div>
+      <div class="pf-note">Symbole TradingView : associé automatiquement (nom du titre pour le SPI, puis recherche par ISIN ou par nom, cotation primaire). ✎ pour corriger — la correction est mémorisée dans ce navigateur. Obligations et liquidités ne sont pas cotées chez le fournisseur.</div>
+    </section>
+
+    <section class="fx-card pf-card pf-pane" data-p="cad" hidden>
+      <div class="pf-bar"><span class="pf-st" id="pfCadSt"></span><span class="sp"></span><label class="pf-ck"><input type="checkbox" id="pfCadLbl" checked> Étiquettes</label></div>
+      <div class="fx-kpis" id="pfCadKpis"></div>
+      <div class="pf-two">
+        <div><div class="pf-plot" id="pfCadPlot"></div>
+          <div class="pf-legend"><span><i class="dm"></i>Portefeuille (NAV réelle)</span><span><i class="dm o"></i>Portefeuille actuel (titres pondérés)</span><span>Taille du point = poids · cadre épais = régime macro actuel</span></div></div>
+        <div class="pf-tblwrap"><table class="pf-tbl" id="pfCadTbl"></table></div>
+      </div>
+      <div class="pf-note">Mêmes facteurs, fenêtre et zone neutre que l'écran Cadran (réglages modifiables là-bas). « Portefeuille actuel » = rendements hebdomadaires des titres cotés pondérés par leur poids d'aujourd'hui ; « NAV réelle » = performance effective du portefeuille (historique plus court, liquidités et obligations comprises).</div>
+    </section>
+
+    <section class="fx-card pf-card pf-pane" data-p="vol" hidden>
+      <div class="fx-kpis" id="pfVolKpis"></div>
+      <h3 class="pf-h">Volatilité glissante annualisée du portefeuille (NAV)</h3>
+      <div class="pf-chart" id="pfVolChart"></div>
+      <h3 class="pf-h">Performance et drawdown (NAV, base 100)</h3>
+      <div class="pf-chart" id="pfDdChart"></div>
+      <h3 class="pf-h">Volatilité et contribution au risque par titre</h3>
+      <div class="pf-bar"><span class="pf-st" id="pfVolSt"></span></div>
+      <div class="pf-tblwrap"><table class="pf-tbl" id="pfVolTbl"></table></div>
+      <div class="fx-notes" id="pfNavNotes" hidden></div>
+      <div class="pf-note">Volatilité = écart-type des rendements quotidiens × √252. Contribution au risque = part de la variance du portefeuille due au titre (poids × covariance avec le portefeuille), sur un an de cours quotidiens, poids actuels. Obligations approchées par l'indice ci-dessous, liquidités à volatilité nulle.</div>
+      <div class="pf-bar"><label class="pf-ck">Indice pour les obligations <input type="text" id="pfBondProxy" spellcheck="false"></label><button type="button" class="btn" id="pfBondApply">Appliquer</button></div>
+    </section>
+
+    <section class="fx-card pf-card pf-pane" data-p="reg" hidden>
+      <div class="pf-bar pf-regopt">
+        <span class="lbl">Variables explicatives</span><span id="pfRegRefs"></span>
+        <input type="text" id="pfRegAdd" placeholder="+ symbole (ex. SIX:SMI)" spellcheck="false">
+        <span class="sp"></span>
+        <div class="fx-ranges" id="pfRegFreq"><button type="button" data-f="d">Quotidien</button><button type="button" data-f="w">Hebdomadaire</button></div>
+      </div>
+      <div class="fx-kpis" id="pfRegKpis"></div>
+      <div class="pf-tblwrap"><table class="pf-tbl" id="pfRegTbl"></table></div>
+      <div class="pf-two">
+        <div><h3 class="pf-h" id="pfScatH">Rendements du portefeuille contre le 1er facteur</h3><div class="pf-chart" id="pfScat"></div></div>
+        <div><h3 class="pf-h">Performance réelle et répliquée (base 100)</h3><div class="pf-chart" id="pfRep"></div></div>
+      </div>
+      <div class="pf-note">Régression multiple des rendements du portefeuille (NAV, flux neutralisés) sur les facteurs choisis, avec constante. β = sensibilité ; t = statistique de Student (|t| &gt; 2 ≈ significatif) ; alpha annualisé = performance non expliquée par les facteurs. « Répliquée » = performance qu'aurait eue le panier de facteurs pondéré par les β (sans alpha).</div>
+    </section>
+  </div>
+</main>
+<div class="qd-toast" id="pfToast"></div>
 </div>
 <div id="screenLab" class="screen">
 
@@ -11448,6 +11615,8 @@ $('qdCsv').addEventListener('click', () => { if (!Q.res || !Q.res.length) { toas
 $('qdBody').addEventListener('mouseover', e => { const tr = e.target.closest('tr[data-s]'); $('qdPlot').querySelectorAll('g.pt').forEach(g => g.classList.toggle('hl', !!tr && g.dataset.s === tr.dataset.s)); });
 $('qdBody').addEventListener('mouseleave', () => $('qdPlot').querySelectorAll('g.pt.hl').forEach(g => g.classList.remove('hl')));
 
+/* Réglages du Cadran exposés au Portfolio Lab (mêmes facteurs, même fenêtre, même zone neutre) */
+window.gipCadranCfg = () => JSON.parse(JSON.stringify(Q.cfg));
 loadState(); loadDay(); renderFactors(); render();
 new MutationObserver(() => {
   if (!$('screenQuad').classList.contains('on') || Q.started) return;
@@ -11458,9 +11627,737 @@ new MutationObserver(() => {
 })();
 
 
+(function PortfolioLabModule(){
+"use strict";
+/* ============================================================================================
+   Écran « Portfolio Lab » — analyse d'un portefeuille déposé sous forme de deux classeurs Excel :
+     • détail des positions (colonnes « Catégorie », « Désignation », « Code/Numéro/Contrat », « Valeur marché en (mon. réf.) »…)
+     • évolution de la valeur (colonnes « Date », « Total », apports / retraits).
+   Onglets : Titres (positions, symboles TradingView), Cadran (croissance / inflation), Volatilité, Régression.
+   Les données du portefeuille restent dans le navigateur (sessionStorage) : rien n'est envoyé au relais ni à la base partagée.
+   API interne (à venir) : il suffira de remplir le même modèle normalisé (voir setPortfolio) au lieu de lire les fichiers.
+   ============================================================================================ */
+const nf = (d, mn) => new Intl.NumberFormat('fr-CH', {maximumFractionDigits: d, minimumFractionDigits: mn == null ? d : mn});
+const chf = v => (v == null || !isFinite(v)) ? '–' : nf(0).format(v);
+const pct = (x, d) => (x == null || !isFinite(x)) ? '–' : (x < 0 ? '−' : '') + nf(d == null ? 1 : d).format(Math.abs(x * 100)) + ' %';
+const spct = (x, d) => (x == null || !isFinite(x)) ? '–' : (x >= 0 ? '+' : '−') + nf(d == null ? 1 : d).format(Math.abs(x * 100)) + ' %';
+const num2 = x => (x == null || !isFinite(x)) ? '–' : (x < 0 ? '−' : '') + nf(2).format(Math.abs(x));
+const nrm = s => mktFold(s).replace(/\s+/g, ' ').trim();
+const dFr = d => new Date(d * 864e5).toLocaleDateString('fr-CH', {day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC'});
+const zDay = () => new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Zurich'}).format(new Date());
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const SS_KEY = 'gip_pf_session_v1', MAP_KEY = 'gip_pf_map_v1', CFG_KEY = 'gip_pf_cfg_v1', DAY_KEY = 'gip_pf_cache_v1';
+const QUADS = {
+  '1,-1': {n: 'Croissance désinflationniste', s: 'Goldilocks', c: '#00993D'},
+  '1,1': {n: 'Boom inflationniste', s: 'Reflation', c: '#E07B00'},
+  '-1,1': {n: 'Stagflation', s: 'Or, liquidités', c: '#C0201B'},
+  '-1,-1': {n: 'Récession déflationniste', s: 'Risk-off', c: '#0086B3'}
+};
+const NEUT = '#8A9199';
+const PAL = ['#02182B', '#0086B3', '#00CFFF', '#E07B00', '#00993D', '#DDD8C4', '#8A9199', '#C0201B', '#6B4FA0', '#B8860B'];
+const REFS_DEF = [
+  {s: 'SIX:SPIX', n: 'SPI', on: true}, {s: 'SIX:SBR14T', n: 'Obligations CH', on: true}, {s: 'SIX:ZGLD', n: 'Or', on: true},
+  {s: 'SIX:BCCMS', n: 'Matières premières', on: false}, {s: 'SIX:SIMA', n: 'Immobilier CH', on: false}, {s: 'FX_IDC:USDCHF', n: 'USDCHF', on: false}
+];
+
+/* ---------------------------------------------------------------- état */
+const PF = {meta: null, pos: null, nav: null, files: {det: null, nav: null}, tab: 'pos', mapBusy: false, cache: {}};
+const CFG = {refs: REFS_DEF.map(r => Object.assign({}, r)), freq: 'd', bond: 'SIX:SBR14T', labels: true};
+try { const c = JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); if (c) { if (Array.isArray(c.refs) && c.refs.length) CFG.refs = c.refs; if (c.freq) CFG.freq = c.freq; if (c.bond) CFG.bond = c.bond; if (c.labels != null) CFG.labels = !!c.labels; } } catch (e) {}
+const saveCfg = () => { try { localStorage.setItem(CFG_KEY, JSON.stringify(CFG)); } catch (e) {} };
+let MAP = {};
+try { MAP = JSON.parse(localStorage.getItem(MAP_KEY) || '{}') || {}; } catch (e) {}
+const saveMap = () => { try { localStorage.setItem(MAP_KEY, JSON.stringify(MAP)); } catch (e) {} };
+function saveSession(){ try { sessionStorage.setItem(SS_KEY, JSON.stringify({meta: PF.meta, pos: PF.pos, nav: PF.nav, files: PF.files})); } catch (e) {} }
+function loadSession(){ try { const o = JSON.parse(sessionStorage.getItem(SS_KEY) || 'null'); if (o) { PF.meta = o.meta; PF.pos = o.pos; PF.nav = o.nav; PF.files = o.files || {det: null, nav: null}; } } catch (e) {} }
+function toast(msg, ok){ const el = $('pfToast'); el.textContent = msg; el.classList.toggle('err', ok === false); el.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('show'), 4500); }
+
+/* ---------------------------------------------------------------- lecture des classeurs */
+const num = v => { if (typeof v === 'number') return isFinite(v) ? v : null; if (typeof v === 'string') { const s = v.replace(/['’\s]/g, '').replace(',', '.'); if (/^-?\d+(\.\d+)?$/.test(s)) return +s; } return null; };
+const txt = v => v == null ? '' : String(v).trim();
+function toDay(v){
+  if (v instanceof Date && !isNaN(v)) return Math.round((v.getTime() - v.getTimezoneOffset() * 60000) / 864e5);
+  if (typeof v === 'number' && v > 20000 && v < 80000) return Math.round(v - 25569);
+  const m = typeof v === 'string' && v.match(/^(\d{1,2})[.\/](\d{1,2})[.\/](\d{4})/);
+  if (m) return Math.round(Date.UTC(+m[3], +m[2] - 1, +m[1]) / 864e5);
+  const m2 = typeof v === 'string' && v.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m2) return Math.round(Date.UTC(+m2[1], +m2[2] - 1, +m2[3]) / 864e5);
+  return null;
+}
+function colIdx(H, keys){
+  for (const k of keys) { const i = H.indexOf(k); if (i >= 0) return i; }
+  for (const k of keys) { const i = H.findIndex(h => h.indexOf(k) === 0); if (i >= 0) return i; }
+  return -1;
+}
+function sheetKind(rows){
+  for (let r = 0; r < Math.min(rows.length, 15); r++) {
+    const H = (rows[r] || []).map(nrm);
+    if (H.indexOf('designation') >= 0 && H.some(h => h.indexOf('valeur marche') === 0)) return {kind: 'det', r, H};
+    if (H.indexOf('date') >= 0 && H.indexOf('total') >= 0) return {kind: 'nav', r, H};
+  }
+  return null;
+}
+function parseDetails(rows, r0, H){
+  const c = {
+    code: colIdx(H, ['code portefeuille']), dep: colIdx(H, ['depositaire']), gest: colIdx(H, ['gestionnaire']), mode: colIdx(H, ['mode de gestion']), prof: colIdx(H, ['profil de gestion']),
+    cat: colIdx(H, ['categorie']), genre: colIdx(H, ['genre']), id: colIdx(H, ['code/numero/contrat', 'isin', 'code']), name: colIdx(H, ['designation']),
+    taux: colIdx(H, ['taux']), ech: colIdx(H, ['echeance']), ccy: colIdx(H, ['monnaie']), qty: colIdx(H, ['quantite']), pxB: colIdx(H, ['prix comptable']),
+    px: colIdx(H, ['prix marche']), mvRef: colIdx(H, ['valeur marche en (mon. ref.)', 'valeur marche en']), mv: colIdx(H, ['valeur marche']),
+    accr: colIdx(H, ['interets courus en (mon. ref.)', 'interets courus en']), pnl: colIdx(H, ['pp non real. en % (mon. ref.)', 'pp non real. en %'])
+  };
+  if (c.name < 0 || (c.mvRef < 0 && c.mv < 0)) throw new Error('colonnes « Désignation » / « Valeur marché » introuvables');
+  const g = (row, i) => i >= 0 ? row[i] : null;
+  const pos = []; let meta = null;
+  for (let r = r0 + 1; r < rows.length; r++) {
+    const row = rows[r] || [], name = txt(g(row, c.name));
+    const mv = num(g(row, c.mvRef >= 0 ? c.mvRef : c.mv));
+    if (!name || mv == null) continue;
+    if (!meta) meta = {code: txt(g(row, c.code)), dep: txt(g(row, c.dep)), gest: txt(g(row, c.gest)), mode: txt(g(row, c.mode)), prof: txt(g(row, c.prof))};
+    const id = txt(g(row, c.id)), isin = (id.match(/[A-Z]{2}[A-Z0-9]{9}\d/) || [''])[0];
+    const ech = g(row, c.ech);
+    pos.push({cat: txt(g(row, c.cat)) || 'Autres', genre: txt(g(row, c.genre)), id, isin, name, ccy: txt(g(row, c.ccy)), qty: num(g(row, c.qty)),
+      px: num(g(row, c.px)), pxB: num(g(row, c.pxB)), mv, accr: num(g(row, c.accr)) || 0, pnl: num(g(row, c.pnl)), taux: num(g(row, c.taux)), ech: toDay(ech)});
+  }
+  if (!pos.length) throw new Error('aucune position lue');
+  return {meta, pos};
+}
+function parseNav(rows, r0, H){
+  const c = {d: colIdx(H, ['date']), ccy: colIdx(H, ['mon.', 'monnaie']), v: colIdx(H, ['total']), aC: colIdx(H, ['apports cash']), aT: colIdx(H, ['apports titre']),
+    rC: colIdx(H, ['retraits cash']), rT: colIdx(H, ['retraits titre'])};
+  const g = (row, i) => i >= 0 ? num(row[i]) : null;
+  const out = []; let ccy = '';
+  for (let r = r0 + 1; r < rows.length; r++) {
+    const row = rows[r] || [], d = toDay(row[c.d]); if (d == null) continue;
+    if (!ccy && c.ccy >= 0) ccy = txt(row[c.ccy]);
+    const flow = (g(row, c.aC) || 0) + (g(row, c.aT) || 0) - Math.abs(g(row, c.rC) || 0) - Math.abs(g(row, c.rT) || 0);
+    out.push({d, v: g(row, c.v), flow});
+  }
+  if (!out.length) throw new Error('aucune date lue');
+  out.sort((a, b) => a.d - b.d);
+  return {nav: out, ccy};
+}
+async function readFiles(files){
+  for (const f of files) {
+    try {
+      const wb = XLSX.read(await f.arrayBuffer(), {type: 'array', cellDates: true});
+      let done = false;
+      for (const sn of wb.SheetNames) {
+        const rows = XLSX.utils.sheet_to_json(wb.Sheets[sn], {header: 1, raw: true, defval: null});
+        const k = sheetKind(rows); if (!k) continue;
+        if (k.kind === 'det') { const o = parseDetails(rows, k.r, k.H); PF.meta = Object.assign(PF.meta || {}, o.meta); PF.pos = o.pos; PF.files.det = {n: f.name, k: o.pos.length + ' positions'}; }
+        else { const o = parseNav(rows, k.r, k.H); PF.nav = o.nav; PF.meta = Object.assign(PF.meta || {}, {ccy: o.ccy}); PF.files.nav = {n: f.name, k: o.nav.length + ' dates'}; }
+        done = true; break;
+      }
+      if (!done) toast(f.name + ' : format non reconnu (ni détail des positions, ni évolution de la valeur).', false);
+    } catch (e) { toast(f.name + ' : lecture impossible (' + e.message + ').', false); }
+  }
+  PF.cache = {}; saveSession(); renderAll(); if (PF.pos) autoMap();
+}
+
+/* ---------------------------------------------------------------- NAV : nettoyage, indice, statistiques */
+function cleanNav(rows){
+  const dropped = []; let carry = 0;
+  let pts = [];
+  rows.forEach(r => {
+    if (!(r.v > 0)) { dropped.push({d: r.d, why: 'valeur nulle ou absente'}); carry += r.flow || 0; return; }
+    if (pts.length && pts[pts.length - 1].d === r.d) pts.pop();
+    pts.push({d: r.d, v: r.v, flow: (r.flow || 0) + carry}); carry = 0;
+  });
+  /* pics isolés (valeur doublée un jour, chute aberrante) : point très éloigné de ses deux voisins alors que ceux-ci concordent */
+  for (let guard = 0; guard < 200; guard++) {
+    let hit = -1;
+    for (let i = 1; i < pts.length; i++) {
+      if (pts[i].flow) continue;
+      const a = pts[i - 1].v, b = pts[i].v, c = i + 1 < pts.length ? pts[i + 1].v : null;
+      if (c != null) { if (Math.abs(c / a - 1) < 0.03 && Math.abs(b / a - 1) > 0.05 && Math.abs(b / c - 1) > 0.05) { hit = i; break; } }
+      else if (Math.abs(b / a - 1) > 0.25) { hit = i; break; }
+    }
+    if (hit < 0) break;
+    dropped.push({d: pts[hit].d, why: 'pic isolé (' + spct(pts[hit].v / pts[hit - 1].v - 1) + ' puis retour)'});
+    pts.splice(hit, 1);
+  }
+  const idx = []; let I = 100;
+  pts.forEach((p, i) => {
+    const r = i ? (p.v - p.flow) / pts[i - 1].v - 1 : 0;
+    if (i) I *= 1 + r;
+    idx.push({d: p.d, v: p.v, r, I});
+  });
+  dropped.sort((a, b) => a.d - b.d);
+  return {idx, dropped};
+}
+const mean = a => a.reduce((s, v) => s + v, 0) / a.length;
+const sdev = a => { if (a.length < 2) return NaN; const m = mean(a); return Math.sqrt(a.reduce((s, v) => s + (v - m) * (v - m), 0) / (a.length - 1)); };
+function navStats(){
+  if (PF.cache.nav) return PF.cache.nav;
+  if (!PF.nav) return null;
+  const {idx, dropped} = cleanNav(PF.nav);
+  if (idx.length < 3) return null;
+  const R = idx.slice(1).map(p => p.r), last = idx[idx.length - 1];
+  const yr = new Date(last.d * 864e5).getUTCFullYear(), y0 = Math.round(Date.UTC(yr, 0, 1) / 864e5);
+  const base = idx.filter(p => p.d < y0).pop() || idx[0];
+  let peak = -Infinity, mdd = 0; const dd = idx.map(p => { peak = Math.max(peak, p.I); const x = p.I / peak - 1; mdd = Math.min(mdd, x); return x; });
+  const roll = w => idx.map((p, i) => i >= w ? {d: p.d, y: sdev(R.slice(i - w, i)) * Math.sqrt(252)} : null).filter(Boolean);
+  const tail = n => R.length >= n ? sdev(R.slice(-n)) * Math.sqrt(252) : null;
+  const s = {idx, dropped, R, first: idx[0], last, perf: last.I / 100 - 1, ytd: last.I / base.I - 1, ytdFrom: base.d,
+    vol: sdev(R) * Math.sqrt(252), vol1m: tail(21), vol3m: tail(63), mdd, dd, roll21: roll(21), roll63: roll(63)};
+  PF.cache.nav = s; return s;
+}
+
+/* ---------------------------------------------------------------- positions : types, poids, symboles */
+const kindOf = p => { const c = nrm(p.cat + ' ' + p.genre); if (/liquid|cash|compte|monetaire|money|fiduciaire/.test(c)) return 'cash'; if (/oblig|bond/.test(c)) return 'bond'; return 'sec'; };
+const keyOf = p => p.isin || nrm(p.name);
+const totalMv = () => (PF.pos || []).reduce((s, p) => s + p.mv, 0);
+const symOf = p => { const m = MAP[keyOf(p)]; return m && m.s ? m.s : null; };
+/* Correspondance par nom avec l'univers SPI (sans appel au fournisseur) */
+const STOP = new Set(['reg', 'shs', 'act', 'nom', 'bp', 'ltd', 'ag', 'sa', 'inc', 'holding', 'hldg', 'group', 'grp', 'the', 'international', 'intl', 'plc', 'se', 'nv', 'corp', 'co', 'namen', 'cie', 'et', 'de', 'du', 'la', 'le', 'des', 'and', 'ord', 'shares']);
+const toks = s => mktFold(s).replace(/\(.*?\)/g, ' ').replace(/ue/g, 'u').replace(/oe/g, 'o').replace(/ae/g, 'a').replace(/[^a-z0-9]+/g, ' ').split(' ').filter(w => w.length > 1 && !STOP.has(w));
+const SPI_C = [];
+MKT_SPI.forEach(g => g[1].forEach(m => SPI_C.push({s: 'SIX:' + m[0], n: m[1], t: toks(m[1])})));
+function spiMatch(p){
+  const dt = toks(p.name); if (!dt.length) return null;
+  const pre = (a, b) => a === b || (Math.min(a.length, b.length) >= 4 && (a.indexOf(b) === 0 || b.indexOf(a) === 0));
+  const nm = nrm(p.name), wantReg = /\breg\b|\bnom\b|\bnamen\b| n$|\breg\./.test(nm), wantBj = /\bbp\b|\bbj\b|\bgs\b|genuss|participation/.test(nm);
+  let best = null, bs = -1;
+  SPI_C.forEach(c => {
+    if (!c.t.length || !pre(dt[0], c.t[0])) return;
+    let s = 10 + (dt[0] === c.t[0] ? 5 : 0);
+    dt.slice(1).forEach(w => { if (c.t.some(x => pre(w, x))) s += 1; });
+    if (wantReg && /nominatif/i.test(c.n)) s += 0.5;
+    if (!wantReg && /porteur/i.test(c.n)) s += 0.2;
+    if (wantBj && /\(BJ\)/.test(c.n)) s += 0.5;
+    if (s > bs) { bs = s; best = c; }
+  });
+  return best ? best.s : null;
+}
+async function searchSym(q){
+  const r = await fetch('/api/tv/search/market/' + encodeURIComponent(q)); let j = null;
+  try { j = await r.json(); } catch (e) {}
+  if (!r.ok || !j || j.success === false) throw new Error((j && (j.error_message || (j.error && j.error.message))) || ('HTTP ' + r.status));
+  const res = mktRankSearch(mktParseSearch(j), q);
+  return res.length ? res[0] : null;
+}
+function searchName(p){
+  return mktFold(p.name).replace(/\(.*?\)/g, ' ').replace(/^(ant\.?-?\s*[a-z]{1,3}\s*-?|par\s|reg\.?\s*shs\s|act\s+nom\s|bp\s)/, '').replace(/\b(chf|usd|eur|gbp|acc|cap|dis|ucits|reg|shs)\b/g, ' ').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim().split(' ').slice(0, 4).join(' ');
+}
+async function autoMap(force){
+  if (PF.mapBusy || !PF.pos) return;
+  PF.mapBusy = true;
+  const todo = PF.pos.filter(p => kindOf(p) === 'sec' && (!MAP[keyOf(p)] || (force && MAP[keyOf(p)].src === 'none')));
+  let n = 0, err = '';
+  for (const p of todo) {
+    $('pfMapSt').textContent = 'Association des symboles… ' + (++n) + ' / ' + todo.length;
+    const k = keyOf(p);
+    if (/action/i.test(nrm(p.cat)) && (!p.isin || /^CH/.test(p.isin))) { const s = spiMatch(p); if (s) { MAP[k] = {s, src: 'SPI'}; continue; } }
+    let hit = null;
+    try {
+      if (p.isin) { hit = await searchSym(p.isin); await sleep(250); }
+      if (!hit) { const q = searchName(p); if (q.length >= 3) { hit = await searchSym(q); await sleep(250); } }
+    } catch (e) { err = e.message; break; }
+    MAP[k] = hit ? {s: hit.full, src: p.isin ? 'recherche' : 'nom', d: hit.desc} : {s: null, src: 'none'};
+  }
+  saveMap(); PF.mapBusy = false; PF.cache.cad = null; PF.cache.risk = null;
+  renderPositions();
+  if (err) toast('Recherche des symboles interrompue : ' + err, false);
+  if (PF.tab !== 'pos') showTab(PF.tab);
+}
+
+/* ---------------------------------------------------------------- cours (TradingView via le relais, instantané du jour) */
+const DS = {};   /* symbole -> {t: [jours], c: [clôtures]} | {none: true} */
+try { const o = JSON.parse(localStorage.getItem(DAY_KEY) || 'null'); if (o && o.day === zDay() && o.s) Object.assign(DS, o.s); } catch (e) {}
+function saveDay(){ try { const s = {}; Object.keys(DS).forEach(k => { if (!DS[k].tmp) s[k] = DS[k]; }); localStorage.setItem(DAY_KEY, JSON.stringify({day: zDay(), s})); } catch (e) {} }
+async function loadSeries(syms, onProg){
+  const need = Array.from(new Set(syms.filter(Boolean))).filter(s => !DS[s] || DS[s].tmp);
+  let warn = '';
+  for (let i = 0; i < need.length; i += 30) {
+    if (i) await sleep(350);
+    const chunk = need.slice(i, i + 30);
+    const send = () => fetch('/api/tv-series?symbols=' + encodeURIComponent(chunk.join(',')) + '&bars=780&eod=1');
+    let r, j = null;
+    try { r = await send(); if (r.status === 429) { await sleep(1500); r = await send(); } }
+    catch (e) { throw new Error('Relais Market Data injoignable — page ouverte hors du site Cloudflare, ou hors-ligne ?'); }
+    try { j = await r.json(); } catch (e) {}
+    if (!r.ok && !(j && j.series)) throw new Error((j && j.error_message) || ('HTTP ' + r.status));
+    const ser = (j && j.series) || {}, bad = !!(j && j.error_message);
+    if (bad) warn = j.error_message;
+    chunk.forEach(k => { const S = ser[k]; DS[k] = (S && S.t && S.t.length > 20) ? {t: S.t, c: S.c} : (bad ? {none: true, tmp: true} : {none: true}); });
+    if (onProg) onProg(Math.min(i + 30, need.length), need.length);
+  }
+  if (need.length) saveDay();
+  return warn;
+}
+const has = s => s && DS[s] && !DS[s].none;
+function toWeekly(t, c){
+  const w = [], v = [];
+  for (let i = 0; i < t.length; i++) { const x = +c[i]; if (!(x > 0)) continue; const k = Math.floor((t[i] + 3) / 7); if (w.length && w[w.length - 1] === k) v[v.length - 1] = x; else { w.push(k); v.push(x); } }
+  return {w, c: v};
+}
+const weekly = s => { const S = DS[s]; return toWeekly(S.t, S.c); };
+
+/* ---------------------------------------------------------------- régression (MCO avec constante, statistiques t) */
+function invert(A){
+  const n = A.length, M = A.map((r, i) => r.concat(A.map((_, j) => i === j ? 1 : 0)));
+  for (let c = 0; c < n; c++) {
+    let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+    const t = M[c]; M[c] = M[p]; M[p] = t;
+    if (Math.abs(M[c][c]) < 1e-14) return null;
+    const d = M[c][c]; for (let k = 0; k < 2 * n; k++) M[c][k] /= d;
+    for (let r = 0; r < n; r++) { if (r === c) continue; const f = M[r][c]; if (f) for (let k = 0; k < 2 * n; k++) M[r][k] -= f * M[c][k]; }
+  }
+  return M.map(r => r.slice(n));
+}
+function ols(y, X){   /* X : tableau de colonnes (sans constante) -> {b: [a, b1..bk], se, t, r2, r2a, resid} */
+  const n = y.length, k = X.length + 1;
+  const col = j => j === 0 ? null : X[j - 1];
+  const A = [], bv = [];
+  for (let i = 0; i < k; i++) {
+    A.push([]); const ci = col(i);
+    for (let j = 0; j < k; j++) { const cj = col(j); let s = 0; for (let t = 0; t < n; t++) s += (ci ? ci[t] : 1) * (cj ? cj[t] : 1); A[i].push(s); }
+    let s = 0; for (let t = 0; t < n; t++) s += (ci ? ci[t] : 1) * y[t]; bv.push(s);
+  }
+  const inv = invert(A); if (!inv) return null;
+  const b = inv.map(r => r.reduce((s, v, j) => s + v * bv[j], 0));
+  const fit = y.map((_, t) => b[0] + X.reduce((s, c, j) => s + b[j + 1] * c[t], 0));
+  const resid = y.map((v, t) => v - fit[t]);
+  const my = mean(y), sst = y.reduce((s, v) => s + (v - my) * (v - my), 0), sse = resid.reduce((s, v) => s + v * v, 0);
+  const s2 = sse / Math.max(1, n - k);
+  const se = inv.map((r, i) => Math.sqrt(Math.max(0, r[i] * s2)));
+  const r2 = sst > 0 ? 1 - sse / sst : NaN;
+  return {b, se, t: b.map((v, i) => se[i] > 0 ? v / se[i] : NaN), r2, r2a: 1 - (1 - r2) * (n - 1) / Math.max(1, n - k), resid, n};
+}
+const corr = (a, b) => { const ma = mean(a), mb = mean(b); let sab = 0, sa = 0, sb = 0; for (let i = 0; i < a.length; i++) { sab += (a[i] - ma) * (b[i] - mb); sa += (a[i] - ma) ** 2; sb += (b[i] - mb) ** 2; } return sab / Math.sqrt(sa * sb); };
+
+/* ---------------------------------------------------------------- graphiques SVG */
+function niceTicks(a, b, n){
+  const span = b - a || 1; let step = Math.pow(10, Math.floor(Math.log10(span / n))); const e = span / n / step;
+  step *= e >= 7.5 ? 10 : e >= 3.5 ? 5 : e >= 1.5 ? 2 : 1;
+  const out = []; for (let v = Math.ceil(a / step) * step; v <= b + step * 1e-9; v += step) out.push(Math.abs(v) < step * 1e-9 ? 0 : v);
+  return out;
+}
+const MOIS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+function lineChart(el, series, o){
+  o = o || {};
+  series = series.filter(s => s.pts && s.pts.length);
+  if (!series.length) { el.innerHTML = '<div class="pf-st">Pas de données.</div>'; return; }
+  const W = 760, H = o.h || 230, L = 54, Rm = 12, T = 10, B = 24;
+  let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+  series.forEach(s => s.pts.forEach(p => { if (p.d < x0) x0 = p.d; if (p.d > x1) x1 = p.d; if (p.y < y0) y0 = p.y; if (p.y > y1) y1 = p.y; }));
+  if (o.zero) { y0 = Math.min(y0, 0); y1 = Math.max(y1, 0); }
+  const pad = (y1 - y0) * 0.06 || Math.abs(y1) * 0.05 || 1; y0 -= o.zero && y0 === 0 ? 0 : pad; y1 += o.zero && y1 === 0 ? 0 : pad;
+  const X = d => L + (d - x0) / ((x1 - x0) || 1) * (W - L - Rm), Y = v => T + (1 - (v - y0) / ((y1 - y0) || 1)) * (H - T - B);
+  const fmt = o.fmt || (v => nf(1).format(v));
+  let h = '<svg viewBox="0 0 ' + W + ' ' + H + '" font-family="Aspekta, Arial, sans-serif">';
+  niceTicks(y0, y1, 5).forEach(v => { h += '<line x1="' + L + '" x2="' + (W - Rm) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" stroke="' + (v === 0 ? '#A9AEB4' : '#ECEBE6') + '"/><text x="' + (L - 6) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end" font-size="10.5" fill="#6B6F76">' + esc(fmt(v)) + '</text>'; });
+  const d0 = new Date(x0 * 864e5), months = []; let y = d0.getUTCFullYear(), m = d0.getUTCMonth() + 1;
+  for (;;) { const d = Math.round(Date.UTC(y, m, 1) / 864e5); if (d > x1) break; months.push({d, y, m}); m++; if (m > 11) { m = 0; y++; } }
+  const stepM = Math.max(1, Math.ceil(months.length / 8));
+  months.forEach((q, i) => { if (i % stepM) return; h += '<line x1="' + X(q.d).toFixed(1) + '" x2="' + X(q.d).toFixed(1) + '" y1="' + T + '" y2="' + (H - B) + '" stroke="#F3F2EE"/><text x="' + X(q.d).toFixed(1) + '" y="' + (H - 7) + '" text-anchor="middle" font-size="10.5" fill="#6B6F76">' + MOIS[q.m] + (q.m === 0 || i === 0 ? ' ' + String(q.y).slice(2) : '') + '</text>'; });
+  series.forEach(s => {
+    const path = s.pts.map((p, i) => (i ? 'L' : 'M') + X(p.d).toFixed(1) + ',' + Y(p.y).toFixed(1)).join('');
+    if (s.area) h += '<path d="' + path + 'L' + X(s.pts[s.pts.length - 1].d).toFixed(1) + ',' + Y(Math.max(y0, Math.min(y1, 0))).toFixed(1) + 'L' + X(s.pts[0].d).toFixed(1) + ',' + Y(Math.max(y0, Math.min(y1, 0))).toFixed(1) + 'Z" fill="' + s.c + '" fill-opacity=".14"/>';
+    h += '<path d="' + path + '" fill="none" stroke="' + s.c + '" stroke-width="' + (s.w || 1.8) + '"' + (s.dash ? ' stroke-dasharray="5 4"' : '') + ' stroke-linejoin="round"/>';
+  });
+  h += '<line class="hv" x1="0" x2="0" y1="' + T + '" y2="' + (H - B) + '" stroke="#02182B" stroke-width="1" opacity="0"/><rect class="ov" x="' + L + '" y="' + T + '" width="' + (W - L - Rm) + '" height="' + (H - T - B) + '" fill="transparent"/></svg>';
+  const lg = series.length > 1 ? '<div class="pf-lg">' + series.map(s => '<span><i style="background:' + s.c + '"></i>' + esc(s.n) + '</span>').join('') + '</div>' : '';
+  el.innerHTML = lg + h + '<div class="pf-tip"></div>';
+  const svg = el.querySelector('svg'), tip = el.querySelector('.pf-tip'), hv = svg.querySelector('.hv');
+  const near = (pts, d) => { let lo = 0, hi = pts.length - 1; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (pts[mid].d < d) lo = mid; else hi = mid; } return Math.abs(pts[lo].d - d) <= Math.abs(pts[hi].d - d) ? pts[lo] : pts[hi]; };
+  svg.addEventListener('mousemove', e => {
+    const rc = svg.getBoundingClientRect(), k = W / rc.width, x = (e.clientX - rc.left) * k;
+    if (x < L || x > W - Rm) { tip.style.display = 'none'; hv.setAttribute('opacity', 0); return; }
+    const d = x0 + (x - L) / (W - L - Rm) * (x1 - x0), p0 = near(series[0].pts, d);
+    hv.setAttribute('x1', X(p0.d)); hv.setAttribute('x2', X(p0.d)); hv.setAttribute('opacity', .35);
+    tip.innerHTML = '<b>' + dFr(p0.d) + '</b><br>' + series.map(s => { const p = near(s.pts, p0.d); return '<i style="background:' + s.c + '"></i>' + esc(s.n) + ' : <b>' + esc(fmt(p.y)) + '</b>'; }).join('<br>');
+    tip.style.display = 'block';
+    const px = X(p0.d) / k, wrap = el.getBoundingClientRect().width;
+    tip.style.left = Math.min(wrap - tip.offsetWidth - 4, px + 12) + 'px'; tip.style.top = (svg.offsetTop + 8) + 'px';
+  });
+  svg.addEventListener('mouseleave', () => { tip.style.display = 'none'; hv.setAttribute('opacity', 0); });
+}
+function scatterChart(el, xs, ys, a, b, o){
+  const W = 520, H = 340, L = 50, Rm = 14, T = 12, B = 34;
+  const lim = arr => { let lo = Math.min.apply(null, arr), hi = Math.max.apply(null, arr); const p = (hi - lo) * 0.08 || 0.01; return [lo - p, hi + p]; };
+  const [x0, x1] = lim(xs), [y0, y1] = lim(ys);
+  const X = v => L + (v - x0) / (x1 - x0) * (W - L - Rm), Y = v => T + (1 - (v - y0) / (y1 - y0)) * (H - T - B);
+  const f = v => nf(1).format(v * 100) + ' %';
+  let h = '<svg viewBox="0 0 ' + W + ' ' + H + '" font-family="Aspekta, Arial, sans-serif">';
+  niceTicks(y0, y1, 5).forEach(v => { h += '<line x1="' + L + '" x2="' + (W - Rm) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" stroke="' + (v === 0 ? '#A9AEB4' : '#ECEBE6') + '"/><text x="' + (L - 6) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end" font-size="10.5" fill="#6B6F76">' + f(v) + '</text>'; });
+  niceTicks(x0, x1, 5).forEach(v => { h += '<line y1="' + T + '" y2="' + (H - B) + '" x1="' + X(v).toFixed(1) + '" x2="' + X(v).toFixed(1) + '" stroke="' + (v === 0 ? '#A9AEB4' : '#F3F2EE') + '"/><text y="' + (H - B + 14) + '" x="' + X(v).toFixed(1) + '" text-anchor="middle" font-size="10.5" fill="#6B6F76">' + f(v) + '</text>'; });
+  xs.forEach((x, i) => { h += '<circle cx="' + X(x).toFixed(1) + '" cy="' + Y(ys[i]).toFixed(1) + '" r="3" fill="#0086B3" fill-opacity=".45"/>'; });
+  const lx0 = x0, lx1 = x1;
+  h += '<line x1="' + X(lx0).toFixed(1) + '" y1="' + Y(a + b * lx0).toFixed(1) + '" x2="' + X(lx1).toFixed(1) + '" y2="' + Y(a + b * lx1).toFixed(1) + '" stroke="#C0201B" stroke-width="2"/>';
+  h += '<text x="' + (W - Rm) + '" y="' + (H - 4) + '" text-anchor="end" font-size="11" fill="#1A1F27" font-weight="600">' + esc(o.xl) + ' →</text>';
+  h += '<text x="' + (L + 6) + '" y="' + (T + 12) + '" font-size="11.5" fill="#C0201B" font-weight="700">β simple = ' + nf(2).format(b) + ' · R² = ' + nf(2).format(o.r2) + '</text></svg>';
+  el.innerHTML = h;
+}
+function cadranSvg(pts, reg, cfg){
+  const S = 640, P = 46, C = S / 2;
+  let m = 0.5; pts.forEach(p => { m = Math.max(m, Math.abs(p.x), Math.abs(p.y)); });
+  const R = Math.min(1.5, Math.ceil(m * 1.15 * 10) / 10), sc = (C - P) / R;
+  const px = x => C + Math.max(-R, Math.min(R, x)) * sc, py = y => C - Math.max(-R, Math.min(R, y)) * sc;
+  const rk = reg ? ((reg.mG >= 0 ? 1 : -1) + ',' + (reg.mI >= 0 ? 1 : -1)) : null;
+  let h = '<svg viewBox="0 0 ' + S + ' ' + S + '" font-family="Aspekta, Arial, sans-serif"><rect width="' + S + '" height="' + S + '" fill="#fff"/>';
+  [['-1,1', P, P], ['1,1', C, P], ['-1,-1', P, C], ['1,-1', C, C]].forEach(([k, x, y]) => {
+    const q = QUADS[k], on = k === rk, left = x === P, top = y === P;
+    h += '<rect x="' + x + '" y="' + y + '" width="' + (C - P) + '" height="' + (C - P) + '" fill="' + q.c + '" fill-opacity="' + (on ? 0.13 : 0.06) + '"' + (on ? ' stroke="' + q.c + '" stroke-width="3"' : '') + '/>';
+    const tx = left ? x + 10 : x + C - P - 10, ty = top ? y + 20 : y + C - P - 12;
+    h += '<text x="' + tx + '" y="' + ty + '" text-anchor="' + (left ? 'start' : 'end') + '" fill="' + q.c + '" font-size="13" font-weight="700">' + esc(q.n + (on ? ' ◆' : '')) + '</text>';
+  });
+  const nz = cfg.neutral * sc;
+  h += '<rect x="' + (C - nz) + '" y="' + P + '" width="' + (2 * nz) + '" height="' + (S - 2 * P) + '" fill="#8A9199" fill-opacity=".09"/><rect x="' + P + '" y="' + (C - nz) + '" width="' + (S - 2 * P) + '" height="' + (2 * nz) + '" fill="#8A9199" fill-opacity=".09"/>';
+  h += '<line x1="' + P + '" y1="' + C + '" x2="' + (S - P) + '" y2="' + C + '" stroke="#6B6F76"/><line x1="' + C + '" y1="' + P + '" x2="' + C + '" y2="' + (S - P) + '" stroke="#6B6F76"/>';
+  const step = R > 1 ? 0.5 : (R > 0.6 ? 0.25 : 0.2);
+  for (let t = step; t <= R + 1e-9; t += step) [t, -t].forEach(v => { h += '<text x="' + px(v) + '" y="' + (C + 15) + '" text-anchor="middle" fill="#6B6F76" font-size="10">' + nf(2).format(v) + '</text><text x="' + (C - 5) + '" y="' + (py(v) + 3) + '" text-anchor="end" fill="#6B6F76" font-size="10">' + nf(2).format(v) + '</text>'; });
+  h += '<text x="' + (S - P) + '" y="' + (S - 16) + '" text-anchor="end" fill="#1A1F27" font-size="12" font-weight="600">β croissance (cuivre / or) →</text>';
+  h += '<text transform="translate(18 ' + P + ') rotate(-90)" text-anchor="end" fill="#1A1F27" font-size="12" font-weight="600">β inflation (TIPS / IEF) →</text>';
+  /* étiquettes placées sans chevauchement (essais autour du point, sinon masquée) */
+  const boxes = pts.map(p => { const r = p.rad || 9; return {x: px(p.x) - r, y: py(p.y) - r, w: 2 * r, h: 2 * r}; });
+  const hit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+  pts.slice().sort((a, b) => (b.dia ? 1 : 0) - (a.dia ? 1 : 0) || (b.rad || 0) - (a.rad || 0)).forEach(p => {
+    if (!p.lab || !(CFG.labels || p.dia)) return;
+    const x = px(p.x), y = py(p.y), r = p.rad || 9, w = p.lab.length * (p.dia ? 7.4 : 6.8) + 2, hh = 13;
+    const cands = [[r + 4, 4], [r + 4, -8], [r + 4, 16], [-r - 4 - w, 4], [-r - 4 - w, -8], [-r - 4 - w, 16], [-w / 2, -r - 4], [-w / 2, r + 14], [r + 4, -20], [r + 4, 28], [-r - 4 - w, -20], [-r - 4 - w, 28]];
+    for (const c of cands) { const b = {x: x + c[0], y: y + c[1] - 10, w, h: hh}; if (b.x < 2 || b.x + w > S - 2 || b.y < 2 || b.y + hh > S - 2) continue; if (!boxes.some(o => hit(o, b))) { boxes.push(b); p.lx = x + c[0]; p.ly = y + c[1]; return; } }
+    if (p.dia) { p.lx = x + r + 4; p.ly = y + 4; }
+  });
+  pts.slice().sort((a, b) => (b.rad || 0) - (a.rad || 0)).forEach(p => {
+    const x = px(p.x), y = py(p.y);
+    h += '<g><title>' + esc(p.tip) + '</title>';
+    if (p.dia) { const r = 9; h += '<path d="M' + x + ',' + (y - r) + 'L' + (x + r) + ',' + y + 'L' + x + ',' + (y + r) + 'L' + (x - r) + ',' + y + 'Z" fill="' + (p.dia === 'o' ? '#fff' : '#02182B') + '" stroke="#02182B" stroke-width="2.5"/>'; }
+    else h += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + p.rad.toFixed(1) + '" fill="' + p.c + '" fill-opacity="' + (p.weak ? 0.35 : 0.75) + '" stroke="#fff" stroke-width="1.5"/>';
+    if (p.lx != null) h += '<text x="' + p.lx.toFixed(1) + '" y="' + p.ly.toFixed(1) + '" fill="#1A1F27" font-size="' + (p.dia ? 12 : 11) + '" font-weight="' + (p.dia ? 800 : 600) + '">' + esc(p.lab) + '</text>';
+    h += '</g>';
+  });
+  return h + '</svg>';
+}
+
+/* ---------------------------------------------------------------- rendu : en-tête, allocation, titres */
+const lgHtml = (sym, name) => {
+  const tk = String(sym || '').replace(/^[A-Z0-9_]+:/, ''), d = sym && /^SIX:/.test(sym) && typeof MKT_LOGO_DOMAINS !== 'undefined' ? MKT_LOGO_DOMAINS[tk] : null;
+  let hh = 0; const base = sym || name; for (let i = 0; i < base.length; i++) hh = (hh * 31 + base.charCodeAt(i)) % 360;
+  const w = toks(name).filter(x => !/^\d/.test(x)), ini = (w.length > 1 ? w[0][0] + w[1][0] : (w[0] || name).slice(0, 2)).toUpperCase();
+  return '<span class="lg" style="--h:' + hh + '"><i>' + esc(ini) + '</i>' + (d ? '<img loading="lazy" alt="" referrerpolicy="no-referrer" onload="this.classList.add(\'ok\')" src="https://www.google.com/s2/favicons?domain=' + d + '&sz=64">' : '') + '</span>';
+};
+function renderFiles(){
+  const f = (k, lbl) => PF.files[k] ? '<span class="pf-file ok">✓ <b>' + lbl + '</b> ' + esc(PF.files[k].n) + ' · ' + esc(PF.files[k].k) + '<button type="button" data-rmf="' + k + '" title="Retirer">×</button></span>' : '<span class="pf-file miss">' + lbl + ' : à déposer</span>';
+  $('pfFiles').innerHTML = f('det', 'Positions') + f('nav', 'Évolution de la valeur');
+}
+function catGroups(){
+  const g = new Map(); (PF.pos || []).forEach(p => { if (!g.has(p.cat)) g.set(p.cat, []); g.get(p.cat).push(p); }); return g;
+}
+function stackHtml(title, parts){
+  const tot = parts.reduce((s, p) => s + p.v, 0) || 1;
+  return '<div><h4>' + title + '</h4><div class="pf-stack">' + parts.map((p, i) => '<i style="width:' + (p.v / tot * 100).toFixed(2) + '%;background:' + PAL[i % PAL.length] + '" title="' + esc(p.n + ' : ' + pct(p.v / tot)) + '"></i>').join('') + '</div><div class="pf-keys">'
+    + parts.map((p, i) => '<span><i style="background:' + PAL[i % PAL.length] + '"></i>' + esc(p.n) + ' <b>' + pct(p.v / tot) + '</b></span>').join('') + '</div></div>';
+}
+function kpi(k, v, s, col){ return '<div class="fx-kpi"><div class="k">' + k + '</div><div class="v"' + (col ? ' style="color:' + col + '"' : '') + '>' + v + '</div>' + (s ? '<div class="s">' + s + '</div>' : '') + '</div>'; }
+function renderHead(){
+  const M = PF.meta || {}, N = navStats(), tot = totalMv();
+  $('pfHead').innerHTML = '<div class="pf-code">Portefeuille ' + esc(M.code || '–') + '</div>'
+    + [['Dépositaire', M.dep], ['Gestionnaire', M.gest], ['Mode', M.mode], ['Profil', M.prof], ['Monnaie', M.ccy || 'CHF']].filter(x => x[1]).map(x => '<span>' + x[0] + ' <b>' + esc(x[1]) + '</b></span>').join('');
+  $('pfKpis').innerHTML = (PF.pos ? kpi('Valeur de marché', chf(tot), PF.pos.length + ' positions') : '')
+    + (N ? kpi('Valeur (NAV)', chf(N.last.v), 'au ' + dFr(N.last.d)) + kpi('Performance', spct(N.perf), 'depuis le ' + dFr(N.first.d), N.perf >= 0 ? '#1F7A4D' : '#B42318')
+      + kpi('Depuis le 1er janvier', spct(N.ytd), 'base ' + dFr(N.ytdFrom)) + kpi('Volatilité annualisée', pct(N.vol), 'rendements quotidiens') + kpi('Perte maximale', pct(N.mdd), 'drawdown') : kpi('Évolution de la valeur', '–', 'déposez le fichier NAV'));
+  if (PF.pos) {
+    const byCat = Array.from(catGroups()).map(([n, ps]) => ({n, v: ps.reduce((s, p) => s + p.mv, 0)})).sort((a, b) => b.v - a.v);
+    const cm = new Map(); PF.pos.forEach(p => cm.set(p.ccy || '?', (cm.get(p.ccy || '?') || 0) + p.mv));
+    $('pfAlloc').innerHTML = stackHtml('Par catégorie', byCat) + stackHtml('Par monnaie', Array.from(cm).map(([n, v]) => ({n, v})).sort((a, b) => b.v - a.v));
+  } else $('pfAlloc').innerHTML = '';
+}
+function renderPositions(){
+  const el = $('pfPos');
+  if (!PF.pos) { el.innerHTML = '<tr><td class="l pf-st">Déposez le détail des positions.</td></tr>'; $('pfMapSt').textContent = ''; return; }
+  const tot = totalMv();
+  let h = '<thead><tr><th class="l">Titre</th><th class="l">Symbole TradingView</th><th>Mon.</th><th>Quantité</th><th>Prix</th><th>Valeur (CHF)</th><th>Poids</th><th title="Plus/moins-value latente en monnaie de référence">+/− latente</th></tr></thead><tbody>';
+  catGroups().forEach((ps, cat) => {
+    const v = ps.reduce((s, p) => s + p.mv, 0);
+    h += '<tr class="grp"><td class="l" colspan="5">' + esc(cat) + ' <span class="pf-st">· ' + ps.length + '</span></td><td>' + chf(v) + '</td><td>' + pct(v / tot) + '</td><td></td></tr>';
+    ps.forEach(p => {
+      const k = kindOf(p), m = MAP[keyOf(p)], s = m && m.s;
+      const symCell = k !== 'sec' ? '<span class="pf-st">' + (k === 'cash' ? 'liquidités' : 'obligation') + '</span>'
+        : (s ? '<span class="pf-sym">' + esc(s) + '</span><span class="pf-src">' + esc(m.src) + '</span>' : (m && m.src === 'none' ? '<span class="pf-dn">non trouvé</span>' : '<span class="pf-st">…</span>'))
+          + '<button type="button" class="pf-ed" data-ed="' + esc(keyOf(p)) + '" title="Corriger le symbole">✎</button>';
+      const sub = [p.isin || p.id, p.taux ? nf(3, 2).format(p.taux * 100) + ' %' : '', p.ech ? 'éch. ' + dFr(p.ech) : ''].filter(Boolean).join(' · ');
+      h += '<tr class="pf-r"><td class="l"><div class="pf-nm">' + lgHtml(s, p.name) + '<span>' + esc(p.name) + '<small>' + esc(sub) + '</small></span></div></td><td class="l">' + symCell + '</td><td>' + esc(p.ccy) + '</td><td>' + (p.qty == null ? '–' : nf(p.qty % 1 ? 2 : 0).format(p.qty)) + '</td><td>' + (p.px == null ? '–' : nf(2).format(p.px)) + '</td><td>' + chf(p.mv) + '</td><td>' + pct(p.mv / tot) + '</td><td class="' + (p.pnl > 0 ? 'pf-up' : p.pnl < 0 ? 'pf-dn' : '') + '">' + (p.pnl == null ? '' : spct(p.pnl)) + '</td></tr>';
+    });
+  });
+  h += '<tr class="tot"><td class="l" colspan="5">Total</td><td>' + chf(tot) + '</td><td>100 %</td><td></td></tr></tbody>';
+  el.innerHTML = h;
+  const secs = PF.pos.filter(p => kindOf(p) === 'sec'), ok = secs.filter(symOf);
+  if (!PF.mapBusy) $('pfMapSt').textContent = ok.length + ' / ' + secs.length + ' titres associés à un symbole TradingView' + (ok.length < secs.length ? ' — ✎ pour compléter' : '');
+}
+function renderAll(){
+  renderFiles();
+  const on = !!(PF.pos || PF.nav);
+  $('pfBody').hidden = !on;
+  if (!on) return;
+  renderHead(); renderPositions(); showTab(PF.tab);
+}
+
+/* ---------------------------------------------------------------- onglet Cadran */
+function cadCfg(){
+  const d = {weeks: 104, fx: true, rel: false, neutral: 0.10, mom: 13, f: {gNum: 'OANDA:XCUUSD', gDen: 'OANDA:XAUUSD', iNum: 'AMEX:TIP', iDen: 'NASDAQ:IEF', fx: 'FX_IDC:USDCHF', bench: 'SIX:SPIX'}};
+  try { return typeof window.gipCadranCfg === 'function' ? window.gipCadranCfg() : d; } catch (e) { return d; }
+}
+function alignW(list, n){
+  const maps = list.map(W => { const m = new Map(); W.w.forEach((k, i) => m.set(k, W.c[i])); return m; });
+  const keys = list[0].w.filter(k => maps.every(m => m.has(k))).slice(-(n + 1));
+  return {keys, v: maps.map(m => keys.map(k => m.get(k)))};
+}
+const lrA = a => a.slice(1).map((v, i) => Math.log(v / a[i]));
+function cadAnalyse(yW, cfg){
+  const f = cfg.f, F = [f.gNum, f.gDen, f.iNum, f.iDen].concat(cfg.fx ? [f.fx] : []).concat(cfg.rel ? [f.bench] : []);
+  const A = alignW([yW].concat(F.map(weekly)), cfg.weeks);
+  if (A.keys.length < 27) return {err: 'historique commun trop court (' + Math.max(0, A.keys.length - 1) + ' semaines)'};
+  const v = A.v; let y = lrA(v[0]);
+  const rG = lrA(v[1].map((x, i) => x / v[2][i])), rI = lrA(v[3].map((x, i) => x / v[4][i]));
+  const X = [rG, rI]; let k = 5;
+  if (cfg.fx) X.push(lrA(v[k++]));
+  if (cfg.rel) { const rb = lrA(v[k++]); y = y.map((r, i) => r - rb[i]); }
+  const res = ols(y, X), sy = sdev(y);
+  if (!res || !(sy > 0)) return {err: 'régression impossible'};
+  return {zG: res.b[1] * sdev(rG) / sy, zI: res.b[2] * sdev(rI) / sy, r2: res.r2, n: y.length};
+}
+function quadOf(x, y, nz){
+  const sx = x > nz ? 1 : x < -nz ? -1 : 0, sy = y > nz ? 1 : y < -nz ? -1 : 0;
+  if (sx && sy) return QUADS[sx + ',' + sy];
+  if (!sx && !sy) return {n: 'Neutre / peu sensible', c: NEUT};
+  return {n: (sx === 1 ? 'Croissance' : sx === -1 ? 'Récession' : sy === 1 ? 'Inflation' : 'Désinflation') + ' (autre axe neutre)', c: NEUT};
+}
+async function runCad(){
+  const st = $('pfCadSt');
+  if (!PF.pos) { st.textContent = 'Déposez le détail des positions.'; return; }
+  if (PF.mapBusy) { st.textContent = 'Association des symboles en cours…'; return; }
+  const cfg = cadCfg(), f = cfg.f;
+  const secs = PF.pos.filter(p => kindOf(p) === 'sec' && symOf(p));
+  const fac = [f.gNum, f.gDen, f.iNum, f.iDen, cfg.fx ? f.fx : null, cfg.rel ? f.bench : null];
+  st.textContent = 'Chargement des cours…';
+  let warn = '';
+  try { warn = await loadSeries(secs.map(symOf).concat(fac), (d, n) => { st.textContent = 'Chargement des cours… ' + d + ' / ' + n; }); }
+  catch (e) { st.textContent = e.message; return; }
+  const miss = fac.filter(s => s && !has(s));
+  if (miss.length) { st.textContent = 'Facteur(s) sans données : ' + miss.join(', ') + ' — corrigez-les dans l\'écran Cadran (Facteurs et réglages).'; return; }
+  const tot = totalMv(), rows = [];
+  secs.forEach(p => { const s = symOf(p); rows.push(Object.assign({p, s, w: p.mv / tot}, has(s) ? cadAnalyse(weekly(s), cfg) : {err: 'aucun cours reçu'})); });
+  /* portefeuille actuel : rendements hebdomadaires des titres cotés, pondérés par les poids d'aujourd'hui */
+  const okRows = rows.filter(r => !r.err), wSum = okRows.reduce((s, r) => s + r.w, 0);
+  let synth = null;
+  if (okRows.length) {
+    const base = weekly(f.gNum), maps = okRows.map(r => { const W = weekly(r.s), m = new Map(); W.w.forEach((k, i) => m.set(k, W.c[i])); return m; });
+    const keys = base.w.slice(-(cfg.weeks + 1)), lv = [100];
+    for (let i = 1; i < keys.length; i++) {
+      let s = 0, ws = 0;
+      okRows.forEach((r, j) => { const a = maps[j].get(keys[i - 1]), b = maps[j].get(keys[i]); if (a > 0 && b > 0) { s += r.w * (b / a - 1); ws += r.w; } });
+      lv.push(lv[i - 1] * (1 + (ws ? s / ws : 0)));
+    }
+    synth = cadAnalyse({w: keys, c: lv}, cfg);
+  }
+  const N = navStats();
+  const navRes = N ? cadAnalyse(toWeekly(N.idx.map(p => p.d), N.idx.map(p => p.I)), Object.assign({}, cfg, {rel: false})) : null;
+  const A = alignW([f.gNum, f.gDen, f.iNum, f.iDen].map(weekly), cfg.mom);
+  let reg = null;
+  if (A.keys.length >= cfg.mom + 1) { const g = A.v[0].map((x, i) => x / A.v[1][i]), inf = A.v[2].map((x, i) => x / A.v[3][i]); reg = {mG: Math.log(g[g.length - 1] / g[0]), mI: Math.log(inf[inf.length - 1] / inf[0])}; }
+  PF.cache.cad = {rows, synth, navRes, reg, cfg, cover: wSum, warn};
+  renderCad();
+}
+function renderCad(){
+  const C = PF.cache.cad; if (!C) return;
+  const cfg = C.cfg, nz = cfg.neutral, wMax = Math.max.apply(null, C.rows.map(r => r.w).concat([0.01]));
+  const pts = C.rows.filter(r => !r.err).map(r => { const q = quadOf(r.zG, r.zI, nz); return {x: r.zG, y: r.zI, c: q.c, rad: 4 + 13 * Math.sqrt(r.w / wMax), weak: !(r.r2 >= 0.1), lab: r.s.replace(/^[A-Z0-9_]+:/, ''),
+    tip: r.p.name + ' (' + r.s + ')\nPoids ' + pct(r.w) + ' · β croissance ' + nf(2).format(r.zG) + ' · β inflation ' + nf(2).format(r.zI) + ' · R² ' + nf(2).format(r.r2) + '\n' + q.n}; });
+  if (C.synth && !C.synth.err) pts.push({x: C.synth.zG, y: C.synth.zI, dia: 'o', lab: 'Portefeuille actuel', tip: 'Portefeuille actuel (titres cotés pondérés, ' + pct(C.cover) + ' de la valeur)\nβ croissance ' + nf(2).format(C.synth.zG) + ' · β inflation ' + nf(2).format(C.synth.zI) + ' · R² ' + nf(2).format(C.synth.r2)});
+  if (C.navRes && !C.navRes.err) pts.push({x: C.navRes.zG, y: C.navRes.zI, dia: 'f', lab: 'NAV', tip: 'Portefeuille (NAV réelle, ' + C.navRes.n + ' semaines)\nβ croissance ' + nf(2).format(C.navRes.zG) + ' · β inflation ' + nf(2).format(C.navRes.zI) + ' · R² ' + nf(2).format(C.navRes.r2)});
+  $('pfCadPlot').innerHTML = cadranSvg(pts, C.reg, cfg);
+  const rk = C.reg ? ((C.reg.mG >= 0 ? 1 : -1) + ',' + (C.reg.mI >= 0 ? 1 : -1)) : null, Rq = rk ? QUADS[rk] : null;
+  const pq = C.synth && !C.synth.err ? quadOf(C.synth.zG, C.synth.zI, nz) : null, nq = C.navRes && !C.navRes.err ? quadOf(C.navRes.zG, C.navRes.zI, nz) : null;
+  const byQ = {}; C.rows.filter(r => !r.err).forEach(r => { const q = quadOf(r.zG, r.zI, nz).n; byQ[q] = (byQ[q] || 0) + r.w; });
+  const topQ = Object.keys(byQ).sort((a, b) => byQ[b] - byQ[a])[0];
+  $('pfCadKpis').innerHTML = kpi('Régime macro actuel', Rq ? esc(Rq.n) : '–', 'momentum ' + cfg.mom + ' sem.', Rq ? Rq.c : null)
+    + kpi('Portefeuille actuel', pq ? esc(pq.n) : '–', pq ? 'titres cotés · ' + pct(C.cover) + ' de la valeur' : (C.synth && C.synth.err) || '', pq ? pq.c : null)
+    + kpi('NAV réelle', nq ? esc(nq.n) : '–', nq ? C.navRes.n + ' semaines' : (C.navRes && C.navRes.err) || 'NAV non déposée', nq ? nq.c : null)
+    + (topQ ? kpi('Plus grand poids', esc(topQ), pct(byQ[topQ]) + ' de la valeur') : '');
+  const rows = C.rows.slice().sort((a, b) => b.w - a.w);
+  $('pfCadTbl').innerHTML = '<thead><tr><th class="l">Titre</th><th>Poids</th><th>β crois.</th><th>β infl.</th><th>R²</th><th class="l">Cadran</th></tr></thead><tbody>'
+    + rows.map(r => { if (r.err) return '<tr><td class="l"><div class="pf-nm">' + lgHtml(r.s, r.p.name) + '<span>' + esc(r.p.name) + '<small>' + esc(r.s) + '</small></span></div></td><td>' + pct(r.w) + '</td><td colspan="4" class="l pf-dn">' + esc(r.err) + '</td></tr>';
+      const q = quadOf(r.zG, r.zI, nz); return '<tr' + (r.r2 >= 0.1 ? '' : ' style="opacity:.6"') + '><td class="l"><div class="pf-nm">' + lgHtml(r.s, r.p.name) + '<span>' + esc(r.p.name) + '<small>' + esc(r.s) + '</small></span></div></td><td>' + pct(r.w) + '</td><td>' + num2(r.zG) + '</td><td>' + num2(r.zI) + '</td><td>' + nf(2).format(r.r2) + '</td><td class="l"><span class="pf-pill" style="background:' + q.c + '">' + esc(q.n) + '</span></td></tr>'; }).join('') + '</tbody>';
+  const unm = PF.pos.filter(p => kindOf(p) === 'sec' && !symOf(p)).length;
+  $('pfCadSt').textContent = C.rows.filter(r => !r.err).length + ' titres placés' + (unm ? ' · ' + unm + ' sans symbole (onglet Titres, ✎)' : '') + ' · fenêtre ' + cfg.weeks + ' semaines' + (C.warn ? ' · fournisseur : ' + C.warn : '');
+}
+
+/* ---------------------------------------------------------------- onglet Volatilité */
+function renderNavVol(){
+  const N = navStats();
+  if (!N) { $('pfVolChart').innerHTML = '<div class="pf-st">Déposez le fichier d\'évolution de la valeur (NAV) pour la volatilité du portefeuille.</div>'; $('pfDdChart').innerHTML = ''; $('pfNavNotes').hidden = true; return; }
+  lineChart($('pfVolChart'), [{n: 'Fenêtre 1 mois (21 j)', c: '#00CFFF', pts: N.roll21}, {n: 'Fenêtre 3 mois (63 j)', c: '#02182B', pts: N.roll63, w: 2.2}], {fmt: v => nf(1).format(v * 100) + ' %', zero: true});
+  const box = $('pfDdChart'); box.innerHTML = '<div id="pfDd1"></div><div id="pfDd2"></div>';
+  lineChart($('pfDd1'), [{n: 'Portefeuille (base 100)', c: '#02182B', pts: N.idx.map(p => ({d: p.d, y: p.I}))}], {fmt: v => nf(1).format(v), h: 200});
+  lineChart($('pfDd2'), [{n: 'Drawdown', c: '#C0201B', area: true, pts: N.idx.map((p, i) => ({d: p.d, y: N.dd[i]}))}], {fmt: v => nf(1).format(v * 100) + ' %', zero: true, h: 130});
+  $('pfNavNotes').hidden = !N.dropped.length;
+  $('pfNavNotes').textContent = N.dropped.length ? 'Points écartés du fichier NAV (' + N.dropped.length + ') : ' + N.dropped.map(x => dFr(x.d) + ' — ' + x.why).join(' ; ') + '. Les rendements sont calculés sur les valeurs restantes, apports et retraits neutralisés.' : '';
+}
+async function runRisk(){
+  renderNavVol();
+  const N = navStats(), st = $('pfVolSt');
+  $('pfBondProxy').value = CFG.bond;
+  if (!PF.pos) { st.textContent = 'Déposez le détail des positions pour la volatilité par titre.'; $('pfVolTbl').innerHTML = ''; setVolKpis(N, null); return; }
+  if (PF.mapBusy) { st.textContent = 'Association des symboles en cours…'; setVolKpis(N, null); return; }
+  const secs = PF.pos.filter(p => kindOf(p) === 'sec' && symOf(p)), bonds = PF.pos.filter(p => kindOf(p) === 'bond');
+  st.textContent = 'Chargement des cours…';
+  try { await loadSeries(secs.map(symOf).concat(bonds.length ? [CFG.bond] : []), (d, n) => { st.textContent = 'Chargement des cours… ' + d + ' / ' + n; }); }
+  catch (e) { st.textContent = e.message; setVolKpis(N, null); return; }
+  const tot = totalMv(), assets = [];
+  secs.forEach(p => { if (has(symOf(p))) assets.push({n: p.name, s: symOf(p), w: p.mv / tot}); });
+  const bondW = bonds.reduce((s, p) => s + p.mv, 0) / tot;
+  if (bonds.length && has(CFG.bond)) assets.push({n: 'Obligations (' + bonds.length + ', approchées par ' + CFG.bond + ')', s: CFG.bond, w: bondW, proxy: true});
+  const cashW = PF.pos.filter(p => kindOf(p) === 'cash').reduce((s, p) => s + p.mv, 0) / tot;
+  const uncovered = PF.pos.filter(p => kindOf(p) === 'sec' && !(symOf(p) && has(symOf(p))));
+  const uncW = uncovered.reduce((s, p) => s + p.mv, 0) / tot + (bonds.length && !has(CFG.bond) ? bondW : 0);
+  if (!assets.length) { st.textContent = 'Aucun titre avec des cours : associez les symboles dans l\'onglet Titres.'; return; }
+  /* calendrier commun (union des dates, dernier cours connu reporté), dernière année */
+  const start = Math.max.apply(null, assets.map(a => DS[a.s].t[0]));
+  const cal = Array.from(new Set([].concat.apply([], assets.map(a => DS[a.s].t.filter(d => d >= start))))).sort((a, b) => a - b).slice(-253);
+  const R = assets.map(a => {
+    const S = DS[a.s], lv = []; let j = 0, last = null;
+    cal.forEach(d => { while (j < S.t.length && S.t[j] <= d) { last = S.c[j]; j++; } lv.push(last); });
+    return lv.slice(1).map((v, i) => (v > 0 && lv[i] > 0) ? Math.log(v / lv[i]) : 0);
+  });
+  const n = R[0].length, k = assets.length, means = R.map(mean);
+  const cov = R.map((a, i) => R.map((b, j) => { let s = 0; for (let t = 0; t < n; t++) s += (a[t] - means[i]) * (b[t] - means[j]); return s / (n - 1) * 252; }));
+  const covW = assets.reduce((s, a) => s + a.w, 0) + cashW;   /* poids renormalisés sur la partie couverte (+ liquidités) */
+  const w = assets.map(a => a.w / covW);
+  const Sw = cov.map(r => r.reduce((s, v, j) => s + v * w[j], 0));
+  const varP = w.reduce((s, v, i) => s + v * Sw[i], 0), volP = Math.sqrt(varP);
+  const vol = (s, nd) => { const c = DS[s].c, r = []; for (let i = Math.max(1, c.length - nd); i < c.length; i++) if (c[i] > 0 && c[i - 1] > 0) r.push(Math.log(c[i] / c[i - 1])); return r.length > 10 ? sdev(r) * Math.sqrt(252) : null; };
+  const rows = assets.map((a, i) => ({n: a.n, s: a.s, w: a.w, v3: vol(a.s, 63), v1: vol(a.s, 252), rc: varP > 0 ? w[i] * Sw[i] / varP : null, proxy: a.proxy}));
+  if (cashW) rows.push({n: 'Liquidités', w: cashW, v3: 0, v1: 0, rc: 0, cash: true});
+  rows.sort((a, b) => (b.rc || 0) - (a.rc || 0));
+  PF.cache.risk = {rows, volP, cover: 1 - uncW, uncovered, n, from: cal[0], to: cal[cal.length - 1]};
+  const rcMax = Math.max.apply(null, rows.map(r => Math.abs(r.rc || 0)).concat([0.01])), vMax = Math.max.apply(null, rows.map(r => r.v1 || r.v3 || 0).concat([0.01]));
+  const bar = (v, m, c) => '<span class="pf-barcell">' + (v == null ? '–' : pct(v)) + '<i style="width:' + (v == null ? 0 : Math.max(1, Math.abs(v) / m * 90)).toFixed(0) + 'px' + (c ? ';background:' + c : '') + '"></i></span>';
+  $('pfVolTbl').innerHTML = '<thead><tr><th class="l">Titre</th><th>Poids</th><th>Vol. 3 mois</th><th>Vol. 1 an</th><th title="Part de la variance du portefeuille">Contribution au risque</th></tr></thead><tbody>'
+    + rows.map(r => '<tr class="pf-r"><td class="l"><div class="pf-nm">' + (r.cash ? '' : lgHtml(r.proxy ? null : r.s, r.n)) + '<span>' + esc(r.n) + (r.s ? '<small>' + esc(r.s) + '</small>' : '') + '</span></div></td><td>' + pct(r.w) + '</td><td>' + (r.v3 == null ? '–' : pct(r.v3)) + '</td><td>' + bar(r.v1, vMax, '#8A9199') + '</td><td>' + bar(r.rc, rcMax) + '</td></tr>').join('')
+    + (uncovered.length ? '<tr><td class="l pf-st" colspan="5">Sans cours (exclus) : ' + uncovered.map(p => esc(p.name)).join(', ') + '</td></tr>' : '') + '</tbody>';
+  st.textContent = 'Un an de cours quotidiens (' + n + ' séances, du ' + dFr(cal[0]) + ' au ' + dFr(cal[cal.length - 1]) + ') · couverture ' + pct(1 - uncW) + ' de la valeur';
+  setVolKpis(N, PF.cache.risk);
+}
+function setVolKpis(N, K){
+  $('pfVolKpis').innerHTML = (N ? kpi('Vol. réalisée', pct(N.vol), 'depuis le ' + dFr(N.first.d)) + kpi('Vol. 3 mois', pct(N.vol3m), '63 dernières séances') + kpi('Vol. 1 mois', pct(N.vol1m), '21 dernières séances') + kpi('Perte maximale', pct(N.mdd), 'drawdown') : '')
+    + (K ? kpi('Vol. ex ante', pct(K.volP), 'titres actuels · 1 an de cours') + kpi('Couverture', pct(K.cover), 'de la valeur') : '');
+}
+
+/* ---------------------------------------------------------------- onglet Régression */
+function renderRefChips(){
+  $('pfRegRefs').innerHTML = CFG.refs.map((r, i) => '<span class="pf-refchip' + (r.on ? ' on' : '') + '" data-ri="' + i + '" title="' + esc(r.s) + (r.custom ? ' — clic droit pour retirer' : '') + '">' + esc(r.n) + ' <b>' + esc(r.s.replace(/^[A-Z0-9_]+:/, '')) + '</b></span>').join('');
+  $('pfRegFreq').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.f === CFG.freq));
+}
+async function runReg(){
+  renderRefChips();
+  const N = navStats(), refs = CFG.refs.filter(r => r.on);
+  const clear = msg => { $('pfRegKpis').innerHTML = ''; $('pfRegTbl').innerHTML = '<tr><td class="l pf-st">' + esc(msg) + '</td></tr>'; $('pfScat').innerHTML = ''; $('pfRep').innerHTML = ''; };
+  if (!N) return clear('Déposez le fichier d\'évolution de la valeur (NAV) : la régression porte sur la performance réelle du portefeuille.');
+  if (!refs.length) return clear('Choisissez au moins une variable explicative.');
+  clear('Chargement des cours…');
+  let warn = '';
+  try { warn = await loadSeries(refs.map(r => r.s)); } catch (e) { return clear(e.message); }
+  const ok = refs.filter(r => has(r.s)), miss = refs.filter(r => !has(r.s));
+  if (!ok.length) return clear('Aucune donnée pour : ' + miss.map(r => r.s).join(', ') + '.');
+  /* séries de niveaux alignées (quotidien : dates communes ; hebdomadaire : dernière valeur de chaque semaine) */
+  let ys, xs, dates;
+  if (CFG.freq === 'w') {
+    const W = [toWeekly(N.idx.map(p => p.d), N.idx.map(p => p.I))].concat(ok.map(r => weekly(r.s)));
+    const A = alignW(W, 100000); dates = A.keys.map(k => k * 7 + 1); ys = A.v[0]; xs = A.v.slice(1);
+  } else {
+    const maps = ok.map(r => { const m = new Map(); DS[r.s].t.forEach((d, i) => m.set(d, DS[r.s].c[i])); return m; });
+    const pts = N.idx.filter(p => maps.every(m => m.has(p.d)));
+    dates = pts.map(p => p.d); ys = pts.map(p => p.I); xs = maps.map(m => pts.map(p => m.get(p.d)));
+  }
+  const ret = a => a.slice(1).map((v, i) => v / a[i] - 1);
+  const y = ret(ys), X = xs.map(ret), n = y.length, ann = CFG.freq === 'w' ? 52 : 252;
+  if (n < 20) return clear('Trop peu d\'observations communes (' + n + ').');
+  const res = ols(y, X);
+  if (!res) return clear('Régression impossible (variables colinéaires).');
+  const te = sdev(res.resid) * Math.sqrt(ann);
+  $('pfRegKpis').innerHTML = kpi('R²', nf(2).format(res.r2), 'ajusté ' + nf(2).format(res.r2a)) + kpi('Alpha annualisé', spct(res.b[0] * ann), 't = ' + nf(1).format(res.t[0]), res.b[0] >= 0 ? '#1F7A4D' : '#B42318')
+    + kpi('Risque spécifique', pct(te), 'vol. des résidus, annualisée') + kpi('Observations', String(n), (CFG.freq === 'w' ? 'semaines' : 'séances') + ' · du ' + dFr(dates[0]) + ' au ' + dFr(dates[dates.length - 1]));
+  $('pfRegTbl').innerHTML = '<thead><tr><th class="l">Variable</th><th>β</th><th>Erreur-type</th><th>t</th><th class="l">Significatif</th><th title="Corrélation simple avec le portefeuille">Corrélation</th></tr></thead><tbody>'
+    + '<tr><td class="l">Constante (alpha par période)</td><td>' + nf(4).format(res.b[0]) + '</td><td>' + nf(4).format(res.se[0]) + '</td><td>' + nf(2).format(res.t[0]) + '</td><td class="l">' + (Math.abs(res.t[0]) > 2 ? '<b class="pf-up">oui</b>' : '<span class="pf-st">non</span>') + '</td><td></td></tr>'
+    + ok.map((r, j) => '<tr><td class="l">' + esc(r.n) + ' <span class="pf-sym">' + esc(r.s) + '</span></td><td><b>' + nf(3).format(res.b[j + 1]) + '</b></td><td>' + nf(3).format(res.se[j + 1]) + '</td><td>' + nf(2).format(res.t[j + 1]) + '</td><td class="l">' + (Math.abs(res.t[j + 1]) > 2 ? '<b class="pf-up">oui</b>' : '<span class="pf-st">non</span>') + '</td><td>' + nf(2).format(corr(y, X[j])) + '</td></tr>').join('')
+    + (miss.length ? '<tr><td class="l pf-dn" colspan="6">Sans données (ignoré) : ' + miss.map(r => esc(r.s)).join(', ') + '</td></tr>' : '') + (warn ? '<tr><td class="l pf-st" colspan="6">Fournisseur : ' + esc(warn) + '</td></tr>' : '') + '</tbody>';
+  const s1 = ols(y, [X[0]]);
+  $('pfScatH').textContent = 'Rendements ' + (CFG.freq === 'w' ? 'hebdomadaires' : 'quotidiens') + ' du portefeuille contre ' + ok[0].n;
+  scatterChart($('pfScat'), X[0], y, s1.b[0], s1.b[1], {xl: ok[0].n + ' (' + ok[0].s + ')', r2: s1.r2});
+  let a = 100, b = 100; const pa = [{d: dates[0], y: 100}], pb = [{d: dates[0], y: 100}];
+  y.forEach((v, t) => { a *= 1 + v; b *= 1 + X.reduce((s, c, j) => s + res.b[j + 1] * c[t], 0); pa.push({d: dates[t + 1], y: a}); pb.push({d: dates[t + 1], y: b}); });
+  lineChart($('pfRep'), [{n: 'Portefeuille (NAV)', c: '#02182B', pts: pa, w: 2.2}, {n: 'Répliqué par les facteurs', c: '#E07B00', pts: pb, dash: true}], {fmt: v => nf(1).format(v), h: 300});
+}
+
+/* ---------------------------------------------------------------- onglets */
+function showTab(t){
+  PF.tab = t;
+  $('pfTabs').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
+  $('screenPf').querySelectorAll('.pf-pane').forEach(p => { p.hidden = p.dataset.p !== t; });
+  if (t === 'cad') { $('pfCadLbl').checked = CFG.labels; if (PF.cache.cad) renderCad(); else runCad(); }
+  else if (t === 'vol') { if (PF.cache.risk) { renderNavVol(); runRisk(); } else runRisk(); }
+  else if (t === 'reg') runReg();
+}
+
+/* ---------------------------------------------------------------- événements */
+const drop = $('pfDrop');
+drop.addEventListener('click', () => $('pfFile').click());
+drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('pfFile').click(); } });
+$('pfFile').addEventListener('change', e => { const f = Array.from(e.target.files || []); e.target.value = ''; if (f.length) readFiles(f); });
+['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => { const f = Array.from((e.dataTransfer && e.dataTransfer.files) || []); if (f.length) readFiles(f); });
+$('pfFiles').addEventListener('click', e => {
+  const b = e.target.closest('[data-rmf]'); if (!b) return;
+  if (b.dataset.rmf === 'det') { PF.pos = null; PF.files.det = null; } else { PF.nav = null; PF.files.nav = null; }
+  if (!PF.pos && !PF.nav) PF.meta = null;
+  PF.cache = {}; saveSession(); renderAll();
+});
+$('pfTabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) showTab(b.dataset.t); });
+$('pfRemap').addEventListener('click', () => autoMap(true));
+$('pfPos').addEventListener('click', e => {
+  const b = e.target.closest('[data-ed]'); if (!b) return;
+  const k = b.dataset.ed, p = PF.pos.find(x => keyOf(x) === k), cur = MAP[k] && MAP[k].s || '';
+  const v = prompt('Symbole TradingView pour « ' + (p ? p.name : k) + ' »\n(ex. SIX:NESN, LSE:XLES ; vide = aucun)', cur);
+  if (v == null) return;
+  const s = v.trim().toUpperCase();
+  MAP[k] = s ? {s, src: 'manuel'} : {s: null, src: 'none'};
+  saveMap(); PF.cache.cad = null; PF.cache.risk = null; renderPositions();
+});
+$('pfCsv').addEventListener('click', () => {
+  if (!PF.pos) return;
+  const tot = totalMv(), f = x => x == null || !isFinite(x) ? '' : String(Math.round(x * 1e6) / 1e6).replace('.', ',');
+  const rows = [['Catégorie', 'Genre', 'ISIN / code', 'Désignation', 'Symbole TradingView', 'Monnaie', 'Quantité', 'Prix marché', 'Valeur (CHF)', 'Poids', '+/- latente']];
+  PF.pos.forEach(p => rows.push([p.cat, p.genre, p.isin || p.id, p.name, symOf(p) || '', p.ccy, f(p.qty), f(p.px), f(p.mv), f(p.mv / tot), f(p.pnl)]));
+  const csv = '﻿' + rows.map(r => r.map(x => /[;"\n]/.test(String(x)) ? '"' + String(x).replace(/"/g, '""') + '"' : x).join(';')).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8'})); a.download = 'portefeuille_' + ((PF.meta && PF.meta.code) || 'positions') + '.csv'; document.body.appendChild(a); a.click(); a.remove();
+});
+$('pfCadLbl').addEventListener('change', () => { CFG.labels = $('pfCadLbl').checked; saveCfg(); renderCad(); });
+$('pfBondApply').addEventListener('click', () => { const v = $('pfBondProxy').value.trim().toUpperCase(); if (!v) return; CFG.bond = v; saveCfg(); PF.cache.risk = null; runRisk(); });
+$('pfRegRefs').addEventListener('click', e => { const c = e.target.closest('[data-ri]'); if (!c) return; const r = CFG.refs[+c.dataset.ri]; r.on = !r.on; saveCfg(); runReg(); });
+$('pfRegRefs').addEventListener('contextmenu', e => { const c = e.target.closest('[data-ri]'); if (!c) return; const r = CFG.refs[+c.dataset.ri]; if (!r.custom) return; e.preventDefault(); CFG.refs.splice(+c.dataset.ri, 1); saveCfg(); runReg(); });
+$('pfRegAdd').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const s = $('pfRegAdd').value.trim().toUpperCase(); if (!s) return;
+  if (s.indexOf(':') < 1) { toast('Saisissez le symbole complet, ex. SIX:SMI.', false); return; }
+  if (!CFG.refs.some(r => r.s === s)) CFG.refs.push({s, n: s.replace(/^[A-Z0-9_]+:/, ''), on: true, custom: true});
+  $('pfRegAdd').value = ''; saveCfg(); runReg();
+});
+$('pfRegFreq').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (!b) return; CFG.freq = b.dataset.f; saveCfg(); runReg(); });
+
+/* API interne (à venir) : window.gipPortfolioSet({meta, pos, nav}) remplace le dépôt des fichiers. */
+window.gipPortfolioSet = function(o){ PF.meta = o.meta || null; PF.pos = o.pos || null; PF.nav = o.nav || null; PF.files = {det: o.pos ? {n: 'API interne', k: o.pos.length + ' positions'} : null, nav: o.nav ? {n: 'API interne', k: o.nav.length + ' dates'} : null}; PF.cache = {}; saveSession(); renderAll(); if (PF.pos) autoMap(); };
+
+loadSession(); renderAll();
+let started = false;
+new MutationObserver(() => { if ($('screenPf').classList.contains('on') && !started) { started = true; if (PF.pos) autoMap(); } }).observe($('screenPf'), {attributes: true, attributeFilter: ['class']});
+})();
+
+
 (function NavModule(){
 "use strict";
-const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), ofs: document.getElementById('screenOfs'), mkt: document.getElementById('screenMkt'), dash: document.getElementById('screenDash'), lab: document.getElementById('screenLab'), quad: document.getElementById('screenQuad'), whiteboard: document.getElementById('screenWhiteboard')};
+const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), ofs: document.getElementById('screenOfs'), mkt: document.getElementById('screenMkt'), dash: document.getElementById('screenDash'), lab: document.getElementById('screenLab'), quad: document.getElementById('screenQuad'), pf: document.getElementById('screenPf'), whiteboard: document.getElementById('screenWhiteboard')};
 function showScreen(name){
   if (!screens[name]) return;
   Object.keys(screens).forEach(k => { if (screens[k]) screens[k].classList.toggle('on', k === name); });
