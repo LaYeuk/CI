@@ -1076,6 +1076,20 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenPc .lg i{font-style:normal;letter-spacing:-.02em}
 #screenPc .lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:2px;box-sizing:border-box;opacity:0;transition:opacity .15s}
 #screenPc .lg img.ok{opacity:1}
+#screenPc .pc-presets{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap}
+#screenPc .pc-presets button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:4px 10px;font:inherit;font-size:12px;color:var(--mut);cursor:pointer}
+#screenPc .pc-presets button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+#screenPc .pc-qs{display:flex;flex-direction:column;gap:3px}
+#screenPc .pc-qs label{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--ink);cursor:pointer}
+#screenPc .pc-qs i{display:inline-block;width:10px;height:10px;border-radius:50%}
+#screenPc .pc-h4{margin:0 0 8px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+#screenPc .pc-qrow{display:grid;grid-template-columns:minmax(200px,auto) 1fr 56px;gap:8px;align-items:center;font-size:12.5px;margin-bottom:6px}
+#screenPc .pc-qrow .bar{height:10px;border-radius:5px;background:#EEE;overflow:hidden}
+#screenPc .pc-qrow .bar i{display:block;height:100%}
+#screenPc .pc-qrow b{text-align:right;font-variant-numeric:tabular-nums}
+#screenPc .pc-qrow.miss{color:#B42318}
+#screenPc .pc-pill{display:inline-block;padding:1px 8px;border-radius:999px;color:#fff;font-size:10.5px;font-weight:600}
+#screenPc .pc-cad{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
 </style>
 </head>
 <body>
@@ -2050,13 +2064,14 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
     <aside class="pc-side">
       <section class="fx-card pc-card">
         <h3 class="pc-h">Univers</h3>
+        <div class="pc-presets" id="pcPreset"><button type="button" data-p="full">Univers complet</button><button type="button" data-p="smi">SMI</button><button type="button" data-p="spi">SPI</button></div>
         <div class="pc-univ-sum" id="pcUnivSum"></div>
         <div class="pc-row"><button type="button" class="btn" id="pcUnivEdit">Modifier l'univers</button></div>
       </section>
 
       <section class="fx-card pc-card">
         <h3 class="pc-h">Données</h3>
-        <div class="pc-field"><span>Historique</span><div class="fx-ranges" id="pcHist"><button type="button" data-h="52">1 an</button><button type="button" data-h="104">2 ans</button><button type="button" data-h="156">3 ans</button></div></div>
+        <div class="pc-field"><span>Historique</span><div class="fx-ranges" id="pcHist"><button type="button" data-h="52">1 an</button><button type="button" data-h="104">2 ans</button><button type="button" data-h="156">3 ans</button><button type="button" data-h="260">5 ans</button></div></div>
         <label class="pc-field"><span>Taux sans risque (CHF)</span><span class="pc-in"><input type="number" id="pcRf" step="0.1"> %</span></label>
         <label class="pc-field"><span>Rendements attendus</span><select id="pcShrink"><option value="0">Historiques bruts</option><option value="0.5">Historiques réduits de moitié vers la moyenne</option><option value="1">Identiques pour tous (seul le risque compte)</option></select></label>
       </section>
@@ -2088,6 +2103,15 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
           <button type="button" class="pc-link" id="pcMinAdd">+ exception (ex. 5 titres d'au moins 4 %)</button>
         </div>
 
+        <label class="pc-tog"><input type="checkbox" id="pcMcOn"><b>Capitalisation boursière</b><em>titres hors fourchette exclus de l'univers (en milliards de CHF)</em></label>
+        <div class="pc-sub" id="pcMcSub"><span class="pc-in">min <input type="number" id="pcMcMin" min="0" step="0.5"> Mrd</span><span class="pc-in">max <input type="number" id="pcMcMax" min="0" step="10"> Mrd</span><span>(0 = sans limite)</span></div>
+
+        <label class="pc-tog"><input type="checkbox" id="pcQOn"><b>Cadrans représentés</b><em>exposition minimale dans chaque cadran coché (cadran croissance / inflation)</em></label>
+        <div class="pc-sub pc-col" id="pcQSub">
+          <div class="pc-qs" id="pcQSel"></div>
+          <span class="pc-in">au moins <input type="number" id="pcQMin" min="1" step="1"> % du portefeuille par cadran</span>
+        </div>
+
         <label class="pc-tog"><input type="checkbox" id="pcVolOn"><b>Volume du portefeuille</b><em>montant investi : calcule le nombre d'actions</em></label>
         <div class="pc-sub" id="pcVolSub"><span class="pc-in"><input type="number" id="pcVol" min="0" step="10000" style="width:130px"> CHF</span></div>
       </section>
@@ -2116,13 +2140,22 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
           <div class="pc-warn" id="pcWarn" hidden></div>
           <div class="pc-alloc" id="pcAlloc"></div>
         </section>
-        <section class="fx-card pc-card">
-          <div class="pc-tblwrap"><table class="pc-tbl" id="pcTbl"></table></div>
-        </section>
         <section class="fx-card pc-card pc-two">
           <div><h3 class="pc-h">Rendement et risque (frontière efficiente)</h3><div class="pc-chart" id="pcFront"></div></div>
           <div><h3 class="pc-h">Performance rétrospective en CHF (base 100)</h3><div class="pc-chart" id="pcBack"></div>
             <div class="pc-note">Poids actuels appliqués au passé, rééquilibrés chaque semaine : illustration flatteuse par construction (les poids sont optimisés sur cette même période).</div></div>
+        </section>
+        <section class="fx-card pc-card">
+          <h3 class="pc-h">Cadran croissance / inflation</h3>
+          <div class="fx-kpis" id="pcCadKpis"></div>
+          <div class="pc-two pc-cad">
+            <div class="pc-chart" id="pcCad"></div>
+            <div><h4 class="pc-h4">Exposition par cadran</h4><div id="pcQExp"></div>
+              <div class="pc-note">Mêmes facteurs, fenêtre et zone neutre que l'écran Cadran (rendements hebdomadaires en monnaie locale). Taille du point = poids ; ◆ = portefeuille (titres pondérés) ; cadre épais = régime macro actuel.</div></div>
+          </div>
+        </section>
+        <section class="fx-card pc-card">
+          <div class="pc-tblwrap"><table class="pc-tbl" id="pcTbl"></table></div>
         </section>
         <div class="pc-note">Méthode : rendements hebdomadaires en CHF (cours de clôture convertis au change du jour), covariance « réduite » vers une corrélation moyenne pour la stabiliser, rendement attendu = historique (éventuellement réduit) + rendement du dividende s'il est chargé. Les contraintes de nombre et de pondération sont résolues par étapes (heuristique) : le résultat est un très bon portefeuille admissible, pas forcément l'optimum mathématique absolu.</div>
       </div>
@@ -12793,7 +12826,7 @@ const zDay = () => new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Zurich'})
 const tick = s => String(s).replace(/^[A-Z0-9_]+:/, '');
 const CFG_KEY = 'gip_pc_cfg_v1', UNIV_KEY = 'gip_pc_univ_v1', CACHE_KEY = 'gip_pc_cache_v1', DIV_KEY = 'gip_pc_div_v1';
 const PAL = ['#02182B', '#0086B3', '#00CFFF', '#E07B00', '#00993D', '#DDD8C4', '#8A9199', '#C0201B', '#6B4FA0', '#B8860B', '#D6619A', '#4F7A28'];
-const DEF = {hist: 156, rf: 0.5, shrink: 0.5, sharpe: true, minvar: false, div: false, divK: 1, nOn: false, nMode: 'max', n: 25,
+const DEF = {preset: 'full', mcOn: false, mcMin: 2, mcMax: 0, qOn: false, qSel: [true, true, true, true], qMin: 5, hist: 156, rf: 0.5, shrink: 0.5, sharpe: true, minvar: false, div: false, divK: 1, nOn: false, nMode: 'max', n: 25,
   maxOn: true, maxDef: 5, maxTiers: [{n: 1, c: 10}], minOn: false, minDef: 1, minTiers: [], volOn: false, vol: 1000000};
 let CFG = Object.assign({}, DEF);
 try { const c = JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); if (c) CFG = Object.assign({}, DEF, c); } catch (e) {}
@@ -12801,14 +12834,23 @@ const saveCfg = () => { try { localStorage.setItem(CFG_KEY, JSON.stringify(CFG))
 function toast(msg, ok){ const el = $('pcToast'); el.textContent = msg; el.classList.toggle('err', ok === false); el.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('show'), 4500); }
 
 /* ---------------------------------------------------------------- univers */
-const BASE = [], seen = new Set();
-DASH_GROUPS.forEach(g => { if (/^index$/i.test(g[0])) return; g[1].forEach(x => { if (/^TVC:/.test(x[0]) || seen.has(x[0])) return; seen.add(x[0]); BASE.push({s: x[0], n: x[1] || tick(x[0]), dom: x[2] || null, g: g[0]}); }); });
-let UNIV = {off: [], added: []};
-try { const u = JSON.parse(localStorage.getItem(UNIV_KEY) || 'null'); if (u) UNIV = {off: u.off || [], added: u.added || []}; } catch (e) {}
-const saveUniv = () => { try { localStorage.setItem(UNIV_KEY, JSON.stringify(UNIV)); } catch (e) {} };
-const allTitles = () => BASE.concat(UNIV.added);
+/* Univers prédéfinis : liste du Market Dashboard (sans les indices), SMI, SPI (composition MKT_SPI de Market Data) */
+const SMI_TK = ['NOVN', 'ROG', 'NESN', 'ABBN', 'UBSG', 'CFR', 'ZURN', 'HOLN', 'SREN', 'LONN', 'GIVN', 'ALC', 'SIKA', 'AMRZ', 'SLHN', 'GEBN', 'PGHN', 'LOGN', 'GALD', 'SDZ'];   /* SMI après la révision du 21.09.2026 (Galderma et Sandoz remplacent Swisscom et Kühne + Nagel) */
+const PRESETS = {full: 'Univers complet (Market Dashboard)', smi: 'Swiss Market Index (SMI)', spi: 'Swiss Performance Index (SPI)'};
+const BASES = {full: [], smi: [], spi: []};
+(() => {
+  const seen = new Set();
+  DASH_GROUPS.forEach(g => { if (/^index$/i.test(g[0])) return; g[1].forEach(x => { if (/^TVC:/.test(x[0]) || seen.has(x[0])) return; seen.add(x[0]); BASES.full.push({s: x[0], n: x[1] || tick(x[0]), dom: x[2] || null, g: g[0]}); }); });
+  const s2 = new Set();
+  MKT_SPI.forEach(g => g[1].forEach(x => { const s = 'SIX:' + x[0]; if (s2.has(s)) return; s2.add(s); const it = {s, n: x[1], dom: null, g: g[0]}; BASES.spi.push(it); if (SMI_TK.indexOf(x[0]) >= 0) BASES.smi.push(it); }));
+})();
+let UNIVS = {full: {off: [], added: []}, smi: {off: [], added: []}, spi: {off: [], added: []}};
+try { const u = JSON.parse(localStorage.getItem(UNIV_KEY) || 'null'); if (u) { if (u.full || u.smi || u.spi) Object.keys(UNIVS).forEach(k => { if (u[k]) UNIVS[k] = {off: u[k].off || [], added: u[k].added || []}; }); else UNIVS.full = {off: u.off || [], added: u.added || []}; } } catch (e) {}
+if (!PRESETS[CFG.preset]) CFG.preset = 'full';
+let UNIV = UNIVS[CFG.preset];
+const saveUniv = () => { UNIVS[CFG.preset] = UNIV; try { localStorage.setItem(UNIV_KEY, JSON.stringify(UNIVS)); } catch (e) {} };
+const allTitles = () => BASES[CFG.preset].concat(UNIV.added);
 const universe = () => { const off = new Set(UNIV.off); return allTitles().filter(a => !off.has(a.s)); };
-const INFO = {}; const infoOf = s => INFO[s] || (INFO[s] = allTitles().find(a => a.s === s) || {s, n: tick(s), g: '—'});
 function lg(a){
   const d = a.dom || (/^SIX:/.test(a.s) && typeof MKT_LOGO_DOMAINS !== 'undefined' ? MKT_LOGO_DOMAINS[tick(a.s)] : null);
   let h = 0; for (let i = 0; i < a.s.length; i++) h = (h * 31 + a.s.charCodeAt(i)) % 360;
@@ -12833,13 +12875,14 @@ function toWeekly(t, c){
   for (let i = 0; i < t.length; i++) { const x = +c[i]; if (!(x > 0)) continue; const k = Math.floor((t[i] + 3) / 7); if (w.length && w[w.length - 1] === k) v[v.length - 1] = x; else { w.push(k); v.push(x); } }
   return {w, c: v, last: v.length ? v[v.length - 1] : null, lastD: t.length ? t[t.length - 1] : null};
 }
-async function loadSeries(syms, onProg){
-  const need = Array.from(new Set(syms.filter(Boolean))).filter(s => !DS[s] || DS[s].tmp);
+async function loadSeries(syms, onProg, bars){
+  bars = bars || 780;
+  const need = Array.from(new Set(syms.filter(Boolean))).filter(s => !DS[s] || DS[s].tmp || (!DS[s].none && (DS[s].req || 780) < bars));
   let warn = '';
   for (let i = 0; i < need.length; i += 30) {
     if (i) await sleep(350);
     const chunk = need.slice(i, i + 30);
-    const send = () => fetch('/api/tv-series?symbols=' + encodeURIComponent(chunk.join(',')) + '&bars=780&eod=1');
+    const send = () => fetch('/api/tv-series?symbols=' + encodeURIComponent(chunk.join(',')) + '&bars=' + bars + '&eod=1');
     let r, j = null;
     try { r = await send(); if (r.status === 429) { await sleep(1500); r = await send(); } }
     catch (e) { throw new Error('Relais Market Data injoignable — page ouverte hors du site Cloudflare, ou hors-ligne ?'); }
@@ -12847,7 +12890,7 @@ async function loadSeries(syms, onProg){
     if (!r.ok && !(j && j.series)) throw new Error((j && j.error_message) || ('HTTP ' + r.status));
     const ser = (j && j.series) || {}, bad = !!(j && j.error_message);
     if (bad) warn = j.error_message;
-    chunk.forEach(k => { const S = ser[k]; DS[k] = (S && S.t && S.t.length > 20) ? toWeekly(S.t, S.c) : (bad ? {none: true, tmp: true} : {none: true}); });
+    chunk.forEach(k => { const S = ser[k]; DS[k] = (S && S.t && S.t.length > 20) ? Object.assign(toWeekly(S.t, S.c), {req: bars}) : (bad ? {none: true, tmp: true} : {none: true}); });
     if (onProg) onProg(Math.min(i + 30, need.length), need.length);
   }
   if (need.length) saveDay();
@@ -12873,16 +12916,19 @@ async function loadFx(ccys){
   return FX;
 }
 
-/* ---------------------------------------------------------------- dividendes (rendement en %, instantané du jour) */
-let DIV = {};
-try { const o = JSON.parse(localStorage.getItem(DIV_KEY) || 'null'); if (o && o.day === zDay() && o.d) DIV = o.d; } catch (e) {}
-async function loadDiv(syms, onProg){
-  const need = syms.filter(s => !(s in DIV));
+/* ---------------------------------------------------------------- fondamentaux : rendement du dividende et capitalisation (instantané du jour) */
+let FUND = {};   /* symbole -> {dy: rendement (décimal) | null, mc: capitalisation en monnaie locale | null} */
+try { const o = JSON.parse(localStorage.getItem(DIV_KEY) || 'null'); if (o && o.day === zDay() && o.f) FUND = o.f; } catch (e) {}
+const divOf = s => FUND[s] && FUND[s].dy != null ? FUND[s].dy : null;
+async function loadFund(syms, onProg){
+  const need = syms.filter(s => !(s in FUND));
   if (!need.length) return '';
   let err = '';
   const six = need.filter(s => /^SIX:/.test(s)), other = need.filter(s => !/^SIX:/.test(s));
   if (six.length) {
-    try { const r = await fetch('/api/tv-fund'); const j = await r.json(); const F = (j && j.fund) || {}; six.forEach(s => { const f = F[tick(s)]; DIV[s] = f && f.dy != null && isFinite(f.dy) ? +f.dy / 100 : null; }); if (!r.ok) err = j.error_message || ('HTTP ' + r.status); }
+    try { const r = await fetch('/api/tv-fund'); const j = await r.json(); const F = (j && j.fund) || {};
+      six.forEach(s => { const f = F[tick(s)]; FUND[s] = {dy: f && f.dy != null && isFinite(f.dy) ? +f.dy / 100 : null, mc: f && f.mc != null && isFinite(+f.mc) ? +f.mc : null}; });
+      if (!r.ok) err = j.error_message || ('HTTP ' + r.status); }
     catch (e) { err = e.message; }
   }
   for (let i = 0; i < other.length; i += 10) {
@@ -12891,12 +12937,101 @@ async function loadDiv(syms, onProg){
     try {
       const r = await fetch('/api/tv/quote/batch', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({symbols: chunk})});
       const j = await r.json(); const map = mktParseBatchQuotes(j);
-      chunk.forEach(s => { const f = map[s]; const dy = f ? mktFundFromQuote(f).dy : null; DIV[s] = dy != null && isFinite(dy) ? dy / 100 : null; });
-    } catch (e) { err = e.message; chunk.forEach(s => { DIV[s] = null; }); }
+      chunk.forEach(s => { const f = map[s] ? mktFundFromQuote(map[s]) : {}; FUND[s] = {dy: f.dy != null && isFinite(f.dy) ? f.dy / 100 : null, mc: f.mc != null && isFinite(f.mc) ? f.mc : null}; });
+    } catch (e) { err = e.message; chunk.forEach(s => { FUND[s] = {dy: null, mc: null}; }); }
     if (onProg) onProg(Math.min(i + 10, other.length), other.length);
   }
-  try { localStorage.setItem(DIV_KEY, JSON.stringify({day: zDay(), d: DIV})); } catch (e) {}
+  try { localStorage.setItem(DIV_KEY, JSON.stringify({day: zDay(), f: FUND})); } catch (e) {}
   return err;
+}
+
+/* ---------------------------------------------------------------- cadran croissance / inflation (mêmes facteurs et réglages que l'écran Cadran) */
+const QK = ['1,-1', '1,1', '-1,1', '-1,-1'];
+const QUADS = {'1,-1': {n: 'Croissance désinflationniste', s: 'Goldilocks', c: '#00993D'}, '1,1': {n: 'Boom inflationniste', s: 'Reflation', c: '#E07B00'},
+  '-1,1': {n: 'Stagflation', s: 'Or, liquidités', c: '#C0201B'}, '-1,-1': {n: 'Récession déflationniste', s: 'Risk-off', c: '#0086B3'}};
+const NEUT = '#8A9199';
+function cadCfg(){
+  const d = {weeks: 104, fx: true, rel: false, neutral: 0.10, mom: 13, f: {gNum: 'OANDA:XCUUSD', gDen: 'OANDA:XAUUSD', iNum: 'AMEX:TIP', iDen: 'NASDAQ:IEF', fx: 'FX_IDC:USDCHF', bench: 'SIX:SPIX'}};
+  try { return typeof window.gipCadranCfg === 'function' ? window.gipCadranCfg() : d; } catch (e) { return d; }
+}
+const cadFactors = c => [c.f.gNum, c.f.gDen, c.f.iNum, c.f.iDen].concat(c.fx ? [c.f.fx] : []).concat(c.rel ? [c.f.bench] : []);
+function alignW(list, n){
+  const maps = list.map(W => { const mm = new Map(); W.w.forEach((k, i) => mm.set(k, W.c[i])); return mm; });
+  const keys = list[0].w.filter(k => maps.every(mm => mm.has(k))).slice(-(n + 1));
+  return {keys, v: maps.map(mm => keys.map(k => mm.get(k)))};
+}
+const lrA = a => a.slice(1).map((v, i) => Math.log(v / a[i]));
+function olsB(y, X){   /* MCO avec constante (centrage) -> {b, r2} */
+  const n = y.length, k = X.length, my = y.reduce((s, v) => s + v, 0) / n;
+  const dX = X.map(c => { const mc = c.reduce((s, v) => s + v, 0) / n; return c.map(v => v - mc); }), dy = y.map(v => v - my);
+  const A = dX.map(a => dX.map(b => a.reduce((s, v, i) => s + v * b[i], 0))), bv = dX.map(a => a.reduce((s, v, i) => s + v * dy[i], 0));
+  const M = A.map((r, i) => r.concat([bv[i]]));
+  for (let c = 0; c < k; c++) { let p = c; for (let r = c + 1; r < k; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r; const t = M[c]; M[c] = M[p]; M[p] = t; if (Math.abs(M[c][c]) < 1e-14) return null; for (let r = 0; r < k; r++) { if (r === c) continue; const f = M[r][c] / M[c][c]; for (let q = c; q <= k; q++) M[r][q] -= f * M[c][q]; } }
+  const b = M.map((r, i) => r[k] / r[i]);
+  const sst = dy.reduce((s, v) => s + v * v, 0), sse = dy.reduce((s, v, i) => { const e = v - b.reduce((t, bb, j) => t + bb * dX[j][i], 0); return s + e * e; }, 0);
+  return {b, r2: sst > 0 ? 1 - sse / sst : NaN};
+}
+const sdA = a => { const m = a.reduce((s, v) => s + v, 0) / a.length; return Math.sqrt(a.reduce((s, v) => s + (v - m) * (v - m), 0) / (a.length - 1)); };
+function cadBeta(W, c){
+  const F = cadFactors(c), A = alignW([W].concat(F.map(s => DS[s])), c.weeks);
+  if (A.keys.length < 27) return null;
+  const v = A.v; let y = lrA(v[0]);
+  const rG = lrA(v[1].map((x, i) => x / v[2][i])), rI = lrA(v[3].map((x, i) => x / v[4][i]));
+  const X = [rG, rI]; let k = 5;
+  if (c.fx) X.push(lrA(v[k++]));
+  if (c.rel) { const rb = lrA(v[k++]); y = y.map((r, i) => r - rb[i]); }
+  const res = olsB(y, X), sy = sdA(y);
+  if (!res || !(sy > 0)) return null;
+  return {zG: res.b[0] * sdA(rG) / sy, zI: res.b[1] * sdA(rI) / sy, r2: res.r2};
+}
+function quadOf(x, y, nz){
+  const sx = x > nz ? 1 : x < -nz ? -1 : 0, sy = y > nz ? 1 : y < -nz ? -1 : 0;
+  if (sx && sy) return Object.assign({k: sx + ',' + sy}, QUADS[sx + ',' + sy]);
+  if (!sx && !sy) return {k: null, n: 'Neutre / peu sensible', c: NEUT};
+  return {k: null, n: (sx === 1 ? 'Croissance' : sx === -1 ? 'Récession' : sy === 1 ? 'Inflation' : 'Désinflation') + ' (autre axe neutre)', c: NEUT};
+}
+function cadRegime(c){
+  const A = alignW([c.f.gNum, c.f.gDen, c.f.iNum, c.f.iDen].map(s => DS[s]), c.mom);
+  if (A.keys.length < c.mom + 1) return null;
+  const g = A.v[0].map((x, i) => x / A.v[1][i]), inf = A.v[2].map((x, i) => x / A.v[3][i]);
+  return {mG: Math.log(g[g.length - 1] / g[0]), mI: Math.log(inf[inf.length - 1] / inf[0])};
+}
+function cadranSvg(pts, reg, cfg){
+  const S = 640, P = 46, C = S / 2;
+  let mx = 0.5; pts.forEach(p => { mx = Math.max(mx, Math.abs(p.x), Math.abs(p.y)); });
+  const R = Math.min(1.5, Math.ceil(mx * 1.15 * 10) / 10), sc = (C - P) / R;
+  const px = x => C + Math.max(-R, Math.min(R, x)) * sc, py = y => C - Math.max(-R, Math.min(R, y)) * sc;
+  const rk = reg ? ((reg.mG >= 0 ? 1 : -1) + ',' + (reg.mI >= 0 ? 1 : -1)) : null;
+  let h = '<svg viewBox="0 0 ' + S + ' ' + S + '" font-family="Aspekta, Arial, sans-serif"><rect width="' + S + '" height="' + S + '" fill="#fff"/>';
+  [['-1,1', P, P], ['1,1', C, P], ['-1,-1', P, C], ['1,-1', C, C]].forEach(([k, x, y]) => {
+    const q = QUADS[k], on = k === rk, left = x === P, top = y === P;
+    h += '<rect x="' + x + '" y="' + y + '" width="' + (C - P) + '" height="' + (C - P) + '" fill="' + q.c + '" fill-opacity="' + (on ? 0.13 : 0.06) + '"' + (on ? ' stroke="' + q.c + '" stroke-width="3"' : '') + '/>';
+    h += '<text x="' + (left ? x + 10 : x + C - P - 10) + '" y="' + (top ? y + 20 : y + C - P - 12) + '" text-anchor="' + (left ? 'start' : 'end') + '" fill="' + q.c + '" font-size="13" font-weight="700">' + esc(q.n + (on ? ' ◆' : '')) + '</text>';
+  });
+  const nz = cfg.neutral * sc;
+  h += '<rect x="' + (C - nz) + '" y="' + P + '" width="' + (2 * nz) + '" height="' + (S - 2 * P) + '" fill="#8A9199" fill-opacity=".09"/><rect x="' + P + '" y="' + (C - nz) + '" width="' + (S - 2 * P) + '" height="' + (2 * nz) + '" fill="#8A9199" fill-opacity=".09"/>';
+  h += '<line x1="' + P + '" y1="' + C + '" x2="' + (S - P) + '" y2="' + C + '" stroke="#6B6F76"/><line x1="' + C + '" y1="' + P + '" x2="' + C + '" y2="' + (S - P) + '" stroke="#6B6F76"/>';
+  const step = R > 1 ? 0.5 : (R > 0.6 ? 0.25 : 0.2);
+  for (let t = step; t <= R + 1e-9; t += step) [t, -t].forEach(v => { h += '<text x="' + px(v) + '" y="' + (C + 15) + '" text-anchor="middle" fill="#6B6F76" font-size="10">' + nf(2).format(v) + '</text><text x="' + (C - 5) + '" y="' + (py(v) + 3) + '" text-anchor="end" fill="#6B6F76" font-size="10">' + nf(2).format(v) + '</text>'; });
+  h += '<text x="' + (S - P) + '" y="' + (S - 16) + '" text-anchor="end" fill="#1A1F27" font-size="12" font-weight="600">β croissance (cuivre / or) →</text><text transform="translate(18 ' + P + ') rotate(-90)" text-anchor="end" fill="#1A1F27" font-size="12" font-weight="600">β inflation (TIPS / IEF) →</text>';
+  const boxes = pts.map(p => { const r = p.rad || 9; return {x: px(p.x) - r, y: py(p.y) - r, w: 2 * r, h: 2 * r}; });
+  const hit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+  pts.slice().sort((a, b) => (b.dia ? 1 : 0) - (a.dia ? 1 : 0) || (b.rad || 0) - (a.rad || 0)).forEach(p => {
+    if (!p.lab) return;
+    const x = px(p.x), y = py(p.y), r = p.rad || 9, w = p.lab.length * (p.dia ? 7.4 : 6.8) + 2, hh = 13;
+    const cands = [[r + 4, 4], [r + 4, -8], [r + 4, 16], [-r - 4 - w, 4], [-r - 4 - w, -8], [-r - 4 - w, 16], [-w / 2, -r - 4], [-w / 2, r + 14]];
+    for (const c of cands) { const b = {x: x + c[0], y: y + c[1] - 10, w, h: hh}; if (b.x < 2 || b.x + w > S - 2 || b.y < 2 || b.y + hh > S - 2) continue; if (!boxes.some(o => hit(o, b))) { boxes.push(b); p.lx = x + c[0]; p.ly = y + c[1]; return; } }
+    if (p.dia) { p.lx = x + r + 4; p.ly = y + 4; }
+  });
+  pts.slice().sort((a, b) => (b.rad || 0) - (a.rad || 0)).forEach(p => {
+    const x = px(p.x), y = py(p.y);
+    h += '<g><title>' + esc(p.tip) + '</title>';
+    if (p.dia) { const r = 9; h += '<path d="M' + x + ',' + (y - r) + 'L' + (x + r) + ',' + y + 'L' + x + ',' + (y + r) + 'L' + (x - r) + ',' + y + 'Z" fill="#02182B" stroke="#fff" stroke-width="2"/>'; }
+    else h += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + p.rad.toFixed(1) + '" fill="' + p.c + '" fill-opacity="' + (p.weak ? 0.35 : 0.75) + '" stroke="#fff" stroke-width="1.5"/>';
+    if (p.lx != null) h += '<text x="' + p.lx.toFixed(1) + '" y="' + p.ly.toFixed(1) + '" fill="#1A1F27" font-size="' + (p.dia ? 12 : 11) + '" font-weight="' + (p.dia ? 800 : 600) + '">' + esc(p.lab) + '</text>';
+    h += '</g>';
+  });
+  return h + '</svg>';
 }
 
 /* ---------------------------------------------------------------- estimation : rendements hebdomadaires en CHF, μ, Σ */
@@ -12938,8 +13073,8 @@ function estimate(P){
   for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) if (i !== j) S[i * n + j] = (1 - delta) * S[i * n + j] + delta * rbar * sd[i] * sd[j];
   const muH = mean.map(m => m * 52), avg = muH.reduce((s, v) => s + v, 0) / (n || 1);
   const mu = muH.map(m => (1 - CFG.shrink) * m + CFG.shrink * avg);
-  const dy = A.map(x => CFG.div ? (DIV[x.a.s] != null ? DIV[x.a.s] : 0) : (DIV[x.a.s] != null ? DIV[x.a.s] : 0));
-  const muT = mu.map((m, i) => m + (dy[i] || 0));
+  const dy = A.map(x => divOf(x.a.s) || 0);
+  const muT = mu.map((m, i) => m + (CFG.div ? (dy[i] || 0) : 0));   /* dividende ajouté au rendement attendu quand l'objectif dividende est activé */
   return {n, S, sd, mu, muT, dy, rbar, delta};
 }
 
@@ -13055,7 +13190,7 @@ function tierFloors(order){
   tiers.forEach(t => { for (let q = 0; q < t.n && p < order.length; q++, p++) fl.set(order[p], t.c / 100); });
   return fl;
 }
-async function build(E, onStep){
+async function build(E, onStep, Q){
   const n = E.n, warn = [];
   const capMax = CFG.maxOn ? Math.max(CFG.maxDef, ...(CFG.maxTiers || []).map(t => +t.c || 0)) / 100 : 1;
   let lb = new Float64Array(n), ub = new Float64Array(n).fill(capMax);
@@ -13071,6 +13206,8 @@ async function build(E, onStep){
   const quality = all.slice().sort((a, b) => qv(b) - qv(a));
   const dropped = new Set(), exact = N && CFG.nMode === 'exact';
   let warned = false;
+  /* contrainte des cadrans : exposition minimale (somme des poids) dans chaque cadran demandé */
+  const reqQ = CFG.qOn && Q ? QK.filter((k, ix) => CFG.qSel[ix]) : [], qMin = (+CFG.qMin || 0) / 100, forced = new Map(), qWarned = new Set();
   for (let round = 0; round < 10; round++) {
     const held = all.filter(i => w[i] > EPS).sort((a, b) => w[b] - w[a]);
     /* pondération min : les positions retenues sous le minimum sont écartées (sauf « exactement N ») */
@@ -13088,6 +13225,26 @@ async function build(E, onStep){
       const cand = quality.filter(i => !dropped.has(i)).slice(0, 90);
       keep = Array.from(new Set(held.filter(i => !dropped.has(i)).concat(cand)));
     }
+    if (reqQ.length && qMin > 0) {
+      reqQ.forEach(k => {
+        let exp = 0, fq = 0;
+        all.forEach(i => { if (w[i] > EPS && Q[i] && Q[i].k === k) exp += w[i]; });
+        forced.forEach((f, i) => { if (Q[i] && Q[i].k === k) fq += f; });
+        if (Math.max(exp, fq) >= qMin - 1e-4) return;
+        const cands = quality.filter(i => Q[i] && Q[i].k === k && !dropped.has(i) && !forced.has(i));
+        if (!cands.length) { if (!qWarned.has(k)) { warn.push('Aucun titre de l\'univers dans le cadran « ' + QUADS[k].n + ' » : contrainte impossible pour ce cadran.'); qWarned.add(k); } return; }
+        let need = qMin - Math.max(exp, fq);
+        const cap = CFG.maxOn ? CFG.maxDef / 100 : 1;
+        for (const i of cands) { if (need <= 1e-6) break; const f = Math.max(Math.min(need, cap), minW); forced.set(i, f); need -= f; }
+      });
+      const fset = new Set(forced.keys());
+      fset.forEach(i => { if (keep.indexOf(i) < 0) keep.push(i); });
+      if (N && keep.length > N) {
+        const rest = keep.filter(i => !fset.has(i)).sort((a, b) => w[b] - w[a]);
+        keep = Array.from(fset).concat(rest).slice(0, Math.max(N, fset.size));
+        if (fset.size > N && !qWarned.has('N')) { warn.push('Les cadrans demandés exigent plus de titres que le nombre autorisé.'); qWarned.add('N'); }
+      }
+    }
     const ordK = keep.slice().sort((a, b) => (w[b] - w[a]) || (quality.indexOf(a) - quality.indexOf(b)));
     const caps = CFG.maxOn ? tierCaps(ordK) : null, floors = CFG.minOn ? tierFloors(ordK.filter(i => w[i] > EPS)) : null;
     ub = new Float64Array(n); lb = new Float64Array(n);
@@ -13095,6 +13252,7 @@ async function build(E, onStep){
       ub[i] = caps ? caps.get(i) : 1;
       lb[i] = exact ? Math.max(minW, 0.001) : (minW && w[i] >= minW - 1e-6 ? minW : 0);
       if (floors && floors.has(i)) lb[i] = Math.max(lb[i], floors.get(i));
+      if (forced.has(i)) lb[i] = Math.max(lb[i], forced.get(i));
       if (lb[i] > ub[i]) ub[i] = lb[i];
     });
     let sumUb = 0, sumLb = 0; keep.forEach(i => { sumUb += ub[i]; sumLb += lb[i]; });
@@ -13124,24 +13282,45 @@ async function run(){
   running = true; $('pcRun').disabled = true;
   const st = $('pcSt'), say = t => { st.textContent = t; };
   try {
-    const U = universe();
+    let U = universe();
     if (U.length < 3) throw new Error('Univers trop petit : cochez au moins 3 titres.');
+    const bars = CFG.hist >= 260 ? 1300 : 780, cc = cadCfg();
     say('Chargement des cours (' + U.length + ' titres)…');
-    const warn = await loadSeries(U.map(a => a.s).concat(['SIX:SPIX']), (d, n) => say('Chargement des cours… ' + d + ' / ' + n));
+    const warn = await loadSeries(U.map(a => a.s).concat(['SIX:SPIX'], cadFactors(cc)), (d, n) => say('Chargement des cours… ' + d + ' / ' + n), bars);
     say('Taux de change…');
     const FX = await loadFx(U.map(a => ccyOf(a.s)));
-    if (CFG.div) { say('Rendements du dividende…'); const e = await loadDiv(U.map(a => a.s), (d, n) => say('Rendements du dividende… ' + d + ' / ' + n)); if (e) toast('Dividendes partiellement indisponibles : ' + e, false); }
+    if (CFG.div || CFG.mcOn) { say('Dividendes et capitalisations…'); const e = await loadFund(U.map(a => a.s), (d, n) => say('Dividendes et capitalisations… ' + d + ' / ' + n)); if (e) toast('Données fondamentales partiellement indisponibles : ' + e, false); }
+    /* contrainte de capitalisation (en milliards de CHF) : filtre de l'univers */
+    const mcExcl = [];
+    if (CFG.mcOn) {
+      const lo = (+CFG.mcMin || 0) * 1e9, hi = (+CFG.mcMax || 0) * 1e9;
+      U = U.filter(a => {
+        const f = FUND[a.s], c = ccyOf(a.s), b = fxBase(c), fx = b === 'CHF' ? 1 : (FX[b] && FX[b].last);
+        const mc = f && f.mc != null && fx ? f.mc * fx : null;
+        INFO_MC[a.s] = mc;
+        const ok = mc != null && mc >= lo && (!hi || mc <= hi);
+        if (!ok) mcExcl.push({a, mc});
+        return ok;
+      });
+      if (U.length < 3) throw new Error('Trop peu de titres dans la fourchette de capitalisation (' + U.length + ').');
+    }
     say('Estimation des rendements et des risques…'); await sleep(10);
     const P = prepare(U, FX);
     if (P.assets.length < 3) throw new Error('Trop peu de titres avec un historique suffisant (' + P.assets.length + ').' + (warn ? ' Fournisseur : ' + warn : ''));
     const E = estimate(P);
-    const B = await build(E, say);
-    LAST = {P, E, B, cfg: JSON.parse(JSON.stringify(CFG)), at: Date.now(), provWarn: warn};
+    /* cadran de chaque titre (rendements hebdomadaires en monnaie locale, facteurs de l'écran Cadran) */
+    say('Cadran des titres…'); await sleep(10);
+    const facOk = cadFactors(cc).every(has);
+    const Q = P.assets.map(x => { if (!facOk) return null; const b = cadBeta(DS[x.a.s], cc); if (!b) return null; return Object.assign(b, quadOf(b.zG, b.zI, cc.neutral)); });
+    if (CFG.qOn && !facOk) toast('Facteurs du cadran indisponibles : contrainte des cadrans ignorée.', false);
+    const B = await build(E, say, facOk ? Q : null);
+    LAST = {P, E, B, Q, cc, reg: facOk ? cadRegime(cc) : null, facOk, mcExcl, cfg: JSON.parse(JSON.stringify(CFG)), at: Date.now(), provWarn: warn};
     render();
-    say('Portefeuille construit · ' + P.assets.length + ' titres analysés' + (P.excl.length ? ', ' + P.excl.length + ' écartés (données)' : '') + '.');
+    say('Portefeuille construit · ' + P.assets.length + ' titres analysés' + (P.excl.length ? ', ' + P.excl.length + ' écartés (données)' : '') + (mcExcl.length ? ', ' + mcExcl.length + ' hors capitalisation' : '') + '.');
   } catch (e) { say(e.message); toast(e.message, false); }
   running = false; $('pcRun').disabled = false;
 }
+const INFO_MC = {};
 
 /* ---------------------------------------------------------------- rendu des résultats */
 function kpi(k, v, s, col){ return '<div class="fx-kpi"><div class="k">' + k + '</div><div class="v"' + (col ? ' style="color:' + col + '"' : '') + '>' + v + '</div>' + (s ? '<div class="s">' + s + '</div>' : '') + '</div>'; }
@@ -13162,7 +13341,7 @@ function holdings(){
   const rows = [];
   for (let i = 0; i < n; i++) if (w[i] > 0) {
     const A = P.assets[i];
-    const r = {i, a: A.a, w: w[i], mu: E.mu[i], muT: E.muT[i], vol: E.sd[i], dy: DIV[A.a.s], rc: v2 > 0 ? w[i] * Sw[i] / v2 : null, ccy: A.c, px: A.px};
+    const r = {i, a: A.a, w: w[i], mu: E.mu[i], muT: E.muT[i], vol: E.sd[i], dy: divOf(A.a.s), mc: FUND[A.a.s] ? FUND[A.a.s].mc : null, q: LAST.Q ? LAST.Q[i] : null, rc: v2 > 0 ? w[i] * Sw[i] / v2 : null, ccy: A.c, px: A.px};
     if (cfg.volOn && cfg.vol > 0) { r.sh = A.px > 0 ? Math.floor(w[i] * cfg.vol / A.px) : 0; r.amt = r.sh * A.px; }
     rows.push(r);
   }
@@ -13175,30 +13354,65 @@ function render(){
   $('pcResT').textContent = 'Portefeuille ' + objLabel(cfg) + ' — ' + rows.length + ' titres';
   const divW = rows.reduce((s, r) => s + r.w * (r.dy || 0), 0), divKnown = rows.filter(r => r.dy != null).reduce((s, r) => s + r.w, 0);
   const inv = cfg.volOn ? rows.reduce((s, r) => s + (r.amt || 0), 0) : null;
-  $('pcKpis').innerHTML = kpi('Rendement attendu', pct(B.ret), 'annuel, en CHF' + (cfg.div || Object.keys(DIV).length ? ', dividende compris' : ''))
+  $('pcKpis').innerHTML = kpi('Rendement attendu', pct(B.ret), 'annuel, en CHF' + (cfg.div ? ', dividende compris' : ''))
     + kpi('Volatilité', pct(B.vol), 'annualisée, ex ante') + kpi('Sharpe', nf(2).format(B.sharpe), 'taux sans risque ' + nf(1).format(cfg.rf) + ' %')
     + (divKnown > 0 ? kpi('Rendement du dividende', pct(divW), divKnown < 0.999 ? 'connu pour ' + pct(divKnown) + ' du poids' : 'pondéré') : '')
     + kpi('Titres', String(rows.length), 'plus grande position ' + pct(rows[0] ? rows[0].w : 0))
     + (inv != null ? kpi('Investi', chf(inv), 'liquidités résiduelles ' + chf(cfg.vol - inv) + ' CHF') : '');
   const warn = B.warn.slice();
   if (P.excl.length) warn.push(P.excl.length + ' titre(s) écarté(s) faute de données : ' + P.excl.slice(0, 12).map(x => esc(x.a.n) + ' (' + x.why + ')').join(', ') + (P.excl.length > 12 ? '…' : '') + '.');
-  if (cfg.div) { const nd = P.assets.filter(x => DIV[x.a.s] == null).length; if (nd) warn.push('Rendement du dividende inconnu pour ' + nd + ' titre(s) : compté à 0.'); }
+  if (cfg.div) { const nd = P.assets.filter(x => divOf(x.a.s) == null).length; if (nd) warn.push('Rendement du dividende inconnu pour ' + nd + ' titre(s) : compté à 0.'); }
   if (cfg.nOn && rows.length < cfg.n && cfg.nMode === 'max') warn.push('L\'optimum ne retient que ' + rows.length + ' titres (au plus ' + cfg.n + ' autorisés).');
   if (cfg.volOn) { const z = rows.filter(r => r.sh === 0).length; if (z) warn.push(z + ' position(s) trop petite(s) pour acheter une action entière avec ce montant.'); }
+  if (LAST.mcExcl && LAST.mcExcl.length) { const unk = LAST.mcExcl.filter(x => x.mc == null).length; warn.push(LAST.mcExcl.length + ' titre(s) exclu(s) par la contrainte de capitalisation' + (unk ? ' (dont ' + unk + ' sans capitalisation connue)' : '') + '.'); }
+  if (cfg.qOn && LAST.facOk) { const ex = qExposure(); const miss = QK.filter((k, ix) => cfg.qSel[ix] && ex[k] < cfg.qMin / 100 - 1e-4); if (miss.length) warn.push('Cadran(s) sous le minimum demandé : ' + miss.map(k => QUADS[k].n + ' (' + pct(ex[k]) + ')').join(', ') + '.'); }
   if (LAST.provWarn) warn.push('Fournisseur : ' + esc(LAST.provWarn));
   $('pcWarn').hidden = !warn.length; $('pcWarn').innerHTML = warn.join('<br>');
   const bySec = new Map(), byCcy = new Map();
   rows.forEach(r => { bySec.set(r.a.g, (bySec.get(r.a.g) || 0) + r.w); byCcy.set(r.ccy === 'GBX' ? 'GBP' : r.ccy, (byCcy.get(r.ccy === 'GBX' ? 'GBP' : r.ccy) || 0) + r.w); });
   const srt = m => Array.from(m).map(([n, v]) => ({n, v})).sort((a, b) => b.v - a.v);
-  $('pcAlloc').innerHTML = stackHtml('Par section du Market Dashboard', srt(bySec)) + stackHtml('Par monnaie de cotation', srt(byCcy));
+  $('pcAlloc').innerHTML = stackHtml(CFG.preset === 'full' ? 'Par section du Market Dashboard' : 'Par secteur', srt(bySec)) + stackHtml('Par monnaie de cotation', srt(byCcy));
   const wMax = rows[0] ? rows[0].w : 1, rcMax = Math.max.apply(null, rows.map(r => r.rc || 0).concat([0.01]));
   const bar = (v, m, c) => '<span class="pc-wb">' + pct(v) + '<i style="width:' + Math.max(1, v / m * 70).toFixed(0) + 'px' + (c ? ';background:' + c : '') + '"></i></span>';
-  $('pcTbl').innerHTML = '<thead><tr><th class="l">Titre</th><th>Poids</th><th>Rendement attendu</th><th>Volatilité</th><th>Dividende</th><th title="Part du risque (variance) du portefeuille">Contribution au risque</th>'
+  const hasMc = rows.some(r => INFO_MC[r.a.s] != null);
+  const qPill = r => { const q = LAST.Q && LAST.Q[r.i]; if (!q) return '–'; return '<span class="pc-pill" style="background:' + q.c + '" title="β croissance ' + nf(2).format(q.zG) + ' · β inflation ' + nf(2).format(q.zI) + '">' + esc(q.k ? QUADS[q.k].s : 'neutre') + '</span>'; };
+  $('pcTbl').innerHTML = '<thead><tr><th class="l">Titre</th><th>Poids</th><th>Rendement attendu</th><th>Volatilité</th><th>Dividende</th>' + (hasMc ? '<th>Cap. (Mrd CHF)</th>' : '') + '<th class="l">Cadran</th><th title="Part du risque (variance) du portefeuille">Contribution au risque</th>'
     + (cfg.volOn ? '<th>Cours (CHF)</th><th>Actions</th><th>Montant (CHF)</th>' : '') + '</tr></thead><tbody>'
-    + rows.map(r => '<tr><td class="l"><div class="pc-nm">' + lg(r.a) + '<span>' + esc(r.a.n) + '<small>' + esc(r.a.s) + ' · ' + esc(r.a.g) + '</small></span></div></td><td>' + bar(r.w, wMax) + '</td><td>' + pct(r.muT) + '</td><td>' + pct(r.vol) + '</td><td>' + (r.dy == null ? '–' : pct(r.dy)) + '</td><td>' + bar(r.rc || 0, rcMax, '#8A9199') + '</td>'
+    + rows.map(r => '<tr><td class="l"><div class="pc-nm">' + lg(r.a) + '<span>' + esc(r.a.n) + '<small>' + esc(r.a.s) + ' · ' + esc(r.a.g) + '</small></span></div></td><td>' + bar(r.w, wMax) + '</td><td>' + pct(r.muT) + '</td><td>' + pct(r.vol) + '</td><td>' + (r.dy == null ? '–' : pct(r.dy)) + '</td>' + (hasMc ? '<td>' + (INFO_MC[r.a.s] == null ? '–' : nf(1).format(INFO_MC[r.a.s] / 1e9)) + '</td>' : '') + '<td class="l">' + qPill(r) + '</td><td>' + bar(r.rc || 0, rcMax, '#8A9199') + '</td>'
       + (cfg.volOn ? '<td>' + nf(2).format(r.px) + '</td><td>' + nf(0).format(r.sh) + '</td><td>' + chf(r.amt) + '</td>' : '') + '</tr>').join('')
-    + '<tr class="tot"><td class="l">Total</td><td>100 %</td><td>' + pct(B.ret) + '</td><td>' + pct(B.vol) + '</td><td>' + (divKnown ? pct(divW) : '–') + '</td><td>100 %</td>' + (cfg.volOn ? '<td></td><td></td><td>' + chf(inv) + '</td>' : '') + '</tr></tbody>';
-  drawFrontier(); drawBacktest();
+    + '<tr class="tot"><td class="l">Total</td><td>100 %</td><td>' + pct(B.ret) + '</td><td>' + pct(B.vol) + '</td><td>' + (divKnown ? pct(divW) : '–') + '</td>' + (hasMc ? '<td></td>' : '') + '<td></td><td>100 %</td>' + (cfg.volOn ? '<td></td><td></td><td>' + chf(inv) + '</td>' : '') + '</tr></tbody>';
+  drawFrontier(); drawBacktest(); drawCadran();
+}
+function qExposure(){
+  const {B, Q} = LAST, ex = {neutral: 0}; QK.forEach(k => { ex[k] = 0; });
+  B.w.forEach((w, i) => { if (!(w > 0)) return; const q = Q && Q[i]; if (q && q.k) ex[q.k] += w; else ex.neutral += w; });
+  return ex;
+}
+function drawCadran(){
+  const {P, B, Q, cc, reg, facOk, cfg} = LAST;
+  if (!facOk) { $('pcCad').innerHTML = '<div class="pc-st">Facteurs du cadran indisponibles : vérifiez les symboles dans l\'écran Cadran (Facteurs et réglages).</div>'; $('pcQExp').innerHTML = ''; $('pcCadKpis').innerHTML = ''; return; }
+  const held = []; B.w.forEach((w, i) => { if (w > 0) held.push(i); });
+  const wMax = Math.max.apply(null, held.map(i => B.w[i]).concat([0.01]));
+  const pts = held.filter(i => Q[i]).map(i => { const q = Q[i], a = P.assets[i].a; return {x: q.zG, y: q.zI, c: q.c, rad: 4 + 13 * Math.sqrt(B.w[i] / wMax), weak: !(q.r2 >= 0.1), lab: tick(a.s),
+    tip: a.n + ' (' + a.s + ')\nPoids ' + pct(B.w[i]) + ' · β croissance ' + nf(2).format(q.zG) + ' · β inflation ' + nf(2).format(q.zI) + ' · R² ' + nf(2).format(q.r2) + '\n' + q.n}; });
+  /* portefeuille : rendements hebdomadaires des titres retenus (monnaie locale) pondérés par les poids */
+  let port = null;
+  const base = DS[cc.f.gNum], keys = base.w.slice(-(cc.weeks + 1)), maps = held.map(i => { const S = DS[P.assets[i].a.s], mm = new Map(); S.w.forEach((k, j) => mm.set(k, S.c[j])); return mm; });
+  const lv = [100];
+  for (let t = 1; t < keys.length; t++) { let s = 0, ws = 0; held.forEach((i, j) => { const a = maps[j].get(keys[t - 1]), b = maps[j].get(keys[t]); if (a > 0 && b > 0) { s += B.w[i] * (b / a - 1); ws += B.w[i]; } }); lv.push(lv[t - 1] * (1 + (ws ? s / ws : 0))); }
+  const pb = cadBeta({w: keys, c: lv}, cc);
+  if (pb) { port = Object.assign(pb, quadOf(pb.zG, pb.zI, cc.neutral)); pts.push({x: pb.zG, y: pb.zI, dia: true, lab: 'Portefeuille', tip: 'Portefeuille construit\nβ croissance ' + nf(2).format(pb.zG) + ' · β inflation ' + nf(2).format(pb.zI) + ' · R² ' + nf(2).format(pb.r2)}); }
+  $('pcCad').innerHTML = cadranSvg(pts, reg, cc);
+  const rk = reg ? ((reg.mG >= 0 ? 1 : -1) + ',' + (reg.mI >= 0 ? 1 : -1)) : null, ex = qExposure();
+  const nRep = QK.filter(k => ex[k] > 1e-4).length;
+  $('pcCadKpis').innerHTML = kpi('Régime macro actuel', rk ? esc(QUADS[rk].n) : '–', 'momentum ' + cc.mom + ' sem.', rk ? QUADS[rk].c : null)
+    + kpi('Portefeuille', port ? esc(port.n) : '–', port ? 'β croiss. ' + nf(2).format(port.zG) + ' · β infl. ' + nf(2).format(port.zI) : '', port ? port.c : null)
+    + kpi('Cadrans représentés', nRep + ' / 4', ex.neutral > 1e-4 ? pct(ex.neutral) + ' en zone neutre' : '');
+  const qMin = cfg.qOn ? cfg.qMin / 100 : 0, mx = Math.max.apply(null, QK.map(k => ex[k]).concat([ex.neutral, 0.01]));
+  $('pcQExp').innerHTML = QK.concat(['neutral']).map((k, ix) => {
+    const q = k === 'neutral' ? {n: 'Neutre / un seul axe', c: NEUT} : QUADS[k], v = ex[k], req = k !== 'neutral' && cfg.qOn && cfg.qSel[ix];
+    return '<div class="pc-qrow' + (req && v < qMin - 1e-4 ? ' miss' : '') + '"><span><i style="display:inline-block;width:9px;height:9px;border-radius:50%;background:' + q.c + ';margin-right:6px"></i>' + esc(q.n) + (req ? ' <small>(min. ' + nf(0).format(cfg.qMin) + ' %)</small>' : '') + '</span><span class="bar"><i style="width:' + (v / mx * 100).toFixed(1) + '%;background:' + q.c + '"></i></span><b>' + pct(v) + '</b></div>';
+  }).join('');
 }
 function drawFrontier(){
   const {P, E, B} = LAST, el = $('pcFront');
@@ -13252,6 +13466,10 @@ function tierRows(kind){
 }
 function syncForm(){
   $('pcHist').querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.h === CFG.hist));
+  $('pcPreset').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.p === CFG.preset));
+  $('pcMcOn').checked = CFG.mcOn; $('pcMcSub').classList.toggle('off', !CFG.mcOn); $('pcMcMin').value = CFG.mcMin; $('pcMcMax').value = CFG.mcMax;
+  $('pcQOn').checked = CFG.qOn; $('pcQSub').classList.toggle('off', !CFG.qOn); $('pcQMin').value = CFG.qMin;
+  $('pcQSel').innerHTML = QK.map((k, ix) => '<label><input type="checkbox" data-q="' + ix + '"' + (CFG.qSel[ix] ? ' checked' : '') + '><i style="background:' + QUADS[k].c + '"></i>' + esc(QUADS[k].n) + '</label>').join('');
   $('pcRf').value = CFG.rf; $('pcShrink').value = String(CFG.shrink);
   $('pcObjSharpe').checked = CFG.sharpe; $('pcObjMinVar').checked = CFG.minvar; $('pcObjDiv').checked = CFG.div;
   $('pcDivSub').classList.toggle('off', !CFG.div); $('pcDivK').querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.k === CFG.divK));
@@ -13263,7 +13481,7 @@ function syncForm(){
 }
 function renderUnivSum(){
   const U = universe(), groups = new Set(U.map(a => a.g));
-  $('pcUnivSum').innerHTML = '<b>' + U.length + '</b> titres retenus sur ' + allTitles().length + ' · ' + groups.size + ' sections<br><span class="pc-st">Liste du Market Dashboard (sans les indices)' + (UNIV.added.length ? ' + ' + UNIV.added.length + ' ajouté(s)' : '') + (UNIV.off.length ? ' · ' + UNIV.off.length + ' retiré(s)' : '') + '</span>';
+  $('pcUnivSum').innerHTML = '<b>' + U.length + '</b> titres retenus sur ' + allTitles().length + ' · ' + groups.size + ' sections<br><span class="pc-st">' + esc(PRESETS[CFG.preset]) + (CFG.preset === 'full' ? ', sans les indices' : CFG.preset === 'smi' ? ', composition au 21.09.2026' : '') + (UNIV.added.length ? ' + ' + UNIV.added.length + ' ajouté(s)' : '') + (UNIV.off.length ? ' · ' + UNIV.off.length + ' retiré(s)' : '') + '</span>';
 }
 function renderGroups(){
   const off = new Set(UNIV.off), G = new Map();
@@ -13278,6 +13496,13 @@ function renderGroups(){
 }
 const setCfg = (k, v) => { CFG[k] = v; saveCfg(); syncForm(); };
 $('pcHist').addEventListener('click', e => { const b = e.target.closest('[data-h]'); if (b) setCfg('hist', +b.dataset.h); });
+$('pcPreset').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (!b) return; CFG.preset = b.dataset.p; UNIV = UNIVS[CFG.preset]; saveCfg(); syncForm(); if (!$('pcUniv').hidden) renderGroups(); });
+$('pcMcOn').addEventListener('change', e => setCfg('mcOn', e.target.checked));
+$('pcMcMin').addEventListener('change', e => { const v = +e.target.value; if (v >= 0) setCfg('mcMin', v); });
+$('pcMcMax').addEventListener('change', e => { const v = +e.target.value; if (v >= 0) setCfg('mcMax', v); });
+$('pcQOn').addEventListener('change', e => setCfg('qOn', e.target.checked));
+$('pcQMin').addEventListener('change', e => { const v = +e.target.value; if (v > 0 && v <= 25) setCfg('qMin', v); });
+$('pcQSel').addEventListener('change', e => { const c = e.target.closest('[data-q]'); if (!c) return; CFG.qSel[+c.dataset.q] = c.checked; saveCfg(); });
 $('pcRf').addEventListener('change', () => { const v = parseFloat($('pcRf').value); if (isFinite(v)) setCfg('rf', v); });
 $('pcShrink').addEventListener('change', () => setCfg('shrink', +$('pcShrink').value));
 $('pcObjSharpe').addEventListener('change', e => { CFG.sharpe = e.target.checked; if (CFG.sharpe) CFG.minvar = false; saveCfg(); syncForm(); });
@@ -13311,7 +13536,7 @@ $('pcUnivEdit').addEventListener('click', () => { $('pcUniv').hidden = false; re
 $('pcUnivClose').addEventListener('click', () => { $('pcUniv').hidden = true; });
 $('pcAll').addEventListener('click', () => { UNIV.off = []; saveUniv(); renderGroups(); });
 $('pcNone').addEventListener('click', () => { UNIV.off = allTitles().map(a => a.s); saveUniv(); renderGroups(); });
-$('pcReset').addEventListener('click', () => { if (!confirm('Revenir à la liste du Market Dashboard (titres ajoutés supprimés) ?')) return; UNIV = {off: [], added: []}; saveUniv(); renderGroups(); });
+$('pcReset').addEventListener('click', () => { if (!confirm('Revenir à la liste « ' + PRESETS[CFG.preset] + ' » (titres ajoutés supprimés) ?')) return; UNIV = {off: [], added: []}; saveUniv(); renderGroups(); });
 $('pcGroups').addEventListener('change', e => {
   const off = new Set(UNIV.off);
   const g = e.target.closest('[data-grp]');

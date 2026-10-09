@@ -179,3 +179,16 @@ Archive permanente des cours dans D1 (15e version) — le fichier _worker.js cha
     personne n'attend le fournisseur. Coût : ~1 appel par 10 symboles et par jour ouvré (≈ 35 appels par soir pour l'univers du Market Dashboard).
   - État de l'archive : /api/tv-hist-status -> {symbols, fresh, stale, bars, lcd}.
   - Les anciennes lignes de cache « tvser:v1:… » ne sont plus utilisées (elles peuvent rester dans la base ; la première consultation de chaque symbole reconstruit l'archive).
+
+Portfolio Constructor (16e version) :
+  - Univers au choix : « Univers complet » (Market Dashboard), « SMI » (20 titres, composition après la révision du 21.09.2026 : Galderma et Sandoz remplacent Swisscom et Kühne + Nagel ;
+    liste SMI_TK dans Outils_GIP.html à mettre à jour lors des révisions de l'indice) ou « SPI » (composition MKT_SPI de Market Data). Chaque univers garde ses propres titres retirés / ajoutés.
+  - Historique de 5 ans ajouté (1, 2, 3 ou 5 ans).
+  - Graphiques (frontière, performance) et nouveau cadran placés au-dessus de la liste des titres.
+  - Cadran croissance / inflation du portefeuille : chaque titre retenu (taille = poids) et le portefeuille (◆), mêmes facteurs et réglages que l'écran Cadran ; exposition par cadran ;
+    colonne « Cadran » dans le tableau.
+  - Nouvelle contrainte « Cadrans représentés » : cadrans à couvrir (cochés) et exposition minimale par cadran (ex. 5 % dans chacun des 4).
+  - Nouvelle contrainte « Capitalisation boursière » : fourchette min / max en milliards de CHF (titres hors fourchette ou sans capitalisation connue exclus) ; colonne de capitalisation dans le tableau.
+    Capitalisations : écran suisse (/api/tv-fund) et cotes groupées pour les titres étrangers, une fois par jour.
+  - Le dividende n'est ajouté au rendement attendu que si l'objectif « Maximiser le dividende » est activé.
+  - Seul Outils_GIP.html change.
