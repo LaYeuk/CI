@@ -893,6 +893,8 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenQuad .lg img.ok{opacity:1}
 #screenQuad .lg.sm{width:22px;height:22px;font-size:8.5px}
 #screenQuad .lg.xs{width:16px;height:16px;font-size:7px}
+
+.mk-prim{font-style:normal;font-size:10px;font-weight:700;color:#00993D;border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:0 6px;margin-left:6px;white-space:nowrap;vertical-align:1px}
 </style>
 </head>
 <body>
@@ -7726,9 +7728,44 @@ function mktParseSearch(json){
     const exch = m.exchange || m.source_id || '';
     const sym = String(m.symbol || '').replace(/<[^>]*>/g, '');
     const full = m.full_name || (exch && sym.indexOf(':') < 0 ? exch + ':' + sym : sym);
-    return {full: String(full).replace(/<[^>]*>/g, ''), symbol: sym, exchange: exch, type: m.type || '', desc: String(m.description || '').replace(/<[^>]*>/g, '')};
+    let prim = null;
+    for (const k of MKT_PRIM_KEYS) if (m[k] != null) { prim = m[k] === true || m[k] === 'true' || m[k] === 1; break; }
+    return {full: String(full).replace(/<[^>]*>/g, ''), symbol: sym, exchange: exch, type: m.type || '', desc: String(m.description || '').replace(/<[^>]*>/g, ''),
+            prim: prim, country: String(m.country || m.country_code || '').toUpperCase()};
   }).filter(m => m.full);
 }
+/* ---- Classement des résultats de recherche : la cotation PRIMAIRE d'un titre passe en tête (toutes les recherches TradingView) ----
+   Indice utilisé, dans l'ordre : 1) le drapeau « cotation primaire » du fournisseur (is_primary_listing…), s'il existe ;
+   2) sinon la bourse du pays du titre (champ country : CH -> SIX, US -> NASDAQ/NYSE/AMEX, DE -> XETR…) ;
+   3) les places secondaires (OTC, bourses régionales allemandes, gettex, Tradegate, BX Swiss…) sont reléguées.
+   À égalité, l'ordre de pertinence du fournisseur est conservé. */
+const MKT_PRIM_KEYS = ['is_primary_listing', 'isPrimaryListing', 'primary_listing', 'is_primary', 'primary'];
+const MKT_HOME_EX = {CH: ['SIX'], US: ['NASDAQ', 'NYSE', 'AMEX'], DE: ['XETR'], FR: ['EURONEXT'], NL: ['EURONEXT'], BE: ['EURONEXT'], PT: ['EURONEXT'], IE: ['EURONEXT'],
+  IT: ['MIL'], ES: ['BME'], GB: ['LSE'], AT: ['VIE'], SE: ['OMXSTO'], DK: ['OMXCOP'], FI: ['OMXHEX'], NO: ['OSL'], PL: ['GPW'], GR: ['ATHEX'], JP: ['TSE'],
+  HK: ['HKEX'], CN: ['SSE', 'SZSE'], KR: ['KRX'], TW: ['TWSE'], IN: ['NSE', 'BSE'], CA: ['TSX', 'TSXV'], AU: ['ASX'], BR: ['BMFBOVESPA'], MX: ['BMV'], SG: ['SGX'], ZA: ['JSE']};
+const MKT_SECONDARY_EX = /^(OTC|GETTEX|TRADEGATE|FWB|BER|MUN|DUS|HAM|HAN|STU|SWB|LS|LSX|LSIN|BX|BCS|TURQUOISE|CBOEEU|BATS|AQUIS|EUREX)$/;
+const mktFold = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();   /* « nestle » trouve « Nestlé » */
+const mktExOf = x => String(x.full || '').split(':')[0].toUpperCase();
+/* cotation primaire : oui (true), non (false) ou inconnu (null) */
+function mktIsPrimary(x){
+  if (x.prim != null) return x.prim;
+  const ex = mktExOf(x);
+  if (MKT_SECONDARY_EX.test(ex)) return false;
+  const home = MKT_HOME_EX[x.country];
+  return home ? home.indexOf(ex) >= 0 : null;
+}
+function mktRankSearch(list, q){
+  const Q = String(q || '').toUpperCase(), fq = mktFold(q);
+  const score = (x, i) => {
+    const p = mktIsPrimary(x), tk = String(x.full || '').split(':').slice(1).join(':').toUpperCase();
+    let s = p === true ? 100 : (p === false ? -40 : 0);
+    if (MKT_SECONDARY_EX.test(mktExOf(x))) s -= 40;
+    if (Q && tk === Q) s += 25; else if (fq && mktFold(x.desc).indexOf(fq) === 0) s += 15;
+    return s - i * 0.01;
+  };
+  return list.map((x, i) => ({x, s: score(x, i)})).sort((a, b) => b.s - a.s).map(o => o.x);
+}
+const mktPrimBadge = x => mktIsPrimary(x) === true ? '<em class="mk-prim" title="Cotation primaire (bourse principale du titre)">primaire</em>' : '';
 /* Cote : /quote/{s} -> data.data ; /quote/batch -> liste d'éléments {symbol, data:{lp,...}} (forme tolérante) */
 function mktQuoteFields(item){
   if (!item || typeof item !== 'object') return null;
@@ -7998,9 +8035,9 @@ async function runSearch(){
   box.innerHTML = '<div class="fx-res"><div class="fx-skel" style="height:18px;width:50%"></div></div><div class="fx-res"><div class="fx-skel" style="height:18px;width:40%"></div></div>';
   try {
     const j = await tv('search/market/' + encodeURIComponent(q) + (typeFilter ? '?filter=' + typeFilter : ''));
-    const res = mktParseSearch(j).slice(0, 60);
+    const res = mktRankSearch(mktParseSearch(j), q).slice(0, 60);
     box.innerHTML = res.map(m => '<div class="fx-res" data-s="' + esc(m.full) + '" data-n="' + esc(m.desc || m.symbol) + '">'
-      + '<div class="t"><span class="fx-id">' + esc(m.full) + '</span>' + esc(m.desc) + '</div>'
+      + '<div class="t"><span class="fx-id">' + esc(m.full) + '</span>' + esc(m.desc) + mktPrimBadge(m) + '</div>'
       + '<div><button type="button" class="btn mk-wl" data-w="' + esc(m.full) + '" data-n="' + esc(m.desc || m.symbol) + '">' + (inWatch(m.full) ? '★ Suivi' : '☆ Suivre') + '</button></div>'
       + '<div class="m">' + esc(TYPE_FR[m.type] || m.type) + (m.exchange ? ' · ' + esc(m.exchange) : '') + '</div></div>').join('')
       || '<div class="fx-res"><div class="fx-mut">Aucun symbole — essayez un autre nom ou un autre type.</div></div>';
@@ -9081,9 +9118,9 @@ $('lbAdd').addEventListener('input', () => {
     try {
       const r = await fetch('/api/tv/search/market/' + encodeURIComponent(q)); const j = await r.json();
       if (!r.ok || j.success === false) throw new Error(j.error_message || (j.error && j.error.message) || ('HTTP ' + r.status));
-      const res = mktParseSearch(j).slice(0, 8);
+      const res = mktRankSearch(mktParseSearch(j), q).slice(0, 8);
       $('lbAddRes').hidden = false;
-      $('lbAddRes').innerHTML = res.length ? res.map(x => '<button type="button" class="lb-hit" data-s="' + esc(x.full) + '" data-n="' + esc(x.desc || x.symbol) + '">' + lgHtml(x.full, x.desc || x.symbol, 'xs') + '<b>' + esc(x.full) + '</b> ' + esc(x.desc) + ' <small>' + esc(x.type) + '</small></button>').join('') : '<span class="fx-mut">Aucun résultat.</span>';
+      $('lbAddRes').innerHTML = res.length ? res.map(x => '<button type="button" class="lb-hit" data-s="' + esc(x.full) + '" data-n="' + esc(x.desc || x.symbol) + '">' + lgHtml(x.full, x.desc || x.symbol, 'xs') + '<b>' + esc(x.full) + '</b> ' + esc(x.desc) + mktPrimBadge(x) + ' <small>' + esc(x.type) + '</small></button>').join('') : '<span class="fx-mut">Aucun résultat.</span>';
     } catch (e) { $('lbAddRes').hidden = false; $('lbAddRes').innerHTML = '<span class="fx-mut">Recherche impossible : ' + esc(e.message) + '</span>'; }
   }, 350);
 });
@@ -9399,11 +9436,11 @@ $('lbRWin').addEventListener('change', () => { const v = Math.round(+$('lbRWin')
 let hitT = null, hitSeq = 0;
 const pickTitle = (sym, name) => { $('lbRTitle').value = name + ' (' + sym + ')'; $('lbRHits').hidden = true; onTitle(); };
 function titleHits(q){
-  const ql = q.toLowerCase(), out = [];
-  Object.keys(SPI_INFO).forEach(s => { const i = SPI_INFO[s]; if (i.n.toLowerCase().indexOf(ql) >= 0 || i.tk.toLowerCase().indexOf(ql) === 0) out.push({full: s, desc: i.n, type: 'SPI'}); });
-  return out.sort((a, b) => (a.desc.toLowerCase().indexOf(ql) === 0 ? 0 : 1) - (b.desc.toLowerCase().indexOf(ql) === 0 ? 0 : 1)).slice(0, 6);
+  const ql = mktFold(q), out = [];
+  Object.keys(SPI_INFO).forEach(s => { const i = SPI_INFO[s]; if (mktFold(i.n).indexOf(ql) >= 0 || i.tk.toLowerCase().indexOf(ql) === 0) out.push({full: s, desc: i.n, type: 'SPI', prim: true, country: 'CH'}); });
+  return mktRankSearch(out, q).slice(0, 6);
 }
-const hitHtml = x => '<button type="button" class="lb-hit" data-s="' + esc(x.full) + '" data-n="' + esc(x.desc || x.symbol || x.full) + '">' + lgHtml(x.full, x.desc || x.symbol || x.full, 'xs') + '<b>' + esc(x.full) + '</b> ' + esc(x.desc || '') + ' <small>' + esc(x.type || '') + '</small></button>';
+const hitHtml = x => '<button type="button" class="lb-hit" data-s="' + esc(x.full) + '" data-n="' + esc(x.desc || x.symbol || x.full) + '">' + lgHtml(x.full, x.desc || x.symbol || x.full, 'xs') + '<b>' + esc(x.full) + '</b> ' + esc(x.desc || '') + mktPrimBadge(x) + ' <small>' + esc(x.type || '') + '</small></button>';
 function searchTitle(){
   const q = $('lbRTitle').value.trim(), box = $('lbRHits'), seq = ++hitSeq;
   clearTimeout(hitT);
@@ -9415,10 +9452,11 @@ function searchTitle(){
     try {
       const r = await fetch('/api/tv/search/market/' + encodeURIComponent(q)), j = await r.json();
       if (!r.ok || j.success === false) throw new Error(j.error_message || (j.error && j.error.message) || ('HTTP ' + r.status));
-      rem = mktParseSearch(j).slice(0, 8).filter(x => !local.some(l => l.full === x.full));
+      rem = mktParseSearch(j).filter(x => !local.some(l => l.full === x.full));
     } catch (e) { err = e.message; }
     if (seq !== hitSeq) return;
-    box.innerHTML = local.map(hitHtml).join('') + rem.map(hitHtml).join('')
+    const all = mktRankSearch(local.concat(rem), q).slice(0, 12);
+    box.innerHTML = all.map(hitHtml).join('')
       + (err ? '<span class="fx-mut lb-srch">Recherche étendue impossible (' + esc(err) + ') — saisissez le symbole complet, ex. NASDAQ:AAPL.</span>' : (!local.length && !rem.length ? '<span class="fx-mut lb-srch">Aucun résultat — essayez le symbole complet (ex. NASDAQ:AAPL).</span>' : ''));
   }, 350);
 }
@@ -11272,14 +11310,16 @@ async function run(){
   if (Q.again) run();
 }
 
-/* ---- Recherche et ajout de titres (SPI instantané + recherche Market Data) ---- */
+/* ---- Recherche et ajout de titres (SPI instantané + recherche Market Data) ----
+   Classement commun à toutes les recherches TradingView (mktRankSearch) : la cotation primaire passe en tête. */
 let hitT = null, hitSeq = 0;
 function localHits(q){
-  const ql = q.toLowerCase(), out = [];
-  Object.keys(SPI_INFO).forEach(s => { const i = SPI_INFO[s]; if (i.n.toLowerCase().indexOf(ql) >= 0 || i.tk.toLowerCase().indexOf(ql) === 0) out.push({full: s, desc: i.n, type: 'SPI'}); });
-  return out.sort((a, b) => (a.desc.toLowerCase().indexOf(ql) === 0 ? 0 : 1) - (b.desc.toLowerCase().indexOf(ql) === 0 ? 0 : 1)).slice(0, 6);
+  const ql = mktFold(q), out = [];
+  Object.keys(SPI_INFO).forEach(s => { const i = SPI_INFO[s]; if (mktFold(i.n).indexOf(ql) >= 0 || i.tk.toLowerCase().indexOf(ql) === 0) out.push({full: s, desc: i.n, type: 'SPI', prim: true, country: 'CH'}); });
+  return mktRankSearch(out, q).slice(0, 6);
 }
-const hitHtml = x => '<button type="button" class="qd-hit" data-s="' + esc(x.full) + '" data-n="' + esc(x.desc || x.symbol || x.full) + '">' + lg(x.full, x.desc || x.full, 'xs') + '<b>' + esc(x.full) + '</b>' + esc(x.desc || '') + '<small>' + esc(x.type || '') + '</small></button>';
+const hitHtml = x => '<button type="button" class="qd-hit" data-s="' + esc(x.full) + '" data-n="' + esc(x.desc || x.symbol || x.full) + '">' + lg(x.full, x.desc || x.full, 'xs') + '<b>' + esc(x.full) + '</b>' + esc(x.desc || '')
+  + mktPrimBadge(x) + '<small>' + esc(x.type || '') + '</small></button>';
 let lastHits = [];
 function search(){
   const q = $('qdQ').value.trim(), box = $('qdHits'), seq = ++hitSeq;
@@ -11292,10 +11332,10 @@ function search(){
     try {
       const r = await fetch('/api/tv/search/market/' + encodeURIComponent(q)), j = await r.json();
       if (!r.ok || j.success === false) throw new Error(j.error_message || (j.error && j.error.message) || ('HTTP ' + r.status));
-      rem = mktParseSearch(j).slice(0, 8).filter(x => !loc.some(l => l.full === x.full));
+      rem = mktParseSearch(j).filter(x => !loc.some(l => l.full === x.full));
     } catch (e) { err = e.message; }
     if (seq !== hitSeq) return;
-    lastHits = loc.concat(rem);
+    lastHits = mktRankSearch(loc.concat(rem), q).slice(0, 12);
     box.innerHTML = lastHits.map(hitHtml).join('')
       + (err ? '<span class="qd-hint">Recherche étendue impossible (' + esc(err) + ') — saisissez le symbole complet puis Entrée, ex. NASDAQ:AAPL.</span>' : (!lastHits.length ? '<span class="qd-hint">Aucun résultat — saisissez le symbole complet puis Entrée (ex. NASDAQ:AAPL).</span>' : ''));
   }, 350);
