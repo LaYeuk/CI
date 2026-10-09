@@ -1569,7 +1569,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       <div class="db-tools">
         <input id="dbFilter" type="search" autocomplete="off" placeholder="Filtrer : nom, ticker, section…" aria-label="Filtrer les briques">
         <button type="button" class="btn" id="dbFold" title="Replier ou déplier toutes les sections">Tout replier</button>
-        <button type="button" class="btn" id="dbRefresh" title="Recharge les clôtures (le relais garde les cours en mémoire environ 3 heures)">Actualiser</button>
+        <button type="button" class="btn" id="dbRefresh" title="Relit les clôtures depuis le relais, qui les garde pour la journée : aucun nouvel appel au fournisseur avant le lendemain (sauf symbole manquant, redemandé après 6 h)">Actualiser</button>
       </div>
     </div>
     <div class="fx-kpis db-kpis" id="dbKpis"></div>
@@ -9427,9 +9427,41 @@ function logo(i){
 }
 document.addEventListener('error', e => { const t = e.target; if (t && t.tagName === 'IMG' && t.parentNode && t.parentNode.classList && t.parentNode.classList.contains('lg')) t.remove(); }, true);
 
+/* ---- Clôtures du jour : magasin propre au tableau de bord (sans la barre du jour en cours : le Worker la retire en mode eod) ----
+   Instantané mémorisé dans ce navigateur pour la journée (jour de Zurich) : rouvrir l'écran ne génère aucun appel. */
+const DS = {};   /* symbole -> {t, c} | {none: true} */
+const DAYKEY = 'gip_dash_cache_v1';
+const zDay = () => new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Zurich'}).format(new Date());
+let snapAt = 0;
+function loadDay(){
+  try {
+    const o = JSON.parse(localStorage.getItem(DAYKEY) || 'null');
+    if (o && o.v === 1 && o.day === zDay() && o.s) { Object.keys(o.s).forEach(k => { if (INFO[k]) DS[k] = o.s[k]; }); snapAt = o.at || 0; }
+  } catch (e) {}
+}
+function saveDay(){
+  try {
+    const s = {}; SYMS.forEach(k => { const S = DS[k]; if (S) s[k] = S.none ? {none: true} : {t: S.t.slice(-70), c: S.c.slice(-70)}; });
+    snapAt = snapAt || Date.now();
+    localStorage.setItem(DAYKEY, JSON.stringify({v: 1, day: zDay(), at: snapAt, s}));
+  } catch (e) {}
+}
+async function fetchChunk(chunk){
+  const send = () => fetch('/api/tv-series?symbols=' + encodeURIComponent(chunk.join(',')) + '&bars=130&eod=1');
+  let r, j = null;
+  try { r = await send(); if (r.status === 429) { await new Promise(res => setTimeout(res, 1500)); r = await send(); } }
+  catch (e) { throw new Error('Relais Market Data injoignable — page ouverte hors du site Cloudflare, ou hors-ligne ?'); }
+  try { j = await r.json(); } catch (e) {}
+  if (r.status === 404 && !(j && j.error_message)) throw new Error("Route /api/tv-series introuvable (404) : le Worker déployé n'est pas à jour — redéployez le _worker.js fourni.");
+  if (!r.ok && !(j && j.series)) throw new Error((j && j.error_message) || ('HTTP ' + r.status));
+  const ser = (j && j.series) || {};
+  chunk.forEach(k => { const S = ser[k]; DS[k] = (S && S.t && S.t.length) ? {t: S.t, c: S.c} : {none: true}; });
+  return !!(j && j.error_message);
+}
+
 /* ---- Mesures d'un titre à partir de ses clôtures ---- */
 function metric(s){
-  const S = MKT_SERIES[s];
+  const S = DS[s];
   if (!S || S.none || !S.t || S.t.length < 2) return null;
   const n = S.t.length, last = S.c[n - 1], prev = S.c[n - 2];
   if (!(last > 0) && !YIELDS[s]) return null;
@@ -9464,7 +9496,7 @@ function sparkSvg(m){
 }
 let REF = 0;   /* date de clôture de référence (la plus récente parmi les titres chargés) */
 function brickInner(s){
-  const i = INFO[s], m = metric(s), S = MKT_SERIES[s];
+  const i = INFO[s], m = metric(s), S = DS[s];
   const head = '<div class="db-t">' + logo(i) + '<span class="db-n" title="' + esc(nameOf(s)) + '">' + esc(nameOf(s)) + '</span></div><div class="db-tk">' + esc(i.ex) + ' · ' + esc(i.tk) + '</div>';
   if (!m) {
     const pending = !S;
@@ -9534,25 +9566,32 @@ function summary(){
     + (ranked.length ? kp('Meilleure section', sgn(ranked[0].a), esc(GROUPS[ranked[0].gi][0]), 'pos') + kp('Moins bonne section', sgn(ranked[ranked.length - 1].a), esc(GROUPS[ranked[ranked.length - 1].gi][0]), 'neg') : '')
     ) : '';
   $('dbBreadth').innerHTML = rows.length ? '<i class="u" style="flex:' + up + '"></i><i class="f" style="flex:' + fl + '"></i><i class="d" style="flex:' + dn + '"></i>' : '';
-  const miss = SYMS.filter(s => MKT_SERIES[s] && MKT_SERIES[s].none);
-  $('dbStatus').innerHTML = '<b>' + (REF ? 'Clôtures au ' + dFr(REF) : 'Chargement…') + '</b> · ' + loaded + ' / ' + SYMS.length + ' titres chargés' + (miss.length ? ' · <span class="miss">' + miss.length + ' sans données</span>' : '');
+  const miss = SYMS.filter(s => DS[s] && DS[s].none);
+  $('dbStatus').innerHTML = '<b>' + (REF ? 'Clôtures au ' + dFr(REF) : 'Chargement…') + '</b> · ' + loaded + ' / ' + SYMS.length + ' titres chargés' + (snapAt && !loading ? ' · instantané du jour (' + new Date(snapAt).toLocaleTimeString('fr-CH', {hour: '2-digit', minute: '2-digit'}) + ')' : '') + (miss.length ? ' · <span class="miss">' + miss.length + ' sans données</span>' : '');
   $('dbNotes').innerHTML = (miss.length ? '<b>Sans données chez le fournisseur (' + miss.length + ') :</b> ' + miss.map(s => esc(nameOf(s)) + ' <code>' + esc(s) + '</code>').join(' · ') + '. Vérifier le symbole ou la couverture du forfait.<br>' : '')
-    + 'Variation = dernière clôture contre la clôture précédente (rendement du Suisse 10 ans en points de base). Les briques grisées d\'une date n\'ont pas coté lors du dernier jour de bourse de référence (jour férié, suspension…). Moyennes de section : pondération égale. Cours en devise de cotation de chaque titre. Source : TradingView Data API (service tiers non officiel) — données indicatives, relayées avec ~3 h de mémoire.';
+    + 'Variation = dernière clôture contre la clôture précédente (rendement du Suisse 10 ans en points de base). Les briques grisées d\'une date n\'ont pas coté lors du dernier jour de bourse de référence (jour férié, suspension…). Moyennes de section : pondération égale. Cours en devise de cotation de chaque titre. Source : TradingView Data API (service tiers non officiel) — données indicatives. Les clôtures sont chargées une seule fois par jour (premier appel de la journée, mémorisé par le relais et dans ce navigateur) et ne comprennent jamais la séance en cours.';
 }
 
 /* ---- Chargement ---- */
 let loading = false, started = false;
 async function load(force){
   if (loading) return; loading = true; $('dbRefresh').disabled = true;
-  if (force) SYMS.forEach(s => { delete MKT_SERIES[s]; });
+  if (force) { SYMS.forEach(s => { delete DS[s]; }); snapAt = 0; try { localStorage.removeItem(DAYKEY); } catch (e) {} }
+  else loadDay();
+  let calls = 0, warn = false;
   try {
-    for (let i = 0; i < SYMS.length; i += 30) {
-      const chunk = SYMS.slice(i, i + 30);
-      $('dbStatus').innerHTML = '<b>Chargement…</b> ' + Math.min(i + 30, SYMS.length) + ' / ' + SYMS.length + ' titres';
-      await mktFetchSeries(chunk, 130);
+    summary(); SYMS.forEach(paint);
+    const need = SYMS.filter(s => !DS[s]);
+    for (let i = 0; i < need.length; i += 30) {
+      const chunk = need.slice(i, i + 30);
+      $('dbStatus').innerHTML = '<b>Chargement…</b> ' + Math.min(i + 30, need.length) + ' / ' + need.length + ' titres';
+      if (i) await new Promise(res => setTimeout(res, 350));
+      if (await fetchChunk(chunk)) warn = true;
+      calls++;
       summary(); SYMS.forEach(paint);
     }
-    summary(); SYMS.forEach(paint);
+    if (!warn && SYMS.every(s => DS[s])) saveDay();
+    loading = false; summary(); SYMS.forEach(paint);
     await fillNames();
   } catch (e) {
     $('dbSetup').hidden = false; $('dbSetup').textContent = (e && e.message) || 'Chargement impossible.';

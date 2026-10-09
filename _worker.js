@@ -791,6 +791,9 @@ async function tvPerf(request, env, ctx) {
    Les historiques sont mis en cache dans D1 (3 h, partagés entre collègues) par symbole ; le nombre de bougies demandé est arrondi
    à un palier (130 / 260 / 780 / 1300 / 2000) pour qu'une même ligne en cache serve plusieurs fenêtres. */
 const TV_SERIES_TTL = 3 * 3600 * 1000;
+const TV_NONE_TTL = 6 * 3600 * 1000;   /* symbole sans données chez le fournisseur : on ne le redemande pas avant 6 h (évite de refaire l'appel à chaque ouverture) */
+/* Jour calendaire à Zurich (nombre de jours depuis 1970) : mode « clôtures du jour » du Market Dashboard. */
+const zurichDay = ms => { const p = new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Zurich', year: 'numeric', month: '2-digit', day: '2-digit'}).format(ms).split('-').map(Number); return Math.round(Date.UTC(p[0], p[1] - 1, p[2]) / 864e5); };
 const TV_SERIES_STEPS = [130, 260, 780, 1300, 2000];
 async function tvSeries(request, env, ctx) {
   const url = new URL(request.url);
@@ -800,13 +803,27 @@ async function tvSeries(request, env, ctx) {
   if (!syms.length) return tvJson({error_message: 'Aucun symbole.'}, 400);
   const want = Math.max(20, Math.min(2000, parseInt(url.searchParams.get('bars'), 10) || 130));
   const bars = TV_SERIES_STEPS.find(x => x >= want) || 2000;
+  /* eod=1 (Market Dashboard) : « instantané du jour ». La mémoire D1 reste valable toute la journée (jour de Zurich) au lieu de 3 h : le premier appel
+     de la journée est le seul à interroger le fournisseur, les suivants relisent D1. Les barres du jour en cours (potentiellement partielles) sont retirées de la réponse
+     (pas de la mémoire) : on ne présente que des clôtures complètes. */
+  const eod = url.searchParams.get('eod') === '1', today = zurichDay(Date.now());
   const cap = parseInt(env.TV_MONTHLY_CAP, 10) || 30000;
   const keys = syms.map(s => 'tvser:v1:' + s);
   const cached = await cacheGetMany(env, keys);
   const series = {}, todo = [], stale = {};
   syms.forEach((s, i) => {
     const h = cached.get(keys[i]);
-    if (h) { try { const v = JSON.parse(h.data); if (v && v.t && v.t.length) { if (h.age < TV_SERIES_TTL && (v.bars >= bars || v.full)) { series[s] = {t: v.t, c: v.c}; return; } stale[s] = {t: v.t, c: v.c}; } } catch (e) {} }
+    if (h) {
+      try {
+        const v = JSON.parse(h.data);
+        if (v && v.none) { if (h.age < TV_NONE_TTL && v.bars >= bars) { series[s] = null; return; } }
+        else if (v && v.t && v.t.length) {
+          const fresh = eod ? zurichDay(Date.now() - h.age) === today : h.age < TV_SERIES_TTL;
+          if (fresh && (v.bars >= bars || v.full)) { series[s] = {t: v.t, c: v.c}; return; }
+          stale[s] = {t: v.t, c: v.c};
+        }
+      } catch (e) {}
+    }
     todo.push(s);
   });
   if (todo.length && await tvUsage(env) >= cap) { todo.forEach(s => { series[s] = stale[s] || null; }); return tvJson({series, error_message: 'Plafond mensuel atteint.'}); }
@@ -832,8 +849,15 @@ async function tvSeries(request, env, ctx) {
     });
   }
   if (st.err === 'BAD_KEY') return tvJson({error_code: 'BAD_KEY', error_message: 'Clé Market Data refusée par le fournisseur (vérifiez TV_API_KEY et votre forfait).'}, 502);
+  /* mémoire négative : un symbole que le fournisseur ne connaît pas n'est pas redemandé à chaque ouverture (seulement si aucune erreur d'API n'a été vue) */
+  if (!st.err) todo.forEach(s => { if (!series[s] && !stale[s]) rows.push({k: 'tvser:v1:' + s, data: JSON.stringify({none: true, bars: bars})}); });
   todo.forEach(s => { if (!series[s]) series[s] = stale[s] || null; });
   if (rows.length && ctx) ctx.waitUntil(cachePutMany(env, rows));
+  if (eod) Object.keys(series).forEach(s => {
+    const S = series[s]; if (!S || !S.t) return;
+    let n = S.t.length; while (n > 0 && S.t[n - 1] >= today) n--;
+    if (n < S.t.length) series[s] = n ? {t: S.t.slice(0, n), c: S.c.slice(0, n)} : null;
+  });
   return tvJson({series, error_message: st.err || undefined});
 }
 
