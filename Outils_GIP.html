@@ -1169,48 +1169,104 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenPr .lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;box-sizing:border-box;opacity:0;transition:opacity .15s}
 #screenPr .lg img.ok{opacity:1}
 /* ---- Écran « Portfolio Restructurator » ---- */
-#screenPr main{max-width:1400px}
-#screenPr .pr-grid{display:grid;grid-template-columns:380px minmax(0,1fr);gap:16px;align-items:start}
-@media (max-width:1050px){#screenPr .pr-grid{grid-template-columns:1fr}}
-#screenPr .pr-grid > aside{position:sticky;top:96px}
-@media (max-width:1050px){#screenPr .pr-grid > aside{position:static}}
-#screenPr .pr-form{display:flex;flex-direction:column;gap:8px}
-#screenPr .pr-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-#screenPr .pr-row .sp{flex:1}
-#screenPr select,#screenPr input[type=number],#screenPr input[type=search]{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
-#screenPr .pr-form > select{width:100%}
-#screenPr input[type=number]{width:96px}
-#screenPr .pr-search{position:relative}
-#screenPr .pr-search input{width:100%;box-sizing:border-box}
-#screenPr .pr-hits{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;max-height:320px;overflow:auto;min-width:360px}
-#screenPr .pr-hit{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;border-top:1px solid #F1F0EC;background:#fff;padding:7px 12px;font:inherit;font-size:12.5px;color:var(--ink);cursor:pointer}
+#screenPr main{max-width:1440px}
+#screenPr .pr-herogrid{display:grid;grid-template-columns:minmax(320px,460px) minmax(0,1fr);gap:28px;align-items:start;margin-top:12px}
+@media (max-width:980px){#screenPr .pr-herogrid{grid-template-columns:1fr}}
+#screenPr .pr-volbox{border:1px solid var(--line);border-radius:12px;padding:14px 18px 10px;background:linear-gradient(180deg,#FBFCF5 0%,#fff 70%)}
+#screenPr .pr-vk{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);font-weight:700}
+#screenPr .pr-vrow{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:6px 0 2px;font-variant-numeric:tabular-nums}
+#screenPr .pr-vb{font-size:22px;color:#747572;font-weight:500}
+#screenPr .pr-varr{font-size:18px;color:#00A6CC}
+#screenPr .pr-va{font-size:34px;color:#02182B;font-weight:700;letter-spacing:-.01em}
+#screenPr .pr-vd{margin-left:auto;align-self:center;display:inline-flex;align-items:baseline;gap:6px;font-size:13px;font-weight:700;border-radius:999px;padding:4px 11px}
+#screenPr .pr-vd small{font-size:11px;font-weight:500;opacity:.8}
+#screenPr .pr-vd.down{background:#E8F4EC;color:#1F7A4D}
+#screenPr .pr-vd.up{background:#FBECE9;color:#B42318}
+#screenPr .pr-vd.flat{background:#F1F0EC;color:#747572}
+#screenPr .pr-gauge{display:block;width:100%;height:auto;margin-top:2px}
+#screenPr .pr-vs{font-size:11px;color:var(--mut);margin-top:2px}
+#screenPr .pr-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+#screenPr .pr-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 4px 3px 10px;font-size:12px;background:#fff;color:var(--ink)}
+#screenPr .pr-chip b{font-size:10px;letter-spacing:.05em;text-transform:uppercase}
+#screenPr .pr-chip.buy b{color:#0086B3}
+#screenPr .pr-chip.sell b{color:#747572}
+#screenPr .pr-chip em{font-style:normal;font-variant-numeric:tabular-nums;color:var(--mut)}
+#screenPr .pr-chip button{border:0;background:#F1F0EC;border-radius:50%;width:18px;height:18px;line-height:18px;padding:0;color:var(--mut);cursor:pointer;font-size:12px}
+#screenPr .pr-chip button:hover{background:#FBECE9;color:#B42318}
+#screenPr .pr-warn{background:#FFF8EC;border:1px solid #F2D9A8;color:#6A4A0C;border-radius:8px;padding:8px 12px;font-size:12px;line-height:1.5;margin-top:12px}
+#screenPr .pr-toolbar{position:sticky;top:88px;z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff;padding:8px 0 10px;margin-bottom:4px;border-bottom:1px solid var(--line)}
+#screenPr .pr-toolbar .sp{flex:1}
+#screenPr .pr-tsep{width:1px;height:24px;background:var(--line);margin:0 4px}
+#screenPr .pr-volpill{font-size:12px;border-radius:999px;padding:3px 11px;background:#F1F0EC;color:var(--ink);font-variant-numeric:tabular-nums;transition:opacity .2s}
+#screenPr .pr-volpill:empty{display:none}
+#screenPr .pr-volpill i{font-style:normal;font-weight:700;margin-left:4px}
+#screenPr .pr-volpill.down i{color:#1F7A4D}
+#screenPr .pr-volpill.up i{color:#B42318}
+#screenPr .pr-volpill.busy{opacity:.45}
+#screenPr .pr-steps{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+#screenPr .pr-steps button{border:0;border-left:1px solid var(--line);background:#fff;padding:5px 10px;font:inherit;font-size:12px;color:var(--mut);cursor:pointer}
+#screenPr .pr-steps button:first-child{border-left:0}
+#screenPr .pr-steps button.on{background:#02182B;color:#fff}
+#screenPr .pr-pop{position:relative}
+#screenPr .pr-big{width:32px;height:32px;border-radius:50%;border:1px solid #02182B;font-size:19px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;transition:.15s}
+#screenPr .pr-big.plus{background:#02182B;color:#fff}
+#screenPr .pr-big.plus:hover{background:#00CFFF;border-color:#00CFFF;color:#02182B}
+#screenPr .pr-big.minus{background:#fff;color:#02182B}
+#screenPr .pr-big.minus:hover{background:#F1F0EC}
+#screenPr .pr-panel{position:absolute;right:0;top:calc(100% + 8px);width:400px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 36px rgba(2,24,43,.18);z-index:40;padding:12px}
+#screenPr .pr-ptitle{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:8px}
+#screenPr .pr-panel input{width:100%;box-sizing:border-box;font:inherit;font-size:13px;padding:8px 10px;border:1px solid var(--line);border-radius:8px}
+#screenPr .pr-hits{max-height:320px;overflow:auto;margin-top:8px}
+#screenPr .pr-hit{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;border-top:1px solid #F1F0EC;background:#fff;padding:7px 6px;font:inherit;font-size:12.5px;color:var(--ink);cursor:pointer}
+#screenPr .pr-hit:first-child{border-top:0}
 #screenPr .pr-hit:hover{background:#EFFCFF}
 #screenPr .pr-hit b{font:700 11px ui-monospace,Consolas,monospace;color:#0086B3;min-width:96px}
-#screenPr .pr-hit small{margin-left:auto;font-size:10.5px;color:#02182B;background:#EFF1C5;border-radius:999px;padding:1px 7px}
-#screenPr .pr-sel{display:flex;align-items:center;gap:8px;font-size:12.5px;min-height:24px;padding:4px 0}
-#screenPr .pr-tx{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;padding:7px 0;border-top:1px solid #F1F0EC;font-size:12.5px}
-#screenPr .pr-tx:first-child{border-top:0}
-#screenPr .pr-tx .tag{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:2px 7px}
-#screenPr .pr-tx.sell .tag{background:#F3F2EE;color:#747572;border:1px solid #DDD8C4}
-#screenPr .pr-tx.buy .tag{background:#E6FAFF;color:#02182B;border:1px solid #00CFFF}
-#screenPr .pr-tx .nm{color:var(--ink);line-height:1.35}
-#screenPr .pr-tx small{display:block;color:var(--mut);font-size:11px}
-#screenPr .pr-tx button{border:0;background:none;color:var(--mut);cursor:pointer;font-size:16px;padding:0 4px}
-#screenPr .pr-tx button:hover{color:#B42318}
-#screenPr .pr-warn{background:#FFF8EC;border:1px solid #F2D9A8;color:#6A4A0C;border-radius:8px;padding:8px 12px;font-size:12px;line-height:1.5;margin-top:10px}
+#screenPr .pr-hit span{flex:1;min-width:0}
+#screenPr .pr-hit small{font-size:10.5px;color:#02182B;background:#EFF1C5;border-radius:999px;padding:1px 7px;white-space:nowrap}
+#screenPr .pr-pempty{font-size:12px;color:var(--mut);padding:8px 6px}
+#screenPr .pr-tbl th.pr-act,#screenPr .pr-tbl td.pr-act{width:58px;text-align:left;padding-left:2px;padding-right:2px}
+#screenPr .pr-pm{width:22px;height:22px;border-radius:50%;border:1px solid #CFCBBE;background:#fff;color:#02182B;font-size:14px;line-height:1;cursor:pointer;padding:0;margin-right:4px;opacity:.55;transition:.12s}
+#screenPr tr:hover .pr-pm{opacity:1}
+#screenPr .pr-pm[data-d="1"]:hover{background:#02182B;border-color:#02182B;color:#fff}
+#screenPr .pr-pm[data-d="-1"]:hover{background:#F1F0EC;border-color:#747572}
+#screenPr .pr-pm:disabled{opacity:.2;cursor:default}
+#screenPr .pr-win{display:inline-flex;align-items:center;gap:3px}
+#screenPr .pr-w{width:66px;font:inherit;font-size:12.5px;font-weight:600;text-align:right;padding:3px 6px;border:1px solid transparent;border-radius:6px;background:#F6F7F4;color:var(--navy);font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+#screenPr .pr-w::-webkit-inner-spin-button,#screenPr .pr-w::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+#screenPr .pr-w:hover{border-color:var(--line)}
+#screenPr .pr-w:focus{outline:0;border-color:#00CFFF;background:#fff;box-shadow:0 0 0 3px rgba(0,207,255,.18)}
+#screenPr .pr-win i{font-style:normal;font-size:11px;color:var(--mut)}
+#screenPr .pr-buy{color:#0086B3;font-weight:600}
+#screenPr .pr-sell{color:#747572;font-weight:600}
+#screenPr .pf-tbl tr.pr-ch td{background:#F5FCFE}
+#screenPr .pf-tbl tr.pr-ch td.pr-act{box-shadow:inset 3px 0 0 #00CFFF}
+#screenPr .pf-tbl tr.pr-zero td{color:#A9AAA5}
+#screenPr .pf-tbl tr.pr-zero .pf-nm span{text-decoration:line-through}
+#screenPr .pf-tbl tr.pr-cash td{border-top:1px solid var(--line);background:#FAFAF7}
+#screenPr .pf-tbl tr.pr-flash td{animation:prFlash 1.4s ease}
+@keyframes prFlash{0%,40%{background:#CFF5FF}100%{background:transparent}}
+#screenPr .pr-new{font-style:normal;font-size:10px;font-weight:700;background:#00CFFF;color:#02182B;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+#screenPr .pr-rm{border:0;background:none;color:var(--mut);cursor:pointer;font-size:13px;padding:0 2px}
+#screenPr .pr-rm:hover{color:#B42318}
+#screenPr .pr-two{grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-top:0}
+#screenPr .pr-two > section{margin-bottom:16px}
+#screenPr .pr-small .fx-kpi .v{font-size:15px}
 #screenPr .pr-h4{margin:0 0 10px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
 #screenPr .pr-qrow{display:grid;grid-template-columns:minmax(150px,auto) 1fr 78px 40px;gap:8px;align-items:center;font-size:12px;margin-bottom:8px}
 #screenPr .pr-qrow span i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
 #screenPr .pr-qrow .bar{position:relative;height:12px;border-radius:6px;background:#F1F0EC;overflow:hidden}
 #screenPr .pr-qrow .bar i{position:absolute;left:0;display:block}
-#screenPr .pr-qrow .bar i.b{top:0;height:100%;background:#DDD8C4}
+#screenPr .pr-qrow .bar i.b{top:0;height:100%;background:#DDD8C4;border-radius:6px}
 #screenPr .pr-qrow .bar i.a{top:3px;height:6px;border-radius:3px}
 #screenPr .pr-qrow b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
 #screenPr .pr-qrow em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;font-size:11.5px}
+#screenPr .pr-hint{margin-top:16px;font-size:12px;line-height:1.55;color:var(--ink);background:#EFFCFF;border:1px solid #BDEFFC;border-radius:10px;padding:10px 12px}
+#screenPr .pr-hint b{color:#02182B}
+#screenPr .pr-drag{cursor:grab}
+#screenPr .pr-drag:active{cursor:grabbing}
+#screenPr #prCad svg{touch-action:none}
 #screenPr .pr-ar{color:#00A6CC;font-weight:400;margin:0 2px}
-#screenPr .pf-tbl tr.pr-ch td{background:#F7FDFF}
-#screenPr .pr-new{font-style:normal;font-size:10px;font-weight:700;background:#00CFFF;color:#02182B;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:1px}
-#screenPr .fx-kpis .pf-up,#screenPr .fx-kpis .pf-dn{font-weight:600}
+#screenPr .pr-more{font-size:12px;color:var(--mut);align-self:center;padding:0 4px}
 </style>
 </head>
 <body>
@@ -2306,7 +2362,7 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
 </div>
 <div id="screenPr" class="screen">
 
-<header><h1>Portfolio Restructurator</h1><span>Simulez des achats et des ventes sur un portefeuille et voyez aussitôt l'effet sur la volatilité, la contribution au risque et le cadran.</span></header>
+<header><h1>Portfolio Restructurator</h1><span>Ajustez les lignes du portefeuille avec + et − et voyez aussitôt l'effet sur la volatilité, la frontière efficiente et le cadran.</span></header>
 <main>
   <section class="fx-card pf-card" id="prEmpty" hidden>
     <div class="pf-drop" id="prDrop" tabindex="0" role="button" aria-label="Déposer les fichiers du portefeuille">
@@ -2317,57 +2373,76 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
   </section>
 
   <div id="prBody" hidden>
-    <section class="fx-card pf-card">
+    <section class="fx-card pf-card pr-hero">
       <div class="pf-head" id="prHead"></div>
-      <div class="fx-kpis" id="prKpis"></div>
+      <div class="pr-herogrid">
+        <div class="pr-volbox" id="prVolBox"></div>
+        <div>
+          <div class="fx-kpis" id="prKpis"></div>
+          <div class="pr-chips" id="prChips"></div>
+        </div>
+      </div>
       <div class="pr-warn" id="prWarn" hidden></div>
     </section>
 
-    <div class="pr-grid">
-      <aside>
-        <section class="fx-card pf-card">
-          <h3 class="pf-h" style="margin-top:0">Vendre / alléger</h3>
-          <div class="pr-form">
-            <select id="prSellPos"></select>
-            <div class="pr-row"><select id="prSellMode"><option value="pct">% de la position</option><option value="amt">montant CHF</option><option value="all">toute la position</option></select>
-              <input type="number" id="prSellVal" min="0" step="1" value="50"><button type="button" class="btn" id="prSellGo">Vendre</button></div>
+    <section class="fx-card pf-card">
+      <div class="pr-toolbar" id="prToolbar">
+        <h3 class="pf-h" style="margin:0">Lignes du portefeuille</h3>
+        <span class="pr-volpill" id="prVolPill"></span>
+        <span class="sp"></span>
+        <span class="pf-st">Pas</span>
+        <div class="pr-steps" id="prSteps"><button type="button" data-st="0.005">0,5 %</button><button type="button" data-st="0.01">1 %</button><button type="button" data-st="0.02">2 %</button><button type="button" data-st="0.05">5 %</button></div>
+        <span class="pr-tsep"></span>
+        <div class="pr-pop">
+          <button type="button" class="pr-big plus" id="prAddBtn" title="Ajouter un titre qui n'est pas dans le portefeuille">+</button>
+          <div class="pr-panel" id="prAddPanel" hidden>
+            <div class="pr-ptitle">Ajouter un titre</div>
+            <input type="search" id="prAddQ" autocomplete="off" placeholder="Nom ou symbole (ex. Nestlé, NASDAQ:AAPL)">
+            <div class="pr-hits" id="prAddHits"></div>
           </div>
-          <h3 class="pf-h">Acheter / renforcer</h3>
-          <div class="pr-form">
-            <div class="fx-sbox pr-search"><input type="search" id="prBuyQ" autocomplete="off" placeholder="Titre du portefeuille ou tout symbole (ex. Nestlé, NASDAQ:AAPL)"><div class="pr-hits" id="prBuyHits" hidden></div></div>
-            <div class="pr-sel" id="prBuySel">Aucun titre choisi</div>
-            <div class="pr-row"><span class="pf-st">Montant</span><input type="number" id="prBuyAmt" min="0" step="1000" value="50000"><span class="pf-st">CHF</span><button type="button" class="btn pri" id="prBuyGo">Acheter</button></div>
+        </div>
+        <div class="pr-pop">
+          <button type="button" class="pr-big minus" id="prDelBtn" title="Vendre entièrement une ligne">−</button>
+          <div class="pr-panel" id="prDelPanel" hidden>
+            <div class="pr-ptitle">Vendre entièrement une ligne</div>
+            <input type="search" id="prDelQ" autocomplete="off" placeholder="Filtrer les positions">
+            <div class="pr-hits" id="prDelHits"></div>
           </div>
-          <h3 class="pf-h">Transactions simulées</h3>
-          <div id="prTxList"></div>
-          <div class="pr-row" style="margin-top:8px"><button type="button" class="btn" id="prTxClear">Tout annuler</button><span class="sp"></span><button type="button" class="btn" id="prCsv">CSV du portefeuille simulé</button></div>
-          <div class="pf-note">Les ventes alimentent les liquidités, les achats les utilisent ; la valeur totale du portefeuille ne change pas. Rien n'est exécuté : simulation uniquement.</div>
-        </section>
-      </aside>
-
-      <div>
-        <section class="fx-card pf-card">
-          <h3 class="pf-h" style="margin-top:0">Volatilité glissante simulée (3 mois, poids constants)</h3>
-          <div class="pf-chart" id="prVolChart"></div>
-          <div class="pf-note" id="prVolNote"></div>
-        </section>
-        <section class="fx-card pf-card">
-          <div class="pf-bar"><h3 class="pf-h" style="margin:0">Cadran croissance / inflation</h3><span class="sp"></span><span class="pf-st" id="prCadSt"></span></div>
-          <div class="fx-kpis" id="prCadKpis"></div>
-          <div class="pf-two">
-            <div><div class="pf-plot" id="prCad"></div>
-              <div class="pf-legend"><span><i class="dm o"></i>Avant</span><span><i class="dm"></i>Après</span><span>Points : titres après transactions (taille = poids, contour épais = achat simulé)</span></div></div>
-            <div><h4 class="pr-h4">Exposition par cadran (titres cotés)</h4><div id="prQExp"></div></div>
-          </div>
-        </section>
+        </div>
+        <span class="pr-tsep"></span>
+        <button type="button" class="btn" id="prReset">Réinitialiser</button>
+        <button type="button" class="btn" id="prCsv">CSV</button>
       </div>
+      <div class="pf-tblwrap"><table class="pf-tbl pr-tbl" id="prTbl"></table></div>
+      <div class="pf-note">+ / − : achète ou vend le pas choisi (en % de la valeur totale). La colonne « Poids après » se modifie aussi directement (Entrée pour valider).
+        Les ventes alimentent les liquidités, les achats les utilisent : la valeur totale ne change pas. Simulation uniquement, rien n'est exécuté.</div>
+    </section>
+
+    <div class="pf-two pr-two">
+      <section class="fx-card pf-card">
+        <div class="pf-bar"><h3 class="pf-h" style="margin:0">Frontière efficiente avant / après</h3><span class="sp"></span><span class="pf-st" id="prFrSt"></span></div>
+        <div class="pf-chart" id="prFront"></div>
+        <div class="fx-kpis pr-small" id="prFrKpis"></div>
+        <div class="pf-note">Frontière sans vente à découvert, construite avec les titres détenus (avant, puis après transactions) et les obligations approchées par leur indice ; liquidités exclues.
+          Rendements = moyenne historique annualisée sur deux ans : ce n'est pas une prévision.</div>
+      </section>
+      <section class="fx-card pf-card">
+        <h3 class="pf-h" style="margin-top:0">Volatilité glissante simulée (3 mois, poids constants)</h3>
+        <div class="pf-chart" id="prVolChart"></div>
+        <div class="pf-note" id="prVolNote"></div>
+      </section>
     </div>
 
     <section class="fx-card pf-card">
-      <div class="pf-bar"><h3 class="pf-h" style="margin:0">Positions avant et après</h3><span class="sp"></span><span class="pf-st" id="prSt"></span></div>
-      <div class="pf-tblwrap"><table class="pf-tbl" id="prTbl"></table></div>
-      <div class="pf-note">Volatilité ex ante = un an de cours quotidiens, poids constants ; obligations approchées par l'indice choisi dans le Portfolio Lab (onglet Volatilité), liquidités à volatilité nulle. Cadran : mêmes facteurs et réglages que l'écran Cadran, titres cotés uniquement.</div>
+      <div class="pf-bar"><h3 class="pf-h" style="margin:0">Cadran croissance / inflation</h3><span class="sp"></span><span class="pf-st" id="prCadSt"></span></div>
+      <div class="fx-kpis" id="prCadKpis"></div>
+      <div class="pf-two">
+        <div><div class="pf-plot" id="prCad"></div>
+          <div class="pf-legend"><span><i class="dm o"></i>Avant</span><span><i class="dm"></i>Après</span><span>Points : titres après transactions (taille = poids, contour foncé = titre ajouté)</span></div></div>
+        <div><h4 class="pr-h4">Exposition par cadran (titres cotés)</h4><div id="prQExp"></div></div>
+      </div>
     </section>
+    <div class="pf-st" id="prSt"></div>
   </div>
 </main>
 <div class="qd-toast" id="prToast"></div>
@@ -12662,7 +12737,7 @@ function cadranSvg(pts, reg, cfg){
   const R = Math.min(1.5, Math.ceil(m * 1.15 * 10) / 10), sc = (C - P) / R;
   const px = x => C + Math.max(-R, Math.min(R, x)) * sc, py = y => C - Math.max(-R, Math.min(R, y)) * sc;
   const rk = reg ? ((reg.mG >= 0 ? 1 : -1) + ',' + (reg.mI >= 0 ? 1 : -1)) : null;
-  let h = '<svg viewBox="0 0 ' + S + ' ' + S + '" font-family="Aspekta, Arial, sans-serif"><rect width="' + S + '" height="' + S + '" fill="#fff"/>';
+  let h = '<svg viewBox="0 0 ' + S + ' ' + S + '" data-c="' + C + '" data-sc="' + sc + '" data-r="' + R + '" font-family="Aspekta, Arial, sans-serif"><rect width="' + S + '" height="' + S + '" fill="#fff"/>';
   [['-1,1', P, P], ['1,1', C, P], ['-1,-1', P, C], ['1,-1', C, C]].forEach(([k, x, y]) => {
     const q = QUADS[k], on = k === rk, left = x === P, top = y === P;
     h += '<rect x="' + x + '" y="' + y + '" width="' + (C - P) + '" height="' + (C - P) + '" fill="' + q.c + '" fill-opacity="' + (on ? 0.13 : 0.06) + '"' + (on ? ' stroke="' + q.c + '" stroke-width="1.5"' : '') + '/>';
@@ -12689,7 +12764,7 @@ function cadranSvg(pts, reg, cfg){
   pts.slice().sort((a, b) => (b.rad || 0) - (a.rad || 0)).forEach(p => {
     const x = px(p.x), y = py(p.y);
     h += '<g><title>' + esc(p.tip) + '</title>';
-    if (p.dia) { const r = 9; h += '<path d="M' + x + ',' + (y - r) + 'L' + (x + r) + ',' + y + 'L' + x + ',' + (y + r) + 'L' + (x - r) + ',' + y + 'Z" fill="' + (p.dia === 'o' ? '#fff' : '#02182B') + '" stroke="#02182B" stroke-width="1.6"/>'; }
+    if (p.dia) { const r = 9; h += '<path class="dia-' + p.dia + '" d="M' + x + ',' + (y - r) + 'L' + (x + r) + ',' + y + 'L' + x + ',' + (y + r) + 'L' + (x - r) + ',' + y + 'Z" fill="' + (p.dia === 'o' ? '#fff' : '#02182B') + '" stroke="#02182B" stroke-width="1.6"/>'; }
     else h += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + p.rad.toFixed(1) + '" fill="' + p.c + '" fill-opacity="' + (p.weak ? 0.35 : 0.75) + '" stroke="' + (p.isNew ? '#02182B' : '#fff') + '" stroke-width="' + (p.isNew ? 1.6 : 1) + '"/>';
     if (p.lx != null) h += '<text x="' + p.lx.toFixed(1) + '" y="' + p.ly.toFixed(1) + '" fill="#1A1F27" font-size="' + (p.dia ? 12 : 11) + '" font-weight="' + (p.dia ? 800 : 600) + '">' + esc(p.lab) + '</text>';
     h += '</g>';
@@ -13074,41 +13149,40 @@ $('pfRegAdd').addEventListener('keydown', e => {
 });
 $('pfRegFreq').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (!b) return; CFG.freq = b.dataset.f; saveCfg(); runReg(); });
 
-
 /* ============================================================================================
    Écran « Portfolio Restructurator » — même portefeuille que le Portfolio Lab (données partagées).
-   On simule des ventes (% / montant / toute la position) et des achats (titre existant ou tout symbole TradingView),
-   puis on compare avant / après : poids, volatilité ex ante et contribution au risque, volatilité glissante simulée, cadran.
+   Les transactions se simulent directement dans le tableau des lignes : boutons + / − (pas en % de la valeur totale)
+   ou saisie du poids après ; + / − en haut du tableau : ajouter un titre hors portefeuille / vendre une ligne entière.
+   Dans le cadran, le losange « Après » se déplace à la souris : les poids des titres déjà retenus sont recalculés
+   pour placer le portefeuille au plus près du point visé (même sélection de titres).
    Les ventes alimentent les liquidités, les achats les consomment : la valeur totale reste constante.
    ============================================================================================ */
-const PR = {tx: [], buySel: null, busy: false, again: false, beta: {}};
-const PR_KEY = 'gip_pr_tx_v1';
-try { const t = JSON.parse(sessionStorage.getItem(PR_KEY) || 'null'); if (Array.isArray(t)) PR.tx = t; } catch (e) {}
-const prSave = () => { try { sessionStorage.setItem(PR_KEY, JSON.stringify(PR.tx)); } catch (e) {} };
-function prToast(msg, ok){ const el = $('prToast'); el.textContent = msg; el.classList.toggle('err', ok === false); el.classList.add('show'); clearTimeout(prToast.t); prToast.t = setTimeout(() => el.classList.remove('show'), 4200); }
-/* lignes du portefeuille : titres et obligations une par une, liquidités regroupées */
+const PR = {adj: {}, added: [], step: 0.01, busy: false, again: false, beta: {}, res: null, target: null, timer: null};
+const PR_KEY = 'gip_pr_v2';
+try { const t = JSON.parse(sessionStorage.getItem(PR_KEY) || 'null'); if (t) { if (t.adj && typeof t.adj === 'object') PR.adj = t.adj; if (Array.isArray(t.added)) PR.added = t.added; if (t.step > 0) PR.step = t.step; } } catch (e) {}
+const prSave = () => { try { sessionStorage.setItem(PR_KEY, JSON.stringify({adj: PR.adj, added: PR.added, step: PR.step})); } catch (e) {} };
+function prToast(msg, ok){ const el = $('prToast'); el.textContent = msg; el.classList.toggle('err', ok === false); el.classList.add('show'); clearTimeout(prToast.t); prToast.t = setTimeout(() => el.classList.remove('show'), 4800); }
+const prShort = s => String(s || '').replace(/^[A-Z0-9_]+:/, '');
+
+/* lignes de base : titres et obligations une par une (groupées par catégorie, poids décroissant), liquidités regroupées */
 function prBaseLines(){
-  const lines = [], cash = {key: '__cash', name: 'Liquidités', kind: 'cash', cat: 'Liquidités', mv: 0};
-  (PF.pos || []).forEach(p => { const k = kindOf(p); if (k === 'cash') { cash.mv += p.mv; return; } lines.push({key: keyOf(p), name: p.name, kind: k, cat: p.cat, s: k === 'sec' ? symOf(p) : null, mv: p.mv, ccy: p.ccy}); });
+  const lines = [], cash = {key: '__cash', name: 'Liquidités', kind: 'cash', cat: 'Liquidités', mv: 0}, cats = [];
+  (PF.pos || []).forEach(p => { const k = kindOf(p); if (k === 'cash') { cash.mv += p.mv; return; } const cat = p.cat || (k === 'bond' ? 'Obligations' : 'Actions'); if (cats.indexOf(cat) < 0) cats.push(cat); lines.push({key: keyOf(p), name: p.name, kind: k, cat, s: k === 'sec' ? symOf(p) : null, mv: p.mv, ccy: p.ccy}); });
+  lines.sort((a, b) => cats.indexOf(a.cat) - cats.indexOf(b.cat) || b.mv - a.mv);
   lines.push(cash);
   return lines;
 }
-function prApply(base){
-  const L = base.map(l => Object.assign({}, l)), by = new Map(L.map(l => [l.key, l])), cash = by.get('__cash'), msgs = [];
-  PR.tx.forEach(t => {
-    if (t.type === 'sell') {
-      const l = by.get(t.key); if (!l) { msgs.push('Vente ignorée : position « ' + t.name + ' » introuvable.'); return; }
-      const amt = t.mode === 'all' ? l.mv : t.mode === 'pct' ? l.mv * Math.min(100, Math.max(0, t.val)) / 100 : Math.min(l.mv, Math.max(0, t.val));
-      l.mv -= amt; cash.mv += amt; t.done = amt;
-    } else {
-      let l = by.get(t.key);
-      if (!l) { l = {key: t.key, name: t.name, kind: 'sec', cat: 'Achats simulés', s: t.s, mv: 0, isNew: true}; L.splice(L.length - 1, 0, l); by.set(t.key, l); }
-      l.mv += t.val; cash.mv -= t.val; t.done = t.val;
-    }
-  });
-  return {lines: L, msgs};
+/* applique les ajustements : chaque ligne garde b (montant avant) et mv (montant après) */
+function prLines(){
+  const base = prBaseLines(), L = base.map(l => Object.assign({}, l, {b: l.mv})), cash = L[L.length - 1];
+  PR.added.forEach(a => { if (!L.some(l => l.key === a.key)) L.splice(L.length - 1, 0, {key: a.key, name: a.name, kind: 'sec', cat: 'Titres ajoutés', s: a.s, mv: 0, b: 0, isNew: true}); });
+  L.forEach(l => { if (l.kind === 'cash') return; const d = Math.max(-l.b, PR.adj[l.key] || 0); l.mv = l.b + d; cash.mv -= d; });
+  return {base, lines: L, tot: base.reduce((s, l) => s + l.mv, 0)};
 }
-/* risque : covariance d'un an de rendements quotidiens sur l'union des titres avant / après */
+function prSetAdj(key, d){ if (Math.abs(d) < 0.5) delete PR.adj[key]; else PR.adj[key] = d; PR.target = null; }
+function prChanged(){ prSave(); prRender(); clearTimeout(PR.timer); PR.timer = setTimeout(prRun, 220); }
+
+/* risque : rendements quotidiens (deux ans) sur l'union des titres avant / après ; vol ex ante sur un an */
 function prRisk(before, after){
   const syms = Array.from(new Set(before.concat(after).filter(l => l.kind === 'sec' && l.s && has(l.s)).map(l => l.s)));
   const useBond = before.concat(after).some(l => l.kind === 'bond' && l.mv > 0) && has(CFG.bond);
@@ -13117,8 +13191,10 @@ function prRisk(before, after){
   const start = Math.max.apply(null, assets.map(s => DS[s].t[0]));
   const cal = Array.from(new Set([].concat.apply([], assets.map(s => DS[s].t.filter(d => d >= start))))).sort((a, b) => a - b).slice(-505);
   const R = assets.map(s => { const S = DS[s], lv = []; let j = 0, last = null; cal.forEach(d => { while (j < S.t.length && S.t[j] <= d) { last = S.c[j]; j++; } lv.push(last); }); return lv.slice(1).map((v, i) => (v > 0 && lv[i] > 0) ? Math.log(v / lv[i]) : 0); });
-  const n = R[0].length, n1 = Math.min(252, n), means = R.map(r => mean(r.slice(-n1)));
-  const cov = R.map((a, i) => R.map((b, j) => { let s = 0; for (let t = n - n1; t < n; t++) s += (a[t] - means[i]) * (b[t] - means[j]); return s / (n1 - 1) * 252; }));
+  const n = R[0].length; if (n < 30) return null;
+  const covOf = n1 => { const mu = R.map(r => mean(r.slice(-n1))); return R.map((a, i) => R.map((b, j) => { let s = 0; for (let t = n - n1; t < n; t++) s += (a[t] - mu[i]) * (b[t] - mu[j]); return s / (n1 - 1) * 252; })); };
+  const cov = covOf(Math.min(252, n)), covL = covOf(n);
+  const muL = R.map((r, i) => mean(r) * 252 + covL[i][i] / 2);
   const scen = lines => {
     const tot = lines.reduce((s, l) => s + l.mv, 0), w = assets.map(() => 0); let cov_ = 0, unc = 0;
     lines.forEach(l => {
@@ -13130,16 +13206,75 @@ function prRisk(before, after){
     const wn = w.map(x => cov_ > 0 ? x / cov_ : 0);
     const Sw = cov.map(r => r.reduce((s, v, j) => s + v * wn[j], 0)), varP = wn.reduce((s, v, i) => s + v * Sw[i], 0);
     const rc = {}; assets.forEach((s, i) => { rc[s] = varP > 0 ? wn[i] * Sw[i] / varP : 0; });
-    /* volatilité glissante 63 j de ce panier à poids constants */
     const pr = []; for (let t = 0; t < n; t++) { let s = 0; for (let i = 0; i < assets.length; i++) s += wn[i] * R[i][t]; pr.push(s); }
     const roll = []; for (let t = 63; t <= n; t++) roll.push({d: cal[t], y: sdev(pr.slice(t - 63, t)) * Math.sqrt(252)});
-    return {vol: Math.sqrt(Math.max(0, varP)), rc, roll, cover: tot > 0 ? 1 - unc / tot : 0};
+    return {vol: Math.sqrt(Math.max(0, varP)), rc, roll, w, cover: tot > 0 ? 1 - unc / tot : 0};
   };
-  const vol1 = s => { const c = DS[s].c, r = []; for (let i = Math.max(1, c.length - 252); i < c.length; i++) if (c[i] > 0 && c[i - 1] > 0) r.push(Math.log(c[i] / c[i - 1])); return r.length > 10 ? sdev(r) * Math.sqrt(252) : null; };
-  const v1 = {}; assets.forEach(s => { v1[s] = vol1(s); });
-  return {B: scen(before), A: scen(after), v1, bondSym: useBond ? CFG.bond : null, from: cal[cal.length - n1 - 1], to: cal[cal.length - 1]};
+  const v1 = {}; assets.forEach((s, i) => { v1[s] = Math.sqrt(cov[i][i]); });
+  return {B: scen(before), A: scen(after), v1, assets, covL, muL, bondSym: useBond ? CFG.bond : null};
 }
-/* cadran : panier hebdomadaire des titres cotés (poids renormalisés) */
+
+/* ---- frontière efficiente (sans vente à découvert) ---- */
+function prProjBox(v, lb, ub, tot){   /* projection sur {lb <= w <= ub, somme = tot} par dichotomie */
+  let lo = Math.min.apply(null, v.map((x, i) => x - ub[i])) - 1, hi = Math.max.apply(null, v.map((x, i) => x - lb[i])) + 1;
+  for (let k = 0; k < 60; k++) { const t = (lo + hi) / 2; let s = 0; for (let i = 0; i < v.length; i++) s += Math.min(ub[i], Math.max(lb[i], v[i] - t)); if (s > tot) lo = t; else hi = t; }
+  const t = (lo + hi) / 2; return v.map((x, i) => Math.min(ub[i], Math.max(lb[i], x - t)));
+}
+function prQP(mu, S, lam){   /* max mu'w − lam/2 w'Sw sur le simplexe (FISTA) ; lam = Infinity -> variance minimale */
+  const m = mu.length, lb = mu.map(() => 0), ub = mu.map(() => 1), tr = S.reduce((s, r, i) => s + r[i], 0) || 1e-6;
+  const L = isFinite(lam) ? lam * tr : tr;
+  let w = mu.map(() => 1 / m), y = w.slice(), t = 1;
+  for (let it = 0; it < 300; it++) {
+    const g = y.map((_, i) => { let s = 0; for (let j = 0; j < m; j++) s += S[i][j] * y[j]; return isFinite(lam) ? mu[i] - lam * s : -s; });
+    const wn = prProjBox(y.map((v, i) => v + g[i] / L), lb, ub, 1), tn = (1 + Math.sqrt(1 + 4 * t * t)) / 2;
+    y = wn.map((v, i) => v + (t - 1) / tn * (v - w[i])); w = wn; t = tn;
+  }
+  return w;
+}
+function prFrontier(K, before, after){
+  if (!K || K.assets.length < 2) return null;
+  const pv = (w, idx) => { let r = 0, v = 0; idx.forEach((i, a) => { r += w[a] * K.muL[i]; idx.forEach((j, b) => { v += w[a] * w[b] * K.covL[i][j]; }); }); return {vol: Math.sqrt(Math.max(0, v)), ret: r}; };
+  const one = sc => {
+    const idx = K.assets.map((_, i) => i).filter(i => sc.w[i] > 0.5); if (!idx.length) return null;
+    const tw = idx.reduce((s, i) => s + sc.w[i], 0), wp = idx.map(i => sc.w[i] / tw), P = pv(wp, idx);
+    if (idx.length < 2) return {front: [P], P, idx};
+    const mu = idx.map(i => K.muL[i]), S = idx.map(i => idx.map(j => K.covL[i][j]));
+    const pts = [Infinity, 400, 200, 120, 80, 50, 32, 20, 13, 8, 5, 3.2, 2, 1.3, 0.8, 0.5, 0.3].map(l => pv(prQP(mu, S, l), idx));
+    const ib = mu.indexOf(Math.max.apply(null, mu)); pts.push({vol: Math.sqrt(S[ib][ib]), ret: mu[ib]});
+    pts.sort((a, b) => a.vol - b.vol);
+    const front = []; pts.forEach(p => { if (!front.length || p.ret > front[front.length - 1].ret + 1e-6) front.push(p); });
+    return {front, P, idx};
+  };
+  const at = (F, v) => { const f = F.front; if (v <= f[0].vol) return f[0].ret; for (let i = 1; i < f.length; i++) if (v <= f[i].vol) { const a = f[i - 1], b = f[i]; return a.ret + (b.ret - a.ret) * (v - a.vol) / Math.max(1e-9, b.vol - a.vol); } return f[f.length - 1].ret; };
+  const B = one(K.B), A = one(K.A);
+  if (B) B.gap = at(B, B.P.vol) - B.P.ret; if (A) A.gap = at(A, A.P.vol) - A.P.ret;
+  return {B, A};
+}
+function prFrontSvg(F, names, newSet){
+  const W = 640, H = 360, L = 54, Rm = 18, T = 16, Bm = 42;
+  const all = [].concat(F.B ? F.B.front.concat([F.B.P]) : [], F.A ? F.A.front.concat([F.A.P]) : []);
+  const xMax = Math.max.apply(null, all.map(p => p.vol)) * 1.25 || 0.2;
+  const idxAll = Array.from(new Set([].concat(F.B ? F.B.idx : [], F.A ? F.A.idx : [])));
+  const dots = idxAll.map(i => ({i, vol: Math.sqrt(F.K.covL[i][i]), ret: F.K.muL[i]})).filter(d => d.vol <= xMax);
+  const ys = all.concat(dots).map(p => p.ret); let y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys); const pad = (y1 - y0) * 0.1 || 0.02; y0 -= pad; y1 += pad;
+  const X = v => L + v / xMax * (W - L - Rm), Y = r => T + (y1 - r) / (y1 - y0) * (H - T - Bm);
+  const nice = (span, k) => { const raw = span / k, p = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+  let h = '<svg viewBox="0 0 ' + W + ' ' + H + '" font-family="Aspekta, Arial, sans-serif"><rect width="' + W + '" height="' + H + '" fill="#fff"/>';
+  const sx = nice(xMax, 6); for (let v = 0; v <= xMax + 1e-9; v += sx) h += '<line x1="' + X(v).toFixed(1) + '" x2="' + X(v).toFixed(1) + '" y1="' + T + '" y2="' + (H - Bm) + '" stroke="#EEECE6"/><text x="' + X(v).toFixed(1) + '" y="' + (H - Bm + 16) + '" font-size="10.5" fill="#6B6F76" text-anchor="middle">' + nf(0).format(v * 100) + ' %</text>';
+  const sy = nice(y1 - y0, 5); for (let r = Math.ceil(y0 / sy) * sy; r <= y1 + 1e-9; r += sy) h += '<line x1="' + L + '" x2="' + (W - Rm) + '" y1="' + Y(r).toFixed(1) + '" y2="' + Y(r).toFixed(1) + '" stroke="' + (Math.abs(r) < 1e-9 ? '#C9C6BC' : '#EEECE6') + '"/><text x="' + (L - 8) + '" y="' + (Y(r) + 3.5).toFixed(1) + '" font-size="10.5" fill="#6B6F76" text-anchor="end">' + nf(0).format(r * 100) + ' %</text>';
+  h += '<text x="' + ((L + W - Rm) / 2) + '" y="' + (H - 6) + '" font-size="10.5" fill="#6B6F76" text-anchor="middle">volatilité annualisée</text><text transform="translate(13,' + ((T + H - Bm) / 2) + ') rotate(-90)" font-size="10.5" fill="#6B6F76" text-anchor="middle">rendement historique annualisé</text>';
+  dots.forEach(d => { const s = F.K.assets[d.i], nw = newSet.has(s); h += '<circle cx="' + X(d.vol).toFixed(1) + '" cy="' + Y(d.ret).toFixed(1) + '" r="' + (nw ? 3.4 : 2.6) + '" fill="' + (nw ? '#00CFFF' : '#C9C3AE') + '" fill-opacity=".9"' + (nw ? ' stroke="#02182B" stroke-width=".8"' : '') + '><title>' + esc((names[s] || prShort(s)) + '\nRendement ' + pct(d.ret) + ' · volatilité ' + pct(d.vol)) + '</title></circle>'; });
+  const path = (f, c, w, dash) => f.length > 1 ? '<path d="' + f.map((p, i) => (i ? 'L' : 'M') + X(Math.min(p.vol, xMax)).toFixed(1) + ',' + Y(p.ret).toFixed(1)).join('') + '" fill="none" stroke="' + c + '" stroke-width="' + w + '"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + ' stroke-linejoin="round" stroke-linecap="round"/>' : '';
+  if (F.B) h += path(F.B.front, '#747572', 1.3, '5 4');
+  if (F.A) h += path(F.A.front, '#02182B', 1.7);
+  const dia = (p, fill, lab, tip) => { const x = X(p.vol), y = Y(p.ret), r = 7; return '<g><title>' + esc(tip) + '</title><path d="M' + x.toFixed(1) + ',' + (y - r).toFixed(1) + 'L' + (x + r).toFixed(1) + ',' + y.toFixed(1) + 'L' + x.toFixed(1) + ',' + (y + r).toFixed(1) + 'L' + (x - r).toFixed(1) + ',' + y.toFixed(1) + 'Z" fill="' + fill + '" stroke="#02182B" stroke-width="1.5"/><text x="' + (x + 11).toFixed(1) + '" y="' + (y + 4).toFixed(1) + '" font-size="11.5" font-weight="700" fill="#02182B">' + lab + '</text></g>'; };
+  if (F.B && F.A && (Math.abs(F.B.P.vol - F.A.P.vol) > 1e-4 || Math.abs(F.B.P.ret - F.A.P.ret) > 1e-4)) h += '<line x1="' + X(F.B.P.vol).toFixed(1) + '" y1="' + Y(F.B.P.ret).toFixed(1) + '" x2="' + X(F.A.P.vol).toFixed(1) + '" y2="' + Y(F.A.P.ret).toFixed(1) + '" stroke="#00A6CC" stroke-width="1" stroke-dasharray="2 3"/>';
+  if (F.B) h += dia(F.B.P, '#fff', 'Avant', 'Portefeuille avant (hors liquidités)\nRendement ' + pct(F.B.P.ret) + ' · volatilité ' + pct(F.B.P.vol));
+  if (F.A) h += dia(F.A.P, '#00CFFF', 'Après', 'Portefeuille après (hors liquidités)\nRendement ' + pct(F.A.P.ret) + ' · volatilité ' + pct(F.A.P.vol));
+  return h + '</svg>';
+}
+
+/* ---- cadran ---- */
 function prCad(lines, cfg){
   const secs = lines.filter(l => l.kind === 'sec' && l.mv > 0 && l.s && has(l.s));
   const tot = secs.reduce((s, l) => s + l.mv, 0); if (!tot) return null;
@@ -13153,144 +13288,290 @@ function prCad(lines, cfg){
   return {r, ex, secs, tot};
 }
 const qKey = (x, y, nz) => { const sx = x > nz ? 1 : x < -nz ? -1 : 0, sy = y > nz ? 1 : y < -nz ? -1 : 0; return sx && sy ? sx + ',' + sy : null; };
+/* modèle linéaire du cadran sur les titres retenus : bêtas bruts additifs, covariance hebdomadaire */
+function prCadModel(secs, cfg){
+  const f = cfg.f, F = [f.gNum, f.gDen, f.iNum, f.iDen].concat(cfg.fx ? [f.fx] : []).concat(cfg.rel ? [f.bench] : []);
+  const m = secs.length, A = alignW(secs.map(l => weekly(l.s)).concat(F.map(weekly)), cfg.weeks);
+  if (A.keys.length < 27) return null;
+  const v = A.v, rG = lrA(v[m].map((x, i) => x / v[m + 1][i])), rI = lrA(v[m + 2].map((x, i) => x / v[m + 3][i])), X = [rG, rI]; let k = m + 4;
+  if (cfg.fx) X.push(lrA(v[k++]));
+  const rb = cfg.rel ? lrA(v[k++]) : null;
+  const Y = secs.map((_, i) => { const y = lrA(v[i]); return rb ? y.map((r, t) => r - rb[t]) : y; });
+  const bG = [], bI = [];
+  for (const y of Y) { const o = ols(y, X); if (!o) return null; bG.push(o.b[1]); bI.push(o.b[2]); }
+  const T = Y[0].length, mu = Y.map(mean), C = Y.map((a, i) => Y.map((b, j) => { let s = 0; for (let t = 0; t < T; t++) s += (a[t] - mu[i]) * (b[t] - mu[j]); return s / (T - 1); }));
+  return {bG, bI, C, sG: sdev(rG), sI: sdev(rI)};
+}
+function prCadSolve(M, w0, tG, tI){
+  const a = 0.25, lb = w0.map(x => Math.min(x, Math.max(0.002, x * 0.25))), ub = w0.map(x => Math.min(1, Math.max(3 * x, x + 0.08)));
+  const ev = w => { const Cw = M.C.map(r => r.reduce((s, c, j) => s + c * w[j], 0)), v = w.reduce((s, x, i) => s + x * Cw[i], 0), sy = Math.sqrt(Math.max(1e-16, v));
+    const g = M.bG.reduce((s, b, i) => s + b * w[i], 0), q = M.bI.reduce((s, b, i) => s + b * w[i], 0), zG = g * M.sG / sy, zI = q * M.sI / sy;
+    let pen = 0; w.forEach((x, i) => { pen += (x - w0[i]) * (x - w0[i]); });
+    return {zG, zI, sy, Cw, obj: (zG - tG) * (zG - tG) + (zI - tI) * (zI - tI) + a * pen}; };
+  let w = prProjBox(w0.slice(), lb, ub, 1), E = ev(w), step = 1;
+  for (let it = 0; it < 500; it++) {
+    const s3 = E.sy * E.sy * E.sy, gq = M.bG.reduce((s, b, i) => s + b * w[i], 0), qq = M.bI.reduce((s, b, i) => s + b * w[i], 0);
+    const grad = w.map((x, i) => 2 * (E.zG - tG) * M.sG * (M.bG[i] / E.sy - gq * E.Cw[i] / s3) + 2 * (E.zI - tI) * M.sI * (M.bI[i] / E.sy - qq * E.Cw[i] / s3) + 2 * a * (x - w0[i]));
+    let ok = false;
+    for (let k = 0; k < 30; k++) { const wn = prProjBox(w.map((x, i) => x - step * grad[i]), lb, ub, 1), En = ev(wn); if (En.obj < E.obj - 1e-12) { w = wn; E = En; step *= 1.6; ok = true; break; } step /= 2; }
+    if (!ok) break;
+  }
+  return {w, zG: E.zG, zI: E.zI};
+}
+function prMoveTo(tG, tI){
+  const R = PR.res; if (!R || !R.facOk) return;
+  const P = prLines(), cfg = R.cfg;
+  const secs = P.lines.filter(l => l.kind === 'sec' && l.mv > 0.5 && l.s && has(l.s) && PR.beta[l.s] && !PR.beta[l.s].err);
+  if (secs.length < 2) { prToast('Il faut au moins deux titres cotés pour déplacer le portefeuille.', false); return; }
+  const M = prCadModel(secs, cfg); if (!M) { prToast('Historique commun trop court pour recalculer les poids.', false); return; }
+  const tot = secs.reduce((s, l) => s + l.mv, 0), w0 = secs.map(l => l.mv / tot), S = prCadSolve(M, w0, tG, tI);
+  secs.forEach((l, i) => { const d = S.w[i] * tot - l.b; if (Math.abs(d) < 0.5) delete PR.adj[l.key]; else PR.adj[l.key] = d; });
+  PR.target = {x: tG, y: tI};
+  const err = Math.hypot(S.zG - tG, S.zI - tI), turn = S.w.reduce((s, x, i) => s + Math.abs(x - w0[i]), 0) / 2;
+  prToast(err < 0.03 ? 'Poids recalculés : point visé atteint (rotation ' + pct(turn * tot / P.tot) + ' du portefeuille).'
+    : 'Point visé hors d\'atteinte avec ces titres et des écarts de poids raisonnables : portefeuille placé au plus près (écart ' + nf(2).format(err) + ', rotation ' + pct(turn * tot / P.tot) + ').');
+  prChanged();
+}
 
+/* ---- calcul ---- */
 async function prRun(){
   if (!PF.pos) { prRender(); return; }
   if (PR.busy) { PR.again = true; return; }
   PR.busy = true; PR.again = false;
-  const st = $('prSt');
+  const st = $('prSt'); $('prVolPill').classList.add('busy');
   try {
     if (PF.mapBusy) { st.textContent = 'Association des symboles du portefeuille…'; while (PF.mapBusy) await sleep(300); }
-    const base = prBaseLines(), app = prApply(base), cfg = cadCfg();
-    const syms = base.concat(app.lines).filter(l => l.kind === 'sec' && l.s).map(l => l.s);
+    const P = prLines(), cfg = cadCfg();
+    const syms = P.lines.filter(l => l.kind === 'sec' && l.s).map(l => l.s);
     const fac = [cfg.f.gNum, cfg.f.gDen, cfg.f.iNum, cfg.f.iDen, cfg.fx ? cfg.f.fx : null, cfg.rel ? cfg.f.bench : null];
-    st.textContent = 'Chargement des cours…';
-    await loadSeries(syms.concat(fac, [CFG.bond]), (d, n) => { st.textContent = 'Chargement des cours… ' + d + ' / ' + n; });
+    const need = syms.concat(fac, [CFG.bond]).filter(s => s && !has(s));
+    if (need.length) { st.textContent = 'Chargement des cours…'; await loadSeries(syms.concat(fac, [CFG.bond]), (d, n) => { st.textContent = 'Chargement des cours… ' + d + ' / ' + n; }); }
     const facOk = fac.every(s => !s || has(s));
     if (facOk) Array.from(new Set(syms)).forEach(s => { if (!(s in PR.beta) && has(s)) PR.beta[s] = cadAnalyse(weekly(s), cfg); });
     let reg = null;
     if (facOk) { const A = alignW([cfg.f.gNum, cfg.f.gDen, cfg.f.iNum, cfg.f.iDen].map(weekly), cfg.mom); if (A.keys.length >= cfg.mom + 1) { const g = A.v[0].map((x, i) => x / A.v[1][i]), inf = A.v[2].map((x, i) => x / A.v[3][i]); reg = {mG: Math.log(g[g.length - 1] / g[0]), mI: Math.log(inf[inf.length - 1] / inf[0])}; } }
-    PR.res = {base, after: app.lines, msgs: app.msgs, risk: prRisk(base, app.lines), cadB: facOk ? prCad(base, cfg) : null, cadA: facOk ? prCad(app.lines, cfg) : null, cfg, reg, facOk};
+    const risk = prRisk(P.base, P.lines);
+    PR.res = {base: P.base, after: P.lines, risk, front: risk ? prFrontier(risk, P.base, P.lines) : null, cadB: facOk ? prCad(P.base, cfg) : null, cadA: facOk ? prCad(P.lines, cfg) : null, cfg, reg, facOk};
+    if (PR.res.front) PR.res.front.K = risk;
     st.textContent = '';
   } catch (e) { st.textContent = e.message; }
-  PR.busy = false;
-  prRender();
+  PR.busy = false; $('prVolPill').classList.remove('busy');
+  prRender(true);
   if (PR.again) prRun();
 }
-function prRender(){
+
+/* ---- affichage ---- */
+function prGauge(vB, vA){
+  const max = Math.max(0.1, Math.ceil(Math.max(vB, vA) * 1.45 / 0.05) * 0.05), W = 420, x0 = 10, x1 = W - 10, X = v => x0 + Math.min(1, v / max) * (x1 - x0), d = vA - vB;
+  const col = d > 0.0005 ? '#B42318' : d < -0.0005 ? '#1F7A4D' : '#02182B';
+  let h = '<svg viewBox="0 0 ' + W + ' 54" class="pr-gauge"><line x1="' + x0 + '" x2="' + x1 + '" y1="24" y2="24" stroke="#ECEAE3" stroke-width="6" stroke-linecap="round"/>';
+  for (let v = 0; v <= max + 1e-9; v += 0.05) h += '<line x1="' + X(v) + '" x2="' + X(v) + '" y1="30" y2="34" stroke="#C9C6BC"/><text x="' + X(v) + '" y="47" font-size="10" fill="#8A8D92" text-anchor="middle">' + nf(0).format(v * 100) + ' %</text>';
+  if (Math.abs(d) > 0.0002) h += '<line x1="' + X(vB) + '" x2="' + X(vA) + '" y1="24" y2="24" stroke="' + col + '" stroke-width="6" stroke-linecap="round" opacity=".85"/>';
+  h += '<circle cx="' + X(vB) + '" cy="24" r="6" fill="#fff" stroke="#747572" stroke-width="1.5"><title>Avant ' + pct(vB, 2) + '</title></circle>';
+  h += '<circle cx="' + X(vA) + '" cy="24" r="7.5" fill="#02182B" stroke="#fff" stroke-width="2"><title>Après ' + pct(vA, 2) + '</title></circle>';
+  h += '<text x="' + X(vB) + '" y="11" font-size="9.5" fill="#747572" text-anchor="middle">avant</text>';
+  if (Math.abs(X(vA) - X(vB)) > 30) h += '<text x="' + X(vA) + '" y="11" font-size="9.5" font-weight="700" fill="#02182B" text-anchor="middle">après</text>';
+  return h + '</svg>';
+}
+function prTrades(P){ return P.lines.filter(l => l.kind !== 'cash' && Math.abs(l.mv - l.b) > 0.5).map(l => ({l, d: l.mv - l.b})); }
+function prRender(full){
   const on = !!PF.pos;
   $('prEmpty').hidden = on; $('prBody').hidden = !on;
   if (!on) return;
-  const M = PF.meta || {};
+  const M = PF.meta || {}, P = prLines(), tot = P.tot, R = PR.res, K = R && R.risk;
   $('prHead').innerHTML = '<div class="pf-code">Portefeuille ' + esc(M.code || '–') + '</div>' + [['Dépositaire', M.dep], ['Gestionnaire', M.gest], ['Profil', M.prof]].filter(x => x[1]).map(x => '<span>' + x[0] + ' <b>' + esc(x[1]) + '</b></span>').join('');
-  /* listes de saisie */
-  const base = prBaseLines(), selPrev = $('prSellPos').value;
-  $('prSellPos').innerHTML = base.filter(l => l.kind !== 'cash').map(l => '<option value="' + esc(l.key) + '">' + esc(l.name) + ' — ' + chf(l.mv) + ' CHF</option>').join('');
-  if (selPrev) $('prSellPos').value = selPrev;
-  $('prBuySel').innerHTML = PR.buySel ? lgHtml(PR.buySel.s, PR.buySel.name) + '<b>' + esc(PR.buySel.name) + '</b> <span class="pf-sym">' + esc(PR.buySel.s || '') + '</span>' : '<span class="pf-st">Aucun titre choisi</span>';
-  $('prTxList').innerHTML = PR.tx.length ? PR.tx.map((t, i) => '<div class="pr-tx ' + t.type + '"><span class="tag">' + (t.type === 'sell' ? 'Vente' : 'Achat') + '</span><span class="nm">' + esc(t.name) + '<small>'
-    + (t.type === 'sell' ? (t.mode === 'all' ? 'toute la position' : t.mode === 'pct' ? nf(0).format(t.val) + ' % de la position' : chf(t.val) + ' CHF') : chf(t.val) + ' CHF') + (t.done != null ? ' · ' + chf(t.done) + ' CHF' : '') + '</small></span><button type="button" data-tx="' + i + '" title="Retirer">×</button></div>').join('')
-    : '<div class="pf-st">Aucune transaction : ajoutez une vente ou un achat.</div>';
-  const R = PR.res;
-  if (!R) { $('prKpis').innerHTML = ''; return; }
-  const tot = R.base.reduce((s, l) => s + l.mv, 0), cashB = R.base.find(l => l.key === '__cash').mv, cashA = R.after.find(l => l.key === '__cash').mv;
-  const sold = PR.tx.filter(t => t.type === 'sell').reduce((s, t) => s + (t.done || 0), 0), bought = PR.tx.filter(t => t.type === 'buy').reduce((s, t) => s + (t.done || 0), 0);
-  const nB = R.base.filter(l => l.kind !== 'cash' && l.mv > 0.5).length, nA = R.after.filter(l => l.kind !== 'cash' && l.mv > 0.5).length;
-  const arrow = (a, b, f) => f(a) + ' <span class="pr-ar">→</span> ' + f(b);
-  const K = R.risk, dv = K ? K.A.vol - K.B.vol : null;
-  $('prKpis').innerHTML = kpi('Volatilité ex ante', K ? arrow(K.B.vol, K.A.vol, pct) : '–', K ? '<span class="' + (dv > 0.0005 ? 'pf-dn' : dv < -0.0005 ? 'pf-up' : '') + '">' + (dv >= 0 ? '+' : '−') + nf(2).format(Math.abs(dv * 100)) + ' pt</span> · couverture ' + pct(K.A.cover) : 'pas de cours')
-    + kpi('Liquidités', arrow(cashB / tot, cashA / tot, x => pct(x)), chf(cashB) + ' → ' + chf(cashA) + ' CHF')
-    + kpi('Titres', arrow(nB, nA, x => String(x)), 'positions hors liquidités')
-    + kpi('Transactions', String(PR.tx.length), 'ventes ' + chf(sold) + ' · achats ' + chf(bought) + ' CHF')
-    + kpi('Valeur totale', chf(tot), 'inchangée');
-  const warn = R.msgs.slice();
+  $('prSteps').querySelectorAll('[data-st]').forEach(b => b.classList.toggle('on', Math.abs(+b.dataset.st - PR.step) < 1e-9));
+  /* volatilité : bloc principal + pastille de la barre d'outils */
+  if (K) {
+    const d = K.A.vol - K.B.vol, cls = d > 0.0005 ? 'up' : d < -0.0005 ? 'down' : 'flat';
+    $('prVolBox').innerHTML = '<div class="pr-vk">Volatilité ex ante du portefeuille</div><div class="pr-vrow"><span class="pr-vb">' + pct(K.B.vol, 2) + '</span><span class="pr-varr">→</span><span class="pr-va">' + pct(K.A.vol, 2) + '</span>'
+      + '<span class="pr-vd ' + cls + '">' + (cls === 'up' ? '▲ +' : cls === 'down' ? '▼ −' : '= ') + nf(2).format(Math.abs(d * 100)) + ' pt<small>' + (K.B.vol > 0 ? (d >= 0 ? '+' : '−') + nf(1).format(Math.abs(d / K.B.vol * 100)) + ' %' : '') + '</small></span></div>'
+      + prGauge(K.B.vol, K.A.vol) + '<div class="pr-vs">Un an de cours quotidiens, poids constants · couverture ' + pct(K.A.cover, 0) + ' de la valeur</div>';
+    $('prVolPill').className = 'pr-volpill ' + cls; $('prVolPill').innerHTML = 'Vol. <b>' + pct(K.B.vol) + '</b> → <b>' + pct(K.A.vol) + '</b> <i>' + (d >= 0 ? '+' : '−') + nf(2).format(Math.abs(d * 100)) + ' pt</i>';
+  } else { $('prVolBox').innerHTML = '<div class="pr-vk">Volatilité ex ante du portefeuille</div><div class="pf-st">' + (PR.busy || !R ? 'Calcul en cours…' : 'Aucun titre avec des cours.') + '</div>'; $('prVolPill').innerHTML = ''; }
+  const cashB = P.base[P.base.length - 1].mv, cashA = P.lines[P.lines.length - 1].mv, T = prTrades(P);
+  const sold = T.filter(t => t.d < 0).reduce((s, t) => s - t.d, 0), bought = T.filter(t => t.d > 0).reduce((s, t) => s + t.d, 0);
+  const nB = P.base.filter(l => l.kind !== 'cash' && l.mv > 0.5).length, nA = P.lines.filter(l => l.kind !== 'cash' && l.mv > 0.5).length, ar = ' <span class="pr-ar">→</span> ';
+  $('prKpis').innerHTML = kpi('Liquidités', pct(cashB / tot) + ar + pct(cashA / tot), chf(cashB) + ' → ' + chf(cashA) + ' CHF', cashA < -1 ? '#B42318' : null)
+    + kpi('Lignes', nB + ar + nA, 'hors liquidités')
+    + kpi('Rotation', pct(Math.max(sold, bought) / tot), 'ventes ' + chf(sold) + ' · achats ' + chf(bought) + ' CHF')
+    + kpi('Valeur totale', chf(tot), 'CHF, inchangée');
+  const TS = T.slice().sort((x, y) => Math.abs(y.d) - Math.abs(x.d)), more = TS.length - 10;
+  $('prChips').innerHTML = T.length ? TS.slice(0, 10).map(t => '<span class="pr-chip ' + (t.d > 0 ? 'buy' : 'sell') + '"><b>' + (t.d > 0 ? 'Achat' : t.l.mv < 0.5 ? 'Vente totale' : 'Vente') + '</b>' + esc(t.l.name) + ' <em>' + (t.d > 0 ? '+' : '−') + chf(Math.abs(t.d)) + '</em><button type="button" data-undo="' + esc(t.l.key) + '" title="Annuler">×</button></span>').join('') + (more > 0 ? '<span class="pr-more">+ ' + more + ' autre' + (more > 1 ? 's' : '') + ' (voir le tableau)</span>' : '')
+    : '<span class="pf-st">Aucune transaction : utilisez + / − dans le tableau ou déplacez le losange « Après » dans le cadran.</span>';
+  const warn = [];
   if (cashA < -1) warn.push('Liquidités négatives après transactions (' + chf(cashA) + ' CHF) : les achats dépassent les liquidités disponibles et le produit des ventes.');
-  const noData = R.after.filter(l => l.kind === 'sec' && l.mv > 0 && !(l.s && has(l.s)));
+  const noData = P.lines.filter(l => l.kind === 'sec' && l.mv > 0 && !(l.s && has(l.s)) && R);
   if (noData.length) warn.push('Sans cours (exclus du risque et du cadran) : ' + noData.map(l => esc(l.name)).join(', ') + '.');
   $('prWarn').hidden = !warn.length; $('prWarn').innerHTML = warn.join('<br>');
+  /* tableau (pas redessiné pendant une saisie) */
+  const ae = document.activeElement;
+  if (!(ae && ae.classList && ae.classList.contains('pr-w') && $('prTbl').contains(ae))) prTable(P, K);
+  else PR.tblDirty = true;
+  if (!full || !R) return;
   /* volatilité glissante */
   if (K) {
-    lineChart($('prVolChart'), [{n: 'Avant', c: '#747572', pts: K.B.roll, dash: '5 4', w: 1.2}, {n: 'Après transactions', c: '#02182B', pts: K.A.roll, w: 1.7}], {fmt: v => nf(1).format(v * 100) + ' %', zero: true, h: 240});
-    $('prVolNote').textContent = 'Rendements quotidiens des titres actuels appliqués avec des poids constants (avant / après) : montre comment le portefeuille simulé se serait comporté, pas sa performance passée réelle.';
+    lineChart($('prVolChart'), [{n: 'Avant', c: '#747572', pts: K.B.roll, dash: '5 4', w: 1.2}, {n: 'Après transactions', c: '#02182B', pts: K.A.roll, w: 1.7}], {fmt: v => nf(1).format(v * 100) + ' %', zero: true, h: 300});
+    $('prVolNote').textContent = 'Rendements quotidiens des titres appliqués avec des poids constants (avant / après) : montre comment le portefeuille simulé se serait comporté, pas sa performance passée réelle.';
   } else $('prVolChart').innerHTML = '<div class="pf-st">Aucun titre avec des cours.</div>';
+  /* frontière efficiente */
+  const F = R.front;
+  if (F && (F.A || F.B)) {
+    const names = {}; R.after.concat(R.base).forEach(l => { if (l.s) names[l.s] = l.name; }); if (K.bondSym) names[K.bondSym] = 'Obligations (indice ' + prShort(K.bondSym) + ')';
+    const newSet = new Set(R.after.filter(l => l.isNew && l.mv > 0).map(l => l.s));
+    $('prFront').innerHTML = '<div class="pf-lg"><span><i style="height:0;background:none;border-top:1.5px dashed #747572"></i>Frontière avant</span><span><i style="height:0;background:none;border-top:1.7px solid #02182B"></i>Frontière après</span><span><i style="width:8px;height:8px;border-radius:50%;background:#C9C3AE;vertical-align:0"></i>Titres</span><span><i style="width:8px;height:8px;border-radius:50%;background:#00CFFF;vertical-align:0"></i>Titres ajoutés</span></div>' + prFrontSvg(F, names, newSet);
+    const B = F.B, A = F.A, f2 = (a, b, fm) => (a ? fm(a) : '–') + ar + (b ? fm(b) : '–');
+    $('prFrKpis').innerHTML = kpi('Rendement historique', f2(B && B.P.ret, A && A.P.ret, x => pct(x)), 'annualisé, hors liquidités')
+      + kpi('Volatilité (2 ans)', f2(B && B.P.vol, A && A.P.vol, x => pct(x)), 'hors liquidités')
+      + kpi('Écart à la frontière', f2(B && B.gap, A && A.gap, x => pct(x)), 'rendement perdu à risque égal');
+    $('prFrSt').textContent = (A ? A.idx.length : 0) + ' actifs après';
+  } else { $('prFront').innerHTML = '<div class="pf-st">Il faut au moins deux actifs avec des cours.</div>'; $('prFrKpis').innerHTML = ''; }
   /* cadran */
   if (R.facOk && R.cadA) {
     const cfg = R.cfg, tA = R.cadA.tot, wMax = Math.max.apply(null, R.cadA.secs.map(l => l.mv / tA).concat([0.01]));
-    const pts = R.cadA.secs.filter(l => PR.beta[l.s] && !PR.beta[l.s].err).map(l => { const b = PR.beta[l.s], q = quadOf(b.zG, b.zI, cfg.neutral); return {x: b.zG, y: b.zI, c: q.c, rad: 4 + 11 * Math.sqrt(l.mv / tA / wMax), weak: !(b.r2 >= 0.1), lab: l.s.replace(/^[A-Z0-9_]+:/, ''), isNew: l.isNew, tip: l.name + ' (' + l.s + ')\nPoids ' + pct(l.mv / tA) + ' des titres cotés · β croissance ' + nf(2).format(b.zG) + ' · β inflation ' + nf(2).format(b.zI) + '\n' + q.n}; });
+    const pts = R.cadA.secs.filter(l => PR.beta[l.s] && !PR.beta[l.s].err).map(l => { const b = PR.beta[l.s], q = quadOf(b.zG, b.zI, cfg.neutral); return {x: b.zG, y: b.zI, c: q.c, rad: 4 + 11 * Math.sqrt(l.mv / tA / wMax), weak: !(b.r2 >= 0.1), lab: prShort(l.s), isNew: l.isNew, tip: l.name + ' (' + l.s + ')\nPoids ' + pct(l.mv / tA) + ' des titres cotés · β croissance ' + nf(2).format(b.zG) + ' · β inflation ' + nf(2).format(b.zI) + '\n' + q.n}; });
     const rB = R.cadB && R.cadB.r, rA = R.cadA.r;
     if (rB && !rB.err) pts.push({x: rB.zG, y: rB.zI, dia: 'o', lab: 'Avant', tip: 'Portefeuille avant\nβ croissance ' + nf(2).format(rB.zG) + ' · β inflation ' + nf(2).format(rB.zI)});
-    if (rA && !rA.err) pts.push({x: rA.zG, y: rA.zI, dia: 'f', lab: 'Après', tip: 'Portefeuille après transactions\nβ croissance ' + nf(2).format(rA.zG) + ' · β inflation ' + nf(2).format(rA.zI)});
-    let svg = cadranSvg(pts, R.reg, cfg);
-    $('prCad').innerHTML = svg;
+    if (rA && !rA.err) pts.push({x: rA.zG, y: rA.zI, dia: 'f', lab: 'Après', tip: 'Portefeuille après transactions — faites-le glisser pour recalculer les poids\nβ croissance ' + nf(2).format(rA.zG) + ' · β inflation ' + nf(2).format(rA.zI)});
+    $('prCad').innerHTML = cadranSvg(pts, R.reg, cfg);
+    const svg = $('prCad').querySelector('svg');
+    if (svg && PR.target) { const c = +svg.dataset.c, sc = +svg.dataset.sc, r = +svg.dataset.r, x = c + Math.max(-r, Math.min(r, PR.target.x)) * sc, y = c - Math.max(-r, Math.min(r, PR.target.y)) * sc;
+      svg.insertAdjacentHTML('beforeend', '<g pointer-events="none"><circle cx="' + x + '" cy="' + y + '" r="11" fill="none" stroke="#00A6CC" stroke-width="1.2" stroke-dasharray="3 3"/><line x1="' + (x - 16) + '" x2="' + (x + 16) + '" y1="' + y + '" y2="' + y + '" stroke="#00A6CC" stroke-width=".8"/><line x1="' + x + '" x2="' + x + '" y1="' + (y - 16) + '" y2="' + (y + 16) + '" stroke="#00A6CC" stroke-width=".8"/></g>'); }
+    const dg = svg && svg.querySelector('.dia-f'); if (dg) dg.parentNode.classList.add('pr-drag');
     const qB = rB && !rB.err ? quadOf(rB.zG, rB.zI, cfg.neutral) : null, qA = rA && !rA.err ? quadOf(rA.zG, rA.zI, cfg.neutral) : null;
     const rk = R.reg ? ((R.reg.mG >= 0 ? 1 : -1) + ',' + (R.reg.mI >= 0 ? 1 : -1)) : null;
     $('prCadKpis').innerHTML = kpi('Régime macro actuel', rk ? esc(QUADS[rk].n) : '–', 'momentum ' + cfg.mom + ' sem.', rk ? QUADS[rk].c : null)
       + kpi('Avant', qB ? esc(qB.n) : '–', qB ? 'β crois. ' + nf(2).format(rB.zG) + ' · β infl. ' + nf(2).format(rB.zI) : '', qB ? qB.c : null)
       + kpi('Après', qA ? esc(qA.n) : '–', qA ? 'β crois. ' + nf(2).format(rA.zG) + ' · β infl. ' + nf(2).format(rA.zI) : '', qA ? qA.c : null);
-    const keys = Object.keys(QUADS).concat(['neutral']);
-    const exB = R.cadB ? R.cadB.ex : {}, exA = R.cadA.ex;
+    const keys = Object.keys(QUADS).concat(['neutral']), exB = R.cadB ? R.cadB.ex : {}, exA = R.cadA.ex;
     $('prQExp').innerHTML = keys.map(k => { const q = k === 'neutral' ? {n: 'Neutre / un seul axe', c: NEUT} : QUADS[k], b = exB[k] || 0, a = exA[k] || 0, d = a - b;
-      return '<div class="pr-qrow"><span><i style="background:' + q.c + '"></i>' + esc(q.n) + '</span><span class="bar"><i class="b" style="width:' + (b * 100).toFixed(1) + '%"></i><i class="a" style="width:' + (a * 100).toFixed(1) + '%;background:' + q.c + '"></i></span><b>' + pct(b, 0) + ' → ' + pct(a, 0) + '</b><em class="' + (d > 0.002 ? 'pf-up' : d < -0.002 ? 'pf-dn' : '') + '">' + (Math.abs(d) < 0.0005 ? '' : (d > 0 ? '+' : '−') + nf(1).format(Math.abs(d * 100))) + '</em></div>'; }).join('');
-    $('prCadSt').textContent = (cfg.rel ? 'relatif à ' + cfg.f.bench.replace(/^[A-Z0-9_]+:/, '') : 'absolu') + (cfg.fx ? ' · USDCHF neutralisé' : '') + ' · réglages de l\'écran Cadran';
+      return '<div class="pr-qrow"><span><i style="background:' + q.c + '"></i>' + esc(q.n) + '</span><span class="bar"><i class="b" style="width:' + (b * 100).toFixed(1) + '%"></i><i class="a" style="width:' + (a * 100).toFixed(1) + '%;background:' + q.c + '"></i></span><b>' + pct(b, 0) + ' → ' + pct(a, 0) + '</b><em class="' + (d > 0.002 ? 'pf-up' : d < -0.002 ? 'pf-dn' : '') + '">' + (Math.abs(d) < 0.0005 ? '' : (d > 0 ? '+' : '−') + nf(1).format(Math.abs(d * 100))) + '</em></div>'; }).join('')
+      + '<div class="pr-hint"><b>Astuce :</b> faites glisser le losange plein « Après » dans le cadran. Les poids des titres cotés déjà retenus sont recalculés pour placer le portefeuille au plus près du point visé, en changeant le moins possible les poids actuels (liquidités et obligations inchangées). Toutes les zones ne sont pas atteignables avec une sélection donnée.</div>';
+    $('prCadSt').textContent = (cfg.rel ? 'relatif à ' + prShort(cfg.f.bench) : 'absolu') + (cfg.fx ? ' · USDCHF neutralisé' : '') + ' · réglages de l\'écran Cadran';
   } else { $('prCad').innerHTML = '<div class="pf-st">Facteurs du cadran indisponibles (voir l\'écran Cadran).</div>'; $('prCadKpis').innerHTML = ''; $('prQExp').innerHTML = ''; }
-  /* tableau avant / après */
-  const byKey = new Map(); R.base.forEach(l => byKey.set(l.key, {l, b: l.mv, a: 0})); R.after.forEach(l => { const x = byKey.get(l.key) || {l, b: 0, a: 0}; x.a = l.mv; x.l = l; byKey.set(l.key, x); });
-  const rows = Array.from(byKey.values()).sort((x, y) => (x.l.kind === 'cash') - (y.l.kind === 'cash') || y.a - x.a || y.b - x.b);
-  const rcOf = (l, S) => !K ? null : l.kind === 'cash' ? 0 : l.kind === 'bond' ? (K.bondSym ? (K[S].rc[K.bondSym] || 0) * (l.mv / Math.max(1e-9, R[S === 'B' ? 'base' : 'after'].filter(x => x.kind === 'bond').reduce((s, x) => s + x.mv, 0))) : null) : (l.s && K[S].rc[l.s] != null ? K[S].rc[l.s] : null);
-  $('prTbl').innerHTML = '<thead><tr><th class="l">Titre</th><th>Poids avant</th><th>Poids après</th><th>Écart</th><th>Montant après (CHF)</th><th>Vol. 1 an</th><th title="Part de la variance du portefeuille">Contribution au risque</th></tr></thead><tbody>'
-    + rows.map(x => { const l = x.l, d = (x.a - x.b) / tot, la = R.after.find(y => y.key === l.key), lb = R.base.find(y => y.key === l.key);
-      const v1 = l.kind === 'cash' ? 0 : K ? (l.kind === 'bond' ? (K.bondSym ? K.v1[K.bondSym] : null) : (l.s ? K.v1[l.s] : null)) : null;
-      const rb = lb ? rcOf(lb, 'B') : 0, ra = la ? rcOf(la, 'A') : 0;
-      return '<tr class="pf-r' + (Math.abs(d) > 1e-6 ? ' pr-ch' : '') + '"><td class="l"><div class="pf-nm">' + (l.kind === 'cash' ? '' : lgHtml(l.s, l.name)) + '<span>' + esc(l.name) + (l.isNew ? ' <em class="pr-new">achat</em>' : '') + '<small>' + esc(l.s || (l.kind === 'bond' ? 'obligation' : l.kind === 'cash' ? '' : 'sans symbole')) + '</small></span></div></td>'
-        + '<td>' + pct(x.b / tot) + '</td><td><b>' + pct(x.a / tot) + '</b></td><td class="' + (d > 1e-6 ? 'pf-up' : d < -1e-6 ? 'pf-dn' : '') + '">' + (Math.abs(d) < 1e-6 ? '' : spct(d)) + '</td><td>' + chf(x.a) + '</td><td>' + (v1 == null ? '–' : pct(v1)) + '</td><td>' + (rb == null && ra == null ? '–' : pct(rb || 0) + ' → <b>' + pct(ra || 0) + '</b>') + '</td></tr>'; }).join('') + '</tbody>';
 }
-/* saisie */
-$('prSellGo').addEventListener('click', () => {
-  const key = $('prSellPos').value, l = prBaseLines().find(x => x.key === key); if (!l) return;
-  const mode = $('prSellMode').value, val = +$('prSellVal').value;
-  if (mode !== 'all' && !(val > 0)) { prToast('Indiquez un pourcentage ou un montant.', false); return; }
-  PR.tx.push({type: 'sell', key, name: l.name, mode, val}); prSave(); prRender(); prRun();
+function prTable(P, K){
+  const tot = P.tot, R = PR.res, ar = ' <span class="pr-ar">→</span> ';
+  const bondTot = S => P[S === 'B' ? 'base' : 'lines'].filter(x => x.kind === 'bond').reduce((s, x) => s + x.mv, 0);
+  const rcOf = (l, mv, S) => !K ? null : l.kind === 'cash' ? 0 : l.kind === 'bond' ? (K.bondSym ? (K[S].rc[K.bondSym] || 0) * mv / Math.max(1e-9, bondTot(S)) : null) : (l.s && K[S].rc[l.s] != null ? (mv > 0 ? K[S].rc[l.s] : 0) : null);
+  let h = '<thead><tr><th class="pr-act"></th><th class="l">Titre</th><th>Poids avant</th><th>Transaction (CHF)</th><th>Poids après</th><th>Écart</th><th>Montant après</th><th>Vol. 1 an</th><th title="Part de la variance du portefeuille">Contribution au risque</th></tr></thead><tbody>';
+  let cat = null;
+  P.lines.forEach(l => {
+    if (l.kind !== 'cash' && l.cat !== cat) { cat = l.cat; const sw = P.lines.filter(x => x.cat === cat).reduce((s, x) => s + x.mv, 0); h += '<tr class="grp"><td></td><td class="l">' + esc(cat) + '</td><td colspan="2"></td><td>' + pct(sw / tot) + '</td><td colspan="4"></td></tr>'; }
+    const d = l.mv - l.b, dw = d / tot, cash = l.kind === 'cash';
+    const v1 = cash ? 0 : K ? (l.kind === 'bond' ? (K.bondSym ? K.v1[K.bondSym] : null) : (l.s ? K.v1[l.s] : null)) : null;
+    const rb = rcOf(l, l.b, 'B'), ra = rcOf(l, l.mv, 'A');
+    h += '<tr class="pf-r' + (cash ? ' pr-cash' : '') + (Math.abs(d) > 0.5 ? ' pr-ch' : '') + (l.mv < 0.5 && !cash ? ' pr-zero' : '') + '" data-row="' + esc(l.key) + '">'
+      + '<td class="pr-act">' + (cash ? '' : '<button type="button" class="pr-pm" data-k="' + esc(l.key) + '" data-d="-1" title="Vendre ' + pct(PR.step, 1) + '"' + (l.mv < 0.5 ? ' disabled' : '') + '>−</button><button type="button" class="pr-pm" data-k="' + esc(l.key) + '" data-d="1" title="Acheter ' + pct(PR.step, 1) + '">+</button>') + '</td>'
+      + '<td class="l"><div class="pf-nm">' + (cash ? '' : lgHtml(l.s, l.name)) + '<span>' + esc(l.name) + (l.isNew ? ' <em class="pr-new">ajouté</em> <button type="button" class="pr-rm" data-rm="' + esc(l.key) + '" title="Retirer la ligne">×</button>' : '') + '<small>' + esc(l.s || (l.kind === 'bond' ? 'obligation' : cash ? '' : 'sans symbole')) + '</small></span></div></td>'
+      + '<td>' + pct(l.b / tot, 2) + '</td>'
+      + '<td class="' + (d > 0.5 ? 'pr-buy' : d < -0.5 ? 'pr-sell' : '') + '">' + (Math.abs(d) > 0.5 ? (d > 0 ? '+' : '−') + chf(Math.abs(d)) : '') + '</td>'
+      + '<td>' + (cash ? '<b' + (l.mv < -1 ? ' class="pf-dn"' : '') + '>' + pct(l.mv / tot, 2) + '</b>' : '<span class="pr-win"><input type="number" class="pr-w" data-k="' + esc(l.key) + '" step="0.1" min="0" value="' + (Math.round(l.mv / tot * 10000) / 100) + '"><i>%</i></span>') + '</td>'
+      + '<td class="' + (dw > 1e-6 ? 'pf-up' : dw < -1e-6 ? 'pf-dn' : '') + '">' + (Math.abs(dw) < 1e-6 ? '' : spct(dw, 2)) + '</td>'
+      + '<td>' + chf(l.mv) + '</td><td>' + (v1 == null ? '–' : pct(v1)) + '</td>'
+      + '<td>' + (rb == null && ra == null ? '–' : Math.abs((ra || 0) - (rb || 0)) < 0.0005 ? pct(ra || 0) : pct(rb || 0) + ar + '<b>' + pct(ra || 0) + '</b>') + '</td></tr>';
+  });
+  h += '<tr class="tot"><td></td><td class="l">Total</td><td>100,00 %</td><td></td><td>100,00 %</td><td></td><td>' + chf(tot) + '</td><td></td><td></td></tr></tbody>';
+  $('prTbl').innerHTML = h; PR.tblDirty = false;
+}
+
+/* ---- saisie dans le tableau ---- */
+$('prTbl').addEventListener('click', e => {
+  const pm = e.target.closest('.pr-pm'), rm = e.target.closest('[data-rm]');
+  if (rm) { const k = rm.dataset.rm; PR.added = PR.added.filter(a => a.key !== k); delete PR.adj[k]; PR.target = null; prChanged(); return; }
+  if (!pm) return;
+  const P = prLines(), l = P.lines.find(x => x.key === pm.dataset.k); if (!l) return;
+  const cur = PR.adj[l.key] || 0, nd = cur + (+pm.dataset.d) * PR.step * P.tot;
+  prSetAdj(l.key, Math.max(-l.b, nd)); prChanged();
 });
-$('prSellMode').addEventListener('change', () => { const m = $('prSellMode').value; $('prSellVal').disabled = m === 'all'; $('prSellVal').value = m === 'pct' ? 50 : m === 'amt' ? 50000 : ''; });
-let prHitT = null, prSeq = 0, prHits = [];
-$('prBuyQ').addEventListener('input', () => {
-  const q = $('prBuyQ').value.trim(), box = $('prBuyHits'), seq = ++prSeq; clearTimeout(prHitT);
-  if (q.length < 2) { box.hidden = true; return; }
-  const fq = mktFold(q);
-  const own = prBaseLines().filter(l => l.kind === 'sec' && (mktFold(l.name).indexOf(fq) >= 0 || (l.s && l.s.toLowerCase().indexOf(q.toLowerCase()) >= 0))).slice(0, 6).map(l => ({key: l.key, s: l.s, name: l.name, own: true}));
-  const show = rem => { prHits = own.concat(rem); box.hidden = false; box.innerHTML = prHits.map((h, i) => '<button type="button" class="pr-hit" data-h="' + i + '">' + lgHtml(h.s, h.name) + '<b>' + esc(h.s || '—') + '</b>' + esc(h.name) + (h.own ? '<small>en portefeuille</small>' : (h.prim ? mktPrimBadge(h.prim) : '')) + '</button>').join('') || '<span class="pf-st" style="padding:8px 12px;display:block">Aucun résultat</span>'; };
-  show([]);
-  prHitT = setTimeout(async () => {
-    let rem = [];
-    try { const r = await fetch('/api/tv/search/market/' + encodeURIComponent(q)), j = await r.json(); if (r.ok && j.success !== false) rem = mktRankSearch(mktParseSearch(j), q).slice(0, 8).filter(x => !own.some(o => o.s === x.full)).map(x => ({key: 'new:' + x.full, s: x.full, name: x.desc || x.symbol || x.full, prim: x})); } catch (e) {}
-    if (seq === prSeq) show(rem);
-  }, 350);
+$('prTbl').addEventListener('change', e => {
+  const inp = e.target.closest('.pr-w'); if (!inp) return;
+  const v = parseFloat(String(inp.value).replace(',', '.')); if (!isFinite(v) || v < 0) { prRender(); return; }
+  const P = prLines(), l = P.lines.find(x => x.key === inp.dataset.k); if (!l) return;
+  prSetAdj(l.key, v / 100 * P.tot - l.b); prChanged();
 });
-$('prBuyQ').addEventListener('blur', () => setTimeout(() => { $('prBuyHits').hidden = true; }, 150));
-$('prBuyHits').addEventListener('mousedown', e => { const b = e.target.closest('[data-h]'); if (!b) return; e.preventDefault(); PR.buySel = prHits[+b.dataset.h]; $('prBuyQ').value = ''; $('prBuyHits').hidden = true; prRender(); });
-$('prBuyGo').addEventListener('click', () => {
-  const amt = +$('prBuyAmt').value;
-  if (!PR.buySel) { prToast('Choisissez d\'abord un titre à acheter.', false); return; }
-  if (!(amt > 0)) { prToast('Indiquez un montant.', false); return; }
-  PR.tx.push({type: 'buy', key: PR.buySel.key, s: PR.buySel.s, name: PR.buySel.name, val: amt}); prSave(); prRender(); prRun();
-});
-$('prTxList').addEventListener('click', e => { const b = e.target.closest('[data-tx]'); if (!b) return; PR.tx.splice(+b.dataset.tx, 1); prSave(); prRender(); prRun(); });
-$('prTxClear').addEventListener('click', () => { if (PR.tx.length && !confirm('Annuler toutes les transactions simulées ?')) return; PR.tx = []; prSave(); prRender(); prRun(); });
+$('prTbl').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.classList.contains('pr-w')) e.target.blur(); });
+$('prTbl').addEventListener('focusout', () => setTimeout(() => { if (PR.tblDirty && !(document.activeElement && document.activeElement.classList.contains('pr-w'))) prRender(); }, 0));
+$('prSteps').addEventListener('click', e => { const b = e.target.closest('[data-st]'); if (!b) return; PR.step = +b.dataset.st; prSave(); prRender(); });
+$('prChips').addEventListener('click', e => { const b = e.target.closest('[data-undo]'); if (!b) return; const k = b.dataset.undo; delete PR.adj[k]; PR.added = PR.added.filter(a => a.key !== k); PR.target = null; prChanged(); });
+$('prReset').addEventListener('click', () => { if (!Object.keys(PR.adj).length && !PR.added.length) return; if (!confirm('Annuler toutes les transactions simulées ?')) return; PR.adj = {}; PR.added = []; PR.target = null; prChanged(); });
 $('prCsv').addEventListener('click', () => {
-  if (!PR.res) return;
-  const tot = PR.res.after.reduce((s, l) => s + l.mv, 0), f = x => String(Math.round(x * 1e6) / 1e6).replace('.', ',');
-  const rows = [['Titre', 'Symbole', 'Catégorie', 'Montant après (CHF)', 'Poids après', 'Achat simulé']].concat(PR.res.after.filter(l => l.mv > 0.5 || l.key === '__cash').map(l => [l.name, l.s || '', l.cat || '', f(l.mv), f(l.mv / tot), l.isNew ? 'oui' : '']));
-  rows.push([]); rows.push(['Transactions']); PR.tx.forEach(t => rows.push([t.type === 'sell' ? 'Vente' : 'Achat', t.name, t.s || '', f(t.done || 0)]));
+  if (!PF.pos) return;
+  const P = prLines(), tot = P.tot, f = x => String(Math.round(x * 1e6) / 1e6).replace('.', ',');
+  const rows = [['Titre', 'Symbole', 'Catégorie', 'Montant avant (CHF)', 'Transaction (CHF)', 'Montant après (CHF)', 'Poids avant', 'Poids après']].concat(P.lines.filter(l => l.mv > 0.5 || l.b > 0.5 || l.kind === 'cash').map(l => [l.name, l.s || '', l.cat || '', f(l.b), f(l.mv - l.b), f(l.mv), f(l.b / tot), f(l.mv / tot)]));
   const csv = '﻿' + rows.map(r => r.map(x => /[;"\n]/.test(String(x)) ? '"' + String(x).replace(/"/g, '""') + '"' : x).join(';')).join('\r\n');
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8'})); a.download = 'portefeuille_simule.csv'; document.body.appendChild(a); a.click(); a.remove();
 });
+function prFlash(key){ const tr = Array.from($('prTbl').querySelectorAll('tr[data-row]')).find(r => r.dataset.row === key); if (!tr) return; tr.scrollIntoView({block: 'center', behavior: 'smooth'}); tr.classList.remove('pr-flash'); void tr.offsetWidth; tr.classList.add('pr-flash'); }
+/* + / − en haut du tableau */
+const prPanels = () => [$('prAddPanel'), $('prDelPanel')];
+function prOpen(which){ prPanels().forEach(p => { p.hidden = p !== which ? true : !p.hidden; }); if (!which.hidden) { const i = which.querySelector('input'); i.value = ''; i.dispatchEvent(new Event('input')); setTimeout(() => i.focus(), 0); } }
+$('prAddBtn').addEventListener('click', () => prOpen($('prAddPanel')));
+$('prDelBtn').addEventListener('click', () => prOpen($('prDelPanel')));
+document.addEventListener('mousedown', e => { if (!e.target.closest('#screenPr .pr-pop')) prPanels().forEach(p => { p.hidden = true; }); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') prPanels().forEach(p => { p.hidden = true; }); });
+let prHitT = null, prSeq = 0, prHits = [];
+$('prAddQ').addEventListener('input', () => {
+  const q = $('prAddQ').value.trim(), box = $('prAddHits'), seq = ++prSeq; clearTimeout(prHitT);
+  if (q.length < 2) { box.innerHTML = '<div class="pr-pempty">Saisissez au moins deux lettres.</div>'; prHits = []; return; }
+  const fq = mktFold(q), P = prLines();
+  const own = P.lines.filter(l => l.kind === 'sec' && (mktFold(l.name).indexOf(fq) >= 0 || (l.s && l.s.toLowerCase().indexOf(q.toLowerCase()) >= 0))).slice(0, 5).map(l => ({key: l.key, s: l.s, name: l.name, own: true}));
+  const show = (rem, wait) => { prHits = own.concat(rem); box.innerHTML = prHits.map((h, i) => '<button type="button" class="pr-hit" data-h="' + i + '">' + lgHtml(h.s, h.name) + '<b>' + esc(h.s || '—') + '</b><span>' + esc(h.name) + '</span>' + (h.own ? '<small>en portefeuille</small>' : (h.prim ? mktPrimBadge(h.prim) : '')) + '</button>').join('') + (wait ? '<div class="pr-pempty">Recherche…</div>' : prHits.length ? '' : '<div class="pr-pempty">Aucun résultat</div>'); };
+  show([], true);
+  prHitT = setTimeout(async () => {
+    let rem = [];
+    try { const r = await fetch('/api/tv/search/market/' + encodeURIComponent(q)), j = await r.json(); if (r.ok && j.success !== false) rem = mktRankSearch(mktParseSearch(j), q).slice(0, 8).filter(x => !own.some(o => o.s === x.full)).map(x => ({key: 'new:' + x.full, s: x.full, name: x.desc || x.symbol || x.full, prim: x})); } catch (e) {}
+    if (seq === prSeq) show(rem, false);
+  }, 320);
+});
+$('prAddHits').addEventListener('click', e => {
+  const b = e.target.closest('[data-h]'); if (!b) return; const h = prHits[+b.dataset.h]; $('prAddPanel').hidden = true;
+  if (h.own) { prFlash(h.key); prToast('« ' + h.name + ' » est déjà dans le tableau : ajustez-le avec + / −.'); return; }
+  if (!PR.added.some(a => a.key === h.key)) PR.added.push({key: h.key, s: h.s, name: h.name});
+  const tot = prLines().tot; if (!PR.adj[h.key]) prSetAdj(h.key, PR.step * tot);
+  prChanged(); setTimeout(() => prFlash(h.key), 50);
+  prToast('« ' + h.name + ' » ajouté avec ' + pct(PR.step, 1) + ' du portefeuille : ajustez avec + / − ou le poids.');
+});
+$('prDelQ').addEventListener('input', () => {
+  const fq = mktFold($('prDelQ').value.trim()), P = prLines();
+  const L = P.lines.filter(l => l.kind !== 'cash' && l.mv > 0.5 && (!fq || mktFold(l.name).indexOf(fq) >= 0 || (l.s && mktFold(l.s).indexOf(fq) >= 0)));
+  $('prDelHits').innerHTML = L.map(l => '<button type="button" class="pr-hit" data-del="' + esc(l.key) + '">' + (l.kind === 'sec' ? lgHtml(l.s, l.name) : '') + '<span>' + esc(l.name) + '</span><small>' + pct(l.mv / P.tot) + '</small></button>').join('') || '<div class="pr-pempty">Aucune position</div>';
+});
+$('prDelHits').addEventListener('click', e => {
+  const b = e.target.closest('[data-del]'); if (!b) return; const k = b.dataset.del, P = prLines(), l = P.lines.find(x => x.key === k); $('prDelPanel').hidden = true; if (!l) return;
+  if (l.isNew) { PR.added = PR.added.filter(a => a.key !== k); delete PR.adj[k]; PR.target = null; } else prSetAdj(k, -l.b);
+  prChanged(); setTimeout(() => prFlash(k), 50); prToast('Vente totale simulée : ' + l.name + ' (' + chf(l.mv) + ' CHF).');
+});
+/* glisser le losange « Après » dans le cadran */
+(function(){
+  let drag = null;
+  const pt = (svg, e) => { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); };
+  $('prCad').addEventListener('pointerdown', e => {
+    const g = e.target.closest('.pr-drag'); if (!g) return; const svg = g.ownerSVGElement; e.preventDefault();
+    drag = {svg, g, c: +svg.dataset.c, sc: +svg.dataset.sc, r: +svg.dataset.r};
+    svg.insertAdjacentHTML('beforeend', '<g class="pr-ghost" pointer-events="none"><line class="h1" stroke="#00A6CC" stroke-width=".8" stroke-dasharray="3 3"/><line class="v1" stroke="#00A6CC" stroke-width=".8" stroke-dasharray="3 3"/><path d="M0,-10L10,0L0,10L-10,0Z" fill="#00CFFF" fill-opacity=".85" stroke="#02182B" stroke-width="1.4"/><text x="14" y="-8" font-size="11" font-weight="700" fill="#02182B"></text></g>');
+    drag.gh = svg.querySelector('.pr-ghost'); g.style.opacity = '.35'; svg.setPointerCapture && svg.setPointerCapture(e.pointerId); move(e);
+  });
+  const clampXY = (e) => { const p = pt(drag.svg, e), lim = drag.r; return {x: Math.max(-lim, Math.min(lim, (p.x - drag.c) / drag.sc)), y: Math.max(-lim, Math.min(lim, (drag.c - p.y) / drag.sc))}; };
+  function move(e){
+    if (!drag) return; const q = clampXY(e), X = drag.c + q.x * drag.sc, Y = drag.c - q.y * drag.sc, S = drag.c * 2;
+    drag.gh.querySelector('path').setAttribute('transform', 'translate(' + X + ',' + Y + ')');
+    const t = drag.gh.querySelector('text'); t.setAttribute('x', X + 14); t.setAttribute('y', Y - 8); t.textContent = 'β ' + nf(2).format(q.x) + ' / ' + nf(2).format(q.y);
+    const h1 = drag.gh.querySelector('.h1'), v1 = drag.gh.querySelector('.v1');
+    h1.setAttribute('x1', 0); h1.setAttribute('x2', S); h1.setAttribute('y1', Y); h1.setAttribute('y2', Y); v1.setAttribute('y1', 0); v1.setAttribute('y2', S); v1.setAttribute('x1', X); v1.setAttribute('x2', X);
+    drag.q = q;
+  }
+  $('prCad').addEventListener('pointermove', move);
+  const end = e => { if (!drag) return; const q = drag.q; drag.gh.remove(); drag.g.style.opacity = ''; drag = null; if (q) prMoveTo(q.x, q.y); };
+  $('prCad').addEventListener('pointerup', end); $('prCad').addEventListener('pointercancel', () => { if (drag) { drag.gh.remove(); drag.g.style.opacity = ''; drag = null; } });
+})();
 const prDrop = $('prDrop');
 prDrop.addEventListener('click', () => $('prFile').click());
 $('prFile').addEventListener('change', async e => { const f = Array.from(e.target.files || []); e.target.value = ''; if (f.length) { await readFiles(f); prRender(); prRun(); } });
 ['dragenter', 'dragover'].forEach(ev => prDrop.addEventListener(ev, e => { e.preventDefault(); prDrop.classList.add('over'); }));
 ['dragleave', 'drop'].forEach(ev => prDrop.addEventListener(ev, e => { e.preventDefault(); prDrop.classList.remove('over'); }));
 prDrop.addEventListener('drop', async e => { const f = Array.from((e.dataTransfer && e.dataTransfer.files) || []); if (f.length) { await readFiles(f); prRender(); prRun(); } });
-new MutationObserver(() => { if ($('screenPr').classList.contains('on')) { prRender(); if (PF.pos) { if (!PF.mapBusy && PF.pos.some(p => kindOf(p) === 'sec' && !MAP[keyOf(p)])) autoMap(); prRun(); } } }).observe($('screenPr'), {attributes: true, attributeFilter: ['class']});
+new MutationObserver(() => { if ($('screenPr').classList.contains('on')) { prRender(true); if (PF.pos) { if (!PF.mapBusy && PF.pos.some(p => kindOf(p) === 'sec' && !MAP[keyOf(p)])) autoMap(); prRun(); } } }).observe($('screenPr'), {attributes: true, attributeFilter: ['class']});
 
 /* Graphique en courbes réutilisé par le Portfolio Constructor */
 window.gipLineChart = lineChart;

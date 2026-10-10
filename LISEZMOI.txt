@@ -229,3 +229,15 @@ Portfolio Restructurator et graphiques affinés (21e version) :
   - Export CSV du portefeuille simulé. Transactions gardées pour la session du navigateur uniquement ; rien n'est exécuté ni envoyé au relais.
   - Graphiques du Portfolio Lab, du Constructor, du Cadran et de l'OFS : traits plus fins (portefeuille ~1,9 px, indices ~1,25 px), points et losanges plus légers.
   - Seul Outils_GIP.html change.
+
+Portfolio Restructurator — saisie dans le tableau (22e version) :
+  - Les transactions se font directement dans le tableau des lignes : boutons − / + devant chaque titre (pas au choix : 0,5 %, 1 %, 2 % ou 5 % de la valeur totale)
+    ou saisie du « Poids après » (Entrée pour valider). Lignes modifiées surlignées, ventes totales barrées, liquidités recalculées en bas du tableau.
+  - En haut à droite du tableau : « + » ajoute un titre hors portefeuille (recherche TradingView, ajouté avec un pas), « − » vend entièrement une ligne ; « Réinitialiser », « CSV ».
+  - Volatilité : bloc dédié avant → après avec écart en points et en %, jauge, et rappel permanent dans la barre du tableau (qui reste visible en défilant).
+  - Nouveau graphique « Frontière efficiente avant / après » (sans vente à découvert, titres détenus, obligations via leur indice, liquidités exclues ;
+    rendements = moyenne historique sur deux ans) avec position du portefeuille avant / après et écart à la frontière.
+  - Cadran : le losange plein « Après » se fait glisser à la souris. Les poids des titres cotés déjà retenus sont recalculés pour placer le portefeuille au plus près du point visé,
+    en changeant le moins possible les poids (chaque titre garde au moins 25 % de son poids, au plus 3 fois son poids ou +8 points ; liquidités et obligations inchangées).
+    Si la zone n'est pas atteignable avec la sélection, le portefeuille est placé au plus près et un message l'indique.
+  - Seul Outils_GIP.html change.
