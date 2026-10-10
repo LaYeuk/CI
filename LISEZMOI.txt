@@ -241,3 +241,14 @@ Portfolio Restructurator — saisie dans le tableau (22e version) :
     en changeant le moins possible les poids (chaque titre garde au moins 25 % de son poids, au plus 3 fois son poids ou +8 points ; liquidités et obligations inchangées).
     Si la zone n'est pas atteignable avec la sélection, le portefeuille est placé au plus près et un message l'indique.
   - Seul Outils_GIP.html change.
+
+Portfolio Restructurator — leviers volatilité, frontière et cadran (23e version) :
+  - On agit sur le portefeuille soit par les titres (tableau), soit par trois leviers : faire glisser le point « après » de la jauge de volatilité,
+    le losange « Après » de la frontière efficiente ou le losange « Après » du cadran. Les poids sont recalculés pour atteindre la cible en changeant le moins possible les poids actuels.
+  - Dès qu'on saisit un point, la zone atteignable avec les titres retenus s'affiche (bande sur la jauge, zone bleutée sur la frontière et le cadran) ; hors zone, le point devient beige
+    et le portefeuille est placé au plus près.
+  - Titres ajustés : titres cotés déjà retenus (+ bloc obligataire, proportionnellement, pour la volatilité et la frontière ; le cadran ne porte que sur les titres cotés).
+    Liquidités et lignes sans cours ne bougent pas.
+  - « Amplitude » (barre du tableau) borne les poids par rapport au poids d'origine : Prudente (25 % à 3× ou +8 pts), Large (0,2 % à 5× ou +15 pts, par défaut), Libre (sans borne).
+  - Tableau : bouton corbeille pour tout vendre une ligne, ↺ pour la rétablir.
+  - Seul Outils_GIP.html change.
