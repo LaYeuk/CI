@@ -27,6 +27,7 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 .topnav .navbtn{border:1px solid rgba(255,255,255,.22);background:transparent;color:#CBD5DA;padding:6px 14px;border-radius:20px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;transition:.15s}
 .topnav .navbtn:hover{border-color:#fff;color:#fff}
 .topnav .navbtn.on{background:var(--cyan);border-color:var(--cyan);color:var(--navy)}
+.topnav .navlbl{align-self:center;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#00CFFF;font-weight:700;margin:0 2px 0 4px}
 .topnav .navsep{width:1px;align-self:stretch;margin:3px 4px;background:rgba(255,255,255,.22)}
 #screenHome .tilegrid.g5{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
 @media (max-width:1000px){#screenHome .tilegrid.g5{grid-template-columns:repeat(auto-fill,minmax(235px,1fr))}}
@@ -149,111 +150,111 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenSandbox .extDim label{font-size:10.5px;color:var(--mut)}
 /* ---- Écrans par source : FRED, BNS, OFS (barre de recherche, accueil, listes, fiches) ---- */
 /* ---- FRED (recherche façon fred.stlouisfed.org) ---- */
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) header span{opacity:.75;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) button{font:inherit;cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-hero{padding:18px 20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sbox{position:relative}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-go:hover{background:#0a3252}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac.open{display:block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item.active,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item:hover{background:#EFFCFF}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item .fx-id{min-width:96px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item .t{flex:1}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-item .m,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sec{margin-top:20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-sec-h small{color:var(--mut);font-size:11.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile:hover{border-color:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile .u{font-size:11px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-delta.down{color:var(--down)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tile svg{display:block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
-@media(max-width:1000px){:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-cols{grid-template-columns:1fr}}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list{list-style:none;margin:0;padding:3px 0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list li:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list .clk{cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list .clk:hover{background:#F7F6F2}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-crumbs a:hover{text-decoration:underline}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res:first-child{border-top:0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res:hover{background:#F7F6F2}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res .fx-id{margin-right:8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .btn:hover:not(:disabled){background:#EEF7FA}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .btn.pri:hover:not(:disabled){background:#0a3252}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .btn:disabled{opacity:.4;cursor:not-allowed}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-panel{padding:16px 20px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-kpi .s{font-size:11px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-chart{position:relative}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-chart svg{display:block;width:100%}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-mut{color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr){--navy:#02182B;--cyan:#00CFFF;--ink2:#0086B3;--bg:#F4F5F2;--card:#FFFFFF;--line:#E3E1D8;--mut:#6B6F76;--ink:#1A1F27;--up:#1F7A4D;--down:#B42318}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) header{background:var(--navy);color:#fff;padding:14px 24px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) header h1{margin:0;font-size:20px;font-weight:700} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) header span{opacity:.75;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) main{max-width:1240px;margin:0 auto;padding:16px 24px 60px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) button{font:inherit;cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-card{background:var(--card);border:1px solid var(--line);border-radius:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-hero{padding:18px 20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-hero h2{margin:0 0 3px;font-size:16px;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-sub{margin:0 0 12px;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-sbox{position:relative}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-sbox input{width:100%;font:inherit;font-size:16px;padding:12px 130px 12px 14px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);outline:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-sbox input:focus{border-color:var(--ink2);box-shadow:0 0 0 3px rgba(0,207,255,.22)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-go{position:absolute;right:5px;top:5px;bottom:5px;padding:0 18px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-go:hover{background:#0a3252}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;overflow:hidden;display:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac.open{display:block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac-item{padding:8px 14px;display:flex;gap:10px;align-items:baseline;cursor:pointer;border-top:1px solid #F1F0EC;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac-item:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac-item.active,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac-item:hover{background:#EFFCFF}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-id{font:700 11.5px/1.3 ui-monospace,Consolas,monospace;color:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac-item .fx-id{min-width:96px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac-item .t{flex:1}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac-item .m,:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac-foot{font-size:11.5px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ac-foot{padding:7px 14px;background:#FAFAF8}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-chip:hover{border-color:var(--ink2);color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-sec{margin-top:20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-sec-h h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-sec-h small{color:var(--mut);font-size:11.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;text-align:left;color:inherit}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tile:hover{border-color:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tile .lbl{font-size:12.5px;color:var(--mut);height:2.6em;overflow:hidden}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tile .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tile .v{font-size:21px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tile .u{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tile .d{font-size:11px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;gap:6px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-delta{font-weight:700;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-delta.up{color:var(--up)} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-delta.down{color:var(--down)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tile svg{display:block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
+@media(max-width:1000px){:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-cols{grid-template-columns:1fr}}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-list{list-style:none;margin:0;padding:3px 0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-list li{padding:7px 13px;border-top:1px solid #F1F0EC;display:flex;gap:10px;align-items:baseline;font-size:13px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-list li:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-list .clk{cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-list .clk:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-list .date{font:700 11.5px/1.4 ui-monospace,Consolas,monospace;color:var(--ink2);min-width:46px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-list .meta{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 10px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-bar select{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-count{margin-left:auto;color:var(--mut);font-size:12.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-crumbs{font-size:12.5px;color:var(--mut);margin:16px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-crumbs a{cursor:pointer;color:var(--ink2);text-decoration:none}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-crumbs a:hover{text-decoration:underline}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-subcats{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-res{padding:10px 15px;border-top:1px solid #F1F0EC;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-res:first-child{border-top:0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-res:hover{background:#F7F6F2}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-res .t{font-weight:700;color:var(--navy);font-size:13.5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-res .fx-id{margin-right:8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-res .m{grid-column:1;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-pop{grid-row:1/3;grid-column:2;align-self:center;display:flex;align-items:center;gap:8px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-pop i{display:block;width:56px;height:5px;border-radius:3px;background:#EEECE6;overflow:hidden}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-pop i b{display:block;height:100%;background:var(--ink2)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-in{font-size:10.5px;font-weight:700;color:var(--up);border:1px solid #BFDCCB;background:#EEF7F1;border-radius:9px;padding:1px 7px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .btn{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:7px;padding:7px 13px;font-size:12.5px;text-decoration:none;display:inline-block}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .btn:hover:not(:disabled){background:#EEF7FA}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .btn.pri{background:var(--navy);color:#fff} :is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .btn.pri:hover:not(:disabled){background:#0a3252}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .btn:disabled{opacity:.4;cursor:not-allowed}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-panel{padding:16px 20px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-panel h2{margin:0;font-size:18px;line-height:1.3;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ids{margin-top:4px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-kpis{display:flex;flex-wrap:wrap;gap:24px;margin:12px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-kpi .k{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-kpi .v{font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-kpi .s{font-size:11px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ranges{display:flex;gap:4px;margin:10px 0 4px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ranges button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 10px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-ranges button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-chart{position:relative}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-chart svg{display:block;width:100%}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-115%);display:none;z-index:5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-tip b{font-size:13px;font-variant-numeric:tabular-nums}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-notes{margin-top:12px;font-size:12px;color:var(--mut);max-height:150px;overflow:auto;white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px;line-height:1.5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-mut{color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-err{background:#FDF2F1;border:1px solid #F3C6C1;color:#7A1A12;padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.5}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-skel{background:linear-gradient(90deg,#EFEDE7 25%,#F7F6F2 50%,#EFEDE7 75%);background-size:200% 100%;animation:fxsk 1.2s infinite;border-radius:6px}
 @keyframes fxsk{to{background-position:-200% 0}}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-litem a{cursor:pointer;color:var(--navy)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-litem .per{color:var(--mut);font-size:11px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) details.fx-set summary{cursor:pointer}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-toast.show{display:flex}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
-:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc) [hidden]{display:none!important}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-loaded{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-litem{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#F4F5F2;border:1px solid var(--line);border-radius:7px;padding:4px 4px 4px 9px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-litem a{cursor:pointer;color:var(--navy)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-litem .per{color:var(--mut);font-size:11px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-litem button{border:none;background:none;color:#C0201B;font-size:11px;padding:2px 5px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) details.fx-set{margin-top:20px;font-size:12px;color:var(--mut)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) details.fx-set summary{cursor:pointer}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) details.fx-set input{width:100%;margin-top:6px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:9px;font-size:13px;display:none;align-items:center;gap:12px;z-index:400;box-shadow:0 8px 24px rgba(2,24,43,.25)}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-toast.show{display:flex}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) .fx-toast button{background:var(--cyan);color:var(--navy);border:0;border-radius:6px;padding:5px 10px;font-weight:700;font-size:12px}
+:is(#screenFred,#screenSnb,#screenOfs,#screenMkt,#screenLab,#screenDash,#screenQuad,#screenPf,#screenPc,#screenPr) [hidden]{display:none!important}
 
 /* ---- BNS (recherche façon data.snb.ch/fr/search) — réutilise les styles fx- de l'écran FRED ---- */
 :is(#screenSnb,#screenOfs) .fx-idx{margin-top:10px;font-size:11.5px;color:var(--mut);display:flex;align-items:center;gap:10px;min-height:16px}
@@ -1090,6 +1091,126 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
 #screenPc .pc-qrow.miss{color:#B42318}
 #screenPc .pc-pill{display:inline-block;padding:1px 8px;border-radius:999px;color:#fff;font-size:10.5px;font-weight:600}
 #screenPc .pc-cad{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+/* Restructurator : styles partagés avec le Portfolio Lab */
+#screenPr .pf-card{padding:16px 20px;margin-bottom:16px}
+#screenPr .pf-drop{border:2px dashed #A9AEB4;border-radius:10px;padding:18px;text-align:center;cursor:pointer;background:#fff;display:flex;flex-direction:column;gap:4px;transition:.15s}
+#screenPr .pf-drop b{color:var(--navy);font-size:14px}
+#screenPr .pf-drop span{color:var(--mut);font-size:12.5px}
+#screenPr .pf-drop.over,#screenPr .pf-drop:hover{border-color:#0086B3;background:#F3FBFE}
+#screenPr .pf-files{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+#screenPr .pf-file{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12.5px;background:#fff}
+#screenPr .pf-file b{color:var(--navy)}
+#screenPr .pf-file.ok{border-color:#BFDCCB;background:#F3FAF6}
+#screenPr .pf-file.miss{color:var(--mut)}
+#screenPr .pf-file button{border:0;background:none;color:var(--mut);font-size:14px;padding:0 2px}
+#screenPr .pf-note{font-size:11.5px;color:var(--mut);line-height:1.5;margin-top:10px}
+#screenPr .pf-head{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:12.5px;color:var(--mut)}
+#screenPr .pf-head b{color:var(--ink);font-weight:600}
+#screenPr .pf-head .pf-code{font-size:17px;color:var(--navy);font-weight:700;width:100%}
+#screenPr .pf-alloc{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+@media (max-width:860px){#screenPr .pf-alloc{grid-template-columns:1fr}}
+#screenPr .pf-alloc h4{margin:0 0 6px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+#screenPr .pf-stack{display:flex;height:14px;border-radius:7px;overflow:hidden;background:#EEE}
+#screenPr .pf-stack i{display:block;height:100%}
+#screenPr .pf-keys{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font-size:12px}
+#screenPr .pf-keys span{display:inline-flex;align-items:center;gap:5px}
+#screenPr .pf-keys i{width:9px;height:9px;border-radius:2px;display:inline-block}
+#screenPr .pf-keys b{font-variant-numeric:tabular-nums}
+#screenPr .pf-tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:4px 0 14px}
+#screenPr .pf-tabs button{border:0;background:none;padding:9px 18px;font:inherit;font-size:13.5px;font-weight:600;color:var(--mut);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+#screenPr .pf-tabs button:hover{color:var(--navy)}
+#screenPr .pf-tabs button.on{color:var(--navy);border-bottom-color:#0086B3}
+#screenPr .pf-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+#screenPr .pf-bar .sp{flex:1}
+#screenPr .pf-bar .lbl{font-size:12px;color:var(--mut)}
+#screenPr .pf-st{font-size:12px;color:var(--mut)}
+#screenPr .pf-ck{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--mut)}
+#screenPr .pf-ck input[type=text],#screenPr #pfRegAdd,#screenPr #pfBenchAdd{font:inherit;font-size:12.5px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;width:170px;color:var(--ink)}
+#screenPr .pf-tblwrap{overflow:auto}
+#screenPr .pf-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+#screenPr .pf-tbl th,#screenPr .pf-tbl td{padding:6px 7px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#screenPr .pf-tbl th{font-size:11px;color:var(--mut);font-weight:700;position:sticky;top:0;background:#fff}
+#screenPr .pf-tbl th.l,#screenPr .pf-tbl td.l{text-align:left}
+#screenPr .pf-tbl tr.grp td{background:#F6F7F4;font-weight:700;color:var(--navy);font-size:12px}
+#screenPr .pf-tbl tr.tot td{font-weight:700;border-top:2px solid var(--line)}
+#screenPr .pf-tbl tr.pf-r:hover td{background:#F7FBFC}
+#screenPr .pf-nm{display:flex;align-items:center;gap:8px;max-width:330px;white-space:normal}
+#screenPr .pf-nm small{display:block;color:var(--mut);font-size:10.5px}
+#screenPr .pf-sym{font:600 11.5px ui-monospace,Consolas,monospace;color:#0086B3}
+#screenPr .pf-src{font-size:10px;color:var(--mut);margin-left:4px}
+#screenPr .pf-ed{border:0;background:none;color:var(--mut);cursor:pointer;font-size:12px;padding:0 3px}
+#screenPr .pf-ed:hover{color:var(--navy)}
+#screenPr .pf-up{color:#1F7A4D}
+#screenPr .pf-dn{color:#B42318}
+#screenPr .pf-pill{display:inline-block;padding:2px 9px;border-radius:999px;color:#fff;font-size:11px;font-weight:600}
+#screenPr .pf-barcell{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+#screenPr .pf-barcell i{display:inline-block;height:8px;border-radius:4px;background:#00CFFF}
+#screenPr .pf-two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:8px}
+@media (max-width:980px){#screenPr .pf-two{grid-template-columns:1fr}}
+#screenPr .pf-plot svg,#screenPr .pf-chart svg{display:block;width:100%;height:auto}
+#screenPr .pf-chart{position:relative}
+#screenPr .pf-h{margin:18px 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+#screenPr .pf-tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11.5px;padding:6px 9px;border-radius:6px;white-space:nowrap;display:none;z-index:5;line-height:1.5}
+#screenPr .pf-tip i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+#screenPr .pf-lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--mut);margin-bottom:4px}
+#screenPr .pf-lg i{display:inline-block;width:18px;height:3px;margin-right:6px;vertical-align:3px}
+#screenPr .pf-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--mut);margin-top:8px}
+#screenPr .pf-legend i.dm{display:inline-block;width:10px;height:10px;background:#02182B;transform:rotate(45deg);margin-right:6px}
+#screenPr .pf-legend i.dm.o{background:#fff;border:2px solid #02182B;width:7px;height:7px}
+#screenPr .pf-refchip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;margin:0 4px 4px 0;cursor:pointer;background:#fff;color:var(--mut)}
+#screenPr .pf-refchip.on{border-color:#0086B3;color:var(--navy);background:#EFFCFF;font-weight:600}
+#screenPr .pf-refchip b{font:600 10.5px ui-monospace,Consolas,monospace;color:#0086B3}
+#screenPr .pf-regopt .fx-ranges{margin:0}
+#screenPr .qd-toast{position:fixed;right:22px;bottom:22px;z-index:200;background:var(--navy);color:#fff;font-size:13px;padding:10px 16px;border-radius:9px;box-shadow:0 8px 24px rgba(2,24,43,.3);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;max-width:420px}
+#screenPr .qd-toast.show{opacity:1;transform:none}
+#screenPr .qd-toast.err{background:#B5361C}
+#screenPr .lg{position:relative;flex:none;width:22px;height:22px;border-radius:50%;background:hsl(var(--h) 40% 90%);color:hsl(var(--h) 45% 30%);display:inline-flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(2,24,43,.08)}
+#screenPr .lg i{font-style:normal;letter-spacing:-.02em}
+#screenPr .lg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;box-sizing:border-box;opacity:0;transition:opacity .15s}
+#screenPr .lg img.ok{opacity:1}
+/* ---- Écran « Portfolio Restructurator » ---- */
+#screenPr main{max-width:1400px}
+#screenPr .pr-grid{display:grid;grid-template-columns:380px minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:1050px){#screenPr .pr-grid{grid-template-columns:1fr}}
+#screenPr .pr-grid > aside{position:sticky;top:96px}
+@media (max-width:1050px){#screenPr .pr-grid > aside{position:static}}
+#screenPr .pr-form{display:flex;flex-direction:column;gap:8px}
+#screenPr .pr-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#screenPr .pr-row .sp{flex:1}
+#screenPr select,#screenPr input[type=number],#screenPr input[type=search]{font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
+#screenPr .pr-form > select{width:100%}
+#screenPr input[type=number]{width:96px}
+#screenPr .pr-search{position:relative}
+#screenPr .pr-search input{width:100%;box-sizing:border-box}
+#screenPr .pr-hits{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 10px 30px rgba(2,24,43,.14);z-index:30;max-height:320px;overflow:auto;min-width:360px}
+#screenPr .pr-hit{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;border-top:1px solid #F1F0EC;background:#fff;padding:7px 12px;font:inherit;font-size:12.5px;color:var(--ink);cursor:pointer}
+#screenPr .pr-hit:hover{background:#EFFCFF}
+#screenPr .pr-hit b{font:700 11px ui-monospace,Consolas,monospace;color:#0086B3;min-width:96px}
+#screenPr .pr-hit small{margin-left:auto;font-size:10.5px;color:#02182B;background:#EFF1C5;border-radius:999px;padding:1px 7px}
+#screenPr .pr-sel{display:flex;align-items:center;gap:8px;font-size:12.5px;min-height:24px;padding:4px 0}
+#screenPr .pr-tx{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;padding:7px 0;border-top:1px solid #F1F0EC;font-size:12.5px}
+#screenPr .pr-tx:first-child{border-top:0}
+#screenPr .pr-tx .tag{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:2px 7px}
+#screenPr .pr-tx.sell .tag{background:#F3F2EE;color:#747572;border:1px solid #DDD8C4}
+#screenPr .pr-tx.buy .tag{background:#E6FAFF;color:#02182B;border:1px solid #00CFFF}
+#screenPr .pr-tx .nm{color:var(--ink);line-height:1.35}
+#screenPr .pr-tx small{display:block;color:var(--mut);font-size:11px}
+#screenPr .pr-tx button{border:0;background:none;color:var(--mut);cursor:pointer;font-size:16px;padding:0 4px}
+#screenPr .pr-tx button:hover{color:#B42318}
+#screenPr .pr-warn{background:#FFF8EC;border:1px solid #F2D9A8;color:#6A4A0C;border-radius:8px;padding:8px 12px;font-size:12px;line-height:1.5;margin-top:10px}
+#screenPr .pr-h4{margin:0 0 10px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+#screenPr .pr-qrow{display:grid;grid-template-columns:minmax(150px,auto) 1fr 78px 40px;gap:8px;align-items:center;font-size:12px;margin-bottom:8px}
+#screenPr .pr-qrow span i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+#screenPr .pr-qrow .bar{position:relative;height:12px;border-radius:6px;background:#F1F0EC;overflow:hidden}
+#screenPr .pr-qrow .bar i{position:absolute;left:0;display:block}
+#screenPr .pr-qrow .bar i.b{top:0;height:100%;background:#DDD8C4}
+#screenPr .pr-qrow .bar i.a{top:3px;height:6px;border-radius:3px}
+#screenPr .pr-qrow b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+#screenPr .pr-qrow em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;font-size:11.5px}
+#screenPr .pr-ar{color:#00A6CC;font-weight:400;margin:0 2px}
+#screenPr .pf-tbl tr.pr-ch td{background:#F7FDFF}
+#screenPr .pr-new{font-style:normal;font-size:10px;font-weight:700;background:#00CFFF;color:#02182B;border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+#screenPr .fx-kpis .pf-up,#screenPr .fx-kpis .pf-dn{font-weight:600}
 </style>
 </head>
 <body>
@@ -1106,8 +1227,10 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
       <button type="button" class="navbtn" data-screen="lab">Market Lab</button>
       <button type="button" class="navbtn" data-screen="quad">Cadran</button>
       <span class="navsep" aria-hidden="true"></span>
-      <button type="button" class="navbtn" data-screen="pf">Portfolio Lab</button>
-      <button type="button" class="navbtn" data-screen="pc">Portfolio Constructor</button>
+      <span class="navlbl">Portfolio</span>
+      <button type="button" class="navbtn" data-screen="pf" title="Portfolio Lab">Lab</button>
+      <button type="button" class="navbtn" data-screen="pc" title="Portfolio Constructor">Constructor</button>
+      <button type="button" class="navbtn" data-screen="pr" title="Portfolio Restructurator">Restructurator</button>
     </div>
     <div class="navbtns">
       <button type="button" class="navbtn" data-screen="sandbox">Chart Creator</button>
@@ -1176,6 +1299,12 @@ html,body{margin:0;font-family:'Aspekta',Arial,sans-serif;background:var(--bg);c
         <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20V4" stroke="white" stroke-width="1.4" stroke-linecap="round"/><path d="M4 20H20" stroke="white" stroke-width="1.4" stroke-linecap="round"/><path d="M6.5 17C9 11 12.5 8 19 6.5" stroke="#00CFFF" stroke-width="1.8" stroke-linecap="round"/><circle cx="12.5" cy="9.6" r="2.2" fill="#00CFFF"/><circle cx="9" cy="15" r="1.2" fill="#DDD8C4"/><circle cx="16" cy="13" r="1.2" fill="#DDD8C4"/></svg></div>
         <h2>Portfolio Constructor</h2>
         <p>Construisez un portefeuille optimisé dans l'univers du Market Dashboard : Max Sharpe, min variance, dividende, nombre de titres et pondérations.</p>
+        <span class="go2">Ouvrir →</span>
+      </button>
+      <button type="button" class="tile" data-open="pr">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 8H17" stroke="white" stroke-width="1.4" stroke-linecap="round"/><path d="M14 5L17 8L14 11" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 16H7" stroke="#00CFFF" stroke-width="1.4" stroke-linecap="round"/><path d="M10 13L7 16L10 19" stroke="#00CFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2>Portfolio Restructurator</h2>
+        <p>Simulez des achats et des ventes sur le portefeuille et mesurez l'effet sur la volatilité, la contribution au risque et le cadran.</p>
         <span class="go2">Ouvrir →</span>
       </button>
     </div>
@@ -2174,6 +2303,74 @@ Données : TradingView Data API (service tiers non officiel) via le relais, inst
   </div>
 </main>
 <div class="qd-toast" id="pcToast"></div>
+</div>
+<div id="screenPr" class="screen">
+
+<header><h1>Portfolio Restructurator</h1><span>Simulez des achats et des ventes sur un portefeuille et voyez aussitôt l'effet sur la volatilité, la contribution au risque et le cadran.</span></header>
+<main>
+  <section class="fx-card pf-card" id="prEmpty" hidden>
+    <div class="pf-drop" id="prDrop" tabindex="0" role="button" aria-label="Déposer les fichiers du portefeuille">
+      <b>Aucun portefeuille chargé</b>
+      <span>Déposez ici le détail des positions (et, si vous le souhaitez, l'évolution de la valeur), ou chargez-les dans le Portfolio Lab : les deux écrans partagent le même portefeuille.</span>
+      <input type="file" id="prFile" accept=".xlsx,.xlsm,.xls" multiple hidden>
+    </div>
+  </section>
+
+  <div id="prBody" hidden>
+    <section class="fx-card pf-card">
+      <div class="pf-head" id="prHead"></div>
+      <div class="fx-kpis" id="prKpis"></div>
+      <div class="pr-warn" id="prWarn" hidden></div>
+    </section>
+
+    <div class="pr-grid">
+      <aside>
+        <section class="fx-card pf-card">
+          <h3 class="pf-h" style="margin-top:0">Vendre / alléger</h3>
+          <div class="pr-form">
+            <select id="prSellPos"></select>
+            <div class="pr-row"><select id="prSellMode"><option value="pct">% de la position</option><option value="amt">montant CHF</option><option value="all">toute la position</option></select>
+              <input type="number" id="prSellVal" min="0" step="1" value="50"><button type="button" class="btn" id="prSellGo">Vendre</button></div>
+          </div>
+          <h3 class="pf-h">Acheter / renforcer</h3>
+          <div class="pr-form">
+            <div class="fx-sbox pr-search"><input type="search" id="prBuyQ" autocomplete="off" placeholder="Titre du portefeuille ou tout symbole (ex. Nestlé, NASDAQ:AAPL)"><div class="pr-hits" id="prBuyHits" hidden></div></div>
+            <div class="pr-sel" id="prBuySel">Aucun titre choisi</div>
+            <div class="pr-row"><span class="pf-st">Montant</span><input type="number" id="prBuyAmt" min="0" step="1000" value="50000"><span class="pf-st">CHF</span><button type="button" class="btn pri" id="prBuyGo">Acheter</button></div>
+          </div>
+          <h3 class="pf-h">Transactions simulées</h3>
+          <div id="prTxList"></div>
+          <div class="pr-row" style="margin-top:8px"><button type="button" class="btn" id="prTxClear">Tout annuler</button><span class="sp"></span><button type="button" class="btn" id="prCsv">CSV du portefeuille simulé</button></div>
+          <div class="pf-note">Les ventes alimentent les liquidités, les achats les utilisent ; la valeur totale du portefeuille ne change pas. Rien n'est exécuté : simulation uniquement.</div>
+        </section>
+      </aside>
+
+      <div>
+        <section class="fx-card pf-card">
+          <h3 class="pf-h" style="margin-top:0">Volatilité glissante simulée (3 mois, poids constants)</h3>
+          <div class="pf-chart" id="prVolChart"></div>
+          <div class="pf-note" id="prVolNote"></div>
+        </section>
+        <section class="fx-card pf-card">
+          <div class="pf-bar"><h3 class="pf-h" style="margin:0">Cadran croissance / inflation</h3><span class="sp"></span><span class="pf-st" id="prCadSt"></span></div>
+          <div class="fx-kpis" id="prCadKpis"></div>
+          <div class="pf-two">
+            <div><div class="pf-plot" id="prCad"></div>
+              <div class="pf-legend"><span><i class="dm o"></i>Avant</span><span><i class="dm"></i>Après</span><span>Points : titres après transactions (taille = poids, contour épais = achat simulé)</span></div></div>
+            <div><h4 class="pr-h4">Exposition par cadran (titres cotés)</h4><div id="prQExp"></div></div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <section class="fx-card pf-card">
+      <div class="pf-bar"><h3 class="pf-h" style="margin:0">Positions avant et après</h3><span class="sp"></span><span class="pf-st" id="prSt"></span></div>
+      <div class="pf-tblwrap"><table class="pf-tbl" id="prTbl"></table></div>
+      <div class="pf-note">Volatilité ex ante = un an de cours quotidiens, poids constants ; obligations approchées par l'indice choisi dans le Portfolio Lab (onglet Volatilité), liquidités à volatilité nulle. Cadran : mêmes facteurs et réglages que l'écran Cadran, titres cotés uniquement.</div>
+    </section>
+  </div>
+</main>
+<div class="qd-toast" id="prToast"></div>
 </div>
 <div id="screenLab" class="screen">
 
@@ -6759,7 +6956,7 @@ function drawCatLines(el, tip){
   R.series.forEach((s, j) => {
     let d = '', pen = false;
     s.vals.forEach((v, i) => { if (!isFinite(v)) { pen = false; return; } d += (pen ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1); pen = true; });
-    h += '<path d="' + d + '" fill="none" stroke="' + serColor(j) + '" stroke-width="2" stroke-linejoin="round"/>';
+    h += '<path d="' + d + '" fill="none" stroke="' + serColor(j) + '" stroke-width="1.5" stroke-linejoin="round"/>';
     if (n <= 40) s.vals.forEach((v, i) => { if (isFinite(v)) h += '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(v).toFixed(1) + '" r="2.5" fill="' + serColor(j) + '"/>'; });
   });
   h += '<line class="xh" y1="' + m.t + '" y2="' + (H - m.b) + '" stroke="#02182B" stroke-opacity=".35" stroke-dasharray="3 3" visibility="hidden"/><rect class="hit" x="' + m.l + '" y="' + m.t + '" width="' + (W - m.l - m.r) + '" height="' + (H - m.t - m.b) + '" fill="transparent"/></svg>';
@@ -11844,7 +12041,7 @@ function plotSvg(){
   h += '<rect width="' + S + '" height="' + S + '" fill="#FFFFFF"/>';
   [['-1,1', P, P], ['1,1', C, P], ['-1,-1', P, C], ['1,-1', C, C]].forEach(([k, x, y]) => {
     const q = QUADS[k], on = k === rk, left = x === P, top = y === P;
-    h += '<rect x="' + x + '" y="' + y + '" width="' + (C - P) + '" height="' + (C - P) + '" fill="' + q.c + '" fill-opacity="' + (on ? 0.13 : 0.06) + '"' + (on ? ' stroke="' + q.c + '" stroke-width="3"' : '') + '/>';
+    h += '<rect x="' + x + '" y="' + y + '" width="' + (C - P) + '" height="' + (C - P) + '" fill="' + q.c + '" fill-opacity="' + (on ? 0.13 : 0.06) + '"' + (on ? ' stroke="' + q.c + '" stroke-width="1.5"' : '') + '/>';
     const tx = left ? x + 10 : x + C - P - 10, ty = top ? y + 20 : y + C - P - 26, an = left ? 'start' : 'end';
     h += '<text x="' + tx + '" y="' + ty + '" text-anchor="' + an + '" fill="' + q.c + '" font-size="13" font-weight="700">' + esc(q.n) + '</text>';
     h += '<text x="' + tx + '" y="' + (ty + 15) + '" text-anchor="' + an + '" fill="' + q.c + '" font-size="11" opacity=".8">' + esc(q.s + (on ? ' · ◆ régime actuel' : '')) + '</text>';
@@ -11876,7 +12073,7 @@ function plotSvg(){
   pts.forEach(p => {
     const weak = !(p.r.r2 >= 0.10);
     h += '<g class="pt" data-s="' + esc(p.r.s) + '"><title>' + esc(nameOf(p.r.s) + ' (' + p.r.s + ')\nβ croissance ' + nf(2).format(p.r.zG) + ' · β inflation ' + nf(2).format(p.r.zI) + ' · R² ' + nf(2).format(p.r.r2) + '\n' + p.q.n + (p.clip ? '\n(hors échelle : ramené au bord)' : '')) + '</title>';
-    h += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="7" fill="' + p.q.c + '" fill-opacity="' + (weak ? 0.4 : 1) + '" stroke="#FFFFFF" stroke-width="2"/>';
+    h += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="7" fill="' + p.q.c + '" fill-opacity="' + (weak ? 0.4 : 1) + '" stroke="#FFFFFF" stroke-width="1.4"/>';
     h += '<text x="' + p.lx.toFixed(1) + '" y="' + p.ly.toFixed(1) + '" fill="#1A1F27" font-size="11.5" font-weight="600"' + (weak ? ' opacity=".6"' : '') + '>' + esc(p.lab + (p.clip ? ' ›' : '')) + '</text></g>';
   });
   if (!ok.length) h += '<text x="' + C + '" y="' + (C - 30) + '" text-anchor="middle" fill="#6B6F76" font-size="13">' + (Q.running ? 'Calcul…' : 'Ajoutez des titres pour les placer dans les cadrans') + '</text>';
@@ -12424,10 +12621,10 @@ function lineChart(el, series, o){
   series.forEach(s => {
     const path = s.pts.map((p, i) => (i ? 'L' : 'M') + X(p.d).toFixed(1) + ',' + Y(p.y).toFixed(1)).join('');
     if (s.area) h += '<path d="' + path + 'L' + X(s.pts[s.pts.length - 1].d).toFixed(1) + ',' + Y(Math.max(y0, Math.min(y1, 0))).toFixed(1) + 'L' + X(s.pts[0].d).toFixed(1) + ',' + Y(Math.max(y0, Math.min(y1, 0))).toFixed(1) + 'Z" fill="' + s.c + '" fill-opacity=".14"/>';
-    h += '<path d="' + path + '" fill="none" stroke="' + s.c + '" stroke-width="' + (s.w || 1.8) + '"' + (s.dash ? ' stroke-dasharray="' + (typeof s.dash === 'string' ? s.dash : '5 4') + '"' : '') + ' stroke-linejoin="round"/>';
+    h += '<path d="' + path + '" fill="none" stroke="' + s.c + '" stroke-width="' + (s.w || 1.25) + '"' + (s.dash ? ' stroke-dasharray="' + (typeof s.dash === 'string' ? s.dash : '5 4') + '"' : '') + ' stroke-linejoin="round"/>';
   });
   h += '<line class="hv" x1="0" x2="0" y1="' + T + '" y2="' + (H - B) + '" stroke="#02182B" stroke-width="1" opacity="0"/><rect class="ov" x="' + L + '" y="' + T + '" width="' + (W - L - Rm) + '" height="' + (H - T - B) + '" fill="transparent"/></svg>';
-  const lg = series.length > 1 ? '<div class="pf-lg">' + series.map(s => '<span><i style="height:0;background:none;border-top:' + Math.max(2, s.w || 2) + 'px ' + (s.dash ? 'dashed' : 'solid') + ' ' + s.c + ';width:18px"></i>' + esc(s.n) + '</span>').join('') + '</div>' : '';
+  const lg = series.length > 1 ? '<div class="pf-lg">' + series.map(s => '<span><i style="height:0;background:none;border-top:' + Math.max(1.5, s.w || 1.25) + 'px ' + (s.dash ? 'dashed' : 'solid') + ' ' + s.c + ';width:18px"></i>' + esc(s.n) + '</span>').join('') + '</div>' : '';
   el.innerHTML = lg + h + '<div class="pf-tip"></div>';
   const svg = el.querySelector('svg'), tip = el.querySelector('.pf-tip'), hv = svg.querySelector('.hv');
   const near = (pts, d) => { let lo = 0, hi = pts.length - 1; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (pts[mid].d < d) lo = mid; else hi = mid; } return Math.abs(pts[lo].d - d) <= Math.abs(pts[hi].d - d) ? pts[lo] : pts[hi]; };
@@ -12454,7 +12651,7 @@ function scatterChart(el, xs, ys, a, b, o){
   niceTicks(x0, x1, 5).forEach(v => { h += '<line y1="' + T + '" y2="' + (H - B) + '" x1="' + X(v).toFixed(1) + '" x2="' + X(v).toFixed(1) + '" stroke="' + (v === 0 ? '#A9AEB4' : '#F3F2EE') + '"/><text y="' + (H - B + 14) + '" x="' + X(v).toFixed(1) + '" text-anchor="middle" font-size="10.5" fill="#6B6F76">' + f(v) + '</text>'; });
   xs.forEach((x, i) => { h += '<circle cx="' + X(x).toFixed(1) + '" cy="' + Y(ys[i]).toFixed(1) + '" r="3" fill="#00CFFF" fill-opacity=".6"/>'; });
   const lx0 = x0, lx1 = x1;
-  h += '<line x1="' + X(lx0).toFixed(1) + '" y1="' + Y(a + b * lx0).toFixed(1) + '" x2="' + X(lx1).toFixed(1) + '" y2="' + Y(a + b * lx1).toFixed(1) + '" stroke="#02182B" stroke-width="2.2"/>';
+  h += '<line x1="' + X(lx0).toFixed(1) + '" y1="' + Y(a + b * lx0).toFixed(1) + '" x2="' + X(lx1).toFixed(1) + '" y2="' + Y(a + b * lx1).toFixed(1) + '" stroke="#02182B" stroke-width="1.4"/>';
   h += '<text x="' + (W - Rm) + '" y="' + (H - 4) + '" text-anchor="end" font-size="11" fill="#1A1F27" font-weight="600">' + esc(o.xl) + ' →</text>';
   h += '<text x="' + (L + 6) + '" y="' + (T + 12) + '" font-size="11.5" fill="#02182B" font-weight="700">β simple = ' + nf(2).format(b) + ' · R² = ' + nf(2).format(o.r2) + '</text></svg>';
   el.innerHTML = h;
@@ -12468,7 +12665,7 @@ function cadranSvg(pts, reg, cfg){
   let h = '<svg viewBox="0 0 ' + S + ' ' + S + '" font-family="Aspekta, Arial, sans-serif"><rect width="' + S + '" height="' + S + '" fill="#fff"/>';
   [['-1,1', P, P], ['1,1', C, P], ['-1,-1', P, C], ['1,-1', C, C]].forEach(([k, x, y]) => {
     const q = QUADS[k], on = k === rk, left = x === P, top = y === P;
-    h += '<rect x="' + x + '" y="' + y + '" width="' + (C - P) + '" height="' + (C - P) + '" fill="' + q.c + '" fill-opacity="' + (on ? 0.13 : 0.06) + '"' + (on ? ' stroke="' + q.c + '" stroke-width="3"' : '') + '/>';
+    h += '<rect x="' + x + '" y="' + y + '" width="' + (C - P) + '" height="' + (C - P) + '" fill="' + q.c + '" fill-opacity="' + (on ? 0.13 : 0.06) + '"' + (on ? ' stroke="' + q.c + '" stroke-width="1.5"' : '') + '/>';
     const tx = left ? x + 10 : x + C - P - 10, ty = top ? y + 20 : y + C - P - 12;
     h += '<text x="' + tx + '" y="' + ty + '" text-anchor="' + (left ? 'start' : 'end') + '" fill="' + q.c + '" font-size="13" font-weight="700">' + esc(q.n + (on ? ' ◆' : '')) + '</text>';
   });
@@ -12492,8 +12689,8 @@ function cadranSvg(pts, reg, cfg){
   pts.slice().sort((a, b) => (b.rad || 0) - (a.rad || 0)).forEach(p => {
     const x = px(p.x), y = py(p.y);
     h += '<g><title>' + esc(p.tip) + '</title>';
-    if (p.dia) { const r = 9; h += '<path d="M' + x + ',' + (y - r) + 'L' + (x + r) + ',' + y + 'L' + x + ',' + (y + r) + 'L' + (x - r) + ',' + y + 'Z" fill="' + (p.dia === 'o' ? '#fff' : '#02182B') + '" stroke="#02182B" stroke-width="2.5"/>'; }
-    else h += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + p.rad.toFixed(1) + '" fill="' + p.c + '" fill-opacity="' + (p.weak ? 0.35 : 0.75) + '" stroke="#fff" stroke-width="1.5"/>';
+    if (p.dia) { const r = 9; h += '<path d="M' + x + ',' + (y - r) + 'L' + (x + r) + ',' + y + 'L' + x + ',' + (y + r) + 'L' + (x - r) + ',' + y + 'Z" fill="' + (p.dia === 'o' ? '#fff' : '#02182B') + '" stroke="#02182B" stroke-width="1.6"/>'; }
+    else h += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + p.rad.toFixed(1) + '" fill="' + p.c + '" fill-opacity="' + (p.weak ? 0.35 : 0.75) + '" stroke="' + (p.isNew ? '#02182B' : '#fff') + '" stroke-width="' + (p.isNew ? 1.6 : 1) + '"/>';
     if (p.lx != null) h += '<text x="' + p.lx.toFixed(1) + '" y="' + p.ly.toFixed(1) + '" fill="#1A1F27" font-size="' + (p.dia ? 12 : 11) + '" font-weight="' + (p.dia ? 800 : 600) + '">' + esc(p.lab) + '</text>';
     h += '</g>';
   });
@@ -12688,12 +12885,12 @@ function renderNavVol(B){
   if (!N) { $('pfVolChart').innerHTML = '<div class="pf-st">Déposez le fichier d\'évolution de la valeur (NAV) pour la volatilité du portefeuille.</div>'; $('pfDdChart').innerHTML = ''; $('pfNavNotes').hidden = true; $('pfBenchTbl').hidden = true; return; }
   const ok = (B || []).filter(x => !x.none), wLbl = CFG.volWin === 21 ? '1 mois (21 j)' : '3 mois (63 j)';
   const navRoll = CFG.volWin === 21 ? N.roll21 : N.roll63;
-  const volSeries = ok.length ? [{n: 'Portefeuille', c: '#02182B', pts: navRoll, w: 2.8}].concat(ok.map(x => ({n: x.b.n, c: x.col, dash: x.dash, pts: x.roll})))
-    : [{n: 'Fenêtre 1 mois (21 j)', c: '#00CFFF', pts: N.roll21}, {n: 'Fenêtre 3 mois (63 j)', c: '#02182B', pts: N.roll63, w: 2.6}];
+  const volSeries = ok.length ? [{n: 'Portefeuille', c: '#02182B', pts: navRoll, w: 1.9}].concat(ok.map(x => ({n: x.b.n, c: x.col, dash: x.dash, pts: x.roll})))
+    : [{n: 'Fenêtre 1 mois (21 j)', c: '#00CFFF', pts: N.roll21}, {n: 'Fenêtre 3 mois (63 j)', c: '#02182B', pts: N.roll63, w: 1.7}];
   lineChart($('pfVolChart'), volSeries, {fmt: v => nf(1).format(v * 100) + ' %', zero: true});
   const box = $('pfDdChart'); box.innerHTML = '<div id="pfDd1"></div><div id="pfDd2"></div>';
-  lineChart($('pfDd1'), [{n: 'Portefeuille (base 100)', c: '#02182B', pts: N.idx.map(p => ({d: p.d, y: p.I})), w: 2.8}].concat(ok.map(x => ({n: x.b.n, c: x.col, dash: x.dash, pts: x.idx.map(p => ({d: p.d, y: p.I}))}))), {fmt: v => nf(1).format(v), h: 220});
-  lineChart($('pfDd2'), [{n: 'Drawdown portefeuille', c: '#02182B', area: true, w: 2.4, pts: N.idx.map((p, i) => ({d: p.d, y: N.dd[i]}))}].concat(ok.map(x => ({n: x.b.n, c: x.col, dash: x.dash, pts: x.idx.map((p, i) => ({d: p.d, y: x.dd[i]}))}))), {fmt: v => nf(1).format(v * 100) + ' %', zero: true, h: 150});
+  lineChart($('pfDd1'), [{n: 'Portefeuille (base 100)', c: '#02182B', pts: N.idx.map(p => ({d: p.d, y: p.I})), w: 1.9}].concat(ok.map(x => ({n: x.b.n, c: x.col, dash: x.dash, pts: x.idx.map(p => ({d: p.d, y: p.I}))}))), {fmt: v => nf(1).format(v), h: 220});
+  lineChart($('pfDd2'), [{n: 'Drawdown portefeuille', c: '#02182B', area: true, w: 1.6, pts: N.idx.map((p, i) => ({d: p.d, y: N.dd[i]}))}].concat(ok.map(x => ({n: x.b.n, c: x.col, dash: x.dash, pts: x.idx.map((p, i) => ({d: p.d, y: x.dd[i]}))}))), {fmt: v => nf(1).format(v * 100) + ' %', zero: true, h: 150});
   const T = $('pfBenchTbl');
   if (B && B.length) {
     const tail = CFG.volWin === 21 ? 'vol1m' : 'vol3m';
@@ -12807,7 +13004,7 @@ async function runReg(){
   scatterChart($('pfScat'), X[0], y, s1.b[0], s1.b[1], {xl: ok[0].n + ' (' + ok[0].s + ')', r2: s1.r2});
   let a = 100, b = 100; const pa = [{d: dates[0], y: 100}], pb = [{d: dates[0], y: 100}];
   y.forEach((v, t) => { a *= 1 + v; b *= 1 + X.reduce((s, c, j) => s + res.b[j + 1] * c[t], 0); pa.push({d: dates[t + 1], y: a}); pb.push({d: dates[t + 1], y: b}); });
-  lineChart($('pfRep'), [{n: 'Portefeuille (NAV)', c: '#02182B', pts: pa, w: 2.8}, {n: 'Répliqué par les facteurs', c: '#00CFFF', pts: pb, w: 2.2, dash: '7 4'}], {fmt: v => nf(1).format(v), h: 300});
+  lineChart($('pfRep'), [{n: 'Portefeuille (NAV)', c: '#02182B', pts: pa, w: 1.9}, {n: 'Répliqué par les facteurs', c: '#00CFFF', pts: pb, w: 1.4, dash: '7 4'}], {fmt: v => nf(1).format(v), h: 300});
 }
 
 /* ---------------------------------------------------------------- onglets */
@@ -12876,6 +13073,224 @@ $('pfRegAdd').addEventListener('keydown', e => {
   $('pfRegAdd').value = ''; saveCfg(); runReg();
 });
 $('pfRegFreq').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (!b) return; CFG.freq = b.dataset.f; saveCfg(); runReg(); });
+
+
+/* ============================================================================================
+   Écran « Portfolio Restructurator » — même portefeuille que le Portfolio Lab (données partagées).
+   On simule des ventes (% / montant / toute la position) et des achats (titre existant ou tout symbole TradingView),
+   puis on compare avant / après : poids, volatilité ex ante et contribution au risque, volatilité glissante simulée, cadran.
+   Les ventes alimentent les liquidités, les achats les consomment : la valeur totale reste constante.
+   ============================================================================================ */
+const PR = {tx: [], buySel: null, busy: false, again: false, beta: {}};
+const PR_KEY = 'gip_pr_tx_v1';
+try { const t = JSON.parse(sessionStorage.getItem(PR_KEY) || 'null'); if (Array.isArray(t)) PR.tx = t; } catch (e) {}
+const prSave = () => { try { sessionStorage.setItem(PR_KEY, JSON.stringify(PR.tx)); } catch (e) {} };
+function prToast(msg, ok){ const el = $('prToast'); el.textContent = msg; el.classList.toggle('err', ok === false); el.classList.add('show'); clearTimeout(prToast.t); prToast.t = setTimeout(() => el.classList.remove('show'), 4200); }
+/* lignes du portefeuille : titres et obligations une par une, liquidités regroupées */
+function prBaseLines(){
+  const lines = [], cash = {key: '__cash', name: 'Liquidités', kind: 'cash', cat: 'Liquidités', mv: 0};
+  (PF.pos || []).forEach(p => { const k = kindOf(p); if (k === 'cash') { cash.mv += p.mv; return; } lines.push({key: keyOf(p), name: p.name, kind: k, cat: p.cat, s: k === 'sec' ? symOf(p) : null, mv: p.mv, ccy: p.ccy}); });
+  lines.push(cash);
+  return lines;
+}
+function prApply(base){
+  const L = base.map(l => Object.assign({}, l)), by = new Map(L.map(l => [l.key, l])), cash = by.get('__cash'), msgs = [];
+  PR.tx.forEach(t => {
+    if (t.type === 'sell') {
+      const l = by.get(t.key); if (!l) { msgs.push('Vente ignorée : position « ' + t.name + ' » introuvable.'); return; }
+      const amt = t.mode === 'all' ? l.mv : t.mode === 'pct' ? l.mv * Math.min(100, Math.max(0, t.val)) / 100 : Math.min(l.mv, Math.max(0, t.val));
+      l.mv -= amt; cash.mv += amt; t.done = amt;
+    } else {
+      let l = by.get(t.key);
+      if (!l) { l = {key: t.key, name: t.name, kind: 'sec', cat: 'Achats simulés', s: t.s, mv: 0, isNew: true}; L.splice(L.length - 1, 0, l); by.set(t.key, l); }
+      l.mv += t.val; cash.mv -= t.val; t.done = t.val;
+    }
+  });
+  return {lines: L, msgs};
+}
+/* risque : covariance d'un an de rendements quotidiens sur l'union des titres avant / après */
+function prRisk(before, after){
+  const syms = Array.from(new Set(before.concat(after).filter(l => l.kind === 'sec' && l.s && has(l.s)).map(l => l.s)));
+  const useBond = before.concat(after).some(l => l.kind === 'bond' && l.mv > 0) && has(CFG.bond);
+  const assets = syms.concat(useBond ? [CFG.bond] : []);
+  if (!assets.length) return null;
+  const start = Math.max.apply(null, assets.map(s => DS[s].t[0]));
+  const cal = Array.from(new Set([].concat.apply([], assets.map(s => DS[s].t.filter(d => d >= start))))).sort((a, b) => a - b).slice(-505);
+  const R = assets.map(s => { const S = DS[s], lv = []; let j = 0, last = null; cal.forEach(d => { while (j < S.t.length && S.t[j] <= d) { last = S.c[j]; j++; } lv.push(last); }); return lv.slice(1).map((v, i) => (v > 0 && lv[i] > 0) ? Math.log(v / lv[i]) : 0); });
+  const n = R[0].length, n1 = Math.min(252, n), means = R.map(r => mean(r.slice(-n1)));
+  const cov = R.map((a, i) => R.map((b, j) => { let s = 0; for (let t = n - n1; t < n; t++) s += (a[t] - means[i]) * (b[t] - means[j]); return s / (n1 - 1) * 252; }));
+  const scen = lines => {
+    const tot = lines.reduce((s, l) => s + l.mv, 0), w = assets.map(() => 0); let cov_ = 0, unc = 0;
+    lines.forEach(l => {
+      if (l.kind === 'cash') { cov_ += l.mv; return; }
+      const i = l.kind === 'bond' ? (useBond ? assets.length - 1 : -1) : assets.indexOf(l.s);
+      if (i < 0) { unc += l.mv; return; }
+      w[i] += l.mv; cov_ += l.mv;
+    });
+    const wn = w.map(x => cov_ > 0 ? x / cov_ : 0);
+    const Sw = cov.map(r => r.reduce((s, v, j) => s + v * wn[j], 0)), varP = wn.reduce((s, v, i) => s + v * Sw[i], 0);
+    const rc = {}; assets.forEach((s, i) => { rc[s] = varP > 0 ? wn[i] * Sw[i] / varP : 0; });
+    /* volatilité glissante 63 j de ce panier à poids constants */
+    const pr = []; for (let t = 0; t < n; t++) { let s = 0; for (let i = 0; i < assets.length; i++) s += wn[i] * R[i][t]; pr.push(s); }
+    const roll = []; for (let t = 63; t <= n; t++) roll.push({d: cal[t], y: sdev(pr.slice(t - 63, t)) * Math.sqrt(252)});
+    return {vol: Math.sqrt(Math.max(0, varP)), rc, roll, cover: tot > 0 ? 1 - unc / tot : 0};
+  };
+  const vol1 = s => { const c = DS[s].c, r = []; for (let i = Math.max(1, c.length - 252); i < c.length; i++) if (c[i] > 0 && c[i - 1] > 0) r.push(Math.log(c[i] / c[i - 1])); return r.length > 10 ? sdev(r) * Math.sqrt(252) : null; };
+  const v1 = {}; assets.forEach(s => { v1[s] = vol1(s); });
+  return {B: scen(before), A: scen(after), v1, bondSym: useBond ? CFG.bond : null, from: cal[cal.length - n1 - 1], to: cal[cal.length - 1]};
+}
+/* cadran : panier hebdomadaire des titres cotés (poids renormalisés) */
+function prCad(lines, cfg){
+  const secs = lines.filter(l => l.kind === 'sec' && l.mv > 0 && l.s && has(l.s));
+  const tot = secs.reduce((s, l) => s + l.mv, 0); if (!tot) return null;
+  const base = weekly(cfg.f.gNum), keys = base.w.slice(-(cfg.weeks + 1));
+  const maps = secs.map(l => { const W = weekly(l.s), m = new Map(); W.w.forEach((k, i) => m.set(k, W.c[i])); return m; });
+  const lv = [100];
+  for (let i = 1; i < keys.length; i++) { let s = 0, ws = 0; secs.forEach((l, j) => { const a = maps[j].get(keys[i - 1]), b = maps[j].get(keys[i]); if (a > 0 && b > 0) { s += l.mv * (b / a - 1); ws += l.mv; } }); lv.push(lv[i - 1] * (1 + (ws ? s / ws : 0))); }
+  const r = cadAnalyse({w: keys, c: lv}, cfg);
+  const ex = {neutral: 0}; Object.keys(QUADS).forEach(k => { ex[k] = 0; });
+  secs.forEach(l => { const b = PR.beta[l.s]; const k = b && !b.err ? qKey(b.zG, b.zI, cfg.neutral) : null; ex[k || 'neutral'] += l.mv / tot; });
+  return {r, ex, secs, tot};
+}
+const qKey = (x, y, nz) => { const sx = x > nz ? 1 : x < -nz ? -1 : 0, sy = y > nz ? 1 : y < -nz ? -1 : 0; return sx && sy ? sx + ',' + sy : null; };
+
+async function prRun(){
+  if (!PF.pos) { prRender(); return; }
+  if (PR.busy) { PR.again = true; return; }
+  PR.busy = true; PR.again = false;
+  const st = $('prSt');
+  try {
+    if (PF.mapBusy) { st.textContent = 'Association des symboles du portefeuille…'; while (PF.mapBusy) await sleep(300); }
+    const base = prBaseLines(), app = prApply(base), cfg = cadCfg();
+    const syms = base.concat(app.lines).filter(l => l.kind === 'sec' && l.s).map(l => l.s);
+    const fac = [cfg.f.gNum, cfg.f.gDen, cfg.f.iNum, cfg.f.iDen, cfg.fx ? cfg.f.fx : null, cfg.rel ? cfg.f.bench : null];
+    st.textContent = 'Chargement des cours…';
+    await loadSeries(syms.concat(fac, [CFG.bond]), (d, n) => { st.textContent = 'Chargement des cours… ' + d + ' / ' + n; });
+    const facOk = fac.every(s => !s || has(s));
+    if (facOk) Array.from(new Set(syms)).forEach(s => { if (!(s in PR.beta) && has(s)) PR.beta[s] = cadAnalyse(weekly(s), cfg); });
+    let reg = null;
+    if (facOk) { const A = alignW([cfg.f.gNum, cfg.f.gDen, cfg.f.iNum, cfg.f.iDen].map(weekly), cfg.mom); if (A.keys.length >= cfg.mom + 1) { const g = A.v[0].map((x, i) => x / A.v[1][i]), inf = A.v[2].map((x, i) => x / A.v[3][i]); reg = {mG: Math.log(g[g.length - 1] / g[0]), mI: Math.log(inf[inf.length - 1] / inf[0])}; } }
+    PR.res = {base, after: app.lines, msgs: app.msgs, risk: prRisk(base, app.lines), cadB: facOk ? prCad(base, cfg) : null, cadA: facOk ? prCad(app.lines, cfg) : null, cfg, reg, facOk};
+    st.textContent = '';
+  } catch (e) { st.textContent = e.message; }
+  PR.busy = false;
+  prRender();
+  if (PR.again) prRun();
+}
+function prRender(){
+  const on = !!PF.pos;
+  $('prEmpty').hidden = on; $('prBody').hidden = !on;
+  if (!on) return;
+  const M = PF.meta || {};
+  $('prHead').innerHTML = '<div class="pf-code">Portefeuille ' + esc(M.code || '–') + '</div>' + [['Dépositaire', M.dep], ['Gestionnaire', M.gest], ['Profil', M.prof]].filter(x => x[1]).map(x => '<span>' + x[0] + ' <b>' + esc(x[1]) + '</b></span>').join('');
+  /* listes de saisie */
+  const base = prBaseLines(), selPrev = $('prSellPos').value;
+  $('prSellPos').innerHTML = base.filter(l => l.kind !== 'cash').map(l => '<option value="' + esc(l.key) + '">' + esc(l.name) + ' — ' + chf(l.mv) + ' CHF</option>').join('');
+  if (selPrev) $('prSellPos').value = selPrev;
+  $('prBuySel').innerHTML = PR.buySel ? lgHtml(PR.buySel.s, PR.buySel.name) + '<b>' + esc(PR.buySel.name) + '</b> <span class="pf-sym">' + esc(PR.buySel.s || '') + '</span>' : '<span class="pf-st">Aucun titre choisi</span>';
+  $('prTxList').innerHTML = PR.tx.length ? PR.tx.map((t, i) => '<div class="pr-tx ' + t.type + '"><span class="tag">' + (t.type === 'sell' ? 'Vente' : 'Achat') + '</span><span class="nm">' + esc(t.name) + '<small>'
+    + (t.type === 'sell' ? (t.mode === 'all' ? 'toute la position' : t.mode === 'pct' ? nf(0).format(t.val) + ' % de la position' : chf(t.val) + ' CHF') : chf(t.val) + ' CHF') + (t.done != null ? ' · ' + chf(t.done) + ' CHF' : '') + '</small></span><button type="button" data-tx="' + i + '" title="Retirer">×</button></div>').join('')
+    : '<div class="pf-st">Aucune transaction : ajoutez une vente ou un achat.</div>';
+  const R = PR.res;
+  if (!R) { $('prKpis').innerHTML = ''; return; }
+  const tot = R.base.reduce((s, l) => s + l.mv, 0), cashB = R.base.find(l => l.key === '__cash').mv, cashA = R.after.find(l => l.key === '__cash').mv;
+  const sold = PR.tx.filter(t => t.type === 'sell').reduce((s, t) => s + (t.done || 0), 0), bought = PR.tx.filter(t => t.type === 'buy').reduce((s, t) => s + (t.done || 0), 0);
+  const nB = R.base.filter(l => l.kind !== 'cash' && l.mv > 0.5).length, nA = R.after.filter(l => l.kind !== 'cash' && l.mv > 0.5).length;
+  const arrow = (a, b, f) => f(a) + ' <span class="pr-ar">→</span> ' + f(b);
+  const K = R.risk, dv = K ? K.A.vol - K.B.vol : null;
+  $('prKpis').innerHTML = kpi('Volatilité ex ante', K ? arrow(K.B.vol, K.A.vol, pct) : '–', K ? '<span class="' + (dv > 0.0005 ? 'pf-dn' : dv < -0.0005 ? 'pf-up' : '') + '">' + (dv >= 0 ? '+' : '−') + nf(2).format(Math.abs(dv * 100)) + ' pt</span> · couverture ' + pct(K.A.cover) : 'pas de cours')
+    + kpi('Liquidités', arrow(cashB / tot, cashA / tot, x => pct(x)), chf(cashB) + ' → ' + chf(cashA) + ' CHF')
+    + kpi('Titres', arrow(nB, nA, x => String(x)), 'positions hors liquidités')
+    + kpi('Transactions', String(PR.tx.length), 'ventes ' + chf(sold) + ' · achats ' + chf(bought) + ' CHF')
+    + kpi('Valeur totale', chf(tot), 'inchangée');
+  const warn = R.msgs.slice();
+  if (cashA < -1) warn.push('Liquidités négatives après transactions (' + chf(cashA) + ' CHF) : les achats dépassent les liquidités disponibles et le produit des ventes.');
+  const noData = R.after.filter(l => l.kind === 'sec' && l.mv > 0 && !(l.s && has(l.s)));
+  if (noData.length) warn.push('Sans cours (exclus du risque et du cadran) : ' + noData.map(l => esc(l.name)).join(', ') + '.');
+  $('prWarn').hidden = !warn.length; $('prWarn').innerHTML = warn.join('<br>');
+  /* volatilité glissante */
+  if (K) {
+    lineChart($('prVolChart'), [{n: 'Avant', c: '#747572', pts: K.B.roll, dash: '5 4', w: 1.2}, {n: 'Après transactions', c: '#02182B', pts: K.A.roll, w: 1.7}], {fmt: v => nf(1).format(v * 100) + ' %', zero: true, h: 240});
+    $('prVolNote').textContent = 'Rendements quotidiens des titres actuels appliqués avec des poids constants (avant / après) : montre comment le portefeuille simulé se serait comporté, pas sa performance passée réelle.';
+  } else $('prVolChart').innerHTML = '<div class="pf-st">Aucun titre avec des cours.</div>';
+  /* cadran */
+  if (R.facOk && R.cadA) {
+    const cfg = R.cfg, tA = R.cadA.tot, wMax = Math.max.apply(null, R.cadA.secs.map(l => l.mv / tA).concat([0.01]));
+    const pts = R.cadA.secs.filter(l => PR.beta[l.s] && !PR.beta[l.s].err).map(l => { const b = PR.beta[l.s], q = quadOf(b.zG, b.zI, cfg.neutral); return {x: b.zG, y: b.zI, c: q.c, rad: 4 + 11 * Math.sqrt(l.mv / tA / wMax), weak: !(b.r2 >= 0.1), lab: l.s.replace(/^[A-Z0-9_]+:/, ''), isNew: l.isNew, tip: l.name + ' (' + l.s + ')\nPoids ' + pct(l.mv / tA) + ' des titres cotés · β croissance ' + nf(2).format(b.zG) + ' · β inflation ' + nf(2).format(b.zI) + '\n' + q.n}; });
+    const rB = R.cadB && R.cadB.r, rA = R.cadA.r;
+    if (rB && !rB.err) pts.push({x: rB.zG, y: rB.zI, dia: 'o', lab: 'Avant', tip: 'Portefeuille avant\nβ croissance ' + nf(2).format(rB.zG) + ' · β inflation ' + nf(2).format(rB.zI)});
+    if (rA && !rA.err) pts.push({x: rA.zG, y: rA.zI, dia: 'f', lab: 'Après', tip: 'Portefeuille après transactions\nβ croissance ' + nf(2).format(rA.zG) + ' · β inflation ' + nf(2).format(rA.zI)});
+    let svg = cadranSvg(pts, R.reg, cfg);
+    $('prCad').innerHTML = svg;
+    const qB = rB && !rB.err ? quadOf(rB.zG, rB.zI, cfg.neutral) : null, qA = rA && !rA.err ? quadOf(rA.zG, rA.zI, cfg.neutral) : null;
+    const rk = R.reg ? ((R.reg.mG >= 0 ? 1 : -1) + ',' + (R.reg.mI >= 0 ? 1 : -1)) : null;
+    $('prCadKpis').innerHTML = kpi('Régime macro actuel', rk ? esc(QUADS[rk].n) : '–', 'momentum ' + cfg.mom + ' sem.', rk ? QUADS[rk].c : null)
+      + kpi('Avant', qB ? esc(qB.n) : '–', qB ? 'β crois. ' + nf(2).format(rB.zG) + ' · β infl. ' + nf(2).format(rB.zI) : '', qB ? qB.c : null)
+      + kpi('Après', qA ? esc(qA.n) : '–', qA ? 'β crois. ' + nf(2).format(rA.zG) + ' · β infl. ' + nf(2).format(rA.zI) : '', qA ? qA.c : null);
+    const keys = Object.keys(QUADS).concat(['neutral']);
+    const exB = R.cadB ? R.cadB.ex : {}, exA = R.cadA.ex;
+    $('prQExp').innerHTML = keys.map(k => { const q = k === 'neutral' ? {n: 'Neutre / un seul axe', c: NEUT} : QUADS[k], b = exB[k] || 0, a = exA[k] || 0, d = a - b;
+      return '<div class="pr-qrow"><span><i style="background:' + q.c + '"></i>' + esc(q.n) + '</span><span class="bar"><i class="b" style="width:' + (b * 100).toFixed(1) + '%"></i><i class="a" style="width:' + (a * 100).toFixed(1) + '%;background:' + q.c + '"></i></span><b>' + pct(b, 0) + ' → ' + pct(a, 0) + '</b><em class="' + (d > 0.002 ? 'pf-up' : d < -0.002 ? 'pf-dn' : '') + '">' + (Math.abs(d) < 0.0005 ? '' : (d > 0 ? '+' : '−') + nf(1).format(Math.abs(d * 100))) + '</em></div>'; }).join('');
+    $('prCadSt').textContent = (cfg.rel ? 'relatif à ' + cfg.f.bench.replace(/^[A-Z0-9_]+:/, '') : 'absolu') + (cfg.fx ? ' · USDCHF neutralisé' : '') + ' · réglages de l\'écran Cadran';
+  } else { $('prCad').innerHTML = '<div class="pf-st">Facteurs du cadran indisponibles (voir l\'écran Cadran).</div>'; $('prCadKpis').innerHTML = ''; $('prQExp').innerHTML = ''; }
+  /* tableau avant / après */
+  const byKey = new Map(); R.base.forEach(l => byKey.set(l.key, {l, b: l.mv, a: 0})); R.after.forEach(l => { const x = byKey.get(l.key) || {l, b: 0, a: 0}; x.a = l.mv; x.l = l; byKey.set(l.key, x); });
+  const rows = Array.from(byKey.values()).sort((x, y) => (x.l.kind === 'cash') - (y.l.kind === 'cash') || y.a - x.a || y.b - x.b);
+  const rcOf = (l, S) => !K ? null : l.kind === 'cash' ? 0 : l.kind === 'bond' ? (K.bondSym ? (K[S].rc[K.bondSym] || 0) * (l.mv / Math.max(1e-9, R[S === 'B' ? 'base' : 'after'].filter(x => x.kind === 'bond').reduce((s, x) => s + x.mv, 0))) : null) : (l.s && K[S].rc[l.s] != null ? K[S].rc[l.s] : null);
+  $('prTbl').innerHTML = '<thead><tr><th class="l">Titre</th><th>Poids avant</th><th>Poids après</th><th>Écart</th><th>Montant après (CHF)</th><th>Vol. 1 an</th><th title="Part de la variance du portefeuille">Contribution au risque</th></tr></thead><tbody>'
+    + rows.map(x => { const l = x.l, d = (x.a - x.b) / tot, la = R.after.find(y => y.key === l.key), lb = R.base.find(y => y.key === l.key);
+      const v1 = l.kind === 'cash' ? 0 : K ? (l.kind === 'bond' ? (K.bondSym ? K.v1[K.bondSym] : null) : (l.s ? K.v1[l.s] : null)) : null;
+      const rb = lb ? rcOf(lb, 'B') : 0, ra = la ? rcOf(la, 'A') : 0;
+      return '<tr class="pf-r' + (Math.abs(d) > 1e-6 ? ' pr-ch' : '') + '"><td class="l"><div class="pf-nm">' + (l.kind === 'cash' ? '' : lgHtml(l.s, l.name)) + '<span>' + esc(l.name) + (l.isNew ? ' <em class="pr-new">achat</em>' : '') + '<small>' + esc(l.s || (l.kind === 'bond' ? 'obligation' : l.kind === 'cash' ? '' : 'sans symbole')) + '</small></span></div></td>'
+        + '<td>' + pct(x.b / tot) + '</td><td><b>' + pct(x.a / tot) + '</b></td><td class="' + (d > 1e-6 ? 'pf-up' : d < -1e-6 ? 'pf-dn' : '') + '">' + (Math.abs(d) < 1e-6 ? '' : spct(d)) + '</td><td>' + chf(x.a) + '</td><td>' + (v1 == null ? '–' : pct(v1)) + '</td><td>' + (rb == null && ra == null ? '–' : pct(rb || 0) + ' → <b>' + pct(ra || 0) + '</b>') + '</td></tr>'; }).join('') + '</tbody>';
+}
+/* saisie */
+$('prSellGo').addEventListener('click', () => {
+  const key = $('prSellPos').value, l = prBaseLines().find(x => x.key === key); if (!l) return;
+  const mode = $('prSellMode').value, val = +$('prSellVal').value;
+  if (mode !== 'all' && !(val > 0)) { prToast('Indiquez un pourcentage ou un montant.', false); return; }
+  PR.tx.push({type: 'sell', key, name: l.name, mode, val}); prSave(); prRender(); prRun();
+});
+$('prSellMode').addEventListener('change', () => { const m = $('prSellMode').value; $('prSellVal').disabled = m === 'all'; $('prSellVal').value = m === 'pct' ? 50 : m === 'amt' ? 50000 : ''; });
+let prHitT = null, prSeq = 0, prHits = [];
+$('prBuyQ').addEventListener('input', () => {
+  const q = $('prBuyQ').value.trim(), box = $('prBuyHits'), seq = ++prSeq; clearTimeout(prHitT);
+  if (q.length < 2) { box.hidden = true; return; }
+  const fq = mktFold(q);
+  const own = prBaseLines().filter(l => l.kind === 'sec' && (mktFold(l.name).indexOf(fq) >= 0 || (l.s && l.s.toLowerCase().indexOf(q.toLowerCase()) >= 0))).slice(0, 6).map(l => ({key: l.key, s: l.s, name: l.name, own: true}));
+  const show = rem => { prHits = own.concat(rem); box.hidden = false; box.innerHTML = prHits.map((h, i) => '<button type="button" class="pr-hit" data-h="' + i + '">' + lgHtml(h.s, h.name) + '<b>' + esc(h.s || '—') + '</b>' + esc(h.name) + (h.own ? '<small>en portefeuille</small>' : (h.prim ? mktPrimBadge(h.prim) : '')) + '</button>').join('') || '<span class="pf-st" style="padding:8px 12px;display:block">Aucun résultat</span>'; };
+  show([]);
+  prHitT = setTimeout(async () => {
+    let rem = [];
+    try { const r = await fetch('/api/tv/search/market/' + encodeURIComponent(q)), j = await r.json(); if (r.ok && j.success !== false) rem = mktRankSearch(mktParseSearch(j), q).slice(0, 8).filter(x => !own.some(o => o.s === x.full)).map(x => ({key: 'new:' + x.full, s: x.full, name: x.desc || x.symbol || x.full, prim: x})); } catch (e) {}
+    if (seq === prSeq) show(rem);
+  }, 350);
+});
+$('prBuyQ').addEventListener('blur', () => setTimeout(() => { $('prBuyHits').hidden = true; }, 150));
+$('prBuyHits').addEventListener('mousedown', e => { const b = e.target.closest('[data-h]'); if (!b) return; e.preventDefault(); PR.buySel = prHits[+b.dataset.h]; $('prBuyQ').value = ''; $('prBuyHits').hidden = true; prRender(); });
+$('prBuyGo').addEventListener('click', () => {
+  const amt = +$('prBuyAmt').value;
+  if (!PR.buySel) { prToast('Choisissez d\'abord un titre à acheter.', false); return; }
+  if (!(amt > 0)) { prToast('Indiquez un montant.', false); return; }
+  PR.tx.push({type: 'buy', key: PR.buySel.key, s: PR.buySel.s, name: PR.buySel.name, val: amt}); prSave(); prRender(); prRun();
+});
+$('prTxList').addEventListener('click', e => { const b = e.target.closest('[data-tx]'); if (!b) return; PR.tx.splice(+b.dataset.tx, 1); prSave(); prRender(); prRun(); });
+$('prTxClear').addEventListener('click', () => { if (PR.tx.length && !confirm('Annuler toutes les transactions simulées ?')) return; PR.tx = []; prSave(); prRender(); prRun(); });
+$('prCsv').addEventListener('click', () => {
+  if (!PR.res) return;
+  const tot = PR.res.after.reduce((s, l) => s + l.mv, 0), f = x => String(Math.round(x * 1e6) / 1e6).replace('.', ',');
+  const rows = [['Titre', 'Symbole', 'Catégorie', 'Montant après (CHF)', 'Poids après', 'Achat simulé']].concat(PR.res.after.filter(l => l.mv > 0.5 || l.key === '__cash').map(l => [l.name, l.s || '', l.cat || '', f(l.mv), f(l.mv / tot), l.isNew ? 'oui' : '']));
+  rows.push([]); rows.push(['Transactions']); PR.tx.forEach(t => rows.push([t.type === 'sell' ? 'Vente' : 'Achat', t.name, t.s || '', f(t.done || 0)]));
+  const csv = '﻿' + rows.map(r => r.map(x => /[;"\n]/.test(String(x)) ? '"' + String(x).replace(/"/g, '""') + '"' : x).join(';')).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8'})); a.download = 'portefeuille_simule.csv'; document.body.appendChild(a); a.click(); a.remove();
+});
+const prDrop = $('prDrop');
+prDrop.addEventListener('click', () => $('prFile').click());
+$('prFile').addEventListener('change', async e => { const f = Array.from(e.target.files || []); e.target.value = ''; if (f.length) { await readFiles(f); prRender(); prRun(); } });
+['dragenter', 'dragover'].forEach(ev => prDrop.addEventListener(ev, e => { e.preventDefault(); prDrop.classList.add('over'); }));
+['dragleave', 'drop'].forEach(ev => prDrop.addEventListener(ev, e => { e.preventDefault(); prDrop.classList.remove('over'); }));
+prDrop.addEventListener('drop', async e => { const f = Array.from((e.dataTransfer && e.dataTransfer.files) || []); if (f.length) { await readFiles(f); prRender(); prRun(); } });
+new MutationObserver(() => { if ($('screenPr').classList.contains('on')) { prRender(); if (PF.pos) { if (!PF.mapBusy && PF.pos.some(p => kindOf(p) === 'sec' && !MAP[keyOf(p)])) autoMap(); prRun(); } } }).observe($('screenPr'), {attributes: true, attributeFilter: ['class']});
 
 /* Graphique en courbes réutilisé par le Portfolio Constructor */
 window.gipLineChart = lineChart;
@@ -13093,7 +13508,7 @@ function cadranSvg(pts, reg, cfg){
   let h = '<svg viewBox="0 0 ' + S + ' ' + S + '" font-family="Aspekta, Arial, sans-serif"><rect width="' + S + '" height="' + S + '" fill="#fff"/>';
   [['-1,1', P, P], ['1,1', C, P], ['-1,-1', P, C], ['1,-1', C, C]].forEach(([k, x, y]) => {
     const q = QUADS[k], on = k === rk, left = x === P, top = y === P;
-    h += '<rect x="' + x + '" y="' + y + '" width="' + (C - P) + '" height="' + (C - P) + '" fill="' + q.c + '" fill-opacity="' + (on ? 0.13 : 0.06) + '"' + (on ? ' stroke="' + q.c + '" stroke-width="3"' : '') + '/>';
+    h += '<rect x="' + x + '" y="' + y + '" width="' + (C - P) + '" height="' + (C - P) + '" fill="' + q.c + '" fill-opacity="' + (on ? 0.13 : 0.06) + '"' + (on ? ' stroke="' + q.c + '" stroke-width="1.5"' : '') + '/>';
     h += '<text x="' + (left ? x + 10 : x + C - P - 10) + '" y="' + (top ? y + 20 : y + C - P - 12) + '" text-anchor="' + (left ? 'start' : 'end') + '" fill="' + q.c + '" font-size="13" font-weight="700">' + esc(q.n + (on ? ' ◆' : '')) + '</text>';
   });
   const nz = cfg.neutral * sc;
@@ -13114,8 +13529,8 @@ function cadranSvg(pts, reg, cfg){
   pts.slice().sort((a, b) => (b.rad || 0) - (a.rad || 0)).forEach(p => {
     const x = px(p.x), y = py(p.y);
     h += '<g><title>' + esc(p.tip) + '</title>';
-    if (p.dia) { const r = 9; h += '<path d="M' + x + ',' + (y - r) + 'L' + (x + r) + ',' + y + 'L' + x + ',' + (y + r) + 'L' + (x - r) + ',' + y + 'Z" fill="#02182B" stroke="#fff" stroke-width="2"/>'; }
-    else h += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + p.rad.toFixed(1) + '" fill="' + p.c + '" fill-opacity="' + (p.weak ? 0.35 : 0.75) + '" stroke="#fff" stroke-width="1.5"/>';
+    if (p.dia) { const r = 9; h += '<path d="M' + x + ',' + (y - r) + 'L' + (x + r) + ',' + y + 'L' + x + ',' + (y + r) + 'L' + (x - r) + ',' + y + 'Z" fill="#02182B" stroke="#fff" stroke-width="1.4"/>'; }
+    else h += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + p.rad.toFixed(1) + '" fill="' + p.c + '" fill-opacity="' + (p.weak ? 0.35 : 0.75) + '" stroke="#fff" stroke-width="1"/>';
     if (p.lx != null) h += '<text x="' + p.lx.toFixed(1) + '" y="' + p.ly.toFixed(1) + '" fill="#1A1F27" font-size="' + (p.dia ? 12 : 11) + '" font-weight="' + (p.dia ? 800 : 600) + '">' + esc(p.lab) + '</text>';
     h += '</g>';
   });
@@ -13532,12 +13947,12 @@ function drawFrontier(){
   ticks(r0, r1, 6).forEach(v => { h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" stroke="' + (Math.abs(v) < 1e-9 ? '#A9AEB4' : '#ECEBE6') + '"/><text x="' + (L - 6) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end" font-size="10.5" fill="#6B6F76">' + nf(0).format(v * 100) + ' %</text>'; });
   ticks(0, vMax, 6).forEach(v => { h += '<line y1="' + T + '" y2="' + (H - Bm) + '" x1="' + X(v).toFixed(1) + '" x2="' + X(v).toFixed(1) + '" stroke="#F3F2EE"/><text y="' + (H - Bm + 14) + '" x="' + X(v).toFixed(1) + '" text-anchor="middle" font-size="10.5" fill="#6B6F76">' + nf(0).format(v * 100) + ' %</text>'; });
   h += '<text x="' + (W - R) + '" y="' + (H - 6) + '" text-anchor="end" font-size="11" fill="#1A1F27" font-weight="600">Volatilité annualisée →</text><text transform="translate(12 ' + T + ') rotate(-90)" text-anchor="end" font-size="11" fill="#1A1F27" font-weight="600">Rendement attendu →</text>';
-  all.forEach(p => { h += '<circle cx="' + X(p.vol).toFixed(1) + '" cy="' + Y(p.ret).toFixed(1) + '" r="' + (p.w > 0 ? 4 : 2.5) + '" fill="' + (p.w > 0 ? '#00CFFF' : '#C9C3AE') + '" fill-opacity="' + (p.w > 0 ? 0.95 : 0.7) + '"' + (p.w > 0 ? ' stroke="#02182B" stroke-width="1"' : '') + '><title>' + esc(p.n + ' (' + p.s + ')\nRendement ' + pct(p.ret) + ' · volatilité ' + pct(p.vol) + (p.w > 0 ? '\nPoids ' + pct(p.w) : '')) + '</title></circle>'; });
-  if (fr.length > 1) h += '<path d="' + fr.map((p, i) => (i ? 'L' : 'M') + X(Math.min(p.vol, vMax)).toFixed(1) + ',' + Y(p.ret).toFixed(1)).join('') + '" fill="none" stroke="#02182B" stroke-width="2.4"/>';
+  all.forEach(p => { h += '<circle cx="' + X(p.vol).toFixed(1) + '" cy="' + Y(p.ret).toFixed(1) + '" r="' + (p.w > 0 ? 3.5 : 2.2) + '" fill="' + (p.w > 0 ? '#00CFFF' : '#C9C3AE') + '" fill-opacity="' + (p.w > 0 ? 0.95 : 0.7) + '"' + (p.w > 0 ? ' stroke="#02182B" stroke-width=".7"' : '') + '><title>' + esc(p.n + ' (' + p.s + ')\nRendement ' + pct(p.ret) + ' · volatilité ' + pct(p.vol) + (p.w > 0 ? '\nPoids ' + pct(p.w) : '')) + '</title></circle>'; });
+  if (fr.length > 1) h += '<path d="' + fr.map((p, i) => (i ? 'L' : 'M') + X(Math.min(p.vol, vMax)).toFixed(1) + ',' + Y(p.ret).toFixed(1)).join('') + '" fill="none" stroke="#02182B" stroke-width="1.5"/>';
   const x = X(B.vol), y = Y(B.ret);
-  h += '<path d="M' + x + ',' + (y - 9) + 'L' + (x + 9) + ',' + y + 'L' + x + ',' + (y + 9) + 'L' + (x - 9) + ',' + y + 'Z" fill="#00CFFF" stroke="#02182B" stroke-width="2.5"><title>Portefeuille : rendement ' + pct(B.ret) + ' · volatilité ' + pct(B.vol) + ' · Sharpe ' + nf(2).format(B.sharpe) + '</title></path>';
+  h += '<path d="M' + x + ',' + (y - 9) + 'L' + (x + 9) + ',' + y + 'L' + x + ',' + (y + 9) + 'L' + (x - 9) + ',' + y + 'Z" fill="#00CFFF" stroke="#02182B" stroke-width="1.6"><title>Portefeuille : rendement ' + pct(B.ret) + ' · volatilité ' + pct(B.vol) + ' · Sharpe ' + nf(2).format(B.sharpe) + '</title></path>';
   h += '<text x="' + (x + 12) + '" y="' + (y + 4) + '" font-size="12" font-weight="800" fill="#02182B">Portefeuille</text>';
-  h += '<g font-size="11" fill="#6B6F76"><circle cx="' + (L + 10) + '" cy="' + (T + 8) + '" r="3" fill="#C9C3AE"/><text x="' + (L + 18) + '" y="' + (T + 12) + '">titres de l\'univers</text><circle cx="' + (L + 130) + '" cy="' + (T + 8) + '" r="4" fill="#00CFFF" stroke="#02182B" stroke-width="1"/><text x="' + (L + 138) + '" y="' + (T + 12) + '">titres retenus</text><line x1="' + (L + 230) + '" x2="' + (L + 250) + '" y1="' + (T + 8) + '" y2="' + (T + 8) + '" stroke="#02182B" stroke-width="2.4"/><text x="' + (L + 256) + '" y="' + (T + 12) + '">frontière (titres retenus, mêmes bornes)</text></g>';
+  h += '<g font-size="11" fill="#6B6F76"><circle cx="' + (L + 10) + '" cy="' + (T + 8) + '" r="3" fill="#C9C3AE"/><text x="' + (L + 18) + '" y="' + (T + 12) + '">titres de l\'univers</text><circle cx="' + (L + 130) + '" cy="' + (T + 8) + '" r="4" fill="#00CFFF" stroke="#02182B" stroke-width="1"/><text x="' + (L + 138) + '" y="' + (T + 12) + '">titres retenus</text><line x1="' + (L + 230) + '" x2="' + (L + 250) + '" y1="' + (T + 8) + '" y2="' + (T + 8) + '" stroke="#02182B" stroke-width="1.5"/><text x="' + (L + 256) + '" y="' + (T + 12) + '">frontière (titres retenus, mêmes bornes)</text></g>';
   el.innerHTML = h + '</svg>';
 }
 function drawBacktest(){
@@ -13549,8 +13964,8 @@ function drawBacktest(){
     let rp = 0, re = 0; for (let i = 0; i < n; i++) { const r = P.assets[i].R[t]; rp += B.w[i] * r; re += r / n; }
     a *= 1 + rp; b *= 1 + re; port.push({d: day(t + 1), y: a}); ew.push({d: day(t + 1), y: b});
   }
-  const series = [{n: 'Portefeuille construit', c: '#02182B', pts: port, w: 2.8}, {n: 'Univers à poids égaux', c: '#747572', pts: ew, w: 2, dash: '7 4'}];
-  if (has('SIX:SPIX')) { const S = DS['SIX:SPIX'], m = new Map(); S.w.forEach((k, i) => m.set(k, S.c[i])); const base = m.get(k0) || null; if (base) { const sp = []; for (let t = 0; t <= H; t++) { const v = m.get(k0 + t); if (v) sp.push({d: day(t), y: v / base * 100}); } series.push({n: 'SPI', c: '#00CFFF', pts: sp, w: 2.2}); } }
+  const series = [{n: 'Portefeuille construit', c: '#02182B', pts: port, w: 1.9}, {n: 'Univers à poids égaux', c: '#747572', pts: ew, w: 1.3, dash: '7 4'}];
+  if (has('SIX:SPIX')) { const S = DS['SIX:SPIX'], m = new Map(); S.w.forEach((k, i) => m.set(k, S.c[i])); const base = m.get(k0) || null; if (base) { const sp = []; for (let t = 0; t <= H; t++) { const v = m.get(k0 + t); if (v) sp.push({d: day(t), y: v / base * 100}); } series.push({n: 'SPI', c: '#00CFFF', pts: sp, w: 1.4}); } }
   if (typeof window.gipLineChart === 'function') window.gipLineChart(el, series, {fmt: v => nf(0).format(v), h: 330});
 }
 function csv(){
@@ -13679,7 +14094,7 @@ syncForm();
 
 (function NavModule(){
 "use strict";
-const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), ofs: document.getElementById('screenOfs'), mkt: document.getElementById('screenMkt'), dash: document.getElementById('screenDash'), lab: document.getElementById('screenLab'), quad: document.getElementById('screenQuad'), pf: document.getElementById('screenPf'), pc: document.getElementById('screenPc'), whiteboard: document.getElementById('screenWhiteboard')};
+const screens = {home: document.getElementById('screenHome'), chartpack: document.getElementById('screenChartPack'), am: document.getElementById('screenAM'), sandbox: document.getElementById('screenSandbox'), fred: document.getElementById('screenFred'), snb: document.getElementById('screenSnb'), ofs: document.getElementById('screenOfs'), mkt: document.getElementById('screenMkt'), dash: document.getElementById('screenDash'), lab: document.getElementById('screenLab'), quad: document.getElementById('screenQuad'), pf: document.getElementById('screenPf'), pc: document.getElementById('screenPc'), pr: document.getElementById('screenPr'), whiteboard: document.getElementById('screenWhiteboard')};
 function showScreen(name){
   if (!screens[name]) return;
   Object.keys(screens).forEach(k => { if (screens[k]) screens[k].classList.toggle('on', k === name); });

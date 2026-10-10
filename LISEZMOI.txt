@@ -218,3 +218,14 @@ Charte graphique GIP (20e version) — Portfolio Lab et Portfolio Constructor :
   - Le portefeuille est toujours en Oxford blue, trait épais ; chaque indice comparé a sa couleur ET son type de trait (plein, tirets, pointillés), repris dans la légende, les pastilles et le tableau.
   - Les couleurs des quatre cadrans (vert, orange, rouge, bleu) ne changent pas : ce sont les mêmes que dans l'écran Cadran.
   - Seul Outils_GIP.html change.
+
+Portfolio Restructurator et graphiques affinés (21e version) :
+  - Nouvel écran « Portfolio Restructurator » (accueil, section Portefeuilles ; barre du haut : PORTFOLIO › Lab / Constructor / Restructurator).
+    Il utilise le même portefeuille que le Portfolio Lab (fichiers déposés dans l'un ou l'autre écran).
+  - Ventes : % de la position, montant CHF ou toute la position. Achats : un titre du portefeuille ou tout symbole TradingView (recherche, cotation primaire en tête), montant en CHF.
+    Les ventes alimentent les liquidités, les achats les utilisent : la valeur totale ne change pas. Avertissement si les liquidités deviennent négatives.
+  - Résultats avant → après : volatilité ex ante (un an de cours quotidiens, obligations approchées par l'indice obligataire du Portfolio Lab), liquidités, nombre de titres ;
+    volatilité glissante 3 mois simulée ; cadran (losange vide = avant, plein = après, achats simulés cerclés) et exposition par cadran ; tableau des poids et contributions au risque.
+  - Export CSV du portefeuille simulé. Transactions gardées pour la session du navigateur uniquement ; rien n'est exécuté ni envoyé au relais.
+  - Graphiques du Portfolio Lab, du Constructor, du Cadran et de l'OFS : traits plus fins (portefeuille ~1,9 px, indices ~1,25 px), points et losanges plus légers.
+  - Seul Outils_GIP.html change.
